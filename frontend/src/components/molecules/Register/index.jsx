@@ -7,7 +7,7 @@ import { FormBox, BtnBox } from './styled';
 function Register() {
   return (
     <Container>
-      <Title text='가입하기' />
+      <Title text='Nuseum' />
       <FormBox>
         <Form placeholder='발급된 코드를 입력해주세요.' type='text' />
         <Form placeholder='패스워드 입력' type='password' />

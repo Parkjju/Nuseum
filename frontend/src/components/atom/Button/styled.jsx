@@ -12,6 +12,7 @@ const Btn = styled.button`
   background-color: #252eff;
   border: none;
   cursor: pointer;
+  margin-bottom: 20px;
 `;
 
 export default Btn;

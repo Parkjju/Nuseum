@@ -1,8 +1,7 @@
-import Register from './components/molecules/Register';
-import Login from './components/molecules/Login';
+import Router from './router';
 
 function App() {
-  return <Login />;
+  return <Router />;
 }
 
 export default App;

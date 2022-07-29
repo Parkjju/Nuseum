@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const FormBox = styled.div`
-  height: 110px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -10,6 +9,4 @@ export const FormBox = styled.div`
   margin-bottom: 40px;
 `;
 
-export const BtnBox = styled(FormBox)`
-  height: 42px;
-`;
+export const BtnBox = styled(FormBox)``;
