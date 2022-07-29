@@ -1,5 +1,7 @@
+import Login from './components/molecules/Login';
+
 function App() {
-    return null;
+  return <Login />;
 }
 
 export default App;
