@@ -7,13 +7,13 @@ import { FormBox, BtnBox } from './styled';
 function Login() {
   return (
     <Container>
-      <Title text='Login' />
+      <Title text='Nuseum' />
       <FormBox>
-        <Form placeholder='username' type='text' />
-        <Form placeholder='password' type='password' />
+        <Form placeholder='발급 코드' type='text' />
+        <Form placeholder='비밀번호 입력' type='password' />
       </FormBox>
       <BtnBox>
-        <Button text='LOGIN' />
+        <Button text='로그인' />
       </BtnBox>
     </Container>
   );
