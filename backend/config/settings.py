@@ -175,7 +175,7 @@ REST_FRAMEWORK = {
 
 # rest_auth customizing
 REST_AUTH_REGISTER_SERIALIZERS = {
-    'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer'
+    'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer',
 }
 
 # JWT
