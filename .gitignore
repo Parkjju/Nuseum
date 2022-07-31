@@ -1,6 +1,6 @@
 # Created by https://www.toptal.com/developers/gitignore/api/django,pycharm+all,python
 # Edit at https://www.toptal.com/developers/gitignore?templates=django,pycharm+all,python
-
+/myvenv
 ### Django ###
 *.log
 *.pot
@@ -13,6 +13,9 @@ media
 
 # Secret
 secrets.json
+
+# Migrations
+migrations/
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
 # in your Git repository. Update and uncomment the following line accordingly.
