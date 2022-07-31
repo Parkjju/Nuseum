@@ -36,7 +36,7 @@ function Register() {
 
         axios
             .post(
-                'https://nuseumbe.herokuapp.com/api/v1/accounts/registration/',
+                'https://cryptic-castle-40575.herokuapp.com/api/v1/accounts/login/',
                 {
                     username: code,
                     password1: password1,

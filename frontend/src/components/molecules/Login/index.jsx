@@ -26,10 +26,13 @@ function Login() {
 
     const onValid = ({ loginId, loginPassword }) => {
         axios
-            .post('https://nuseumbe.herokuapp.com/api/v1/accounts/login/', {
-                username: loginId,
-                password: loginPassword,
-            })
+            .post(
+                'https://cryptic-castle-40575.herokuapp.com/api/v1/accounts/login/',
+                {
+                    username: loginId,
+                    password: loginPassword,
+                }
+            )
             .then((response) => {
                 tokenSetter(response.data.access_token);
                 navigate('/');
