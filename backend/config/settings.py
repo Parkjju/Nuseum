@@ -88,7 +88,7 @@ MIDDLEWARE = [
 ]
 
 # CORS 설정
-CORS_ORIGIN_WHITELIST = ['https://nuseum-e27dip9rj-parkjju.vercel.app/',
+CORS_ORIGIN_WHITELIST = ['https://nuseum-e27dip9rj-parkjju.vercel.app',
                         'http://127.0.0.1:3000',
                          'http://localhost:3000']
 CORS_ALLOW_CREDENTIALS = True
