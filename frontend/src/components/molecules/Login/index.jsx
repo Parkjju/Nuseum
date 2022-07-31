@@ -26,7 +26,7 @@ function Login() {
 
     const onValid = ({ loginId, loginPassword }) => {
         axios
-            .post('http://localhost:8000/api/v1/accounts/login/', {
+            .post('https://nuseumbe.herokuapp.com/api/v1/accounts/login/', {
                 username: loginId,
                 password: loginPassword,
             })
