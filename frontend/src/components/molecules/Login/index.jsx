@@ -3,20 +3,22 @@ import Form from '../../atom/Form';
 import Title from '../../atom/Title';
 import Container from '../../atom/Container';
 import { FormBox, BtnBox } from './styled';
+import { useform } from 'react-hook-form';
 
 function Login() {
-  return (
-    <Container>
-      <Title text='Nuseum' />
-      <FormBox>
-        <Form placeholder='발급 코드' type='text' />
-        <Form placeholder='비밀번호 입력' type='password' />
-      </FormBox>
-      <BtnBox>
-        <Button text='로그인' />
-      </BtnBox>
-    </Container>
-  );
+    const onSubmit = () => {};
+    return (
+        <Container>
+            <Title text='Nuseum' />
+            <FormBox onSubmit={onSubmit}>
+                <Form placeholder='발급 코드' type='text' />
+                <Form placeholder='비밀번호 입력' type='password' />
+                <BtnBox>
+                    <Button text='로그인' />
+                </BtnBox>
+            </FormBox>
+        </Container>
+    );
 }
 
 export default Login;
