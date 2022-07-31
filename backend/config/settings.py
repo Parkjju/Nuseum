@@ -23,6 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+
 # secret_file = os.path.join(BASE_DIR.parent, 'secrets.json')
 
 # with open(secret_file) as f:
@@ -36,6 +37,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 #         raise ImproperlyConfigured(error_msg)
 
 # SECRET_KEY = get_secret("SECRET_KEY")
+
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
