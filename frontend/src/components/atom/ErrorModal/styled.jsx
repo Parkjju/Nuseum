@@ -12,10 +12,10 @@ export const Modal = styled.div`
 `;
 
 export const ModalTitle = styled.p`
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     height: 15px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 `;
 
 export const ModalDescription = styled.p`
