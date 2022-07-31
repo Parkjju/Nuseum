@@ -5,11 +5,10 @@ import Container from '../../atom/Container';
 import { FormBox, BtnBox } from './styled';
 
 function Login() {
-    const onSubmit = () => {};
     return (
         <Container>
             <Title text='Nuseum' />
-            <FormBox onSubmit={onSubmit}>
+            <FormBox>
                 <Form placeholder='발급 코드' type='text' />
                 <Form placeholder='비밀번호 입력' type='password' />
                 <BtnBox>

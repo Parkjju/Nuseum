@@ -1,26 +1,16 @@
-import Input from './styled';
-import { useForm } from 'react-hook-form';
+import styled from 'styled-components';
 
-function Form({ placeholder, type, name }) {
-    const { register, watch } = useForm();
-
-    if (name) {
-        console.log(watch(name));
+const Input = styled.input`
+    width: 300px;
+    height: 42px;
+    border-radius: 20px;
+    border: 1px solid #6066ff;
+    font-size: 16px;
+    padding-left: 20px;
+    margin-bottom: 15px;
+    &:focus {
+        outline: ${(props) => (props.error ? '1px solid red' : null)};
     }
+`;
 
-    return (
-        <>
-            {name === undefined ? (
-                <Input type={type} placeholder={placeholder} />
-            ) : (
-                <Input
-                    {...register(`${name}`)}
-                    type={type}
-                    placeholder={placeholder}
-                />
-            )}
-        </>
-    );
-}
-
-export default Form;
+export default Input;
