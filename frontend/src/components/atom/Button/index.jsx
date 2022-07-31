@@ -1,6 +1,14 @@
 import Btn from './styled';
-function Button({ text }) {
-  return <Btn>{text}</Btn>;
+function Button({ text, openModal }) {
+    return (
+        <>
+            {openModal ? (
+                <Btn onClick={openModal}>{text}</Btn>
+            ) : (
+                <Btn>{text}</Btn>
+            )}
+        </>
+    );
 }
 
 export default Button;
