@@ -13,6 +13,7 @@ media
 
 # Secret
 secrets.json
+.env
 
 # Migrations
 migrations/
@@ -265,6 +266,9 @@ fabric.properties
 
 !.idea/codeStyles
 !.idea/runConfigurations
+
+## pipenv
+Pipfile
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
