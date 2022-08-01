@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from .models import User
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from dj_rest_auth.serializers import UserDetailsSerializer
 from allauth.account.adapter import get_adapter
@@ -11,7 +12,7 @@ UserModel = get_user_model()
 class CustomRegisterSerializer(RegisterSerializer):
 
   def validate_username(self, username):
-        codes = ['AA111111', 'AB111112', 'AC111113'] # 30명 코드
+        codes = ['사과', '오이', '호박', '당근' , '시금치', '열무' , '토란', '감자', '브로콜리', '양배추']
         username = get_adapter().clean_username(username)
         if username not in codes:
           raise serializers.ValidationError(_("올바른 코드를 입력하세요!"))
@@ -39,3 +40,21 @@ class CustomDetailSerializer(UserDetailsSerializer):
         model = UserModel
         fields = ('pk', *extra_fields)
         read_only_fields = ('email',)
+
+# class UserSerializer(serializers.ModelSerializer):
+
+#     password = serializers.CharField(write_only=True)
+
+#     class Meta:
+#         model = User
+#         fields = (
+#             "id",
+#             "username",
+#             "firts_name",
+#             "last_name",
+#             "d_nutrient",
+#             "m_nutrient",
+#             "y_nutrient",
+#             "password",
+#         )
+#         read_only_fields = ("id",)
