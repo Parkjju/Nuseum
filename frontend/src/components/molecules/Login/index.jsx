@@ -26,10 +26,13 @@ function Login() {
 
     const onValid = ({ loginId, loginPassword }) => {
         axios
-            .post('http://localhost:8000/api/v1/accounts/login/', {
-                username: loginId,
-                password: loginPassword,
-            })
+            .post(
+                'https://cryptic-castle-40575.herokuapp.com/api/v1/accounts/login/',
+                {
+                    username: loginId,
+                    password: loginPassword,
+                }
+            )
             .then((response) => {
                 tokenSetter(response.data.access_token);
                 navigate('/');
@@ -44,7 +47,7 @@ function Login() {
 
     return (
         <Container>
-            <Title text='Nuseum' />
+            <Title text='SNU 영양생리약리연구실' />
             <FormBox onSubmit={handleSubmit(onValid)}>
                 <Form
                     {...register('loginId', {

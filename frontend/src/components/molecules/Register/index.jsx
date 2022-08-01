@@ -35,11 +35,14 @@ function Register() {
         }
 
         axios
-            .post('http://127.0.0.1:8000/api/v1/accounts/registration/', {
-                username: code,
-                password1: password1,
-                password2: password2,
-            })
+            .post(
+                'https://cryptic-castle-40575.herokuapp.com/api/v1/accounts/registration/',
+                {
+                    username: code,
+                    password1: password1,
+                    password2: password2,
+                }
+            )
             .then(() => {
                 alert('회원 가입이 완료되었습니다!');
                 navigate('/');
@@ -57,7 +60,7 @@ function Register() {
 
     return (
         <Container>
-            <Title text='Nuseum' />
+            <Title text='SNU 영양생리약리연구실' />
             <FormBox onSubmit={handleSubmit(onValid)}>
                 <Form
                     name='code'

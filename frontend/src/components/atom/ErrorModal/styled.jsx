@@ -28,7 +28,7 @@ export const ModalBtn = styled.button`
     height: 40px;
     width: 100%;
     border-radius: 10px;
-    background-color: #3088ff;
+    background-color: #f1c40f;
     color: white;
     border: none;
     &:active {
