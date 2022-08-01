@@ -60,7 +60,7 @@ function Register() {
 
     return (
         <Container>
-            <Title text='Nuseum' />
+            <Title text='SNU 영양생리약리연구실' />
             <FormBox onSubmit={handleSubmit(onValid)}>
                 <Form
                     name='code'

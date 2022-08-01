@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './components/molecules/Login';
 import Register from './components/molecules/Register';
+import Survey from './components/molecules/Survey';
 import Home from './components/pages/Home';
 
 function Router() {
@@ -10,7 +11,7 @@ function Router() {
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='/' element={<Home />} />
-                {/* <Route path="/survey" element={<Survey /> }/> */}
+                <Route path='/survey' element={<Survey />} />
             </Routes>
         </BrowserRouter>
     );

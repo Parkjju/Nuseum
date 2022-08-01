@@ -13,6 +13,9 @@ export const Box = styled.div`
     align-items: center;
     justify-items: center;
     padding: 10px;
+    a {
+        text-decoration: none;
+    }
 `;
 
 export const Tab = styled.div`

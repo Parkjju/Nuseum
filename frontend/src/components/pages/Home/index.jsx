@@ -17,7 +17,7 @@ function Home() {
     }, [tokenValue, navigate]);
     return (
         <>
-            <Title text='Home' />;
+            <Title text='HOME' />
             <Contents>
                 <Card />
             </Contents>
