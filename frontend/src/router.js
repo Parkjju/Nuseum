@@ -10,6 +10,7 @@ function Router() {
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='/' element={<Home />} />
+                {/* <Route path="/survey" element={<Survey /> }/> */}
             </Routes>
         </BrowserRouter>
     );
