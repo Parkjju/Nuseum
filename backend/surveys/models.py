@@ -10,8 +10,8 @@ class Survey(models.Model):
     (5, '5'),
   )
   GENDER_CHOICES = (
-    ('M', 'Male'),
-    ('F', 'Female'),
+    ('M', '남성'),
+    ('F', '여성'),
   )
 
   author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
