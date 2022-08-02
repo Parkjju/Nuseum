@@ -20,18 +20,6 @@ function Card() {
                     <Name>분석 결과</Name>
                 </Tab>
             </Link>
-            <Link to='/survey'>
-                <Tab>
-                    <Icon src={survey} />
-                    <Name>영양 & 식생활 진단</Name>
-                </Tab>
-            </Link>
-            <Link to='/'>
-                <Tab>
-                    <Icon src={agreement} />
-                    <Name>참여자 동의서</Name>
-                </Tab>
-            </Link>
         </Box>
     );
 }

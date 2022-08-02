@@ -1,7 +1,11 @@
-import Text from './styled';
+import Text, { TextBox } from './styled';
 
 function Title({ text }) {
-  return <Text>{text}</Text>;
+    return (
+        <TextBox>
+            <Text>{text}</Text>
+        </TextBox>
+    );
 }
 
 export default Title;

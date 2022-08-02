@@ -2,14 +2,14 @@ import styled from 'styled-components';
 
 export const Box = styled.div`
     width: 300px;
-    height: 250px;
+    height: 120px;
     /* border: 1px solid rgb(0, 0, 0); */
     margin-bottom: 20px;
-    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.4);
+    /* box-shadow: 0 3px 4px rgba(0, 0, 0, 0.4); */
     cursor: pointer;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: repeat(1, 1fr);
     align-items: center;
     justify-items: center;
     padding: 10px;
