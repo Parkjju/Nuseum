@@ -1,17 +1,14 @@
 import styled from 'styled-components';
 
 export const Box = styled.div`
+    margin-top: 40px;
     width: 300px;
-    height: 120px;
-    /* border: 1px solid rgb(0, 0, 0); */
-    margin-bottom: 20px;
-    /* box-shadow: 0 3px 4px rgba(0, 0, 0, 0.4); */
+    height: 520px;
     cursor: pointer;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(1, 1fr);
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-items: center;
+    justify-content: space-between;
     padding: 10px;
     a {
         text-decoration: none;

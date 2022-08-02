@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { token } from '../../../recoil/token/token';
 import Card from '../../atom/Card';
-import Footer from '../../atom/Footer';
+import Container from '../../atom/Container';
 
 function Home() {
     const navigate = useNavigate();
@@ -17,12 +17,12 @@ function Home() {
         }
     }, [tokenValue, navigate]);
     return (
-        <>
-            <Title text='HOME' />
+        <Container>
+            {/* <Title text='HOME' /> */}
             <Contents>
                 <Card />
             </Contents>
-        </>
+        </Container>
     );
 }
 

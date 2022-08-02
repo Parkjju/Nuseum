@@ -1,7 +1,9 @@
 import Router from './router';
 import { RecoilRoot } from 'recoil';
 import { Helmet } from 'react-helmet';
+import ReactDOM from 'react-dom';
 import { createGlobalStyle } from 'styled-components';
+import Footer from './components/atom/Footer';
 
 const GlobalStyle = createGlobalStyle`
 /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -39,6 +41,7 @@ html,body {
 	line-height: 1;
     font-family: 'Noto Serif KR', serif;
     height:100%;
+    
 }
 button{
     font-family: 'Noto Serif KR', serif;
@@ -82,6 +85,10 @@ function App() {
                 <GlobalStyle />
                 <Router />
             </>
+            {ReactDOM.createPortal(
+                <Footer />,
+                document.querySelector('#footer')
+            )}
         </RecoilRoot>
     );
 }
