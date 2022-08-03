@@ -10,10 +10,10 @@ import { Contents } from '../Home/styled';
 
 function Diary() {
     const menu = [
-        [morning, '아침', 'morning'],
+        [morning, '아침', 'breakfast'],
         [lunch, '점심', 'lunch'],
         [dinner, '저녁', 'dinner'],
-        [cake, '간식', 'cake'],
+        [cake, '간식', 'snack'],
         [drug, '영양제', 'drug'],
     ];
 
