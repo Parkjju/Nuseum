@@ -25,6 +25,7 @@ function DiaryCalendar() {
         if (!sessionStorage.getItem('access_token')) {
             navigate('/login');
         }
+        navigate(`./${date.setHours(0, 0, 0, 0)}`);
     }, []);
     const onChange = (d) => {
         setDate(d);
