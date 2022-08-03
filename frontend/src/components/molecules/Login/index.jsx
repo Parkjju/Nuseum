@@ -35,7 +35,13 @@ function Login() {
                 }
             )
             .then((response) => {
+                const sessionStorage = window.sessionStorage;
+                sessionStorage.setItem(
+                    'access_token',
+                    response.data.access_token
+                );
                 tokenSetter(response.data.access_token);
+
                 navigate('/');
             })
             .catch(() => {

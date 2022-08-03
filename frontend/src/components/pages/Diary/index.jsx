@@ -7,8 +7,17 @@ import drug from '../../../assets/drug.png';
 
 import Card from '../../atom/Card';
 import { Contents } from '../Home/styled';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 function Diary() {
+    const navigate = useNavigate();
+    useEffect(() => {
+        const sessionStorage = window.sessionStorage;
+        if (!sessionStorage.getItem('access_token')) {
+            navigate('/login');
+        }
+    }, []);
     const menu = [
         [morning, '아침', 'breakfast'],
         [lunch, '점심', 'lunch'],

@@ -1,6 +1,6 @@
 import Container from '../../atom/Container';
 import { Contents } from '../Home/styled';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import morning from '../../../assets/morning.png';
 import mid from '../../../assets/lunch.png';
@@ -21,7 +21,7 @@ import {
     TagBox,
 } from './styled';
 import { Icon, Name } from '../../atom/Card/styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { motion } from 'framer-motion';
 import { Modal, ModalBtn, ModalTitle } from '../../atom/Modal/styled';
@@ -74,7 +74,6 @@ function Record() {
         default:
             break;
     }
-    console.log(meal[index]);
 
     const onChangeName = (e) => {
         setFoodName(e.target.value);
@@ -82,7 +81,13 @@ function Record() {
     const onChangeAmount = (e) => {
         setFoodAmount(e.target.value);
     };
-
+    const navigate = useNavigate();
+    useEffect(() => {
+        const sessionStorage = window.sessionStorage;
+        if (!sessionStorage.getItem('access_token')) {
+            navigate('/login');
+        }
+    }, []);
     return (
         <Container>
             <Contents>
