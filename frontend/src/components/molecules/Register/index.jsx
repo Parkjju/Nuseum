@@ -6,7 +6,7 @@ import { FormBox, BtnBox } from './styled';
 import { useForm } from 'react-hook-form';
 import Error from '../../atom/Error';
 import axios from 'axios';
-import ErrorModal from '../../atom/ErrorModal';
+import ErrorModal from '../../atom/Modal';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
