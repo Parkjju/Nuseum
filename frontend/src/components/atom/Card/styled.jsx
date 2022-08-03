@@ -1,9 +1,10 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 export const Box = styled.div`
     margin-top: 40px;
     width: 300px;
-    height: 520px;
+    height: 560px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -15,10 +16,11 @@ export const Box = styled.div`
     }
 `;
 
-export const Tab = styled.div`
+export const Tab = styled(motion.div)`
     padding: 10px 0;
     width: 120px;
-    height: 90px;
+    height: 60px;
+    margin-bottom: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -30,11 +32,11 @@ export const Tab = styled.div`
 `;
 
 export const Icon = styled.img`
-    width: 60px;
+    width: 40px;
 `;
 
 export const Name = styled.span`
-    font-size: 14px;
+    font-size: 12px;
     color: rgba(0, 0, 0, 0.8);
     font-weight: bold;
 `;
