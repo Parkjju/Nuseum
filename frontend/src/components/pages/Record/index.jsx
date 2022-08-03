@@ -32,8 +32,6 @@ function Record() {
     const [foodAmount, setFoodAmount] = useState();
     const [foodInformation, setFoodInformation] = useState([]);
     const param = useParams();
-    const location = useLocation();
-    console.log(location);
 
     let menu = [];
     const onChange = (e) => {
