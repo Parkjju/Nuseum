@@ -41,9 +41,10 @@ footer, header, hgroup, menu, nav, section {
 html,body {
 	line-height: 1;
     font-family: 'Noto Serif KR', serif;
-    height:100%;
-    
+    /* height:100%; */
+    max-width:480px;
 }
+
 button{
     font-family: 'Noto Serif KR', serif;
 }

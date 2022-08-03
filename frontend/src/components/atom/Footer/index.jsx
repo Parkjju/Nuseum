@@ -1,3 +1,4 @@
+import Container from '../Container';
 import { Box, Content, Text } from './styled';
 
 function Footer() {

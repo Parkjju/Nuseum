@@ -1,6 +1,6 @@
 import Container from '../../atom/Container';
 import { Calendar } from 'react-calendar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import 'react-calendar/dist/Calendar.css';
 import { Contents } from '../Home/styled';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -17,8 +17,16 @@ import Diary from '../Diary';
 
 function DiaryCalendar() {
     const [date, setDate] = useState(new Date());
+
     const param = useParams();
     const navigate = useNavigate();
+    useEffect(() => {
+        const sessionStorage = window.sessionStorage;
+        if (!sessionStorage.getItem('access_token')) {
+            navigate('/login');
+        }
+        navigate(`./${date.setHours(0, 0, 0, 0)}`);
+    }, []);
     const onChange = (d) => {
         setDate(d);
         navigate(`./${d.getTime()}`);
