@@ -11,7 +11,7 @@ UserModel = get_user_model()
 class CustomRegisterSerializer(RegisterSerializer):
 
   def validate_username(self, username):
-        codes = ['AA111111', 'AB111112', 'AC111113'] # 30명 코드
+        codes = ['사과', '오이', '호박', '당근' , '시금치', '열무' , '토란', '감자', '브로콜리', '양배추'] # 30명 코드
         username = get_adapter().clean_username(username)
         if username not in codes:
           raise serializers.ValidationError(_("올바른 코드를 입력하세요!"))
