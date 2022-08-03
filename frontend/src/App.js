@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import ReactDOM from 'react-dom';
 import { createGlobalStyle } from 'styled-components';
 import Footer from './components/atom/Footer';
+import Container from './components/atom/Container';
 
 const GlobalStyle = createGlobalStyle`
 /* http://meyerweb.com/eric/tools/css/reset/ 
