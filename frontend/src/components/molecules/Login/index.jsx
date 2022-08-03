@@ -6,7 +6,7 @@ import { FormBox, BtnBox, Logo, LogoBox } from './styled';
 import { useForm } from 'react-hook-form';
 import Error from '../../atom/Error';
 import axios from 'axios';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { token } from '../../../recoil/token/token';
 import { Link, useNavigate } from 'react-router-dom';
 import ErrorModal from '../../atom/Modal';
@@ -21,26 +21,28 @@ function Login() {
         setError,
         clearErrors,
     } = useForm();
-    const tokenSetter = useSetRecoilState(token);
+    const [tokenValue, tokenSetter] = useRecoilState(token);
     const navigate = useNavigate();
     const [display, setDisplay] = useState(false);
 
     const onValid = ({ loginId, loginPassword }) => {
         axios
-            .post(
-                'https://cryptic-castle-40575.herokuapp.com/api/v1/accounts/login/',
-                {
-                    username: loginId,
-                    password: loginPassword,
-                }
-            )
+            .post('http://localhost:8000/api/v1/accounts/login/', {
+                username: loginId,
+                password: loginPassword,
+            })
             .then((response) => {
                 const sessionStorage = window.sessionStorage;
+                const val = sessionStorage.getItem('access_token');
+
+                val
+                    ? sessionStorage.removeItem('access_token')
+                    : tokenSetter(response.data.access_token);
+
                 sessionStorage.setItem(
                     'access_token',
                     response.data.access_token
                 );
-                tokenSetter(response.data.access_token);
 
                 navigate('/');
             })

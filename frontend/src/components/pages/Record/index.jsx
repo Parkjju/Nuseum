@@ -1,6 +1,6 @@
 import Container from '../../atom/Container';
 import { Contents } from '../Home/styled';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import morning from '../../../assets/morning.png';
 import mid from '../../../assets/lunch.png';
@@ -21,12 +21,13 @@ import {
     TagBox,
 } from './styled';
 import { Icon, Name } from '../../atom/Card/styled';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { motion } from 'framer-motion';
 import { Modal, ModalBtn, ModalTitle } from '../../atom/Modal/styled';
 import { derivedState } from '../../../recoil/period/period';
 import { useRecoilValue } from 'recoil';
+import axios from 'axios';
 
 function Record() {
     const [selectedImage, setSelectedImage] = useState([]);
@@ -48,6 +49,11 @@ function Record() {
             ...prev.slice(0, index),
             ...prev.slice(index + 1),
         ]);
+    };
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        console.log(e.current.value);
     };
     const meal = useRecoilValue(derivedState);
     let index = undefined;
@@ -81,13 +87,7 @@ function Record() {
     const onChangeAmount = (e) => {
         setFoodAmount(e.target.value);
     };
-    const navigate = useNavigate();
-    useEffect(() => {
-        const sessionStorage = window.sessionStorage;
-        if (!sessionStorage.getItem('access_token')) {
-            navigate('/login');
-        }
-    }, []);
+
     return (
         <Container>
             <Contents>
@@ -107,7 +107,7 @@ function Record() {
                     }}
                 >
                     <Label style={{ marginBottom: 30 }} htmlFor='input-file'>
-                        업로드
+                        +
                     </Label>
                     <input
                         onChange={onChange}
@@ -120,6 +120,7 @@ function Record() {
                         <ImageBox>
                             {selectedImage.map((item, index) => (
                                 <motion.div
+                                    key={index}
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
@@ -133,7 +134,6 @@ function Record() {
                                         flexDirection: 'column',
                                         alignContent: 'space-between',
                                     }}
-                                    key={item.name}
                                 >
                                     <Remove
                                         onClick={() => {
@@ -155,7 +155,7 @@ function Record() {
                     )}
                     <TagBox>
                         {foodInformation.map((item) => (
-                            <Tag>
+                            <Tag key={item.name}>
                                 {item[0]} {` ${item[1]}g`}
                             </Tag>
                         ))}
@@ -170,7 +170,7 @@ function Record() {
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'space-between',
-                            height: '250px',
+                            minHeight: '250px',
                         }}
                     >
                         <div
@@ -180,7 +180,7 @@ function Record() {
                             }}
                         >
                             <ModalTitle>음식 명을 검색하세요.</ModalTitle>
-                            <ModalSearch>
+                            <ModalSearch as='form' onSubmit={onSubmit}>
                                 <span className='material-symbols-outlined'>
                                     search
                                 </span>
@@ -190,7 +190,7 @@ function Record() {
                                 />
                             </ModalSearch>
                         </div>
-                        <div style={{ height: '120px' }}>
+                        <div style={{ height: '80px' }}>
                             <ModalTitle>
                                 먹은 양을 입력해주세요. (단위: g)
                             </ModalTitle>
@@ -211,18 +211,33 @@ function Record() {
                         </div>
                         <ModalBtn
                             style={{ cursor: 'pointer' }}
-                            onClick={() => {
+                            onClick={async (e) => {
+                                e.preventDefault();
+                                const sessionStorage = window.sessionStorage;
+                                await axios
+                                    .get(
+                                        `http://127.0.0.1:8000/api/v1/foods/?search=${foodName}`,
+                                        {
+                                            headers: {
+                                                Authorization: `Bearer ${sessionStorage.getItem(
+                                                    'access_token'
+                                                )}`,
+                                            },
+                                        }
+                                    )
+                                    .then((response) =>
+                                        console.log(response.data)
+                                    );
                                 setFoodAmount(0);
                                 setFoodName('');
-                                setFoodInformation((prev) => [
-                                    ...prev,
-                                    [foodName, foodAmount],
-                                ]);
-                                return setOpen(false);
+                                // setFoodInformation((prev) => [
+                                //     ...prev,
+                                //     [foodName, foodAmount],
+                                // ]);
                             }}
                             open={open}
                         >
-                            저장
+                            검색
                         </ModalBtn>
                     </Modal>
                 </ModalBackground>

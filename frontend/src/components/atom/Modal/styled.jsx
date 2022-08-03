@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 export const Modal = styled.div`
     border: 1px solid black;
-    width: 320px;
-    height: 160px;
+    width: 280px;
+    height: 140px;
     position: relative;
     top: 100px;
     background-color: white;
@@ -12,7 +12,7 @@ export const Modal = styled.div`
 `;
 
 export const ModalTitle = styled.p`
-    font-size: 18px;
+    font-size: 14px;
     font-weight: bold;
     height: 15px;
     margin-bottom: 20px;
@@ -28,12 +28,10 @@ export const ModalBtn = styled.button`
     height: 40px;
     width: 100%;
     border-radius: 10px;
-    background-color: #f1c40f;
-    color: white;
+
+    color: black;
     border: none;
-    &:active {
-        opacity: 0.9;
-    }
+    background-color: white;
 `;
 
 export const Container = styled.div`

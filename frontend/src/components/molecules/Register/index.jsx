@@ -35,14 +35,11 @@ function Register() {
         }
 
         axios
-            .post(
-                'https://cryptic-castle-40575.herokuapp.com/api/v1/accounts/registration/',
-                {
-                    username: code,
-                    password1: password1,
-                    password2: password2,
-                }
-            )
+            .post('http://127.0.0.1:8000/api/v1/accounts/registration/', {
+                username: code,
+                password1: password1,
+                password2: password2,
+            })
             .then(() => {
                 alert('회원 가입이 완료되었습니다!');
                 navigate('/');

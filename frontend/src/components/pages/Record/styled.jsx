@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
 
-export const DiaryTitle = styled(motion.div)`
+export const DiaryTitle = styled.div`
     margin-top: 50px;
     padding: 10px 0;
     width: 120px;
@@ -17,7 +16,7 @@ export const DiaryTitle = styled(motion.div)`
     } */
 `;
 
-export const DiaryBody = styled(motion.div)`
+export const DiaryBody = styled.div`
     width: 80%;
     display: flex;
     flex-direction: column;
@@ -25,10 +24,10 @@ export const DiaryBody = styled(motion.div)`
 `;
 export const Label = styled.label`
     padding: 6px 25px;
-    font-size: 12px;
-    background-color: #7f8c8d;
+    font-size: 30px;
+
     border-radius: 4px;
-    color: white;
+    color: black;
     cursor: pointer;
     &:hover {
         opacity: 0.8;

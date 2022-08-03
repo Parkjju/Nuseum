@@ -42,7 +42,7 @@ html,body {
 	line-height: 1;
     font-family: 'Noto Serif KR', serif;
     /* height:100%; */
-    max-width:480px;
+ 
 }
 
 button{

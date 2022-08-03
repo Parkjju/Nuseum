@@ -9,6 +9,8 @@ import food from '../../../assets/food.png';
 import question from '../../../assets/q&a.png';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { DiaryTitle } from '../Record/styled';
+import { Name } from '../../atom/Card/styled';
 
 function Home() {
     const navigate = useNavigate();
@@ -28,7 +30,18 @@ function Home() {
 
     return (
         <Container>
-            <Contents>
+            <Contents style={{ height: '500px' }}>
+                <DiaryTitle layoutId={menu[0][2]}>
+                    <Name
+                        style={{
+                            width: '250px',
+                            textAlign: 'center',
+                            fontSize: '16px',
+                        }}
+                    >
+                        맞춤형 영양관리 및 정보제공 연구
+                    </Name>
+                </DiaryTitle>
                 <Card menu={menu} current='home' />
             </Contents>
         </Container>

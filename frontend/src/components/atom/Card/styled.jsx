@@ -1,24 +1,24 @@
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
 
 export const Box = styled.div`
     margin-top: 40px;
     width: 300px;
-    height: 560px;
+    height: 300px;
     cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    justify-items: center;
+
     padding: 10px;
     a {
         text-decoration: none;
     }
 `;
 
-export const Tab = styled(motion.div)`
+export const Tab = styled.div`
     padding: 10px 0;
-    width: 120px;
+    width: 80px;
     height: 60px;
     margin-bottom: 10px;
     display: flex;

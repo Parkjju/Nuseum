@@ -2,6 +2,7 @@ import Container from '../../atom/Container';
 import { Calendar } from 'react-calendar';
 import { useEffect, useState } from 'react';
 import 'react-calendar/dist/Calendar.css';
+import './calendar.css';
 import { Contents } from '../Home/styled';
 import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -56,9 +57,8 @@ function DiaryCalendar() {
 
     return (
         <Container>
-            <Contents>
+            <Contents style={{ height: '270px' }}>
                 <DiaryTitle layoutId={menu[0][2]}>
-                    <Icon style={{ width: '40px' }} src={menu[0][0]} />
                     <Name>{menu[0][1]}</Name>
                 </DiaryTitle>
                 <motion.div
@@ -69,7 +69,7 @@ function DiaryCalendar() {
                         velocity: 1,
                     }}
                 >
-                    <Calendar onChange={onChange} value={date} />
+                    <Calendar locale='en-US' onChange={onChange} value={date} />
                 </motion.div>
             </Contents>
             <Diary />
