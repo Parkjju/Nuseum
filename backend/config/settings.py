@@ -23,24 +23,24 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# secret_file = os.path.join(BASE_DIR.parent, 'secrets.json')
+secret_file = os.path.join(BASE_DIR.parent, 'secrets.json')
 
-# with open(secret_file) as f:
-#     secrets = json.loads(f.read())
+with open(secret_file) as f:
+    secrets = json.loads(f.read())
 
-# def get_secret(setting):
-#     try:
-#         return secrets[setting]
-#     except KeyError:
-#         error_msg = "Set the {} environment variable".format(setting)
-#         raise ImproperlyConfigured(error_msg)
+def get_secret(setting):
+    try:
+        return secrets[setting]
+    except KeyError:
+        error_msg = "Set the {} environment variable".format(setting)
+        raise ImproperlyConfigured(error_msg)
 
-# SECRET_KEY = get_secret("SECRET_KEY")
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = get_secret("SECRET_KEY")
+# SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = True
+# DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['*']
 
@@ -58,6 +58,9 @@ DJANGO_APPS = [
 
 PROJECT_APPS = [
     "accounts.apps.AccountsConfig",
+    "foods.apps.FoodsConfig",
+    "nutrients.apps.NutrientsConfig",
+    "posts.apps.PostsConfig",
 ]
 
 THIRD_PARTY_APPS = [
@@ -68,7 +71,8 @@ THIRD_PARTY_APPS = [
     'dj_rest_auth.registration',
     'allauth',
     'allauth.account',
-    "corsheaders",
+    'corsheaders',
+    'django_seed',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
