@@ -9,11 +9,9 @@ import axios from 'axios';
 import { useSetRecoilState } from 'recoil';
 import { token } from '../../../recoil/token/token';
 import { Link, useNavigate } from 'react-router-dom';
-import ErrorModal from '../../atom/ErrorModal';
+import ErrorModal from '../../atom/Modal';
 import { useState } from 'react';
 import SNU from '../../../assets/SNU.png';
-import Footer from '../../atom/Footer';
-import ReactDOM from 'react-dom';
 
 function Login() {
     const {
