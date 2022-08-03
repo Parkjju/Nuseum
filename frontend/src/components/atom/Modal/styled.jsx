@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Modal = styled.div`
     border: 1px solid black;
-    width: 300px;
+    width: 320px;
     height: 160px;
     position: relative;
     top: 100px;
@@ -28,7 +28,7 @@ export const ModalBtn = styled.button`
     height: 40px;
     width: 100%;
     border-radius: 10px;
-    background-color: #3088ff;
+    background-color: #f1c40f;
     color: white;
     border: none;
     &:active {

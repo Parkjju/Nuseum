@@ -2,15 +2,16 @@ import Button from '../../atom/Button';
 import Form from '../../atom/Form';
 import Title from '../../atom/Title';
 import Container from '../../atom/Container';
-import { FormBox, BtnBox } from './styled';
+import { FormBox, BtnBox, Logo, LogoBox } from './styled';
 import { useForm } from 'react-hook-form';
 import Error from '../../atom/Error';
 import axios from 'axios';
 import { useSetRecoilState } from 'recoil';
 import { token } from '../../../recoil/token/token';
 import { Link, useNavigate } from 'react-router-dom';
-import ErrorModal from '../../atom/ErrorModal';
+import ErrorModal from '../../atom/Modal';
 import { useState } from 'react';
+import SNU from '../../../assets/SNU.png';
 
 function Login() {
     const {
@@ -37,7 +38,7 @@ function Login() {
                 tokenSetter(response.data.access_token);
                 navigate('/');
             })
-            .catch((err) => {
+            .catch(() => {
                 setError('nonExists', {
                     message: '아이디 또는 비밀번호가 잘못되었습니다.',
                 });
@@ -46,8 +47,12 @@ function Login() {
     };
 
     return (
-        <Container>
-            <Title text='Nuseum' />
+        <Container style={{ backgroundColor: 'white' }}>
+            <LogoBox>
+                <Logo src={SNU} />
+            </LogoBox>
+
+            <Title text='맞춤형 영양관리 및 정보제공 연구' />
             <FormBox onSubmit={handleSubmit(onValid)}>
                 <Form
                     {...register('loginId', {

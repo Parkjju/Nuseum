@@ -1,27 +1,28 @@
-import Title from '../../atom/Title';
-import { Contents, Logo } from './styled';
-import logo from '../../../assets/logo.jpeg';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import { token } from '../../../recoil/token/token';
+import { Contents } from './styled';
+import Card from '../../atom/Card';
+import Container from '../../atom/Container';
+
+import diary from '../../../assets/notepad.png';
+import record from '../../../assets/record.png';
+import analysis from '../../../assets/analysis.png';
+import food from '../../../assets/food.png';
+import question from '../../../assets/q&a.png';
 
 function Home() {
-    const navigate = useNavigate();
-    const tokenValue = useRecoilValue(token);
-    useEffect(() => {
-        if (!tokenValue) {
-            navigate('/login');
-            return;
-        }
-    }, [tokenValue, navigate]);
+    const menu = [
+        [diary, '식단일기', 'diary'],
+        [analysis, '식이분석', 'analysis'],
+        [food, '맞춤식품', 'food'],
+        [record, '내 아이', 'record'],
+        [question, 'Q&A', 'question'],
+    ];
+
     return (
-        <>
-            <Title text='Home' />;
+        <Container>
             <Contents>
-                <Logo src={logo} />
+                <Card menu={menu} current='home' />
             </Contents>
-        </>
+        </Container>
     );
 }
 
