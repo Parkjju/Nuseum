@@ -3,7 +3,6 @@ export const Box = styled.div`
     display: flex;
     width: 100%;
     justify-content: center;
-    height: 100px;
     position: relative;
     bottom: 0;
 `;
@@ -11,7 +10,6 @@ export const Box = styled.div`
 export const Content = styled.footer`
     width: 80%;
     border-top: 1px solid #7f8c8d;
-    height: 100px;
     padding-top: 30px;
     display: flex;
     flex-direction: column;
