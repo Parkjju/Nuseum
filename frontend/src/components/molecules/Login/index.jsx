@@ -6,7 +6,7 @@ import { FormBox, BtnBox, Logo, LogoBox } from './styled';
 import { useForm } from 'react-hook-form';
 import Error from '../../atom/Error';
 import axios from 'axios';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { token } from '../../../recoil/token/token';
 import { Link, useNavigate } from 'react-router-dom';
 import ErrorModal from '../../atom/Modal';

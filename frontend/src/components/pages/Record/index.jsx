@@ -1,6 +1,6 @@
 import Container from '../../atom/Container';
 import { Contents } from '../Home/styled';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import morning from '../../../assets/morning.png';
 import mid from '../../../assets/lunch.png';
@@ -55,7 +55,7 @@ function Record() {
         e.preventDefault();
         console.log(e.current.value);
     };
-    const meal = useRecoilValue(derivedState);
+    // const meal = useRecoilValue(derivedState);
     let index = undefined;
     switch (param.when) {
         case 'breakfast':

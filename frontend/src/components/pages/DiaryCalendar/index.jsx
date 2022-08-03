@@ -13,7 +13,7 @@ import analysis from '../../../assets/analysis.png';
 import food from '../../../assets/food.png';
 import question from '../../../assets/q&a.png';
 import { DiaryTitle } from './styled';
-import { Icon, Name } from '../../atom/Card/styled';
+import { Name } from '../../atom/Card/styled';
 import Diary from '../Diary';
 
 function DiaryCalendar() {
