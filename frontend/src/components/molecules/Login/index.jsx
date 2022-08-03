@@ -27,10 +27,13 @@ function Login() {
 
     const onValid = ({ loginId, loginPassword }) => {
         axios
-            .post('http://localhost:8000/api/v1/accounts/login/', {
-                username: loginId,
-                password: loginPassword,
-            })
+            .post(
+                'https://cryptic-castle-40575.herokuapp.com/api/v1/accounts/login/',
+                {
+                    username: loginId,
+                    password: loginPassword,
+                }
+            )
             .then((response) => {
                 const sessionStorage = window.sessionStorage;
                 const val = sessionStorage.getItem('access_token');
