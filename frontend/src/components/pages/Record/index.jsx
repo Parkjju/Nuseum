@@ -3,8 +3,8 @@ import { Contents } from '../Home/styled';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import morning from '../../../assets/morning.png';
-import lunch from '../../../assets/lunch.png';
-import dinner from '../../../assets/dinner.png';
+import mid from '../../../assets/lunch.png';
+import night from '../../../assets/dinner.png';
 import cake from '../../../assets/cake.png';
 import drug from '../../../assets/drug.png';
 import {
@@ -25,6 +25,8 @@ import { useEffect, useState } from 'react';
 
 import { motion } from 'framer-motion';
 import { Modal, ModalBtn, ModalTitle } from '../../atom/Modal/styled';
+import { derivedState } from '../../../recoil/period/period';
+import { useRecoilValue } from 'recoil';
 
 function Record() {
     const [selectedImage, setSelectedImage] = useState([]);
@@ -47,19 +49,24 @@ function Record() {
             ...prev.slice(index + 1),
         ]);
     };
-
+    const meal = useRecoilValue(derivedState);
+    let index = undefined;
     switch (param.when) {
-        case 'morning':
-            menu.push([morning, '아침', 'morning']);
+        case 'breakfast':
+            menu.push([morning, '아침', 'breakfast']);
+            index = 0;
             break;
         case 'lunch':
-            menu.push([lunch, '점심', 'lunch']);
+            menu.push([mid, '점심', 'lunch']);
+            index = 1;
             break;
         case 'dinner':
-            menu.push([dinner, '저녁', 'dinner']);
+            menu.push([night, '저녁', 'dinner']);
+            index = 2;
             break;
-        case 'cake':
-            menu.push([cake, '간식', 'cake']);
+        case 'snack':
+            menu.push([cake, '간식', 'snack']);
+            index = 3;
             break;
         case 'drug':
             menu.push([drug, '영양제', 'drug']);
