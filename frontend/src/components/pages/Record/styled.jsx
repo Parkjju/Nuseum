@@ -85,6 +85,8 @@ export const ModalSearch = styled.div`
     border-radius: 10px;
     display: flex;
     align-items: center;
+
+    /* flex-direction: column; */
     font-size: 14px;
     margin-bottom: 16px;
 `;
@@ -124,4 +126,17 @@ export const Tag = styled.div`
     margin-right: 5px;
     margin-bottom: 5px;
     cursor: default;
+`;
+
+export const ResultBox = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+`;
+
+export const Result = styled.p`
+    width: 100%;
+    font-size: 12px;
+    text-align: center;
+    height: 30px;
 `;
