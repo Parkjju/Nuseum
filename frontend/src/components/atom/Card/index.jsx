@@ -1,7 +1,6 @@
 import { Box, Icon, Name, Tab } from './styled';
 import { Link, useParams } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
-import Container from '../Container';
 
 function Card({ menu, current }) {
     const params = useParams();
