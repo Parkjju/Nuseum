@@ -95,6 +95,9 @@ function Record() {
                     <Icon style={{ width: '40px' }} src={menu[0][0]} />
                     <Name>{menu[0][1]}</Name>
                 </DiaryTitle>
+                <Name style={{ marginBottom: '5px' }}>
+                    음식 이미지를 업로드하고
+                </Name>
                 <Name style={{ marginBottom: '50px' }}>
                     업로드한 이미지를 클릭하여 식이정보를 입력하세요 :)
                 </Name>
