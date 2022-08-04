@@ -13,10 +13,11 @@ import {
     ImageBox,
     Img,
     Label,
-    ModalBackground,
     ModalInput,
     ModalSearch,
     Remove,
+    Result,
+    ResultBox,
     Tag,
     TagBox,
 } from './styled';
@@ -24,16 +25,29 @@ import { Icon, Name } from '../../atom/Card/styled';
 import { useState } from 'react';
 
 import { motion } from 'framer-motion';
-import { Modal, ModalBtn, ModalTitle } from '../../atom/Modal/styled';
-import { derivedState } from '../../../recoil/period/period';
-import { useRecoilValue } from 'recoil';
+import { ModalTitle } from '../../atom/Modal/styled';
+import { periodState } from '../../../recoil/period/period';
+import { useRecoilState } from 'recoil';
 import axios from 'axios';
 
 function Record() {
+    // 식사 시간별 데이터 전역상태
+    const [meal, setMeal] = useRecoilState(periodState);
+
+    // 선택 이미지 상태값 - 삭제할때 활용
     const [selectedImage, setSelectedImage] = useState([]);
+
+    // 검색 음식명
     const [foodName, setFoodName] = useState();
+
+    // 입력 음식 양
     const [foodAmount, setFoodAmount] = useState();
-    const [foodInformation, setFoodInformation] = useState([]);
+
+    // 음식 태그
+    const [foodTag, setFoodTag] = useState([]);
+
+    // 검색결과 배열
+    const [result, setResult] = useState(null);
     const param = useParams();
 
     let menu = [];
@@ -42,7 +56,13 @@ function Record() {
             setSelectedImage((prev) => [...prev, e.target.files[0]]);
         }
     };
-    const [open, setOpen] = useState(false);
+    const onClick = () => {
+        setMeal((prev) => {
+            let copy = [...prev];
+            copy[index] = [...foodTag];
+            return [...copy];
+        });
+    };
 
     const removeSelectedImage = (index) => {
         setSelectedImage((prev) => [
@@ -51,28 +71,59 @@ function Record() {
         ]);
     };
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
-        console.log(e.current.value);
+        const sessionStorage = window.sessionStorage;
+        await axios
+            .get(
+                `https://cryptic-castle-40575.herokuapp.com/api/v1/foods/?search=${foodName}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${sessionStorage.getItem(
+                            'access_token'
+                        )}`,
+                    },
+                }
+            )
+            .then((response) => {
+                console.log(response.data);
+                setResult(response.data.results);
+                // 검색결과가 response로 나옴
+                // 각각 음식결과를 푸드태그 상태값에 저장
+                // 논리적으로 임시방편 , 데이터 확인을 위한 저장임
+                // 순회하며 하나씩 푸드태그에 [음식명, 그램] 저장한 뒤 리턴
+                // 그램은 10그램으로 일단 고정
+
+                setFoodTag((prev) => {
+                    const copy = [...prev];
+                    let newFood = [];
+                    response.data.results.forEach((food) => {
+                        newFood.push([food.id, 10]);
+                    });
+                    return [...copy, ...newFood];
+                });
+            });
+        setFoodAmount(0);
+        setFoodName('');
     };
-    // const meal = useRecoilValue(derivedState);
-    let index = undefined;
+
+    let index = param.when;
     switch (param.when) {
         case 'breakfast':
             menu.push([morning, '아침', 'breakfast']);
-            index = 0;
+
             break;
         case 'lunch':
             menu.push([mid, '점심', 'lunch']);
-            index = 1;
+
             break;
         case 'dinner':
             menu.push([night, '저녁', 'dinner']);
-            index = 2;
+
             break;
         case 'snack':
             menu.push([cake, '간식', 'snack']);
-            index = 3;
+
             break;
         case 'drug':
             menu.push([drug, '영양제', 'drug']);
@@ -118,6 +169,29 @@ function Record() {
                         id='input-file'
                         style={{ display: 'none' }}
                     />
+                    <ModalTitle>음식 명을 검색하세요.</ModalTitle>
+                    <ModalSearch as='form' onSubmit={onSubmit}>
+                        <span className='material-symbols-outlined'>
+                            search
+                        </span>
+                        <ModalInput value={foodName} onChange={onChangeName} />
+                    </ModalSearch>
+                    {/* <ModalBtn
+                        style={{
+                            cursor: 'pointer',
+                            marginBottom: '20px',
+                            backgroundColor: 'transparent',
+                        }}
+                    >
+                        검색
+                    </ModalBtn> */}
+                    <ResultBox>
+                        {result
+                            ? result.map((item, index) => (
+                                  <Result key={item.id}>{item.name}</Result>
+                              ))
+                            : null}
+                    </ResultBox>
 
                     {selectedImage && (
                         <ImageBox>
@@ -148,7 +222,6 @@ function Record() {
                                         </span>
                                     </Remove>
                                     <Img
-                                        onClick={() => setOpen(true)}
                                         src={URL.createObjectURL(item)}
                                         alt='img'
                                     />
@@ -157,94 +230,18 @@ function Record() {
                         </ImageBox>
                     )}
                     <TagBox>
-                        {foodInformation.map((item) => (
-                            <Tag key={item.name}>
-                                {item[0]} {` ${item[1]}g`}
-                            </Tag>
-                        ))}
+                        {foodTag
+                            ? foodTag.map((item, index) => (
+                                  <Tag key={index}>
+                                      {item[0]}
+                                      {` ${item[1]}g`}
+                                  </Tag>
+                              ))
+                            : null}
                     </TagBox>
+                    <button onClick={onClick}>저장</button>
                 </DiaryBody>
             </Contents>
-            {open ? (
-                <ModalBackground>
-                    <Modal
-                        as='form'
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'space-between',
-                            minHeight: '250px',
-                        }}
-                    >
-                        <div
-                            style={{
-                                height: '120px',
-                                paddingTop: '30px',
-                            }}
-                        >
-                            <ModalTitle>음식 명을 검색하세요.</ModalTitle>
-                            <ModalSearch as='form' onSubmit={onSubmit}>
-                                <span className='material-symbols-outlined'>
-                                    search
-                                </span>
-                                <ModalInput
-                                    value={foodName}
-                                    onChange={onChangeName}
-                                />
-                            </ModalSearch>
-                        </div>
-                        <div style={{ height: '80px' }}>
-                            <ModalTitle>
-                                먹은 양을 입력해주세요. (단위: g)
-                            </ModalTitle>
-                            <ModalSearch>
-                                <ModalInput
-                                    type='number'
-                                    value={foodAmount}
-                                    onChange={onChangeAmount}
-                                />
-                                <span
-                                    style={{
-                                        fontSize: '16px',
-                                    }}
-                                >
-                                    g
-                                </span>
-                            </ModalSearch>
-                        </div>
-                        <ModalBtn
-                            style={{ cursor: 'pointer' }}
-                            onClick={async (e) => {
-                                e.preventDefault();
-                                const sessionStorage = window.sessionStorage;
-                                await axios
-                                    .get(
-                                        `https://cryptic-castle-40575.herokuapp.com/api/v1/foods/?search=${foodName}`,
-                                        {
-                                            headers: {
-                                                Authorization: `Bearer ${sessionStorage.getItem(
-                                                    'access_token'
-                                                )}`,
-                                            },
-                                        }
-                                    )
-                                    .then((response) =>
-                                        console.log(response.data)
-                                    );
-                                setFoodAmount(0);
-                                setFoodName('');
-                                // setFoodInformation((prev) => [
-                                //     ...prev,
-                                //     [foodName, foodAmount],
-                                // ]);
-                            }}
-                            open={open}
-                        >
-                            검색
-                        </ModalBtn>
-                    </Modal>
-                </ModalBackground>
-            ) : null}
         </Container>
     );
 }

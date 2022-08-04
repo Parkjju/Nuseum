@@ -66,6 +66,7 @@ table {
 	border-spacing: 0;
 }
 body{
+    
     max-width:800px;
     margin:auto;
 }

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Modal = styled.div`
     border: 1px solid black;
     width: 280px;
-    height: 140px;
+    max-height: 140px;
     position: relative;
     top: 100px;
     background-color: white;
