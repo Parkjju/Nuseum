@@ -40,8 +40,7 @@ footer, header, hgroup, menu, nav, section {
 html,body {
 	line-height: 1;
     font-family: 'Noto Serif KR', serif;
-    /* height:100%; */
- 
+    min-height:800px;
 }
 
 button{
@@ -65,6 +64,10 @@ q:before, q:after {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+}
+body{
+    max-width:800px;
+    margin:auto;
 }
 
 `;
