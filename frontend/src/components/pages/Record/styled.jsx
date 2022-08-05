@@ -127,16 +127,3 @@ export const Tag = styled.div`
     margin-bottom: 5px;
     cursor: default;
 `;
-
-export const ResultBox = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-`;
-
-export const Result = styled.p`
-    width: 100%;
-    font-size: 12px;
-    text-align: center;
-    height: 30px;
-`;

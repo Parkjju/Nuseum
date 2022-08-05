@@ -16,8 +16,6 @@ import {
     ModalInput,
     ModalSearch,
     Remove,
-    Result,
-    ResultBox,
     Tag,
     TagBox,
 } from './styled';
@@ -29,6 +27,8 @@ import { ModalTitle } from '../../atom/Modal/styled';
 import { periodState } from '../../../recoil/period/period';
 import { useRecoilState } from 'recoil';
 import axios from 'axios';
+import { Result, ResultBox } from '../../atom/Menu/styled';
+import Menu from '../../atom/Menu';
 
 function Record() {
     // 식사 시간별 데이터 전역상태
@@ -185,13 +185,14 @@ function Record() {
                     >
                         검색
                     </ModalBtn> */}
-                    <ResultBox>
+                    <Menu data={result} />
+                    {/* <ResultBox>
                         {result
                             ? result.map((item, index) => (
                                   <Result key={item.id}>{item.name}</Result>
                               ))
                             : null}
-                    </ResultBox>
+                    </ResultBox> */}
 
                     {selectedImage && (
                         <ImageBox>
