@@ -21,5 +21,5 @@ export const Text = styled.p`
     color: #7f8c8d;
     margin-bottom: 20px;
     line-height: 14px;
-    text-align: center;
+    text-align: justify;
 `;
