@@ -15,6 +15,7 @@ function Card({ menu, current }) {
                     }
                 >
                     <AnimatePresence>
+                        {/* 영수증 사진 탭 추가 */}
                         {current === 'home' ? (
                             <Tab layoutId={item[2]}>
                                 {item[1] === '저녁' ? (
