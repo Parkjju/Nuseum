@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import React, { useState } from 'react';
 import { Nutrition, Result, ResultBox } from './styled';
 
@@ -16,7 +16,7 @@ function Menu({ data }) {
     };
 
     return (
-        <ResultBox transition={{}}>
+        <ResultBox>
             {/* 영양성분 국문화 */}
             {/* id, name, category 제외 */}
             {/* 단위 추가 */}
