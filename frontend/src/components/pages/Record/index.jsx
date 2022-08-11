@@ -243,7 +243,7 @@ function Record() {
                                         <Img
                                             src={URL.createObjectURL(item)}
                                             alt='img'
-                                            style={{ width: '150px' }}
+                                            style={{ width: '200px' }}
                                         />
                                     </div>
                                 </motion.div>
