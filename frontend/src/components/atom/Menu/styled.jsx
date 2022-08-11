@@ -55,6 +55,7 @@ const NutritionList = ({ item }) => {
     }
 
     const [keyCount, setKeyCount] = useState(0);
+
     useEffect(() => {
         Object.entries(item).forEach((elem) =>
             elem[1] === 0 ||
@@ -70,7 +71,7 @@ const NutritionList = ({ item }) => {
     return (
         <motion.div
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: (16 * keyCount) / 2, opacity: 1 }}
+            animate={{ height: 10 * keyCount, opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{
                 duration: 0.5,
