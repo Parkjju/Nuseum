@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
+import TextField from '@mui/material/TextField';
+import { useParams } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { periodState } from '../../../recoil/period/period';
+import InputAdornment from '@mui/material/InputAdornment';
 
 export const ResultBox = styled(motion.div)`
     width: 100%;
@@ -19,13 +24,36 @@ export const Result = styled(motion.p)`
     line-height: 16px;
     margin-bottom: 10px;
     border-radius: 10px;
-    cursor: pointer;
 `;
 export const Divider = styled(motion.hr)`
     width: 100%;
 `;
-
 const NutritionList = ({ item }) => {
+    const [isChecked, setIsChecked] = useState(false);
+    const param = useParams();
+    const [period, setPeriod] = useRecoilState(periodState);
+
+    const onClick = () => {
+        setIsChecked((prev) => !prev);
+    };
+
+    if (isChecked) {
+        switch (param.when) {
+            case 'breakfast':
+                break;
+            case 'lunch':
+                break;
+            case 'dinner':
+                break;
+            case 'snack':
+                break;
+            case 'drug':
+                break;
+            default:
+                break;
+        }
+    }
+
     const [keyCount, setKeyCount] = useState(0);
     useEffect(() => {
         Object.entries(item).forEach((elem) =>
@@ -47,23 +75,39 @@ const NutritionList = ({ item }) => {
             transition={{
                 duration: 0.5,
             }}
+            style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+            }}
         >
-            {Object.entries(item).map((elem, index) =>
-                elem[1] === 0 ||
-                elem[0] === 'open' ||
-                elem[0] === 'id' ||
-                elem[0] === 'category' ||
-                elem[0] === 'name' ? null : (
-                    <p key={index}>
-                        {elem[0]} : {elem[1]}
-                    </p>
-                )
-            )}
-            <Divider
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ delay: 0.5 }}
+            <div>
+                {Object.entries(item).map((elem, index) =>
+                    elem[1] === 0 ||
+                    elem[0] === 'open' ||
+                    elem[0] === 'id' ||
+                    elem[0] === 'category' ||
+                    elem[0] === 'name' ||
+                    elem[0] === 'classifier' ? null : (
+                        <p key={index}>
+                            {elem[0]} : {elem[1]}
+                        </p>
+                    )
+                )}
+            </div>
+
+            <TextField
+                label='섭취량'
+                size='small'
+                id='outlined-start-adornment'
+                sx={{ width: '150px' }}
+                InputProps={{
+                    startAdornment: (
+                        <InputAdornment sx={{ fontSize: 12 }} position='start'>
+                            g 또는 ml
+                        </InputAdornment>
+                    ),
+                }}
             />
         </motion.div>
     );
