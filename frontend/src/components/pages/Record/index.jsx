@@ -91,7 +91,7 @@ function Record() {
                 }
             )
             .then((response) => {
-                console.log(response.data);
+                console.log(response.data.results);
                 setResult(response.data.results);
                 // 검색결과가 response로 나옴
                 // 각각 음식결과를 푸드태그 상태값에 저장
@@ -232,10 +232,20 @@ function Record() {
                                             close
                                         </span>
                                     </Remove>
-                                    <Img
-                                        src={URL.createObjectURL(item)}
-                                        alt='img'
-                                    />
+                                    <div
+                                        style={{
+                                            width: '100%',
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            height: 'auto',
+                                        }}
+                                    >
+                                        <Img
+                                            src={URL.createObjectURL(item)}
+                                            alt='img'
+                                            style={{ width: '150px' }}
+                                        />
+                                    </div>
                                 </motion.div>
                             ))}
                         </ImageBox>
