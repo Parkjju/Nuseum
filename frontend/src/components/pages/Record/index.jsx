@@ -1,6 +1,6 @@
 import Container from '../../atom/Container';
 import { Contents } from '../Home/styled';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import morning from '../../../assets/morning.png';
 import mid from '../../../assets/lunch.png';
@@ -31,6 +31,7 @@ import Menu from '../../atom/Menu';
 import CircularProgress from '@mui/material/CircularProgress';
 
 function Record() {
+    const navigate = useNavigate();
     // 식사 시간별 데이터 전역상태
     const [meal, setMeal] = useRecoilState(periodState);
 
@@ -107,6 +108,14 @@ function Record() {
                     });
                     return [...copy, ...newFood];
                 });
+            })
+            .catch((e) => {
+                if (e.response.data.code === 'token_not_valid') {
+                    alert('세션이 만료되었습니다. 다시 로그인 해주세요!');
+                    const sessionStorage = window.sessionStorage;
+                    sessionStorage.clear();
+                    navigate('/login');
+                }
             });
         setFoodAmount(0);
         setFoodName('');
@@ -260,7 +269,9 @@ function Record() {
                               ))
                             : null}
                     </TagBox> */}
-                    <button onClick={onClick}>저장</button>
+                    <button onClick={onClick} style={{ marginBottom: '30px' }}>
+                        저장
+                    </button>
                 </DiaryBody>
             </Contents>
         </Container>

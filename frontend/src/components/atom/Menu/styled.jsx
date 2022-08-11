@@ -99,13 +99,14 @@ const NutritionList = ({ item }) => {
             </div>
 
             <TextField
-                label='섭취량'
                 size='small'
                 id='outlined-start-adornment'
-                sx={{ width: '150px' }}
+                sx={{
+                    width: '150px',
+                }}
                 InputProps={{
-                    startAdornment: (
-                        <InputAdornment sx={{ fontSize: 12 }} position='start'>
+                    endAdornment: (
+                        <InputAdornment position='start'>
                             g 또는 ml
                         </InputAdornment>
                     ),
