@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-import Checkbox from '@mui/material/Checkbox';
+import TextField from '@mui/material/TextField';
+import { useParams } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { periodState } from '../../../recoil/period/period';
+import InputAdornment from '@mui/material/InputAdornment';
 
 export const ResultBox = styled(motion.div)`
     width: 100%;
@@ -25,6 +29,31 @@ export const Divider = styled(motion.hr)`
     width: 100%;
 `;
 const NutritionList = ({ item }) => {
+    const [isChecked, setIsChecked] = useState(false);
+    const param = useParams();
+    const [period, setPeriod] = useRecoilState(periodState);
+
+    const onClick = () => {
+        setIsChecked((prev) => !prev);
+    };
+
+    if (isChecked) {
+        switch (param.when) {
+            case 'breakfast':
+                break;
+            case 'lunch':
+                break;
+            case 'dinner':
+                break;
+            case 'snack':
+                break;
+            case 'drug':
+                break;
+            default:
+                break;
+        }
+    }
+
     const [keyCount, setKeyCount] = useState(0);
     useEffect(() => {
         Object.entries(item).forEach((elem) =>
@@ -66,7 +95,20 @@ const NutritionList = ({ item }) => {
                     )
                 )}
             </div>
-            <Checkbox />
+
+            <TextField
+                label='섭취량'
+                size='small'
+                id='outlined-start-adornment'
+                sx={{ width: '150px' }}
+                InputProps={{
+                    startAdornment: (
+                        <InputAdornment sx={{ fontSize: 12 }} position='start'>
+                            g 또는 ml
+                        </InputAdornment>
+                    ),
+                }}
+            />
         </motion.div>
     );
 };
