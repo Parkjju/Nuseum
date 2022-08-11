@@ -9,6 +9,7 @@ import axios from 'axios';
 import ErrorModal from '../../atom/Modal';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
 
 function Register() {
     const {
@@ -19,6 +20,7 @@ function Register() {
         clearErrors,
     } = useForm();
     const [display, setDisplay] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const onValid = ({ code, password1, password2 }) => {
         if (password1 !== password2) {
@@ -33,6 +35,7 @@ function Register() {
             );
             return;
         }
+        setIsLoading(true);
 
         axios
             .post(
@@ -45,6 +48,7 @@ function Register() {
             )
             .then(() => {
                 alert('회원 가입이 완료되었습니다!');
+                setIsLoading(false);
                 navigate('/');
             })
             .catch((err) => {
@@ -53,6 +57,7 @@ function Register() {
                         message: '이미 가입된 계정입니다.',
                         type: 'custom',
                     });
+                    setIsLoading(false);
                     setDisplay(true);
                 }
             });
@@ -111,12 +116,18 @@ function Register() {
                 ) : null}
 
                 <BtnBox as='div'>
-                    <Button
-                        text='가입하기'
-                        openModal={
-                            errors.AlreadyExists ? () => setDisplay(true) : null
-                        }
-                    />
+                    {isLoading ? (
+                        <CircularProgress sx={{ marginBottom: 5 }} />
+                    ) : (
+                        <Button
+                            text='가입하기'
+                            openModal={
+                                errors.AlreadyExists
+                                    ? () => setDisplay(true)
+                                    : null
+                            }
+                        />
+                    )}
                     <Link style={{ textDecoration: 'none' }} to='/login'>
                         <Button text='이미 계정이 있으신가요?' />
                     </Link>

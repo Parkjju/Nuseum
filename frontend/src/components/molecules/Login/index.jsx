@@ -12,6 +12,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import ErrorModal from '../../atom/Modal';
 import { useState } from 'react';
 import SNU from '../../../assets/SNU.png';
+import CircularProgress from '@mui/material/CircularProgress';
 
 function Login() {
     const {
@@ -24,8 +25,10 @@ function Login() {
     const [tokenValue, tokenSetter] = useRecoilState(token);
     const navigate = useNavigate();
     const [display, setDisplay] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const onValid = ({ loginId, loginPassword }) => {
+        setIsLoading(true);
         axios
             .post(
                 'https://cryptic-castle-40575.herokuapp.com/api/v1/accounts/login/',
@@ -46,6 +49,7 @@ function Login() {
                     'access_token',
                     response.data.access_token
                 );
+                setIsLoading(false);
 
                 navigate('/');
             })
@@ -53,6 +57,7 @@ function Login() {
                 setError('nonExists', {
                     message: '아이디 또는 비밀번호가 잘못되었습니다.',
                 });
+                setIsLoading(false);
                 setDisplay(true);
             });
     };
@@ -105,12 +110,16 @@ function Login() {
                 ) : null}
 
                 <BtnBox as='div'>
-                    <Button
-                        openModal={
-                            errors.nonExists ? () => setDisplay(true) : null
-                        }
-                        text='로그인'
-                    />
+                    {isLoading ? (
+                        <CircularProgress sx={{ marginBottom: 5 }} />
+                    ) : (
+                        <Button
+                            openModal={
+                                errors.nonExists ? () => setDisplay(true) : null
+                            }
+                            text='로그인'
+                        />
+                    )}
 
                     <Link style={{ textDecoration: 'none' }} to='/register'>
                         <Button text='회원가입' />
