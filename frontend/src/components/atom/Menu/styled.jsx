@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-import TextField from '@mui/material/TextField';
 import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { periodState } from '../../../recoil/period/period';
-import InputAdornment from '@mui/material/InputAdornment';
 
 export const ResultBox = styled(motion.div)`
     width: 100%;
@@ -28,31 +26,89 @@ export const Result = styled(motion.p)`
 export const Divider = styled(motion.hr)`
     width: 100%;
 `;
+const InputAmountBox = styled.div`
+    width: 90px;
+    position: relative;
+    right: 20px;
+`;
+const InputAmount = styled.input`
+    height: 30px;
+    width: 90px;
+    padding: 0 10px;
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 1px #7f8c8d;
+        transition: 0.1s linear;
+    }
+`;
+const Adornment = styled.span`
+    color: #7f8c8d;
+    position: absolute;
+    right: -15px;
+    top: 8px;
+`;
+
 const NutritionList = ({ item }) => {
-    const [isChecked, setIsChecked] = useState(false);
     const param = useParams();
     const [period, setPeriod] = useRecoilState(periodState);
+    const [amount, setAmount] = useState(0);
 
-    const onClick = () => {
-        setIsChecked((prev) => !prev);
+    const onChange = (e) => {
+        setAmount(e.target.value);
     };
 
-    if (isChecked) {
-        switch (param.when) {
-            case 'breakfast':
-                break;
-            case 'lunch':
-                break;
-            case 'dinner':
-                break;
-            case 'snack':
-                break;
-            case 'drug':
-                break;
-            default:
-                break;
+    const saveNutrition = (e) => {
+        if (e.which === 13) {
+            switch (param.when) {
+                case 'breakfast':
+                    setPeriod((prev) => {
+                        const previousMeal = [...prev.breakfast];
+                        const newFood = [e.target.name, amount];
+                        return {
+                            ...prev,
+                            breakfast: [...previousMeal, newFood],
+                        };
+                    });
+                    break;
+                case 'lunch':
+                    setPeriod((prev) => {
+                        const previousMeal = [...prev.lunch];
+                        const newFood = [e.target.name, amount];
+                        return {
+                            ...prev,
+                            lunch: [...previousMeal, newFood],
+                        };
+                    });
+                    break;
+                case 'dinner':
+                    setPeriod((prev) => {
+                        const previousMeal = [...prev.dinner];
+                        const newFood = [e.target.name, amount];
+                        return {
+                            ...prev,
+                            dinner: [...previousMeal, newFood],
+                        };
+                    });
+                    break;
+                case 'snack':
+                    setPeriod((prev) => {
+                        const previousMeal = [...prev.snack];
+                        const newFood = [e.target.name, amount];
+                        return {
+                            ...prev,
+                            snack: [...previousMeal, newFood],
+                        };
+                    });
+                    break;
+                case 'drug':
+                    break;
+                default:
+                    break;
+            }
+            setAmount(0);
         }
-    }
+    };
+    console.log(period);
 
     const [keyCount, setKeyCount] = useState(0);
 
@@ -97,21 +153,17 @@ const NutritionList = ({ item }) => {
                     )
                 )}
             </div>
-
-            <TextField
-                size='small'
-                id='outlined-start-adornment'
-                sx={{
-                    width: '150px',
-                }}
-                InputProps={{
-                    endAdornment: (
-                        <InputAdornment position='start'>
-                            g 또는 ml
-                        </InputAdornment>
-                    ),
-                }}
-            />
+            <InputAmountBox>
+                <InputAmount
+                    name={item.id}
+                    onChange={onChange}
+                    value={amount}
+                    maxLength={5}
+                    type='number'
+                    onKeyDown={saveNutrition}
+                />
+                <Adornment>g 또는 ml</Adornment>
+            </InputAmountBox>
         </motion.div>
     );
 };
