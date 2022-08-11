@@ -20,12 +20,12 @@ import {
     TagBox,
 } from './styled';
 import { Icon, Name } from '../../atom/Card/styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { motion } from 'framer-motion';
 import { ModalTitle } from '../../atom/Modal/styled';
 import { periodState } from '../../../recoil/period/period';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import axios from 'axios';
 import Menu from '../../atom/Menu';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -55,19 +55,46 @@ function Record() {
 
     const param = useParams();
 
+    useEffect(() => {
+        setFoodTag((prev) => {
+            const copy = [...prev];
+            let newFood = [];
+            switch (param.when) {
+                case 'breakfast':
+                    newFood = [...meal.breakfast];
+                    break;
+                case 'lunch':
+                    newFood = [...meal.lunch];
+                    break;
+                case 'dinner':
+                    newFood = [...meal.dinner];
+                    break;
+                case 'snack':
+                    newFood = [...meal.snack];
+                    break;
+                case 'drug':
+                    break;
+                default:
+                    break;
+            }
+
+            return [...copy, ...newFood];
+        });
+    }, []);
+
     let menu = [];
     const onChange = (e) => {
         if (e.target.files && e.target.files.length > 0) {
             setSelectedImage((prev) => [...prev, e.target.files[0]]);
         }
     };
-    const onClick = () => {
-        setMeal((prev) => {
-            let copy = [...prev];
-            copy[index] = [...foodTag];
-            return [...copy];
-        });
-    };
+    // const onClick = () => {
+    //     setMeal((prev) => {
+    //         let copy = [...prev];
+    //         copy[index] = [...foodTag];
+    //         return [...copy];
+    //     });
+    // };
 
     const removeSelectedImage = (index) => {
         setSelectedImage((prev) => [
@@ -94,20 +121,6 @@ function Record() {
             .then((response) => {
                 console.log(response.data.results);
                 setResult(response.data.results);
-                // 검색결과가 response로 나옴
-                // 각각 음식결과를 푸드태그 상태값에 저장
-                // 논리적으로 임시방편 , 데이터 확인을 위한 저장임
-                // 순회하며 하나씩 푸드태그에 [음식명, 그램] 저장한 뒤 리턴
-                // 그램은 10그램으로 일단 고정
-
-                setFoodTag((prev) => {
-                    const copy = [...prev];
-                    let newFood = [];
-                    response.data.results.forEach((food) => {
-                        newFood.push([food.id, 10]);
-                    });
-                    return [...copy, ...newFood];
-                });
             })
             .catch((e) => {
                 if (e.response.data.code === 'token_not_valid') {
@@ -178,6 +191,16 @@ function Record() {
                     <Label style={{ marginBottom: 30 }} htmlFor='input-file'>
                         +
                     </Label>
+                    <TagBox>
+                        {foodTag
+                            ? foodTag.map((item, index) => (
+                                  <Tag key={index}>
+                                      {item[0]}
+                                      {` ${item[1]}g`}
+                                  </Tag>
+                              ))
+                            : null}
+                    </TagBox>
                     <input
                         onChange={onChange}
                         type='file'
@@ -259,19 +282,7 @@ function Record() {
                             ))}
                         </ImageBox>
                     )}
-                    {/* <TagBox>
-                        {foodTag
-                            ? foodTag.map((item, index) => (
-                                  <Tag key={index}>
-                                      {item[0]}
-                                      {` ${item[1]}g`}
-                                  </Tag>
-                              ))
-                            : null}
-                    </TagBox> */}
-                    <button onClick={onClick} style={{ marginBottom: '30px' }}>
-                        저장
-                    </button>
+                    <button style={{ marginBottom: '30px' }}>저장</button>
                 </DiaryBody>
             </Contents>
         </Container>
