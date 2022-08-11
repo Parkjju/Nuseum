@@ -27,8 +27,8 @@ import { ModalTitle } from '../../atom/Modal/styled';
 import { periodState } from '../../../recoil/period/period';
 import { useRecoilState } from 'recoil';
 import axios from 'axios';
-import { Result, ResultBox } from '../../atom/Menu/styled';
 import Menu from '../../atom/Menu';
+import CircularProgress from '@mui/material/CircularProgress';
 
 function Record() {
     // 식사 시간별 데이터 전역상태
@@ -48,6 +48,10 @@ function Record() {
 
     // 검색결과 배열
     const [result, setResult] = useState(null);
+
+    // 로딩 인디케이터
+    const [isLoading, setIsLoading] = useState(false);
+
     const param = useParams();
 
     let menu = [];
@@ -74,6 +78,7 @@ function Record() {
     const onSubmit = async (e) => {
         e.preventDefault();
         const sessionStorage = window.sessionStorage;
+        setIsLoading(true);
         await axios
             .get(
                 `https://cryptic-castle-40575.herokuapp.com/api/v1/foods/?search=${foodName}`,
@@ -105,6 +110,7 @@ function Record() {
             });
         setFoodAmount(0);
         setFoodName('');
+        setIsLoading(false);
     };
 
     let index = param.when;
@@ -185,7 +191,11 @@ function Record() {
                     >
                         검색
                     </ModalBtn> */}
-                    <Menu data={result} />
+                    {isLoading ? (
+                        <CircularProgress sx={{ marginBottom: 5 }} />
+                    ) : (
+                        <Menu data={result} />
+                    )}
                     {/* <ResultBox>
                         {result
                             ? result.map((item, index) => (
@@ -230,7 +240,7 @@ function Record() {
                             ))}
                         </ImageBox>
                     )}
-                    <TagBox>
+                    {/* <TagBox>
                         {foodTag
                             ? foodTag.map((item, index) => (
                                   <Tag key={index}>
@@ -239,7 +249,7 @@ function Record() {
                                   </Tag>
                               ))
                             : null}
-                    </TagBox>
+                    </TagBox> */}
                     <button onClick={onClick}>저장</button>
                 </DiaryBody>
             </Contents>

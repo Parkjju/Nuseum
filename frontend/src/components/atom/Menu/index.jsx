@@ -1,6 +1,6 @@
-import { AnimatePresence, motion } from 'framer-motion';
 import React, { useState } from 'react';
-import { Nutrition, Result, ResultBox } from './styled';
+
+import { Divider, Nutrition, Result, ResultBox } from './styled';
 
 function Menu({ data }) {
     // 하위 컴포넌트 각각에 state를 부여해야함
@@ -22,24 +22,35 @@ function Menu({ data }) {
             {/* 단위 추가 */}
             {data
                 ? data.map((item) => (
-                      <Result
-                          key={item.id}
-                          onClick={() => {
-                              slide(item);
-                              setChangeResultState((prev) => !prev);
-                          }}
-                      >
-                          <p>{item.name}</p>
+                      <>
+                          <Result key={item.id}>
+                              <p
+                                  style={{ cursor: 'pointer' }}
+                                  onClick={() => {
+                                      slide(item);
+                                      setChangeResultState((prev) => !prev);
+                                  }}
+                              >
+                                  {item.name}
+                              </p>
 
-                          <Nutrition
-                              style={{
-                                  display: 'flex',
-                                  flexDirection: 'column',
-                              }}
-                              item={item}
-                              open={item.open}
-                          />
-                      </Result>
+                              <Nutrition
+                                  style={{
+                                      display: 'flex',
+                                      flexDirection: 'column',
+                                  }}
+                                  item={item}
+                                  open={item.open}
+                              />
+
+                              <Divider
+                                  initial={{ opacity: 0 }}
+                                  animate={{ opacity: 1 }}
+                                  exit={{ opacity: 0 }}
+                                  transition={{ delay: 0.5 }}
+                              />
+                          </Result>
+                      </>
                   ))
                 : null}
         </ResultBox>
