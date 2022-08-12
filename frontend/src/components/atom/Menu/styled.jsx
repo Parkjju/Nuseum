@@ -72,7 +72,11 @@ const NutritionList = ({ item }) => {
                 case 'breakfast':
                     setPeriod((prev) => {
                         const previousMeal = [...prev.breakfast];
-                        const newFood = [e.target.name, amount];
+                        const newFood = [
+                            e.target.name,
+                            e.target.getAttribute('data-itemid'),
+                            amount,
+                        ];
                         return {
                             ...prev,
                             breakfast: [...previousMeal, newFood],
@@ -82,7 +86,11 @@ const NutritionList = ({ item }) => {
                 case 'lunch':
                     setPeriod((prev) => {
                         const previousMeal = [...prev.lunch];
-                        const newFood = [e.target.name, amount];
+                        const newFood = [
+                            e.target.name,
+                            e.target.getAttribute('data-itemid'),
+                            amount,
+                        ];
                         return {
                             ...prev,
                             lunch: [...previousMeal, newFood],
@@ -95,7 +103,11 @@ const NutritionList = ({ item }) => {
                         const newFood = [e.target.name, amount];
                         return {
                             ...prev,
-                            dinner: [...previousMeal, newFood],
+                            dinner: [
+                                ...previousMeal,
+                                e.target.getAttribute('data-itemid'),
+                                newFood,
+                            ],
                         };
                     });
                     break;
@@ -105,7 +117,11 @@ const NutritionList = ({ item }) => {
                         const newFood = [e.target.name, amount];
                         return {
                             ...prev,
-                            snack: [...previousMeal, newFood],
+                            snack: [
+                                ...previousMeal,
+                                e.target.getAttribute('data-itemid'),
+                                newFood,
+                            ],
                         };
                     });
                     break;
@@ -164,7 +180,8 @@ const NutritionList = ({ item }) => {
             </div>
             <InputAmountBox>
                 <InputAmount
-                    name={item.id}
+                    name={item.name}
+                    data-itemID={item.id}
                     onChange={onChange}
                     value={amount}
                     maxLength='5'

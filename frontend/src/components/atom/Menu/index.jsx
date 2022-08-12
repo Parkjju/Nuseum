@@ -11,8 +11,6 @@ function Menu({ data }) {
         } else {
             item.open = true;
         }
-        console.log(`item: ${item.name}`);
-        console.log(item.open);
     };
 
     return (
