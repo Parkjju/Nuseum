@@ -57,7 +57,7 @@ function DiaryCalendar() {
 
     return (
         <Container>
-            <Contents style={{ height: '270px' }}>
+            <Contents style={{}}>
                 <DiaryTitle layoutId={menu[0][2]}>
                     <Name>{menu[0][1]}</Name>
                 </DiaryTitle>
@@ -72,6 +72,7 @@ function DiaryCalendar() {
                     <Calendar locale='en-US' onChange={onChange} value={date} />
                 </motion.div>
             </Contents>
+
             <Diary />
         </Container>
     );
