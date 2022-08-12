@@ -174,10 +174,10 @@ function Record() {
                     <Name>{menu[0][1]}</Name>
                 </DiaryTitle>
                 <Name style={{ marginBottom: '5px' }}>
-                    음식 이미지를 업로드하고
+                    음식 이미지를 업로드하고 식이정보를 입력하세요 :)
                 </Name>
                 <Name style={{ marginBottom: '50px' }}>
-                    업로드한 이미지를 클릭하여 식이정보를 입력하세요 :)
+                    {/* 식이정보를 입력하세요 :) */}
                 </Name>
                 <DiaryBody
                     initial={{ y: 300 }}
@@ -241,7 +241,7 @@ function Record() {
                             ? foodTag.map((item, index) => (
                                   <Tag key={index}>
                                       {item[0]}
-                                      {` ${item[2]}g`}
+                                      {` ${item[2]} (g 또는 ml)`}
                                   </Tag>
                               ))
                             : null}
