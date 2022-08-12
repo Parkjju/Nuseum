@@ -56,6 +56,7 @@ function Record() {
     const param = useParams();
 
     useEffect(() => {
+        setFoodTag([]);
         setFoodTag((prev) => {
             const copy = [...prev];
             let newFood = [];
@@ -80,7 +81,7 @@ function Record() {
 
             return [...copy, ...newFood];
         });
-    }, []);
+    }, [param.when, meal]);
 
     let menu = [];
     const onChange = (e) => {
@@ -88,13 +89,11 @@ function Record() {
             setSelectedImage((prev) => [...prev, e.target.files[0]]);
         }
     };
-    // const onClick = () => {
-    //     setMeal((prev) => {
-    //         let copy = [...prev];
-    //         copy[index] = [...foodTag];
-    //         return [...copy];
-    //     });
-    // };
+
+    const onClick = () => {
+        alert('저장되었습니다!');
+        navigate(`/${param.category}/${param.date}`);
+    };
 
     const removeSelectedImage = (index) => {
         setSelectedImage((prev) => [
@@ -191,51 +190,6 @@ function Record() {
                     <Label style={{ marginBottom: 30 }} htmlFor='input-file'>
                         +
                     </Label>
-                    <TagBox>
-                        {foodTag
-                            ? foodTag.map((item, index) => (
-                                  <Tag key={index}>
-                                      {item[0]}
-                                      {` ${item[1]}g`}
-                                  </Tag>
-                              ))
-                            : null}
-                    </TagBox>
-                    <input
-                        onChange={onChange}
-                        type='file'
-                        id='input-file'
-                        style={{ display: 'none' }}
-                    />
-                    <ModalTitle>음식 명을 검색하세요.</ModalTitle>
-                    <ModalSearch as='form' onSubmit={onSubmit}>
-                        <span className='material-symbols-outlined'>
-                            search
-                        </span>
-                        <ModalInput value={foodName} onChange={onChangeName} />
-                    </ModalSearch>
-                    {/* <ModalBtn
-                        style={{
-                            cursor: 'pointer',
-                            marginBottom: '20px',
-                            backgroundColor: 'transparent',
-                        }}
-                    >
-                        검색
-                    </ModalBtn> */}
-                    {isLoading ? (
-                        <CircularProgress sx={{ marginBottom: 5 }} />
-                    ) : (
-                        <Menu data={result} />
-                    )}
-                    {/* <ResultBox>
-                        {result
-                            ? result.map((item, index) => (
-                                  <Result key={item.id}>{item.name}</Result>
-                              ))
-                            : null}
-                    </ResultBox> */}
-
                     {selectedImage && (
                         <ImageBox>
                             {selectedImage.map((item, index) => (
@@ -282,7 +236,55 @@ function Record() {
                             ))}
                         </ImageBox>
                     )}
-                    <button style={{ marginBottom: '30px' }}>저장</button>
+                    <TagBox>
+                        {foodTag
+                            ? foodTag.map((item, index) => (
+                                  <Tag key={index}>
+                                      {item[0]}
+                                      {` ${item[2]}g`}
+                                  </Tag>
+                              ))
+                            : null}
+                    </TagBox>
+                    <input
+                        onChange={onChange}
+                        type='file'
+                        id='input-file'
+                        style={{ display: 'none' }}
+                    />
+
+                    <ModalTitle>음식 명을 검색하세요.</ModalTitle>
+                    <ModalSearch as='form' onSubmit={onSubmit}>
+                        <span className='material-symbols-outlined'>
+                            search
+                        </span>
+                        <ModalInput value={foodName} onChange={onChangeName} />
+                    </ModalSearch>
+                    {/* <ModalBtn
+                        style={{
+                            cursor: 'pointer',
+                            marginBottom: '20px',
+                            backgroundColor: 'transparent',
+                        }}
+                    >
+                        검색
+                    </ModalBtn> */}
+                    {isLoading ? (
+                        <CircularProgress sx={{ marginBottom: 5 }} />
+                    ) : (
+                        <Menu data={result} />
+                    )}
+                    {/* <ResultBox>
+                        {result
+                            ? result.map((item, index) => (
+                                  <Result key={item.id}>{item.name}</Result>
+                              ))
+                            : null}
+                    </ResultBox> */}
+
+                    <button onClick={onClick} style={{ marginBottom: '30px' }}>
+                        저장
+                    </button>
                 </DiaryBody>
             </Contents>
         </Container>
