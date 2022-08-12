@@ -40,6 +40,11 @@ const InputAmount = styled.input`
         box-shadow: 0 0 0 1px #7f8c8d;
         transition: 0.1s linear;
     }
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 `;
 const Adornment = styled.span`
     color: #7f8c8d;
@@ -54,7 +59,11 @@ const NutritionList = ({ item }) => {
     const [amount, setAmount] = useState(0);
 
     const onChange = (e) => {
-        setAmount(e.target.value);
+        if (e.target.value.toString().length > 5) {
+            return;
+        } else {
+            setAmount(e.target.value);
+        }
     };
 
     const saveNutrition = (e) => {
@@ -158,7 +167,7 @@ const NutritionList = ({ item }) => {
                     name={item.id}
                     onChange={onChange}
                     value={amount}
-                    maxLength={5}
+                    maxLength='5'
                     type='number'
                     onKeyDown={saveNutrition}
                 />
