@@ -40,6 +40,11 @@ const InputAmount = styled.input`
         box-shadow: 0 0 0 1px #7f8c8d;
         transition: 0.1s linear;
     }
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 `;
 const Adornment = styled.span`
     color: #7f8c8d;
@@ -54,7 +59,11 @@ const NutritionList = ({ item }) => {
     const [amount, setAmount] = useState(0);
 
     const onChange = (e) => {
-        setAmount(e.target.value);
+        if (e.target.value.toString().length > 5) {
+            return;
+        } else {
+            setAmount(e.target.value);
+        }
     };
 
     const saveNutrition = (e) => {
@@ -63,7 +72,11 @@ const NutritionList = ({ item }) => {
                 case 'breakfast':
                     setPeriod((prev) => {
                         const previousMeal = [...prev.breakfast];
-                        const newFood = [e.target.name, amount];
+                        const newFood = [
+                            e.target.name,
+                            e.target.getAttribute('data-itemid'),
+                            amount,
+                        ];
                         return {
                             ...prev,
                             breakfast: [...previousMeal, newFood],
@@ -73,7 +86,11 @@ const NutritionList = ({ item }) => {
                 case 'lunch':
                     setPeriod((prev) => {
                         const previousMeal = [...prev.lunch];
-                        const newFood = [e.target.name, amount];
+                        const newFood = [
+                            e.target.name,
+                            e.target.getAttribute('data-itemid'),
+                            amount,
+                        ];
                         return {
                             ...prev,
                             lunch: [...previousMeal, newFood],
@@ -86,7 +103,11 @@ const NutritionList = ({ item }) => {
                         const newFood = [e.target.name, amount];
                         return {
                             ...prev,
-                            dinner: [...previousMeal, newFood],
+                            dinner: [
+                                ...previousMeal,
+                                e.target.getAttribute('data-itemid'),
+                                newFood,
+                            ],
                         };
                     });
                     break;
@@ -96,7 +117,11 @@ const NutritionList = ({ item }) => {
                         const newFood = [e.target.name, amount];
                         return {
                             ...prev,
-                            snack: [...previousMeal, newFood],
+                            snack: [
+                                ...previousMeal,
+                                e.target.getAttribute('data-itemid'),
+                                newFood,
+                            ],
                         };
                     });
                     break;
@@ -155,10 +180,11 @@ const NutritionList = ({ item }) => {
             </div>
             <InputAmountBox>
                 <InputAmount
-                    name={item.id}
+                    name={item.name}
+                    data-itemID={item.id}
                     onChange={onChange}
                     value={amount}
-                    maxLength={5}
+                    maxLength='5'
                     type='number'
                     onKeyDown={saveNutrition}
                 />

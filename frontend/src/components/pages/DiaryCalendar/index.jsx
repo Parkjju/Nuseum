@@ -12,12 +12,16 @@ import record from '../../../assets/record.png';
 import analysis from '../../../assets/analysis.png';
 import food from '../../../assets/food.png';
 import question from '../../../assets/q&a.png';
-import { DiaryTitle } from './styled';
+import { DiaryTitle, Summary, SummaryNutrition } from './styled';
 import { Name } from '../../atom/Card/styled';
 import Diary from '../Diary';
+import { useRecoilValue } from 'recoil';
+import { periodState } from '../../../recoil/period/period';
 
 function DiaryCalendar() {
     const [date, setDate] = useState(new Date());
+    const meal = useRecoilValue(periodState);
+    console.log('In Calender', meal);
 
     const param = useParams();
     const navigate = useNavigate();
@@ -57,7 +61,7 @@ function DiaryCalendar() {
 
     return (
         <Container>
-            <Contents style={{ height: '270px' }}>
+            <Contents style={{}}>
                 <DiaryTitle layoutId={menu[0][2]}>
                     <Name>{menu[0][1]}</Name>
                 </DiaryTitle>
@@ -72,8 +76,22 @@ function DiaryCalendar() {
                     <Calendar locale='en-US' onChange={onChange} value={date} />
                 </motion.div>
             </Contents>
+
             <Diary />
         </Container>
     );
 }
 export default DiaryCalendar;
+// 에너지
+// 단백질
+// 지방
+// 탄수화물
+// 총 식이섬유
+// 마그네슘
+// 비타민 A
+// 비타민 D
+// 비타민 B6
+// 엽산
+// 비타민 B12
+// 트립토판
+// DHA+EPA
