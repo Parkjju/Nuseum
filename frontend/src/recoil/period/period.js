@@ -7,5 +7,6 @@ export const periodState = atom({
         lunch: [],
         dinner: [],
         snack: [],
+        supplement: [],
     },
 });
