@@ -100,32 +100,44 @@ const NutritionList = ({ item }) => {
                 case 'dinner':
                     setPeriod((prev) => {
                         const previousMeal = [...prev.dinner];
-                        const newFood = [e.target.name, amount];
+                        const newFood = [
+                            e.target.name,
+                            e.target.getAttribute('data-itemid'),
+                            amount,
+                        ];
                         return {
                             ...prev,
-                            dinner: [
-                                ...previousMeal,
-                                e.target.getAttribute('data-itemid'),
-                                newFood,
-                            ],
+                            dinner: [...previousMeal, newFood],
                         };
                     });
                     break;
                 case 'snack':
                     setPeriod((prev) => {
                         const previousMeal = [...prev.snack];
-                        const newFood = [e.target.name, amount];
+                        const newFood = [
+                            e.target.name,
+                            e.target.getAttribute('data-itemid'),
+                            amount,
+                        ];
                         return {
                             ...prev,
-                            snack: [
-                                ...previousMeal,
-                                e.target.getAttribute('data-itemid'),
-                                newFood,
-                            ],
+                            snack: [...previousMeal, newFood],
                         };
                     });
                     break;
-                case 'drug':
+                case 'supplement':
+                    setPeriod((prev) => {
+                        const previousMeal = [...prev.supplement];
+                        const newFood = [
+                            e.target.name,
+                            e.target.getAttribute('data-itemid'),
+                            amount,
+                        ];
+                        return {
+                            ...prev,
+                            supplement: [...previousMeal, newFood],
+                        };
+                    });
                     break;
                 default:
                     break;
@@ -133,7 +145,6 @@ const NutritionList = ({ item }) => {
             setAmount(0);
         }
     };
-    console.log(period);
 
     const [keyCount, setKeyCount] = useState(0);
 
