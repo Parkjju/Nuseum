@@ -73,7 +73,8 @@ function Record() {
                 case 'snack':
                     newFood = [...meal.snack];
                     break;
-                case 'drug':
+                case 'supplement':
+                    newFood = [...meal.supplement];
                     break;
                 default:
                     break;
@@ -92,7 +93,6 @@ function Record() {
 
     const onClick = () => {
         alert('저장되었습니다!');
-        navigate(`/${param.category}/${param.date}`);
     };
 
     const removeSelectedImage = (index) => {
@@ -134,26 +134,21 @@ function Record() {
         setIsLoading(false);
     };
 
-    let index = param.when;
     switch (param.when) {
         case 'breakfast':
             menu.push([morning, '아침', 'breakfast']);
-
             break;
         case 'lunch':
             menu.push([mid, '점심', 'lunch']);
-
             break;
         case 'dinner':
             menu.push([night, '저녁', 'dinner']);
-
             break;
         case 'snack':
             menu.push([cake, '간식', 'snack']);
-
             break;
-        case 'drug':
-            menu.push([drug, '영양제', 'drug']);
+        case 'supplement':
+            menu.push([drug, '영양제', 'supplement']);
             break;
         default:
             break;
@@ -252,7 +247,6 @@ function Record() {
                         id='input-file'
                         style={{ display: 'none' }}
                     />
-
                     <ModalTitle>음식 명을 검색하세요.</ModalTitle>
                     <ModalSearch as='form' onSubmit={onSubmit}>
                         <span className='material-symbols-outlined'>
@@ -260,31 +254,14 @@ function Record() {
                         </span>
                         <ModalInput value={foodName} onChange={onChangeName} />
                     </ModalSearch>
-                    {/* <ModalBtn
-                        style={{
-                            cursor: 'pointer',
-                            marginBottom: '20px',
-                            backgroundColor: 'transparent',
-                        }}
-                    >
-                        검색
-                    </ModalBtn> */}
+                    <button onClick={onClick} style={{ marginBottom: '30px' }}>
+                        저장
+                    </button>
                     {isLoading ? (
                         <CircularProgress sx={{ marginBottom: 5 }} />
                     ) : (
                         <Menu data={result} />
                     )}
-                    {/* <ResultBox>
-                        {result
-                            ? result.map((item, index) => (
-                                  <Result key={item.id}>{item.name}</Result>
-                              ))
-                            : null}
-                    </ResultBox> */}
-
-                    <button onClick={onClick} style={{ marginBottom: '30px' }}>
-                        저장
-                    </button>
                 </DiaryBody>
             </Contents>
         </Container>
