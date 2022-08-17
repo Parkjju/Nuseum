@@ -103,8 +103,7 @@ export const ModalInput = styled.input`
 `;
 
 export const Img = styled.img`
-    max-width: '100%';
-    max-height: 180px;
+    max-width: 100%;
     border-radius: 20px;
     box-shadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px';
     cursor: 'pointer';
