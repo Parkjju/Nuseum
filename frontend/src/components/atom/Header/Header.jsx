@@ -30,23 +30,45 @@ const Header = () => {
                 />
             </Helmet>
 
-            <Icon
-                onClick={() => {
-                    if (locationArray.length === 3) {
-                        navigate('/');
-                        return;
-                    }
-                    if (backActive) {
-                        navigate(-1);
-                    } else {
-                        return null;
-                    }
+            <div
+                style={{
+                    paddingLeft: 30,
+                    width: 80,
+                    display: 'flex',
+                    justifyContent: 'space-between',
                 }}
-                active={backActive}
-                className='material-symbols-outlined'
             >
-                arrow_back
-            </Icon>
+                <Icon
+                    onClick={() => {
+                        if (locationArray.length === 3) {
+                            navigate('/');
+                            return;
+                        }
+                        if (backActive) {
+                            navigate(-1);
+                        } else {
+                            return null;
+                        }
+                    }}
+                    active={backActive}
+                    className='material-symbols-outlined'
+                >
+                    arrow_back
+                </Icon>
+                <Icon
+                    onClick={() => {
+                        if (homeActive) {
+                            navigate('/');
+                        } else {
+                            return null;
+                        }
+                    }}
+                    active={homeActive}
+                    className='material-symbols-outlined'
+                >
+                    home
+                </Icon>
+            </div>
             <Icon
                 onClick={() => {
                     if (homeActive) {
@@ -57,8 +79,9 @@ const Header = () => {
                 }}
                 active={homeActive}
                 className='material-symbols-outlined'
+                style={{ paddingRight: 30 }}
             >
-                home
+                logout
             </Icon>
         </HeaderBox>
     );
