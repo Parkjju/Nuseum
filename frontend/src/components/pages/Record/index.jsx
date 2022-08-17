@@ -25,7 +25,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ModalTitle } from '../../atom/Modal/styled';
 import { periodState } from '../../../recoil/period/period';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import axios from 'axios';
 import Menu from '../../atom/Menu';
 import CircularProgress from '@mui/material/CircularProgress';

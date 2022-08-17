@@ -15,11 +15,18 @@ import question from '../../../assets/q&a.png';
 import { DiaryTitle } from './styled';
 import { Name } from '../../atom/Card/styled';
 import Diary from '../Diary';
+import axios from 'axios';
+import { CircularProgress } from '@mui/material';
+import { periodState } from '../../../recoil/period/period';
+import { useSetRecoilState } from 'recoil';
 
 function DiaryCalendar() {
+    const param = useParams();
+    const [loading, setLoading] = useState(false);
+    const setMeal = useSetRecoilState(periodState);
+
     const [date, setDate] = useState(new Date());
 
-    const param = useParams();
     const navigate = useNavigate();
     useEffect(() => {
         const sessionStorage = window.sessionStorage;
@@ -29,6 +36,39 @@ function DiaryCalendar() {
         navigate(`./${date.setHours(0, 0, 0, 0)}`);
     }, []);
     const onChange = (d) => {
+        setLoading(true);
+        axios
+            .get(
+                `https://cryptic-castle-40575.herokuapp.com/api/v1/post/?date=${d.getTime()}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${sessionStorage.getItem(
+                            'access_token'
+                        )}`,
+                    },
+                }
+            )
+            .then((response) => {
+                setMeal((prev) => {
+                    let copy = { ...prev };
+                    copy.breakfast = [response.data];
+                    console.log(copy);
+                });
+                console.log(response);
+                setLoading(false);
+            })
+            .catch(() => {
+                setMeal((prev) => {
+                    return {
+                        breakfast: [],
+                        lunch: [],
+                        dinner: [],
+                        snack: [],
+                        supplement: [],
+                    };
+                });
+                setLoading(false);
+            });
         setDate(d);
         navigate(`./${d.getTime()}`);
     };
@@ -69,7 +109,15 @@ function DiaryCalendar() {
                         velocity: 1,
                     }}
                 >
-                    <Calendar locale='en-US' onChange={onChange} value={date} />
+                    {loading ? (
+                        <CircularProgress sx={{ marginBottom: 5 }} />
+                    ) : (
+                        <Calendar
+                            locale='en-US'
+                            onChange={onChange}
+                            value={date}
+                        />
+                    )}
                 </motion.div>
             </Contents>
 
