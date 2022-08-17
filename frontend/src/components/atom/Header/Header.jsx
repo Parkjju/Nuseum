@@ -6,6 +6,7 @@ import { HeaderBox, Icon } from './Header.style';
 const Header = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const locationArray = location.pathname.split('/');
 
     const [backActive, setBackActive] = useState(true);
     const [homeActive, setHomeActive] = useState(true);
@@ -31,6 +32,10 @@ const Header = () => {
 
             <Icon
                 onClick={() => {
+                    if (locationArray.length === 3) {
+                        navigate('/');
+                        return;
+                    }
                     if (backActive) {
                         navigate(-1);
                     } else {
