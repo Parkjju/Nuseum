@@ -18,14 +18,68 @@ import Diary from '../Diary';
 import axios from 'axios';
 import { CircularProgress } from '@mui/material';
 import { periodState } from '../../../recoil/period/period';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 function DiaryCalendar() {
     const param = useParams();
     const [loading, setLoading] = useState(false);
-    const setMeal = useSetRecoilState(periodState);
+    const [meal, setMeal] = useRecoilState(periodState);
 
     const [date, setDate] = useState(new Date());
+
+    const setMealData = (key, res) => {
+        let data = [];
+        let parsedAmount = [];
+        switch (key) {
+            case 'breakfast':
+                parsedAmount = JSON.parse(res.breakfast_amount);
+                for (let i in parsedAmount) {
+                    data.push([res.breakfast[i], parsedAmount[i]]);
+                }
+                return data;
+            case 'lunch':
+                parsedAmount = JSON.parse(res.lunch_amount);
+                for (let i in parsedAmount) {
+                    data.push([res.lunch[i], parsedAmount[i]]);
+                }
+                return data;
+            case 'dinner':
+                parsedAmount = JSON.parse(res.dinner_amount);
+                for (let i in parsedAmount) {
+                    data.push([res.dinner[i], parsedAmount[i]]);
+                }
+                return data;
+            case 'snack':
+                parsedAmount = JSON.parse(res.snack_amount);
+                for (let i in parsedAmount) {
+                    data.push([res.snack[i], parsedAmount[i]]);
+                }
+                return data;
+            case 'supplement':
+                parsedAmount = JSON.parse(res.supplement_amount);
+                for (let i in parsedAmount) {
+                    data.push([res.supplement[i], parsedAmount[i]]);
+                }
+                return data;
+            default:
+                return null;
+        }
+    };
+    const loopFunction = (meal, res) => {
+        let copy = {
+            breakfast: [],
+            lunch: [],
+            dinner: [],
+            snack: [],
+            supplement: [],
+        };
+        for (let i in meal) {
+            copy[i].push(...setMealData(i, res));
+        }
+        delete copy.i;
+
+        return copy;
+    };
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -49,12 +103,8 @@ function DiaryCalendar() {
                 }
             )
             .then((response) => {
-                setMeal((prev) => {
-                    let copy = { ...prev };
-                    copy.breakfast = [response.data];
-                    console.log(copy);
-                });
-                console.log(response);
+                let copy = loopFunction(meal, response.data);
+                setMeal({ ...copy });
                 setLoading(false);
             })
             .catch(() => {
@@ -72,7 +122,7 @@ function DiaryCalendar() {
         setDate(d);
         navigate(`./${d.getTime()}`);
     };
-
+    console.log(meal);
     let menu = [];
 
     switch (param.category) {
