@@ -32,14 +32,17 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+input{
+    font-family: 'Noto Serif KR', serif;
+}
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 html,body {
-	line-height: 1;
     font-family: 'Noto Serif KR', serif;
+	line-height: 1;
     min-height:800px;
 }
 
