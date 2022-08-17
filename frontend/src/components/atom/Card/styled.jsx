@@ -3,12 +3,10 @@ import styled from 'styled-components';
 export const Box = styled.div`
     margin-top: 40px;
     width: 300px;
-    height: 300px;
     cursor: pointer;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-items: space-between;
 
     padding: 10px;
     a {
@@ -17,12 +15,11 @@ export const Box = styled.div`
 `;
 
 export const Tab = styled.div`
-    padding: 10px 0;
-    width: 80px;
-    height: 60px;
+    padding: 10px 10px;
+    width: 100%;
+    height: 50px;
     margin-bottom: 10px;
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     &:hover {
@@ -32,11 +29,24 @@ export const Tab = styled.div`
 `;
 
 export const Icon = styled.img`
-    width: 40px;
+    width: 30px;
+`;
+export const IconBox = styled.div`
+    display: flex;
+    align-items: center;
 `;
 
 export const Name = styled.span`
     font-size: 12px;
     color: rgba(0, 0, 0, 0.8);
     font-weight: bold;
+`;
+
+export const IconName = styled(Name)`
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.8);
+    font-weight: bold;
+    text-align: start;
+    width: 100px;
+    margin-left: 50px;
 `;
