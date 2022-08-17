@@ -8,7 +8,7 @@ function Card({ menu, current }) {
     return (
         <Box>
             {menu.map((item, index) => (
-                <AnimatePresence>
+                <AnimatePresence key={index}>
                     {/* 영수증 사진 탭 추가 */}
                     {current === 'home' ? (
                         <Tab layoutId={item[2]}>
@@ -40,7 +40,7 @@ function Card({ menu, current }) {
                                                 {item[1]}
                                             </IconName>
                                         </IconBox>
-                                        <span class='material-symbols-outlined'>
+                                        <span className='material-symbols-outlined'>
                                             chevron_right
                                         </span>
                                     </Link>
@@ -66,7 +66,7 @@ function Card({ menu, current }) {
                                             <Icon src={item[0]} />
                                             <IconName>{item[1]}</IconName>
                                         </IconBox>
-                                        <span class='material-symbols-outlined'>
+                                        <span className='material-symbols-outlined'>
                                             chevron_right
                                         </span>
                                     </Link>
@@ -109,7 +109,7 @@ function Card({ menu, current }) {
                                             color: 'black',
                                         }}
                                     >
-                                        <span class='material-symbols-outlined'>
+                                        <span className='material-symbols-outlined'>
                                             add
                                         </span>
                                     </Link>
@@ -133,7 +133,7 @@ function Card({ menu, current }) {
                                             color: 'black',
                                         }}
                                     >
-                                        <span class='material-symbols-outlined'>
+                                        <span className='material-symbols-outlined'>
                                             add
                                         </span>
                                     </Link>
