@@ -37,8 +37,6 @@ const InputAmount = styled.input`
     padding: 0 10px;
     &:focus {
         outline: none;
-        box-shadow: 0 0 0 1px #7f8c8d;
-        transition: 0.1s linear;
     }
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
