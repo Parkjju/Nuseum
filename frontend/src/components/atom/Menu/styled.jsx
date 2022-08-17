@@ -46,7 +46,7 @@ const InputAmount = styled.input`
         margin: 0;
     }
     border: none;
-    border-bottom: 0.5px solid black;
+    border-bottom: 1px solid #9a9a9a;
 `;
 const Adornment = styled.span`
     color: #7f8c8d;
@@ -206,12 +206,11 @@ const NutritionList = ({ item }) => {
             }}
             style={{
                 display: 'flex',
-                alignItems: 'center',
+                alignItems: 'flex-end',
                 justifyContent: 'space-between',
             }}
         >
             <div>
-                {console.log(item)}
                 {Object.entries(item).map((elem, index) =>
                     elem[1] === 0 ||
                     elem[0] === 'open' ||
