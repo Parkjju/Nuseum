@@ -45,6 +45,8 @@ const InputAmount = styled.input`
         -webkit-appearance: none;
         margin: 0;
     }
+    border: none;
+    border-bottom: 0.5px solid black;
 `;
 const Adornment = styled.span`
     color: #7f8c8d;
