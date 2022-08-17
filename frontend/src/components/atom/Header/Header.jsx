@@ -7,7 +7,6 @@ const Header = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const locationArray = location.pathname.split('/');
-    console.log(location);
 
     const [backActive, setBackActive] = useState(true);
     const [homeActive, setHomeActive] = useState(true);

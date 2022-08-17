@@ -57,9 +57,10 @@ export const Remove = styled.button`
 
 export const ImageBox = styled.div`
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    align-items: flex-start;
     flex-direction: column;
     margin-bottom: 50px;
 `;

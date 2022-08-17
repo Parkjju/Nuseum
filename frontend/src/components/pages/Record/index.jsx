@@ -118,7 +118,6 @@ function Record() {
                 }
             )
             .then((response) => {
-                console.log(response.data.results);
                 setResult(response.data.results);
             })
             .catch((e) => {
@@ -197,7 +196,7 @@ function Record() {
                                         velocity: 1,
                                     }}
                                     style={{
-                                        width: '80%',
+                                        width: '90%',
                                         display: 'flex',
                                         justifyContent: 'center',
                                         flexDirection: 'column',

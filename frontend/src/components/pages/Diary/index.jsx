@@ -47,13 +47,6 @@ function Diary() {
                 });
             }
         }
-        console.log({
-            breakfast: [...postData.breakfast],
-            lunch: [...postData.lunch],
-            dinner: [...postData.dinner],
-            snack: [...postData.snack],
-            supplement: [...postData.supplement],
-        });
 
         axios
             .post(
