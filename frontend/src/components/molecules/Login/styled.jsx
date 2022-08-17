@@ -17,6 +17,7 @@ export const LogoBox = styled.div`
 export const Logo = styled.img`
     width: 140px;
     margin-bottom: 60px;
+    margin-top: 50px;
 `;
 
 export const BtnBox = styled(FormBox)``;
