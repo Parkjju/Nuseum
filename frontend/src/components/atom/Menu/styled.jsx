@@ -33,6 +33,7 @@ const InputAmountBox = styled.div`
 `;
 const InputAmount = styled.input`
     height: 30px;
+    color: #7f8c8d;
     width: 90px;
     padding: 0 10px;
     &:focus {

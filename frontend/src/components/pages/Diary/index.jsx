@@ -4,6 +4,7 @@ import lunch from '../../../assets/lunch.png';
 import dinner from '../../../assets/dinner.png';
 import cake from '../../../assets/cake.png';
 import supplement from '../../../assets/drug.png';
+import water from '../../../assets/water.png';
 
 import Card from '../../atom/Card';
 import { Contents } from '../Home/styled';
@@ -28,6 +29,7 @@ function Diary({ date }) {
         [dinner, '저녁', 'dinner'],
         [cake, '간식', 'snack'],
         [supplement, '영양제', 'supplement'],
+        [water, '물', 'water'],
     ];
     const meal = useRecoilValue(periodState);
 
@@ -75,8 +77,24 @@ function Diary({ date }) {
         <Contents>
             <Card menu={menu} />
 
-            <FormBox onSubmit={onSubmit}>
-                <button style={{ marginBottom: '30px' }}>저장</button>
+            <FormBox
+                onSubmit={onSubmit}
+                style={{
+                    display: 'flex',
+                    width: '320px',
+                    justifyContent: 'center',
+                    flexDirection: 'row',
+                }}
+            >
+                <button
+                    style={{
+                        marginBottom: '30px',
+                        position: 'relative',
+                        left: '10px',
+                    }}
+                >
+                    저장
+                </button>
             </FormBox>
         </Contents>
     );
