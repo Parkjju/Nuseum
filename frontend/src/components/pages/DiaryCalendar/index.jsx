@@ -19,13 +19,13 @@ import axios from 'axios';
 import { CircularProgress } from '@mui/material';
 import { periodState } from '../../../recoil/period/period';
 import { useRecoilState } from 'recoil';
+import { dateState } from '../../../recoil/date/date';
 
 function DiaryCalendar() {
     const param = useParams();
     const [loading, setLoading] = useState(false);
     const [meal, setMeal] = useRecoilState(periodState);
-
-    const [date, setDate] = useState(new Date());
+    const [date, setDate] = useRecoilState(dateState);
 
     const setMealData = (key, res) => {
         let data = [];
@@ -216,7 +216,7 @@ function DiaryCalendar() {
                 </motion.div>
             </Contents>
 
-            <Diary />
+            <Diary date={date} />
         </Container>
     );
 }
