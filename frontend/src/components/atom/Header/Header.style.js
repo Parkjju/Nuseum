@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export const HeaderBox = styled.div`
     height: 50px;
     max-width: 800px;
-    position: absolute;
     width: 100vw;
+    margin: auto;
     top: 0;
     left: 0;
     display: flex;

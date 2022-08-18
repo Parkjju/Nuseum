@@ -1,6 +1,6 @@
 import Container from '../../atom/Container';
 import { Calendar } from 'react-calendar';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import 'react-calendar/dist/Calendar.css';
 import './calendar.css';
 import { Contents } from '../Home/styled';
@@ -80,6 +80,49 @@ function DiaryCalendar() {
 
         return copy;
     };
+    const updateMeal = (meal) => {
+        let promises = [];
+        let names = [];
+        for (let key in meal) {
+            meal[key].forEach((item) => {
+                promises.push(
+                    axios
+                        .get(
+                            `https://cryptic-castle-40575.herokuapp.com/api/v1/foods/name/?id=${item[0]}`,
+                            {
+                                headers: {
+                                    Authorization: `Bearer ${sessionStorage.getItem(
+                                        'access_token'
+                                    )}`,
+                                },
+                            }
+                        )
+                        .then((response) => names.push(response.data))
+                );
+            });
+        }
+
+        Promise.all(promises).then(() => {
+            let copy = { ...meal };
+            for (let i in copy) {
+                let temp = [];
+                copy[i].forEach((item) => {
+                    let tempItem = [...item];
+                    tempItem.unshift(names.shift().name);
+                    temp.push(tempItem);
+                });
+                copy[i] = [...temp];
+            }
+
+            setMeal({
+                breakfast: [...copy.breakfast],
+                lunch: [...copy.lunch],
+                dinner: [...copy.dinner],
+                snack: [...copy.snack],
+                supplement: [...copy.supplement],
+            });
+        });
+    };
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -89,6 +132,7 @@ function DiaryCalendar() {
         }
         navigate(`./${date.setHours(0, 0, 0, 0)}`);
     }, []);
+
     const onChange = (d) => {
         setLoading(true);
         axios
@@ -104,7 +148,8 @@ function DiaryCalendar() {
             )
             .then((response) => {
                 let copy = loopFunction(meal, response.data);
-                setMeal({ ...copy });
+                updateMeal({ ...copy });
+
                 setLoading(false);
             })
             .catch(() => {
@@ -122,7 +167,7 @@ function DiaryCalendar() {
         setDate(d);
         navigate(`./${d.getTime()}`);
     };
-    console.log(meal);
+
     let menu = [];
 
     switch (param.category) {
