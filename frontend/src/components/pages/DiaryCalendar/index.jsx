@@ -1,6 +1,6 @@
 import Container from '../../atom/Container';
 import { Calendar } from 'react-calendar';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import 'react-calendar/dist/Calendar.css';
 import './calendar.css';
 import { Contents } from '../Home/styled';
@@ -26,7 +26,9 @@ function DiaryCalendar() {
     const [loading, setLoading] = useState(false);
     const [meal, setMeal] = useRecoilState(periodState);
     const [date, setDate] = useRecoilState(dateState);
-    const [isDateSelected, setIsDateSelected] = useState(false);
+    const [isDateSelected, setIsDateSelected] = useState(
+        param.date !== undefined
+    );
 
     const setMealData = (key, res) => {
         let data = [];
