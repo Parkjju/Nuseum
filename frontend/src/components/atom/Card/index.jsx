@@ -4,7 +4,6 @@ import { AnimatePresence } from 'framer-motion';
 
 function Card({ menu, current }) {
     const params = useParams();
-    console.log(params);
 
     return (
         <Box>
