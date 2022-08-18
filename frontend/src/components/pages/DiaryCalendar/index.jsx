@@ -26,6 +26,7 @@ function DiaryCalendar() {
     const [loading, setLoading] = useState(false);
     const [meal, setMeal] = useRecoilState(periodState);
     const [date, setDate] = useRecoilState(dateState);
+    const [isDateSelected, setIsDateSelected] = useState(false);
 
     const setMealData = (key, res) => {
         let data = [];
@@ -130,7 +131,6 @@ function DiaryCalendar() {
         if (!sessionStorage.getItem('access_token')) {
             navigate('/login');
         }
-        navigate(`./${date.setHours(0, 0, 0, 0)}`);
     }, []);
 
     const onChange = (d) => {
@@ -152,7 +152,12 @@ function DiaryCalendar() {
 
                 setLoading(false);
             })
-            .catch(() => {
+            .catch((err) => {
+                if (err.response.status === 403) {
+                    alert('세션이 만료되었습니다. 다시 로그인 해주세요!');
+                    navigate('/login');
+                    return;
+                }
                 setMeal((prev) => {
                     return {
                         breakfast: [],
@@ -163,8 +168,10 @@ function DiaryCalendar() {
                     };
                 });
                 setLoading(false);
+                alert('이 날에는 기록하지 않으셨네요!');
             });
         setDate(d);
+        setIsDateSelected(true);
         navigate(`./${d.getTime()}`);
     };
 
@@ -216,7 +223,7 @@ function DiaryCalendar() {
                 </motion.div>
             </Contents>
 
-            <Diary date={date} />
+            {isDateSelected && !loading ? <Diary date={date} /> : null}
         </Container>
     );
 }

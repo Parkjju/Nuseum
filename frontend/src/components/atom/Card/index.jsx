@@ -1,9 +1,10 @@
-import { Box, Icon, IconBox, IconName, Name, Tab } from './styled';
+import { Box, Icon, IconBox, IconName, Tab } from './styled';
 import { Link, useParams } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 
 function Card({ menu, current }) {
     const params = useParams();
+    console.log(params);
 
     return (
         <Box>
@@ -11,38 +12,13 @@ function Card({ menu, current }) {
                 <AnimatePresence key={index}>
                     {/* 영수증 사진 탭 추가 */}
                     {current === 'home' ? (
+                        // item2로 url 조정
                         <Tab layoutId={item[2]}>
-                            {item[1] === '저녁' ? (
-                                <>
-                                    <Link
-                                        key={index}
-                                        to={
-                                            params.date
-                                                ? `${params.date}/${item[2]}`
-                                                : `${item[2]}`
-                                        }
-                                        style={{
-                                            textDecoration: 'none',
-                                            color: 'black',
-                                            display: 'flex',
-                                            justifyContent: 'space-between',
-                                            width: '100%',
-                                        }}
-                                    >
-                                        <IconBox>
-                                            <Icon
-                                                style={{ width: '40px' }}
-                                                src={item[0]}
-                                            />
-                                            <IconName>{item[1]}</IconName>
-                                        </IconBox>
-                                    </Link>
-                                </>
-                            ) : (
+                            {
                                 <Link
                                     key={index}
                                     to={
-                                        params.date
+                                        params.category === 'diary'
                                             ? `${params.date}/${item[2]}`
                                             : `${item[2]}`
                                     }
@@ -59,7 +35,7 @@ function Card({ menu, current }) {
                                         <IconName>{item[1]}</IconName>
                                     </IconBox>
                                 </Link>
-                            )}
+                            }
                         </Tab>
                     ) : (
                         <Tab

@@ -160,9 +160,6 @@ function Record() {
     const onChangeName = (e) => {
         setFoodName(e.target.value);
     };
-    const onChangeAmount = (e) => {
-        setFoodAmount(e.target.value);
-    };
 
     return (
         <Container>
