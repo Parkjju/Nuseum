@@ -118,7 +118,11 @@ function Record() {
                 }
             )
             .then((response) => {
-                setResult(response.data.results);
+                if (response.data.results.length === 0) {
+                    alert('검색 결과가 없어요!');
+                } else {
+                    setResult(response.data.results);
+                }
             })
             .catch((e) => {
                 if (e.response.data.code === 'token_not_valid') {
@@ -246,13 +250,16 @@ function Record() {
                         id='input-file'
                         style={{ display: 'none' }}
                     />
-                    <ModalTitle>음식 명을 검색하세요.</ModalTitle>
+                    <ModalTitle>
+                        찾고싶은 음식을 작성한 후 엔터키를 입력해주세요.
+                    </ModalTitle>
                     <ModalSearch as='form' onSubmit={onSubmit}>
                         <span className='material-symbols-outlined'>
                             search
                         </span>
                         <ModalInput value={foodName} onChange={onChangeName} />
                     </ModalSearch>
+
                     <button onClick={onClick} style={{ marginBottom: '30px' }}>
                         저장
                     </button>
