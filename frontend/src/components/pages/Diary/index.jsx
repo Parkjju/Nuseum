@@ -14,7 +14,7 @@ import { periodState } from '../../../recoil/period/period';
 import axios from 'axios';
 import { FormBox } from '../../molecules/Login/styled';
 
-function Diary() {
+function Diary({ date }) {
     const navigate = useNavigate();
     useEffect(() => {
         const sessionStorage = window.sessionStorage;
@@ -57,6 +57,7 @@ function Diary() {
                     dinner: [...postData.dinner],
                     snack: [...postData.snack],
                     supplement: [...postData.supplement],
+                    created_at: `${date.getTime()}`,
                 },
                 {
                     headers: {
