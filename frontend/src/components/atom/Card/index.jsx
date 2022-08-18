@@ -34,43 +34,31 @@ function Card({ menu, current }) {
                                                 style={{ width: '40px' }}
                                                 src={item[0]}
                                             />
-                                            <IconName
-                                                style={{ marginLeft: '40px' }}
-                                            >
-                                                {item[1]}
-                                            </IconName>
+                                            <IconName>{item[1]}</IconName>
                                         </IconBox>
-                                        <span className='material-symbols-outlined'>
-                                            chevron_right
-                                        </span>
                                     </Link>
                                 </>
                             ) : (
-                                <>
-                                    <Link
-                                        key={index}
-                                        to={
-                                            params.date
-                                                ? `${params.date}/${item[2]}`
-                                                : `${item[2]}`
-                                        }
-                                        style={{
-                                            textDecoration: 'none',
-                                            color: 'black',
-                                            display: 'flex',
-                                            justifyContent: 'space-between',
-                                            width: '100%',
-                                        }}
-                                    >
-                                        <IconBox>
-                                            <Icon src={item[0]} />
-                                            <IconName>{item[1]}</IconName>
-                                        </IconBox>
-                                        <span className='material-symbols-outlined'>
-                                            chevron_right
-                                        </span>
-                                    </Link>
-                                </>
+                                <Link
+                                    key={index}
+                                    to={
+                                        params.date
+                                            ? `${params.date}/${item[2]}`
+                                            : `${item[2]}`
+                                    }
+                                    style={{
+                                        textDecoration: 'none',
+                                        color: 'black',
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        width: '100%',
+                                    }}
+                                >
+                                    <IconBox>
+                                        <Icon src={item[0]} />
+                                        <IconName>{item[1]}</IconName>
+                                    </IconBox>
+                                </Link>
                             )}
                         </Tab>
                     ) : (
@@ -82,21 +70,6 @@ function Card({ menu, current }) {
                         >
                             {item[1] === '저녁' ? (
                                 <>
-                                    <IconBox>
-                                        <Icon
-                                            style={{
-                                                width: '40px',
-                                                position: 'relative',
-                                                left: -5,
-                                            }}
-                                            src={item[0]}
-                                        />
-                                        <IconName
-                                            style={{ marginLeft: '40px' }}
-                                        >
-                                            {item[1]}
-                                        </IconName>
-                                    </IconBox>
                                     <Link
                                         key={index}
                                         to={
@@ -109,18 +82,20 @@ function Card({ menu, current }) {
                                             color: 'black',
                                         }}
                                     >
-                                        <span className='material-symbols-outlined'>
-                                            add
-                                        </span>
+                                        <IconBox>
+                                            <Icon
+                                                style={{
+                                                    width: '40px',
+                                                    position: 'relative',
+                                                }}
+                                                src={item[0]}
+                                            />
+                                            <IconName>{item[1]}</IconName>
+                                        </IconBox>
                                     </Link>
                                 </>
                             ) : (
                                 <>
-                                    <IconBox>
-                                        <Icon src={item[0]} />
-                                        <IconName>{item[1]}</IconName>
-                                    </IconBox>
-
                                     <Link
                                         key={index}
                                         to={
@@ -133,9 +108,10 @@ function Card({ menu, current }) {
                                             color: 'black',
                                         }}
                                     >
-                                        <span className='material-symbols-outlined'>
-                                            add
-                                        </span>
+                                        <IconBox>
+                                            <Icon src={item[0]} />
+                                            <IconName>{item[1]}</IconName>
+                                        </IconBox>
                                     </Link>
                                 </>
                             )}
