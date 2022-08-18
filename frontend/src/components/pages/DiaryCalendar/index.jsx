@@ -183,14 +183,14 @@ function DiaryCalendar() {
         case 'diary':
             menu.push([diary, '식단일기', 'notepad']);
             break;
-        case 'record':
-            menu.push([record, '식이분석', 'record']);
-            break;
         case 'analysis':
-            menu.push([analysis, '맞춤식품', 'analysis']);
+            menu.push([analysis, '식이분석', 'analysis']);
             break;
         case 'food':
-            menu.push([food, '내 아이', 'food']);
+            menu.push([food, '맞춤식품', 'food']);
+            break;
+        case 'record':
+            menu.push([record, '내 아이', 'record']);
             break;
         case 'question':
             menu.push([question, 'Q&A', 'question']);
@@ -198,6 +198,7 @@ function DiaryCalendar() {
         default:
             break;
     }
+    console.log(menu);
 
     return (
         <Container>
