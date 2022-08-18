@@ -215,13 +215,13 @@ function DiaryCalendar() {
                 >
                     {loading ? (
                         <CircularProgress sx={{ marginBottom: 5 }} />
-                    ) : (
+                    ) : param.category === 'diary' ? (
                         <Calendar
                             locale='en-US'
                             onChange={onChange}
                             value={date}
                         />
-                    )}
+                    ) : null}
                 </motion.div>
             </Contents>
 
