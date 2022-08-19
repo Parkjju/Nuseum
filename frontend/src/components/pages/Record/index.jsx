@@ -24,7 +24,7 @@ import { useEffect, useState } from 'react';
 
 import { motion } from 'framer-motion';
 import { ModalTitle } from '../../atom/Modal/styled';
-import { periodState } from '../../../recoil/period/period';
+import { mealImageState, periodState } from '../../../recoil/period/period';
 import { useRecoilState } from 'recoil';
 import axios from 'axios';
 import Menu from '../../atom/Menu';
@@ -37,6 +37,8 @@ function Record() {
 
     // 선택 이미지 상태값 - 삭제할때 활용
     const [selectedImage, setSelectedImage] = useState([]);
+    const [formData, setFormData] = useState(new FormData());
+    const [globalImage, setGlobalImage] = useRecoilState(mealImageState);
 
     // 검색 음식명
     const [foodName, setFoodName] = useState();
@@ -86,15 +88,84 @@ function Record() {
 
     let menu = [];
     const onChange = (e) => {
+        if (selectedImage.length >= 3) {
+            alert('사진은 세장까지만 등록 가능해요 😭');
+            return;
+        }
         if (e.target.files && e.target.files.length > 0) {
             setSelectedImage((prev) => [...prev, e.target.files[0]]);
+            setFormData((prev) => {
+                return {
+                    ...prev,
+                    [`${e.target.files[0].name}`]: e.target.files[0],
+                };
+            });
         }
     };
 
     const onClick = () => {
+        switch (param.when) {
+            case 'breakfast':
+                for (let i = 1; i < selectedImage.length + 1; i++) {
+                    setGlobalImage((prev) => {
+                        return {
+                            ...prev,
+                            [`breakfast_img${i}`]:
+                                formData[Object.keys(formData)[i - 1]],
+                        };
+                    });
+                }
+                break;
+            case 'lunch':
+                for (let i = 1; i < selectedImage.length + 1; i++) {
+                    setGlobalImage((prev) => {
+                        return {
+                            ...prev,
+                            [`lunch_img${i}`]:
+                                formData[Object.keys(formData)[i - 1]],
+                        };
+                    });
+                }
+                break;
+            case 'dinner':
+                for (let i = 1; i < selectedImage.length + 1; i++) {
+                    setGlobalImage((prev) => {
+                        return {
+                            ...prev,
+                            [`dinner_img${i}`]:
+                                formData[Object.keys(formData)[i - 1]],
+                        };
+                    });
+                }
+                break;
+            case 'snack':
+                for (let i = 1; i < selectedImage.length + 1; i++) {
+                    setGlobalImage((prev) => {
+                        return {
+                            ...prev,
+                            [`snack_img${i}`]:
+                                formData[Object.keys(formData)[i - 1]],
+                        };
+                    });
+                }
+                break;
+            case 'supplement':
+                for (let i = 1; i < selectedImage.length + 1; i++) {
+                    setGlobalImage((prev) => {
+                        return {
+                            ...prev,
+                            [`supplement_img${i}`]:
+                                formData[Object.keys(formData)[i - 1]],
+                        };
+                    });
+                }
+                break;
+            default:
+                break;
+        }
         alert('저장되었습니다!');
     };
-
+    console.log(formData);
     const removeSelectedImage = (index) => {
         setSelectedImage((prev) => [
             ...prev.slice(0, index),
@@ -246,9 +317,11 @@ function Record() {
                         type='file'
                         id='input-file'
                         style={{ display: 'none' }}
+                        accept='image/*'
                     />
                     <ModalTitle>
-                        찾고싶은 음식을 작성한 후 엔터키를 입력해주세요.
+                        찾고싶은 음식을 작성한 후 엔터해주세요. 섭취량을 작성한
+                        후 엔터해주세요.
                     </ModalTitle>
                     <ModalSearch as='form' onSubmit={onSubmit}>
                         <span className='material-symbols-outlined'>

@@ -11,10 +11,11 @@ import Card from '../../atom/Card';
 import { Contents } from '../Home/styled';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
-import { periodState } from '../../../recoil/period/period';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { mealImageState, periodState } from '../../../recoil/period/period';
 import axios from 'axios';
 import { FormBox } from '../../molecules/Login/styled';
+import { postIdState } from '../../../recoil/postID/postId';
 
 function Diary({ date }) {
     const navigate = useNavigate();
@@ -34,9 +35,41 @@ function Diary({ date }) {
         [today, '오늘', 'today'],
     ];
     const meal = useRecoilValue(periodState);
+    const mealImages = useRecoilValue(mealImageState);
+    const [postId, setPostId] = useRecoilState(postIdState);
+    console.log('포스트 아이디:', postId);
 
-    const onSubmit = (e) => {
-        e.preventDefault();
+    const makePutRequestData = (meal) => {
+        let postData = { ...meal };
+        console.log('PUTREQUESTDATA function', postData);
+        for (let i of Object.keys(postData)) {
+            let amountSaveArray = [];
+            if (postData[i].length === 0) {
+                postData = {
+                    ...postData,
+                    [`${i}`]: [],
+                    [`${i}_amount`]: JSON.stringify([]),
+                };
+                continue;
+            }
+            postData[i] = postData[i].map((amount) => {
+                amountSaveArray.push(amount.at(-1));
+                let copy = [...amount];
+                copy.pop();
+                return [...copy];
+            });
+
+            postData = {
+                ...postData,
+                [`${i}`]: [...postData[i].flat()],
+                [`${i}_amount`]: JSON.stringify([...amountSaveArray]),
+            };
+        }
+
+        return { ...postData };
+    };
+
+    const makePostRequestData = (meal) => {
         let postData = { ...meal };
         for (let i in postData) {
             if (postData[i] !== []) {
@@ -52,27 +85,111 @@ function Diary({ date }) {
             }
         }
 
-        axios
-            .post(
-                'https://cryptic-castle-40575.herokuapp.com/api/v1/post/',
-                {
-                    breakfast: [...postData.breakfast],
-                    lunch: [...postData.lunch],
-                    dinner: [...postData.dinner],
-                    snack: [...postData.snack],
-                    supplement: [...postData.supplement],
-                    created_at: `${date.getTime()}`,
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${sessionStorage.getItem(
-                            'access_token'
-                        )}`,
+        return { ...postData };
+    };
+
+    const deleteFoodName = (postData) => {
+        for (let i of Object.keys(postData)) {
+            if (postData[i].length === 0) {
+                continue;
+            }
+
+            postData[i] = postData[i].map((meal) => {
+                let copy = [...meal];
+                copy.shift();
+                copy = copy.map((item) => Number(item));
+                return [...copy];
+            });
+        }
+        return { ...postData };
+    };
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        let postData = { ...meal };
+
+        postData = { ...deleteFoodName({ ...postData }) };
+
+        if (postId.id === undefined || postId.id === null) {
+            let temp = makePostRequestData({ ...meal });
+            postData = { ...temp };
+        } else {
+            let temp = makePutRequestData({ ...postData });
+            postData = { ...temp };
+        }
+
+        if (!postId.id) {
+            console.log('POST직전');
+            console.log('POST 직전 정제 데이터', postData);
+            axios
+                .post(
+                    'https://cryptic-castle-40575.herokuapp.com/api/v1/post/',
+                    {
+                        breakfast: [...postData.breakfast],
+                        lunch: [...postData.lunch],
+                        dinner: [...postData.dinner],
+                        snack: [...postData.snack],
+                        supplement: [...postData.supplement],
+                        created_at: `${date.getTime()}`,
                     },
-                }
-            )
-            .then((response) => console.log(response))
-            .catch((err) => console.log(err));
+                    {
+                        headers: {
+                            Authorization: `Bearer ${sessionStorage.getItem(
+                                'access_token'
+                            )}`,
+                        },
+                    }
+                )
+                .then((response) => {
+                    console.log(response);
+                    setPostId(() => {
+                        return {
+                            id: response.data.id,
+                        };
+                    });
+                })
+                .catch((err) => console.log(err));
+        } else {
+            console.log('PUT 날리는중..');
+            axios
+                .put(
+                    `https://cryptic-castle-40575.herokuapp.com/api/v1/post/${postId.id}/`,
+                    {
+                        breakfast: [...postData.breakfast],
+                        breakfast_amount: postData.breakfast_amount,
+                        lunch: [...postData.lunch],
+                        lunch_amount: postData.lunch_amount,
+                        dinner_amount: postData.dinner_amount,
+                        dinner: [...postData.dinner],
+                        snack: [...postData.snack],
+                        snack_amount: postData.snack_amount,
+                        supplement: [...postData.supplement],
+                        supplement_amount: postData.supplement_amount,
+                        // created_at: `${date.getTime()}`,
+                        // breakfast_img1: mealImages.breakfast_img1,
+                        // breakfast_img2: mealImages.breakfast_img2,
+                        // breakfast_img3: mealImages.breakfast_img3,
+                        // lunch_img1: mealImages.lunch_img1,
+                        // lunch_img2: mealImages.lunch_img2,
+                        // lunch_img3: mealImages.lunch_img3,
+                        // dinner_img1: mealImages.dinner_img1,
+                        // dinner_img2: mealImages.dinner_img2,
+                        // dinner_img3: mealImages.dinner_img3,
+                        // snack_img1: mealImages.snack1,
+                        // snack_img2: mealImages.snack2,
+                        // snack_img3: mealImages.snack3,
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${sessionStorage.getItem(
+                                'access_token'
+                            )}`,
+                        },
+                    }
+                )
+                .then((response) => console.log(response))
+                .catch((err) => console.log(err));
+        }
     };
 
     return (
