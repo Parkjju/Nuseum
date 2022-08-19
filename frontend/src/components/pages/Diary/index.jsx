@@ -37,7 +37,6 @@ function Diary({ date }) {
     const meal = useRecoilValue(periodState);
     const mealImages = useRecoilValue(mealImageState);
     const [postId, setPostId] = useRecoilState(postIdState);
-    console.log('포스트 아이디:', postId);
 
     const makePutRequestData = (meal) => {
         let postData = { ...meal };
@@ -104,6 +103,7 @@ function Diary({ date }) {
         return { ...postData };
     };
 
+    console.log(postId.id);
     const onSubmit = (e) => {
         e.preventDefault();
         let postData = { ...meal };
@@ -117,8 +117,7 @@ function Diary({ date }) {
             let temp = makePutRequestData({ ...postData });
             postData = { ...temp };
         }
-
-        if (!postId.id) {
+        if (postId.id === null || postId.id === undefined) {
             console.log('POST직전');
             console.log('POST 직전 정제 데이터', postData);
             axios
@@ -141,7 +140,7 @@ function Diary({ date }) {
                     }
                 )
                 .then((response) => {
-                    console.log(response);
+                    console.log('일지 등록이 완료되었어요☺️');
                     setPostId(() => {
                         return {
                             id: response.data.id,
@@ -151,6 +150,18 @@ function Diary({ date }) {
                 .catch((err) => console.log(err));
         } else {
             console.log('PUT 날리는중..');
+            console.log('PUT 최종 데이터:', {
+                breakfast: [...postData.breakfast],
+                breakfast_amount: postData.breakfast_amount,
+                lunch: [...postData.lunch],
+                lunch_amount: postData.lunch_amount,
+                dinner_amount: postData.dinner_amount,
+                dinner: [...postData.dinner],
+                snack: [...postData.snack],
+                snack_amount: postData.snack_amount,
+                supplement: [...postData.supplement],
+                supplement_amount: postData.supplement_amount,
+            });
             axios
                 .put(
                     `https://cryptic-castle-40575.herokuapp.com/api/v1/post/${postId.id}/`,
@@ -165,7 +176,6 @@ function Diary({ date }) {
                         snack_amount: postData.snack_amount,
                         supplement: [...postData.supplement],
                         supplement_amount: postData.supplement_amount,
-                        // created_at: `${date.getTime()}`,
                         // breakfast_img1: mealImages.breakfast_img1,
                         // breakfast_img2: mealImages.breakfast_img2,
                         // breakfast_img3: mealImages.breakfast_img3,
@@ -187,7 +197,7 @@ function Diary({ date }) {
                         },
                     }
                 )
-                .then((response) => console.log(response))
+                .then((response) => alert('일지 수정이 완료되었어요☺️'))
                 .catch((err) => console.log(err));
         }
     };

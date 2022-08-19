@@ -174,6 +174,7 @@ function DiaryCalendar() {
                         supplement: [],
                     };
                 });
+                setId({ id: null });
                 setLoading(false);
                 alert('이 날에는 기록하지 않으셨네요!');
             });
