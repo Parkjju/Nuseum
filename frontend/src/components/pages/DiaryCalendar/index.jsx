@@ -18,8 +18,9 @@ import Diary from '../Diary';
 import axios from 'axios';
 import { CircularProgress } from '@mui/material';
 import { periodState } from '../../../recoil/period/period';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { dateState } from '../../../recoil/date/date';
+import { postIdState } from '../../../recoil/postID/postId';
 
 function DiaryCalendar() {
     const param = useParams();
@@ -29,6 +30,7 @@ function DiaryCalendar() {
     const [isDateSelected, setIsDateSelected] = useState(
         param.date !== undefined
     );
+    const setId = useSetRecoilState(postIdState);
 
     const setMealData = (key, res) => {
         let data = [];
@@ -100,7 +102,9 @@ function DiaryCalendar() {
                                 },
                             }
                         )
-                        .then((response) => names.push(response.data))
+                        .then((response) => {
+                            names.push(response.data);
+                        })
                 );
             });
         }
@@ -150,6 +154,7 @@ function DiaryCalendar() {
             )
             .then((response) => {
                 let copy = loopFunction(meal, response.data);
+                setId({ id: response.data.id });
                 updateMeal({ ...copy });
 
                 setLoading(false);
@@ -198,7 +203,6 @@ function DiaryCalendar() {
         default:
             break;
     }
-    console.log(menu);
 
     return (
         <Container>

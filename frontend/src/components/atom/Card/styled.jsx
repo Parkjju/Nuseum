@@ -41,7 +41,7 @@ export const Name = styled.span`
 `;
 
 export const IconName = styled(Name)`
-    font-size: 16px;
+    font-size: 10px;
     color: rgba(0, 0, 0, 0.8);
     font-weight: bold;
     width: 100%;

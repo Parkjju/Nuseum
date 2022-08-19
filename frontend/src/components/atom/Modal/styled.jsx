@@ -12,7 +12,7 @@ export const Modal = styled.div`
 `;
 
 export const ModalTitle = styled.p`
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
     height: 15px;
     margin-bottom: 20px;
