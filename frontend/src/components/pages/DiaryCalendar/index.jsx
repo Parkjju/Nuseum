@@ -27,10 +27,10 @@ function DiaryCalendar() {
     const [loading, setLoading] = useState(false);
     const [meal, setMeal] = useRecoilState(periodState);
     const [date, setDate] = useRecoilState(dateState);
+    const setPostId = useSetRecoilState(postIdState);
     const [isDateSelected, setIsDateSelected] = useState(
         param.date !== undefined
     );
-    const setId = useSetRecoilState(postIdState);
 
     const setMealData = (key, res) => {
         let data = [];
@@ -70,7 +70,7 @@ function DiaryCalendar() {
                 return null;
         }
     };
-    const loopFunction = (meal, res) => {
+    const loopFunction = (res) => {
         let copy = {
             breakfast: [],
             lunch: [],
@@ -78,22 +78,30 @@ function DiaryCalendar() {
             snack: [],
             supplement: [],
         };
-        for (let i in meal) {
-            copy[i].push(...setMealData(i, res));
-        }
-        delete copy.i;
-
+        res.map((item) => copy[item.meal_type].push(item));
+        res.forEach((item) => {
+            if (item.post_id) {
+                setPostId(item.post_id);
+                return;
+            }
+        });
         return copy;
     };
     const updateMeal = (meal) => {
         let promises = [];
-        let names = [];
+        let names = {
+            breakfast: [],
+            lunch: [],
+            dinner: [],
+            snack: [],
+            supplement: [],
+        };
         for (let key in meal) {
             meal[key].forEach((item) => {
                 promises.push(
                     axios
                         .get(
-                            `https://cryptic-castle-40575.herokuapp.com/api/v1/foods/name/?id=${item[0]}`,
+                            `https://nuseum-server.herokuapp.com/api/v1/food/name/?id=${item.food_id}`,
                             {
                                 headers: {
                                     Authorization: `Bearer ${sessionStorage.getItem(
@@ -103,7 +111,7 @@ function DiaryCalendar() {
                             }
                         )
                         .then((response) => {
-                            names.push(response.data);
+                            names[key].push(response.data.name);
                         })
                 );
             });
@@ -114,8 +122,11 @@ function DiaryCalendar() {
             for (let i in copy) {
                 let temp = [];
                 copy[i].forEach((item) => {
-                    let tempItem = [...item];
-                    tempItem.unshift(names.shift().name);
+                    let tempItem = [
+                        names[i].shift(),
+                        item.food_id,
+                        item.amount,
+                    ];
                     temp.push(tempItem);
                 });
                 copy[i] = [...temp];
@@ -143,7 +154,7 @@ function DiaryCalendar() {
         setLoading(true);
         axios
             .get(
-                `https://cryptic-castle-40575.herokuapp.com/api/v1/post/?date=${d.getTime()}`,
+                `https://nuseum-server.herokuapp.com/api/v1/post/?date=${d.getTime()}`,
                 {
                     headers: {
                         Authorization: `Bearer ${sessionStorage.getItem(
@@ -153,10 +164,8 @@ function DiaryCalendar() {
                 }
             )
             .then((response) => {
-                let copy = loopFunction(meal, response.data);
-                setId({ id: response.data.id });
+                let copy = loopFunction(response.data);
                 updateMeal({ ...copy });
-
                 setLoading(false);
             })
             .catch((err) => {
@@ -174,8 +183,8 @@ function DiaryCalendar() {
                         supplement: [],
                     };
                 });
-                setId({ id: null });
                 setLoading(false);
+                setPostId(null);
                 alert('이 날에는 기록하지 않으셨네요!');
             });
         setDate(d);
