@@ -165,7 +165,7 @@ function Record() {
         }
         alert('저장되었습니다!');
     };
-    console.log(formData);
+
     const removeSelectedImage = (index) => {
         setSelectedImage((prev) => [
             ...prev.slice(0, index),

@@ -46,7 +46,6 @@ function Diary({ date }) {
             result.meal.push(data[i]);
         }
         result.meal = result.meal.flat();
-        console.log('FLAT', result);
 
         return { ...result };
     };
@@ -75,7 +74,6 @@ function Diary({ date }) {
         postData = { ...deleteFoodName({ ...postData }) };
 
         let requestData = makeRequestData(postData, date);
-        console.log(requestData);
 
         if (postId === null || postId === undefined) {
             axios
