@@ -58,6 +58,7 @@ const NutritionList = ({ item }) => {
     const param = useParams();
     const [period, setPeriod] = useRecoilState(periodState);
     const [amount, setAmount] = useState(0);
+    console.log('검색 전 피리어드', period);
 
     const onChange = (e) => {
         if (e.target.value.toString().length > 5) {
@@ -75,8 +76,8 @@ const NutritionList = ({ item }) => {
                         const previousMeal = [...prev.breakfast];
                         const newFood = [
                             e.target.name,
-                            e.target.getAttribute('data-itemid'),
-                            amount,
+                            Number(e.target.getAttribute('data-itemid')),
+                            Number(amount),
                         ];
                         return {
                             ...prev,
@@ -89,8 +90,8 @@ const NutritionList = ({ item }) => {
                         const previousMeal = [...prev.lunch];
                         const newFood = [
                             e.target.name,
-                            e.target.getAttribute('data-itemid'),
-                            amount,
+                            Number(e.target.getAttribute('data-itemid')),
+                            Number(amount),
                         ];
                         return {
                             ...prev,
@@ -103,8 +104,8 @@ const NutritionList = ({ item }) => {
                         const previousMeal = [...prev.dinner];
                         const newFood = [
                             e.target.name,
-                            e.target.getAttribute('data-itemid'),
-                            amount,
+                            Number(e.target.getAttribute('data-itemid')),
+                            Number(amount),
                         ];
                         return {
                             ...prev,
@@ -117,8 +118,8 @@ const NutritionList = ({ item }) => {
                         const previousMeal = [...prev.snack];
                         const newFood = [
                             e.target.name,
-                            e.target.getAttribute('data-itemid'),
-                            amount,
+                            Number(e.target.getAttribute('data-itemid')),
+                            Number(amount),
                         ];
                         return {
                             ...prev,
@@ -131,8 +132,8 @@ const NutritionList = ({ item }) => {
                         const previousMeal = [...prev.supplement];
                         const newFood = [
                             e.target.name,
-                            e.target.getAttribute('data-itemid'),
-                            amount,
+                            Number(e.target.getAttribute('data-itemid')),
+                            Number(amount),
                         ];
                         return {
                             ...prev,
@@ -143,6 +144,7 @@ const NutritionList = ({ item }) => {
                 default:
                     break;
             }
+
             setAmount(0);
         }
     };
