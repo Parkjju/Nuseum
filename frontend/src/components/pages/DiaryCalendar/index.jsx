@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import 'react-calendar/dist/Calendar.css';
 import './calendar.css';
 import { Contents } from '../Home/styled';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 import diary from '../../../assets/notepad.png';
@@ -24,6 +24,7 @@ import { postIdState } from '../../../recoil/postID/postId';
 
 function DiaryCalendar() {
     const param = useParams();
+    const location = useLocation();
     const [loading, setLoading] = useState(false);
     const [meal, setMeal] = useRecoilState(periodState);
     const [date, setDate] = useRecoilState(dateState);
@@ -219,7 +220,7 @@ function DiaryCalendar() {
 
     let menu = [];
 
-    switch (param.category) {
+    switch (location.pathname.split('/')[1]) {
         case 'diary':
             menu.push([diary, '식단일기', 'notepad']);
             break;
@@ -255,7 +256,7 @@ function DiaryCalendar() {
                 >
                     {loading ? (
                         <CircularProgress sx={{ marginBottom: 5 }} />
-                    ) : param.category === 'diary' ? (
+                    ) : location.pathname.split('/')[1] === 'diary' ? (
                         <Calendar
                             locale='en-US'
                             onChange={onChange}

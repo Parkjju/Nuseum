@@ -100,8 +100,6 @@ function Diary({ date }) {
                             Authorization: `Bearer ${sessionStorage.getItem(
                                 'access_token'
                             )}`,
-
-                            'Content-Type': 'multipart/form-data',
                         },
                     }
                 )
@@ -126,7 +124,6 @@ function Diary({ date }) {
                             Authorization: `Bearer ${sessionStorage.getItem(
                                 'access_token'
                             )}`,
-                            'Content-type': 'multipart/form-data',
                         },
                     }
                 )

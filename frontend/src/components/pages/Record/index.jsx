@@ -30,6 +30,7 @@ import axios from 'axios';
 import Menu from '../../atom/Menu';
 import CircularProgress from '@mui/material/CircularProgress';
 import React from 'react';
+import imageCompression from 'browser-image-compression';
 
 function Record() {
     const navigate = useNavigate();
@@ -39,7 +40,7 @@ function Record() {
 
     // 선택 이미지 상태값 - 삭제할때 활용
     const [selectedImage, setSelectedImage] = useState([]);
-    const [formData, setFormData] = useState(new FormData());
+    const [formData, setFormData] = useState([]);
     const [globalImage, setGlobalImage] = useRecoilState(mealImageState);
 
     // 검색 음식명
@@ -58,6 +59,29 @@ function Record() {
     const [isLoading, setIsLoading] = useState(false);
 
     const param = useParams();
+
+    const actionImgCompress = async (fileSrc) => {
+        console.log('압축 시작');
+
+        const options = {
+            maxSizeMB: 0.2,
+            maxWidthOrHeight: 1920,
+            useWebWorker: true,
+        };
+        try {
+            // 압축 결과
+            const compressedFile = await imageCompression(fileSrc, options);
+
+            const reader = new FileReader();
+            reader.readAsDataURL(compressedFile);
+            reader.onloadend = () => {
+                const base64data = reader.result;
+                setFormData((prev) => [...prev, base64data]);
+            };
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     useEffect(() => {
         setFoodTag([]);
@@ -90,6 +114,7 @@ function Record() {
     }, [param.when, meal]);
 
     let menu = [];
+
     const onChange = (e) => {
         if (selectedImage.length >= 3) {
             alert('사진은 세장까지만 등록 가능해요 😭');
@@ -98,10 +123,7 @@ function Record() {
         if (e.target.files && e.target.files.length > 0) {
             console.log('이미지 파일: ', e.target.files[0]);
             setSelectedImage((prev) => [...prev, e.target.files[0]]);
-            setFormData((prev) => {
-                prev.append('file', e.target.files[0]);
-                return prev;
-            });
+            actionImgCompress(e.target.files[0]);
         }
     };
 
