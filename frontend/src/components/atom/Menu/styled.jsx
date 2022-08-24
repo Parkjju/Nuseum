@@ -58,7 +58,6 @@ const NutritionList = ({ item }) => {
     const param = useParams();
     const [period, setPeriod] = useRecoilState(periodState);
     const [amount, setAmount] = useState(0);
-    console.log('검색 전 피리어드', period);
 
     const onChange = (e) => {
         if (e.target.value.toString().length > 5) {
@@ -70,77 +69,114 @@ const NutritionList = ({ item }) => {
 
     const saveNutrition = (e) => {
         if (e.which === 13) {
+            console.log(period);
             switch (param.when) {
                 case 'breakfast':
                     setPeriod((prev) => {
-                        const previousMeal = [...prev.breakfast];
-                        const newFood = [
-                            e.target.name,
-                            Number(e.target.getAttribute('data-itemid')),
-                            Number(amount),
-                        ];
+                        const previousMeal = {
+                            data: [...prev.breakfast.data],
+                            image: prev.breakfast.image,
+                        };
+                        const newFood = {
+                            name: e.target.name,
+                            food_id: Number(
+                                e.target.getAttribute('data-itemID')
+                            ),
+                            amount: Number(amount),
+                        };
+
                         return {
                             ...prev,
-                            breakfast: [...previousMeal, newFood],
+                            breakfast: {
+                                ...previousMeal,
+                                data: [...prev.breakfast.data, newFood],
+                            },
                         };
                     });
                     break;
                 case 'lunch':
                     setPeriod((prev) => {
-                        const previousMeal = [...prev.lunch];
-                        const newFood = [
-                            e.target.name,
-                            Number(e.target.getAttribute('data-itemid')),
-                            Number(amount),
-                        ];
+                        const previousMeal = {
+                            data: [...prev.lunch.data],
+                            image: prev.lunch.image,
+                        };
+                        const newFood = {
+                            name: e.target.name,
+                            food_id: Number(
+                                e.target.getAttribute('data-itemID')
+                            ),
+                            amount: Number(amount),
+                        };
+
                         return {
                             ...prev,
-                            lunch: [...previousMeal, newFood],
+                            lunch: {
+                                ...previousMeal,
+                                data: [...prev.lunch.data, newFood],
+                            },
                         };
                     });
                     break;
                 case 'dinner':
                     setPeriod((prev) => {
-                        const previousMeal = [...prev.dinner];
-                        const newFood = [
-                            e.target.name,
-                            Number(e.target.getAttribute('data-itemid')),
-                            Number(amount),
-                        ];
+                        const previousMeal = {
+                            data: [...prev.dinner.data],
+                            image: prev.dinner.image,
+                        };
+                        const newFood = {
+                            name: e.target.name,
+                            food_id: Number(
+                                e.target.getAttribute('data-itemID')
+                            ),
+                            amount: Number(amount),
+                        };
+
                         return {
                             ...prev,
-                            dinner: [...previousMeal, newFood],
+                            dinner: {
+                                ...previousMeal,
+                                data: [...prev.dinner.data, newFood],
+                            },
                         };
                     });
                     break;
                 case 'snack':
                     setPeriod((prev) => {
-                        const previousMeal = [...prev.snack];
-                        const newFood = [
-                            e.target.name,
-                            Number(e.target.getAttribute('data-itemid')),
-                            Number(amount),
-                        ];
+                        const previousMeal = {
+                            data: [...prev.snack.data],
+                            image: prev.snack.image,
+                        };
+                        const newFood = {
+                            name: e.target.name,
+                            food_id: Number(
+                                e.target.getAttribute('data-itemID')
+                            ),
+                            amount: Number(amount),
+                        };
+
                         return {
                             ...prev,
-                            snack: [...previousMeal, newFood],
+                            snack: {
+                                ...previousMeal,
+                                data: [...prev.snack.data, newFood],
+                            },
                         };
                     });
                     break;
-                case 'supplement':
-                    setPeriod((prev) => {
-                        const previousMeal = [...prev.supplement];
-                        const newFood = [
-                            e.target.name,
-                            Number(e.target.getAttribute('data-itemid')),
-                            Number(amount),
-                        ];
-                        return {
-                            ...prev,
-                            supplement: [...previousMeal, newFood],
-                        };
-                    });
-                    break;
+                // case 'supplement':
+                //     setPeriod((prev) => {
+                //         const previousMeal = { ...prev.supplement };
+                //         const newFood = [
+                //             e.target.name,
+                //             Number(e.target.getAttribute('data-itemid')),
+                //             Number(amount),
+                //         ];
+                //         return {
+                //             ...prev,
+                //             supplement: [...previousMeal, newFood],
+                //         };
+                //     });
+                //     break;
                 default:
                     break;
             }
@@ -148,6 +184,7 @@ const NutritionList = ({ item }) => {
             setAmount(0);
         }
     };
+    console.log('PERIOD STATE:', period);
 
     const [keyCount, setKeyCount] = useState(0);
 

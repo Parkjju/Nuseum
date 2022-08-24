@@ -72,19 +72,41 @@ function DiaryCalendar() {
     };
     const loopFunction = (res) => {
         let copy = {
-            breakfast: [],
-            lunch: [],
-            dinner: [],
-            snack: [],
-            supplement: [],
+            breakfast: {
+                data: [],
+                image: null,
+            },
+            lunch: {
+                data: [],
+                image: null,
+            },
+            dinner: {
+                data: [],
+                image: null,
+            },
+            snack: {
+                data: [],
+                image: null,
+            },
+            supplement: {
+                data: [],
+                image: null,
+            },
         };
-        res.map((item) => copy[item.meal_type].push(item));
-        res.forEach((item) => {
-            if (item.post_id) {
-                setPostId(item.post_id);
-                return;
+        for (let i in res) {
+            copy[i].data = [...res[i].data];
+
+            if (res[i].data.length) {
+                res[i].data.forEach((item) => {
+                    if (item.post_id) {
+                        setPostId(item.post_id);
+                        return;
+                    }
+                });
+                break;
             }
-        });
+        }
+
         return copy;
     };
     const updateMeal = (meal) => {
@@ -96,8 +118,9 @@ function DiaryCalendar() {
             snack: [],
             supplement: [],
         };
+
         for (let key in meal) {
-            meal[key].forEach((item) => {
+            meal[key].data.forEach((item) => {
                 promises.push(
                     axios
                         .get(
@@ -121,23 +144,23 @@ function DiaryCalendar() {
             let copy = { ...meal };
             for (let i in copy) {
                 let temp = [];
-                copy[i].forEach((item) => {
-                    let tempItem = [
-                        names[i].shift(),
-                        item.food_id,
-                        item.amount,
-                    ];
+                copy[i].data.forEach((item) => {
+                    let tempItem = {
+                        name: names[i].shift(),
+                        food_id: item.food_id,
+                        amount: item.amount,
+                    };
                     temp.push(tempItem);
                 });
-                copy[i] = [...temp];
+                copy[i].data = [...temp];
             }
 
             setMeal({
-                breakfast: [...copy.breakfast],
-                lunch: [...copy.lunch],
-                dinner: [...copy.dinner],
-                snack: [...copy.snack],
-                supplement: [...copy.supplement],
+                breakfast: { data: [...copy.breakfast.data], image: null },
+                lunch: { data: [...copy.lunch.data], image: null },
+                dinner: { data: [...copy.dinner.data], image: null },
+                snack: { data: [...copy.snack.data], image: null },
+                supplement: { data: [...copy.supplement.data], image: null },
             });
         });
     };
@@ -164,11 +187,13 @@ function DiaryCalendar() {
                 }
             )
             .then((response) => {
-                let copy = loopFunction(response.data);
+                let copy = loopFunction(response.data.meal);
                 updateMeal({ ...copy });
+                console.log(copy);
                 setLoading(false);
             })
             .catch((err) => {
+                console.log(err);
                 if (err.response.status === 403) {
                     alert('세션이 만료되었습니다. 다시 로그인 해주세요!');
                     navigate('/login');
@@ -176,11 +201,11 @@ function DiaryCalendar() {
                 }
                 setMeal((prev) => {
                     return {
-                        breakfast: [],
-                        lunch: [],
-                        dinner: [],
-                        snack: [],
-                        supplement: [],
+                        breakfast: { data: [], image: '' },
+                        lunch: { data: [], image: '' },
+                        dinner: { data: [], image: '' },
+                        snack: { data: [], image: '' },
+                        supplement: { data: [], image: '' },
                     };
                 });
                 setLoading(false);

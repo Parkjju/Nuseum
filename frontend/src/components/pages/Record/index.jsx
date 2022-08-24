@@ -20,20 +20,22 @@ import {
     TagBox,
 } from './styled';
 import { Icon, Name } from '../../atom/Card/styled';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { motion } from 'framer-motion';
 import { ModalTitle } from '../../atom/Modal/styled';
 import { mealImageState, periodState } from '../../../recoil/period/period';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import axios from 'axios';
 import Menu from '../../atom/Menu';
 import CircularProgress from '@mui/material/CircularProgress';
+import React from 'react';
 
 function Record() {
     const navigate = useNavigate();
     // 식사 시간별 데이터 전역상태
     const [meal, setMeal] = useRecoilState(periodState);
+    const val = useRecoilValue(periodState);
 
     // 선택 이미지 상태값 - 삭제할때 활용
     const [selectedImage, setSelectedImage] = useState([]);
@@ -62,21 +64,22 @@ function Record() {
         setFoodTag((prev) => {
             const copy = [...prev];
             let newFood = [];
+
             switch (param.when) {
                 case 'breakfast':
-                    newFood = [...meal.breakfast];
+                    newFood = [...meal.breakfast.data];
                     break;
                 case 'lunch':
-                    newFood = [...meal.lunch];
+                    newFood = [...meal.lunch.data];
                     break;
                 case 'dinner':
-                    newFood = [...meal.dinner];
+                    newFood = [...meal.dinner.data];
                     break;
                 case 'snack':
-                    newFood = [...meal.snack];
+                    newFood = [...meal.snack.data];
                     break;
                 case 'supplement':
-                    newFood = [...meal.supplement];
+                    newFood = [...meal.supplement.data];
                     break;
                 default:
                     break;
@@ -93,12 +96,11 @@ function Record() {
             return;
         }
         if (e.target.files && e.target.files.length > 0) {
+            console.log('이미지 파일: ', e.target.files[0]);
             setSelectedImage((prev) => [...prev, e.target.files[0]]);
             setFormData((prev) => {
-                return {
-                    ...prev,
-                    [`${e.target.files[0].name}`]: e.target.files[0],
-                };
+                prev.append('file', e.target.files[0]);
+                return prev;
             });
         }
     };
@@ -110,8 +112,7 @@ function Record() {
                     setGlobalImage((prev) => {
                         return {
                             ...prev,
-                            [`breakfast_img${i}`]:
-                                formData[Object.keys(formData)[i - 1]],
+                            breakfast: formData,
                         };
                     });
                 }
@@ -121,8 +122,7 @@ function Record() {
                     setGlobalImage((prev) => {
                         return {
                             ...prev,
-                            [`lunch_img${i}`]:
-                                formData[Object.keys(formData)[i - 1]],
+                            lunch: formData,
                         };
                     });
                 }
@@ -132,8 +132,7 @@ function Record() {
                     setGlobalImage((prev) => {
                         return {
                             ...prev,
-                            [`dinner_img${i}`]:
-                                formData[Object.keys(formData)[i - 1]],
+                            dinner: formData,
                         };
                     });
                 }
@@ -143,8 +142,7 @@ function Record() {
                     setGlobalImage((prev) => {
                         return {
                             ...prev,
-                            [`snack_img${i}`]:
-                                formData[Object.keys(formData)[i - 1]],
+                            snack: formData,
                         };
                     });
                 }
@@ -154,8 +152,7 @@ function Record() {
                     setGlobalImage((prev) => {
                         return {
                             ...prev,
-                            [`supplement_img${i}`]:
-                                formData[Object.keys(formData)[i - 1]],
+                            supplement: formData,
                         };
                     });
                 }
@@ -306,12 +303,13 @@ function Record() {
                         {foodTag
                             ? foodTag.map((item, index) => (
                                   <Tag key={index}>
-                                      {item[0]}
-                                      {` ${item[2]} (g 또는 ml)`}
+                                      {item.name}
+                                      {` ${item.amount} (g 또는 ml)`}
                                   </Tag>
                               ))
                             : null}
                     </TagBox>
+
                     <input
                         onChange={onChange}
                         type='file'
@@ -319,6 +317,7 @@ function Record() {
                         style={{ display: 'none' }}
                         accept='image/*'
                     />
+
                     <ModalTitle>
                         찾고싶은 음식을 작성한 후 엔터해주세요. 섭취량을 작성한
                         후 엔터해주세요.

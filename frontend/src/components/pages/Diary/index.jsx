@@ -11,7 +11,7 @@ import Card from '../../atom/Card';
 import { Contents } from '../Home/styled';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { constSelector, useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { mealImageState, periodState } from '../../../recoil/period/period';
 import axios from 'axios';
 import { FormBox } from '../../molecules/Login/styled';
@@ -36,32 +36,22 @@ function Diary({ date }) {
         [today, '오늘', 'today'],
     ];
     const meal = useRecoilValue(periodState);
+
     const mealImages = useRecoilValue(mealImageState);
 
     const [postId, setPostId] = useRecoilState(postIdState);
 
-    const makeRequestData = (data, date) => {
-        let result = { meal: [], created_at: `${date.getTime()}` };
-        for (let i in data) {
-            result.meal.push(data[i]);
-        }
-        result.meal = result.meal.flat();
-
-        return { ...result };
-    };
-
     const deleteFoodName = (postData) => {
         for (let i of Object.keys(postData)) {
-            if (postData[i].length === 0) {
+            if (postData[i].data.length === 0) {
                 continue;
             }
+            postData[i].image = mealImages[i];
 
-            postData[i] = postData[i].map((meal) => {
-                let copy = [...meal];
-                copy.shift();
-                copy = copy.map((item) => Number(item));
-                copy.push(i);
-                return [...copy];
+            postData[i].data = postData[i].data.map((meal) => {
+                let copy = { ...meal };
+                delete copy.name;
+                return { ...copy };
             });
         }
         return { ...postData };
@@ -69,25 +59,49 @@ function Diary({ date }) {
 
     const onSubmit = (e) => {
         e.preventDefault();
+
         let postData = { ...meal };
+        let copy = {
+            breakfast: {
+                data: [...meal.breakfast.data],
+                image: meal.breakfast.image,
+            },
+            lunch: {
+                data: [...meal.lunch.data],
+                image: meal.lunch.image,
+            },
+            dinner: {
+                data: [...meal.dinner.data],
+                image: meal.dinner.image,
+            },
+            snack: {
+                data: [...meal.snack.data],
+                image: meal.snack.image,
+            },
+        };
+        copy = deleteFoodName(copy);
 
-        postData = { ...deleteFoodName({ ...postData }) };
-
-        let requestData = makeRequestData(postData, date);
+        console.log('요청 데이터:', {
+            meal: { ...copy },
+            created_at: date.getTime(),
+        });
 
         if (postId === null || postId === undefined) {
             axios
                 .post(
                     'https://nuseum-server.herokuapp.com/api/v1/post/',
                     {
-                        meal: [...requestData.meal],
-                        created_at: requestData.created_at,
+                        meal: { ...copy },
+                        created_at: date.getTime(),
+                        water: 0,
                     },
                     {
                         headers: {
                             Authorization: `Bearer ${sessionStorage.getItem(
                                 'access_token'
                             )}`,
+
+                            'Content-Type': 'multipart/form-data',
                         },
                     }
                 )
@@ -99,24 +113,28 @@ function Diary({ date }) {
                         };
                     });
                 })
-                .catch((err) => console.log('POST Error'));
+                .catch((err) => console.log(err));
         } else {
             axios
                 .put(
                     `https://nuseum-server.herokuapp.com/api/v1/post/${postId}/`,
                     {
-                        meal: [...requestData.meal],
+                        meal: { ...copy },
                     },
                     {
                         headers: {
                             Authorization: `Bearer ${sessionStorage.getItem(
                                 'access_token'
                             )}`,
+                            'Content-type': 'multipart/form-data',
                         },
                     }
                 )
                 .then((response) => alert('일지 수정이 완료되었어요☺️'))
-                .catch((err) => console.log('put Error'));
+                .catch((err) => {
+                    console.log(err);
+                    console.log('put Error');
+                });
         }
     };
 
