@@ -246,7 +246,12 @@ function DiaryCalendar() {
                 });
                 setLoading(false);
                 setPostId(null);
-                alert('이 날에는 기록하지 않으셨네요!');
+                let today = new Date().setHours(0, 0, 0, 0);
+                if (today === date) {
+                    alert('오늘의 일지를 기록해주세요 ☺️');
+                } else {
+                    alert('이 날에는 기록하지 않으셨네요 ☺️');
+                }
             });
         setDate(d);
         setIsDateSelected(true);
