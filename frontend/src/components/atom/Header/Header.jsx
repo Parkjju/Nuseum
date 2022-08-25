@@ -18,8 +18,11 @@ const Header = () => {
         ) {
             setBackActive(false);
             setHomeActive(false);
+        } else {
+            setBackActive(true);
+            setHomeActive(true);
         }
-    }, []);
+    }, [location]);
 
     return (
         <HeaderBox>
@@ -40,7 +43,7 @@ const Header = () => {
             >
                 <Icon
                     onClick={() => {
-                        if (locationArray.length === 3) {
+                        if (locationArray[1].length > 0) {
                             navigate('/');
                             return;
                         }
