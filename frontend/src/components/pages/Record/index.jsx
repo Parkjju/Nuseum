@@ -61,10 +61,8 @@ function Record() {
     const param = useParams();
 
     const actionImgCompress = async (fileSrc) => {
-        console.log('압축 시작');
-
         const options = {
-            maxSizeMB: 0.2,
+            maxSizeMB: 3,
             maxWidthOrHeight: 1920,
             useWebWorker: true,
         };
@@ -84,6 +82,7 @@ function Record() {
     };
 
     useEffect(() => {
+        setSelectedImage([...meal[param.when].image]);
         setFoodTag([]);
         setFoodTag((prev) => {
             const copy = [...prev];
@@ -121,6 +120,7 @@ function Record() {
             return;
         }
         if (e.target.files && e.target.files.length > 0) {
+            console.log(typeof e.target.files[0]);
             console.log('이미지 파일: ', e.target.files[0]);
             setSelectedImage((prev) => [...prev, e.target.files[0]]);
             actionImgCompress(e.target.files[0]);
@@ -312,7 +312,11 @@ function Record() {
                                         }}
                                     >
                                         <Img
-                                            src={URL.createObjectURL(item)}
+                                            src={
+                                                typeof item === 'object'
+                                                    ? URL.createObjectURL(item)
+                                                    : item
+                                            }
                                             alt='img'
                                             style={{ width: '200px' }}
                                         />

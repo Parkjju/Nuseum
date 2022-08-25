@@ -71,6 +71,28 @@ function DiaryCalendar() {
                 return null;
         }
     };
+    const appendImages = (res) => {
+        let fetchImages = {
+            breakfast: {
+                image: [],
+            },
+            lunch: {
+                image: [],
+            },
+            dinner: {
+                image: [],
+            },
+            snack: {
+                image: [],
+            },
+        };
+
+        for (let i in res.meal) {
+            fetchImages[i].image = [...res.meal[i].image];
+        }
+
+        return fetchImages;
+    };
     const loopFunction = (res) => {
         let copy = {
             breakfast: {
@@ -110,7 +132,7 @@ function DiaryCalendar() {
 
         return copy;
     };
-    const updateMeal = (meal) => {
+    const updateMeal = (meal, images) => {
         let promises = [];
         let names = {
             breakfast: [],
@@ -157,10 +179,22 @@ function DiaryCalendar() {
             }
 
             setMeal({
-                breakfast: { data: [...copy.breakfast.data], image: null },
-                lunch: { data: [...copy.lunch.data], image: null },
-                dinner: { data: [...copy.dinner.data], image: null },
-                snack: { data: [...copy.snack.data], image: null },
+                breakfast: {
+                    data: [...copy.breakfast.data],
+                    image: [...images.breakfast.image],
+                },
+                lunch: {
+                    data: [...copy.lunch.data],
+                    image: [...images.lunch.image],
+                },
+                dinner: {
+                    data: [...copy.dinner.data],
+                    image: [...images.dinner.image],
+                },
+                snack: {
+                    data: [...copy.snack.data],
+                    image: [...images.snack.image],
+                },
                 supplement: { data: [...copy.supplement.data], image: null },
             });
         });
@@ -189,8 +223,9 @@ function DiaryCalendar() {
             )
             .then((response) => {
                 let copy = loopFunction(response.data.meal);
-                updateMeal({ ...copy });
-                console.log(copy);
+                let images = appendImages(response.data);
+                updateMeal({ ...copy }, images);
+
                 setLoading(false);
             })
             .catch((err) => {
