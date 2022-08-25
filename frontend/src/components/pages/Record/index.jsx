@@ -25,7 +25,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ModalTitle } from '../../atom/Modal/styled';
 import { mealImageState, periodState } from '../../../recoil/period/period';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { RecoilValueReadOnly, useRecoilState, useRecoilValue } from 'recoil';
 import axios from 'axios';
 import Menu from '../../atom/Menu';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -59,7 +59,7 @@ function Record() {
     const [isLoading, setIsLoading] = useState(false);
 
     const param = useParams();
-
+    console.log(selectedImage);
     const actionImgCompress = async (fileSrc) => {
         const options = {
             maxSizeMB: 3,
@@ -186,10 +186,11 @@ function Record() {
     };
 
     const removeSelectedImage = (index) => {
-        setSelectedImage((prev) => [
-            ...prev.slice(0, index),
-            ...prev.slice(index + 1),
-        ]);
+        setSelectedImage((prev) => {
+            let left = [...prev.slice(0, index)];
+            let right = [...prev.slice(index + 1)];
+            return [...left, ...right];
+        });
     };
 
     const onSubmit = async (e) => {

@@ -118,6 +118,7 @@ function Diary({ date }) {
                     `https://nuseum-server.herokuapp.com/api/v1/post/${postId}/`,
                     {
                         meal: { ...copy },
+                        water: 0,
                     },
                     {
                         headers: {

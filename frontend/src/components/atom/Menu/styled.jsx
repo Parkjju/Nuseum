@@ -69,14 +69,9 @@ const NutritionList = ({ item }) => {
 
     const saveNutrition = (e) => {
         if (e.which === 13) {
-            console.log(period);
             switch (param.when) {
                 case 'breakfast':
                     setPeriod((prev) => {
-                        const previousMeal = {
-                            data: [...prev.breakfast.data],
-                            image: prev.breakfast.image,
-                        };
                         const newFood = {
                             name: e.target.name,
                             food_id: Number(
@@ -88,18 +83,14 @@ const NutritionList = ({ item }) => {
                         return {
                             ...prev,
                             breakfast: {
-                                ...previousMeal,
                                 data: [...prev.breakfast.data, newFood],
+                                image: [...prev.breakfast.image],
                             },
                         };
                     });
                     break;
                 case 'lunch':
                     setPeriod((prev) => {
-                        const previousMeal = {
-                            data: [...prev.lunch.data],
-                            image: prev.lunch.image,
-                        };
                         const newFood = {
                             name: e.target.name,
                             food_id: Number(
@@ -111,18 +102,14 @@ const NutritionList = ({ item }) => {
                         return {
                             ...prev,
                             lunch: {
-                                ...previousMeal,
                                 data: [...prev.lunch.data, newFood],
+                                image: [...prev.lunch.image],
                             },
                         };
                     });
                     break;
                 case 'dinner':
                     setPeriod((prev) => {
-                        const previousMeal = {
-                            data: [...prev.dinner.data],
-                            image: prev.dinner.image,
-                        };
                         const newFood = {
                             name: e.target.name,
                             food_id: Number(
@@ -134,18 +121,14 @@ const NutritionList = ({ item }) => {
                         return {
                             ...prev,
                             dinner: {
-                                ...previousMeal,
                                 data: [...prev.dinner.data, newFood],
+                                image: [...prev.dinner.image],
                             },
                         };
                     });
                     break;
                 case 'snack':
                     setPeriod((prev) => {
-                        const previousMeal = {
-                            data: [...prev.snack.data],
-                            image: prev.snack.image,
-                        };
                         const newFood = {
                             name: e.target.name,
                             food_id: Number(
@@ -157,8 +140,8 @@ const NutritionList = ({ item }) => {
                         return {
                             ...prev,
                             snack: {
-                                ...previousMeal,
                                 data: [...prev.snack.data, newFood],
+                                image: [...prev.snack.image],
                             },
                         };
                     });
