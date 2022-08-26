@@ -29,6 +29,7 @@ function DiaryCalendar() {
     const [meal, setMeal] = useRecoilState(periodState);
     const [date, setDate] = useRecoilState(dateState);
     const setPostId = useSetRecoilState(postIdState);
+    const [today, setToday] = useState(new Date().setHours(0, 0, 0, 0));
     const [isDateSelected, setIsDateSelected] = useState(
         param.date !== undefined
     );
@@ -147,7 +148,7 @@ function DiaryCalendar() {
                 promises.push(
                     axios
                         .get(
-                            `https://nuseum-server.herokuapp.com/api/v1/food/name/?id=${item.food_id}`,
+                            `https://cryptic-castle-40575.herokuapp.com/api/v1/food/name/?id=${item.food_id}`,
                             {
                                 headers: {
                                     Authorization: `Bearer ${sessionStorage.getItem(
@@ -212,7 +213,7 @@ function DiaryCalendar() {
         setLoading(true);
         axios
             .get(
-                `https://nuseum-server.herokuapp.com/api/v1/post/?date=${d.getTime()}`,
+                `https://cryptic-castle-40575.herokuapp.com/api/v1/post/?date=${d.getTime()}`,
                 {
                     headers: {
                         Authorization: `Bearer ${sessionStorage.getItem(
@@ -235,6 +236,13 @@ function DiaryCalendar() {
                     navigate('/login');
                     return;
                 }
+                console.log('today', today);
+
+                if (today === Number(window.location.pathname.split('/')[2])) {
+                    alert('오늘의 일지를 기록해주세요 ☺️');
+                } else {
+                    alert('이 날에는 기록하지 않으셨네요 ☺️');
+                }
                 setMeal((prev) => {
                     return {
                         breakfast: { data: [], image: '' },
@@ -246,12 +254,6 @@ function DiaryCalendar() {
                 });
                 setLoading(false);
                 setPostId(null);
-                let today = new Date().setHours(0, 0, 0, 0);
-                if (today === date) {
-                    alert('오늘의 일지를 기록해주세요 ☺️');
-                } else {
-                    alert('이 날에는 기록하지 않으셨네요 ☺️');
-                }
             });
         setDate(d);
         setIsDateSelected(true);

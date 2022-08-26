@@ -199,7 +199,7 @@ function Record() {
         setIsLoading(true);
         await axios
             .get(
-                `https://nuseum-server.herokuapp.com/api/v1/food/?search=${foodName}`,
+                `https://cryptic-castle-40575.herokuapp.com/api/v1/food/?search=${foodName}`,
                 {
                     headers: {
                         Authorization: `Bearer ${sessionStorage.getItem(

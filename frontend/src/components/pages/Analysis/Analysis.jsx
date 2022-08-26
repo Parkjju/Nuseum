@@ -48,7 +48,7 @@ const Analysis = () => {
         setLoading(true);
         axios
             .get(
-                `https://nuseum-server.herokuapp.com/api/v1/consumption/day/?date=${d.getTime()}`,
+                `https://cryptic-castle-40575.herokuapp.com/api/v1/consumption/day/?date=${d.getTime()}`,
                 {
                     headers: {
                         Authorization: `Bearer ${sessionStorage.getItem(
@@ -104,7 +104,7 @@ const Analysis = () => {
     const fetchWeekData = () => {
         setLoading(true);
         axios(
-            `https://nuseum-server.herokuapp.com/api/v1/consumption/week/?date=${date.getTime()}`,
+            `https://cryptic-castle-40575.herokuapp.com/api/v1/consumption/week/?date=${date.getTime()}`,
             {
                 headers: {
                     Authorization: `Bearer ${sessionStorage.getItem(
@@ -158,7 +158,7 @@ const Analysis = () => {
     const fetchMonthData = () => {
         setLoading(true);
         axios(
-            `https://nuseum-server.herokuapp.com/api/v1/consumption/month/?date=${date.getTime()}`,
+            `https://cryptic-castle-40575.herokuapp.com/api/v1/consumption/month/?date=${date.getTime()}`,
             {
                 headers: {
                     Authorization: `Bearer ${sessionStorage.getItem(

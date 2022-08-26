@@ -30,10 +30,13 @@ function Login() {
     const onValid = ({ loginId, loginPassword }) => {
         setIsLoading(true);
         axios
-            .post('https://nuseum-server.herokuapp.com/api/v1/account/login/', {
-                username: loginId,
-                password: loginPassword,
-            })
+            .post(
+                'https://cryptic-castle-40575.herokuapp.com/api/v1/account/login/',
+                {
+                    username: loginId,
+                    password: loginPassword,
+                }
+            )
             .then((response) => {
                 const sessionStorage = window.sessionStorage;
                 const val = sessionStorage.getItem('access_token');

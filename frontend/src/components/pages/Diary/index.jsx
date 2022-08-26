@@ -89,7 +89,7 @@ function Diary({ date }) {
         if (postId === null || postId === undefined) {
             axios
                 .post(
-                    'https://nuseum-server.herokuapp.com/api/v1/post/',
+                    'https://cryptic-castle-40575.herokuapp.com/api/v1/post/',
                     {
                         meal: { ...copy },
                         created_at: date.getTime(),
@@ -115,7 +115,7 @@ function Diary({ date }) {
         } else {
             axios
                 .put(
-                    `https://nuseum-server.herokuapp.com/api/v1/post/${postId}/`,
+                    `https://cryptic-castle-40575.herokuapp.com/api/v1/post/${postId}/`,
                     {
                         meal: { ...copy },
                         water: 0,
