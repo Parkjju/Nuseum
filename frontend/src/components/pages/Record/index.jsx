@@ -34,14 +34,15 @@ import imageCompression from 'browser-image-compression';
 
 function Record() {
     const navigate = useNavigate();
+    const param = useParams();
     // 식사 시간별 데이터 전역상태
     const [meal, setMeal] = useRecoilState(periodState);
     const val = useRecoilValue(periodState);
 
     // 선택 이미지 상태값 - 삭제할때 활용
-    const [selectedImage, setSelectedImage] = useState([]);
     const [formData, setFormData] = useState([]);
     const [globalImage, setGlobalImage] = useRecoilState(mealImageState);
+    const [selectedImage, setSelectedImage] = useState([]);
 
     // 검색 음식명
     const [foodName, setFoodName] = useState();
@@ -57,8 +58,6 @@ function Record() {
 
     // 로딩 인디케이터
     const [isLoading, setIsLoading] = useState(false);
-
-    const param = useParams();
 
     const actionImgCompress = async (fileSrc) => {
         const options = {
@@ -80,8 +79,6 @@ function Record() {
             console.log(error);
         }
     };
-
-    console.log(globalImage);
 
     useEffect(() => {
         setSelectedImage([...meal[param.when].image]);
@@ -119,7 +116,6 @@ function Record() {
             if (typeof i === 'object') {
                 continue;
             } else {
-                console.log(i);
                 copy.push(i);
             }
         }
@@ -130,14 +126,11 @@ function Record() {
             };
         });
     }, [selectedImage]);
+    console.log(globalImage);
 
     let menu = [];
 
     const onChange = (e) => {
-        if (selectedImage.length >= 3) {
-            alert('사진은 세장까지만 등록 가능해요 😭');
-            return;
-        }
         if (e.target.files && e.target.files.length > 0) {
             setSelectedImage((prev) => [...prev, e.target.files[0]]);
             actionImgCompress(e.target.files[0]);
@@ -206,7 +199,7 @@ function Record() {
         setSelectedImage((prev) => {
             let left = [...prev.slice(0, index)];
             let right = [...prev.slice(index + 1)];
-            return [...left, ...right];
+            return [...left, '', ...right];
         });
     };
 
@@ -295,52 +288,71 @@ function Record() {
                     </Label>
                     {selectedImage && (
                         <ImageBox>
-                            {selectedImage.map((item, index) => (
-                                <motion.div
-                                    key={index}
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    exit={{ opacity: 0 }}
-                                    transition={{
-                                        velocity: 1,
-                                    }}
-                                    style={{
-                                        width: '90%',
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        flexDirection: 'column',
-                                        alignContent: 'space-between',
-                                    }}
-                                >
-                                    <Remove
-                                        onClick={() => {
-                                            return removeSelectedImage(index);
+                            {selectedImage.map((item, index) =>
+                                item === '' ? null : (
+                                    <motion.div
+                                        key={index}
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{
+                                            velocity: 1,
                                         }}
-                                    >
-                                        <span className='material-symbols-outlined'>
-                                            close
-                                        </span>
-                                    </Remove>
-                                    <div
                                         style={{
-                                            width: '100%',
+                                            width: '90%',
                                             display: 'flex',
                                             justifyContent: 'center',
-                                            height: 'auto',
+                                            flexDirection: 'column',
+                                            alignContent: 'space-between',
                                         }}
                                     >
-                                        <Img
-                                            src={
-                                                typeof item === 'object'
-                                                    ? URL.createObjectURL(item)
-                                                    : item
-                                            }
-                                            alt='img'
-                                            style={{ width: '200px' }}
-                                        />
-                                    </div>
-                                </motion.div>
-                            ))}
+                                        {item === '' ? null : (
+                                            <Remove
+                                                onClick={() => {
+                                                    return removeSelectedImage(
+                                                        index
+                                                    );
+                                                }}
+                                            >
+                                                <span className='material-symbols-outlined'>
+                                                    close
+                                                </span>
+                                            </Remove>
+                                        )}
+                                        <div
+                                            style={{
+                                                width: '100%',
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                height: 'auto',
+                                            }}
+                                        >
+                                            {typeof item === 'object' ? (
+                                                <Img
+                                                    src={URL.createObjectURL(
+                                                        item
+                                                    )}
+                                                    alt='img'
+                                                    style={{ width: '200px' }}
+                                                />
+                                            ) : typeof item === 'string' &&
+                                              item.length > 1 ? (
+                                                <Img
+                                                    src={
+                                                        typeof item === 'object'
+                                                            ? URL.createObjectURL(
+                                                                  item
+                                                              )
+                                                            : item
+                                                    }
+                                                    alt='img'
+                                                    style={{ width: '200px' }}
+                                                />
+                                            ) : null}
+                                        </div>
+                                    </motion.div>
+                                )
+                            )}
                         </ImageBox>
                     )}
                     <TagBox>

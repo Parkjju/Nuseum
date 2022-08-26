@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import styled from 'styled-components';
 
 export const DiaryTitle = styled.div`
@@ -55,7 +56,7 @@ export const Remove = styled.button`
     }
 `;
 
-export const ImageBox = styled.div`
+export const ImageBox = memo(styled.div`
     width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -63,7 +64,7 @@ export const ImageBox = styled.div`
     align-items: flex-start;
     flex-direction: column;
     margin-bottom: 50px;
-`;
+`);
 
 export const ModalBackground = styled.div`
     width: 100vw;

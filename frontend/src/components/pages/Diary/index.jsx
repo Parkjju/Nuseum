@@ -109,6 +109,7 @@ function Diary({ date }) {
                 })
                 .catch((err) => console.log(err));
         } else {
+            console.log(copy);
             axios
                 .put(
                     `https://cryptic-castle-40575.herokuapp.com/api/v1/post/${postId}/`,
