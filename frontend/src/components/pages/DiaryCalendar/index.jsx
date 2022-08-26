@@ -238,11 +238,6 @@ function DiaryCalendar() {
                     return;
                 }
 
-                if (today === Number(window.location.pathname.split('/')[2])) {
-                    alert('오늘의 일지를 기록해주세요 ☺️');
-                } else {
-                    alert('이 날에는 기록하지 않으셨네요 ☺️');
-                }
                 setMeal((prev) => {
                     return {
                         breakfast: { data: [], image: '' },
