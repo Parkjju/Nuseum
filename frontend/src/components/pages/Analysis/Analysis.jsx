@@ -60,7 +60,6 @@ const Analysis = () => {
             .then((response) => {
                 let res = response.data;
                 for (let i in res) {
-                    console.log(res[i]);
                     res[i] = Number.isInteger(res[i])
                         ? res[i]
                         : res[i].toFixed(3);
@@ -116,7 +115,6 @@ const Analysis = () => {
             .then((response) => {
                 let res = response.data;
                 for (let i in res) {
-                    console.log(res[i]);
                     res[i] = Number.isInteger(res[i])
                         ? res[i]
                         : res[i].toFixed(3);
@@ -170,7 +168,6 @@ const Analysis = () => {
             .then((response) => {
                 let res = response.data;
                 for (let i in res) {
-                    console.log(res[i]);
                     res[i] = Number.isInteger(res[i])
                         ? res[i]
                         : res[i].toFixed(3);

@@ -59,7 +59,7 @@ function Record() {
     const [isLoading, setIsLoading] = useState(false);
 
     const param = useParams();
-    console.log(selectedImage);
+
     const actionImgCompress = async (fileSrc) => {
         const options = {
             maxSizeMB: 3,
@@ -80,6 +80,8 @@ function Record() {
             console.log(error);
         }
     };
+
+    console.log(globalImage);
 
     useEffect(() => {
         setSelectedImage([...meal[param.when].image]);
@@ -111,6 +113,23 @@ function Record() {
             return [...copy, ...newFood];
         });
     }, [param.when, meal]);
+    useEffect(() => {
+        let copy = [];
+        for (let i of selectedImage) {
+            if (typeof i === 'object') {
+                continue;
+            } else {
+                console.log(i);
+                copy.push(i);
+            }
+        }
+        setGlobalImage((prev) => {
+            return {
+                ...prev,
+                [param.when]: [...copy],
+            };
+        });
+    }, [selectedImage]);
 
     let menu = [];
 
@@ -120,8 +139,6 @@ function Record() {
             return;
         }
         if (e.target.files && e.target.files.length > 0) {
-            console.log(typeof e.target.files[0]);
-            console.log('이미지 파일: ', e.target.files[0]);
             setSelectedImage((prev) => [...prev, e.target.files[0]]);
             actionImgCompress(e.target.files[0]);
         }
@@ -134,7 +151,7 @@ function Record() {
                     setGlobalImage((prev) => {
                         return {
                             ...prev,
-                            breakfast: formData,
+                            breakfast: [...globalImage.breakfast, ...formData],
                         };
                     });
                 }

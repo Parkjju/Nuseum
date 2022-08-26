@@ -80,11 +80,7 @@ function Diary({ date }) {
             },
         };
         copy = deleteFoodName(copy);
-
-        console.log('요청 데이터:', {
-            meal: { ...copy },
-            created_at: date.getTime(),
-        });
+        console.log(copy);
 
         if (postId === null || postId === undefined) {
             axios
@@ -131,7 +127,6 @@ function Diary({ date }) {
                 .then((response) => alert('일지 수정이 완료되었어요☺️'))
                 .catch((err) => {
                     console.log(err);
-                    console.log('put Error');
                 });
         }
     };

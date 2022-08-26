@@ -223,6 +223,7 @@ function DiaryCalendar() {
                 }
             )
             .then((response) => {
+                console.log(response.data);
                 let copy = loopFunction(response.data.meal);
                 let images = appendImages(response.data);
                 updateMeal({ ...copy }, images);
@@ -236,7 +237,6 @@ function DiaryCalendar() {
                     navigate('/login');
                     return;
                 }
-                console.log('today', today);
 
                 if (today === Number(window.location.pathname.split('/')[2])) {
                     alert('오늘의 일지를 기록해주세요 ☺️');
