@@ -31,6 +31,7 @@ import Menu from '../../atom/Menu';
 import CircularProgress from '@mui/material/CircularProgress';
 import React from 'react';
 import imageCompression from 'browser-image-compression';
+import { postIdState } from '../../../recoil/postID/postId';
 
 function Record() {
     const navigate = useNavigate();
@@ -38,6 +39,9 @@ function Record() {
     // 식사 시간별 데이터 전역상태
     const [meal, setMeal] = useRecoilState(periodState);
     const val = useRecoilValue(periodState);
+
+    // postId 얻어서 PUT / POST 구분
+    const [postId, setPostId] = useRecoilState(postIdState);
 
     // 선택 이미지 상태값 - 삭제할때 활용
     const [formData, setFormData] = useState([]);
@@ -80,6 +84,7 @@ function Record() {
         }
     };
 
+    // globalImage들 끼니별로 분류하여 불러오고 있음.
     useEffect(() => {
         setSelectedImage([...meal[param.when].image]);
         setFoodTag([]);
@@ -110,7 +115,26 @@ function Record() {
             return [...copy, ...newFood];
         });
     }, [param.when, meal]);
+
+    let menu = [];
+
+    // formData 생성 후에 함수가 호출된다. 비동기 처리의 완료
     useEffect(() => {
+        // formData 생성 되고나서 삽입
+        setGlobalImageAfterSelected();
+    }, [formData]);
+
+    useEffect(() => {
+        // selectedImage 변경에 따라 글로벌이미지 세팅
+        setGlobalImage((prev) => {
+            return {
+                ...prev,
+                [param.when]: [...selectedImage],
+            };
+        });
+    }, [selectedImage]);
+
+    const setGlobalImageAfterSelected = () => {
         let copy = [];
         for (let i of selectedImage) {
             if (typeof i === 'object') {
@@ -119,16 +143,14 @@ function Record() {
                 copy.push(i);
             }
         }
+
         setGlobalImage((prev) => {
             return {
                 ...prev,
-                [param.when]: [...copy],
+                [param.when]: [...copy, ...formData],
             };
         });
-    }, [selectedImage]);
-    console.log(globalImage);
-
-    let menu = [];
+    };
 
     const onChange = (e) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -137,69 +159,15 @@ function Record() {
         }
     };
 
-    const onClick = () => {
-        switch (param.when) {
-            case 'breakfast':
-                for (let i = 1; i < selectedImage.length + 1; i++) {
-                    setGlobalImage((prev) => {
-                        return {
-                            ...prev,
-                            breakfast: [...globalImage.breakfast, ...formData],
-                        };
-                    });
-                }
-                break;
-            case 'lunch':
-                for (let i = 1; i < selectedImage.length + 1; i++) {
-                    setGlobalImage((prev) => {
-                        return {
-                            ...prev,
-                            lunch: formData,
-                        };
-                    });
-                }
-                break;
-            case 'dinner':
-                for (let i = 1; i < selectedImage.length + 1; i++) {
-                    setGlobalImage((prev) => {
-                        return {
-                            ...prev,
-                            dinner: formData,
-                        };
-                    });
-                }
-                break;
-            case 'snack':
-                for (let i = 1; i < selectedImage.length + 1; i++) {
-                    setGlobalImage((prev) => {
-                        return {
-                            ...prev,
-                            snack: formData,
-                        };
-                    });
-                }
-                break;
-            case 'supplement':
-                for (let i = 1; i < selectedImage.length + 1; i++) {
-                    setGlobalImage((prev) => {
-                        return {
-                            ...prev,
-                            supplement: formData,
-                        };
-                    });
-                }
-                break;
-            default:
-                break;
-        }
-        alert('저장되었습니다!');
-    };
-
     const removeSelectedImage = (index) => {
-        setSelectedImage((prev) => {
-            let left = [...prev.slice(0, index)];
-            let right = [...prev.slice(index + 1)];
-            return [...left, '', ...right];
+        setGlobalImage((prev) => {
+            let copy = [...prev[param.when]];
+            let left = [...copy.slice(0, index)];
+            let right = [...copy.slice(index + 1)];
+            return {
+                ...prev,
+                [param.when]: [...left, '', ...right],
+            };
         });
     };
 
@@ -262,6 +230,92 @@ function Record() {
         setFoodName(e.target.value);
     };
 
+    const deleteFoodName = (postData) => {
+        for (let i of Object.keys(postData)) {
+            if (postData[i].data.length === 0) {
+                continue;
+            }
+            postData[i].image = globalImage[i];
+
+            postData[i].data = postData[i].data.map((meal) => {
+                let copy = { ...meal };
+                delete copy.name;
+                return { ...copy };
+            });
+        }
+        return { ...postData };
+    };
+
+    const onClickLast = () => {
+        let copy = {
+            breakfast: {
+                data: [...meal.breakfast.data],
+                image: meal.breakfast.image,
+            },
+            lunch: {
+                data: [...meal.lunch.data],
+                image: meal.lunch.image,
+            },
+            dinner: {
+                data: [...meal.dinner.data],
+                image: meal.dinner.image,
+            },
+            snack: {
+                data: [...meal.snack.data],
+                image: meal.snack.image,
+            },
+        };
+        copy = deleteFoodName(copy);
+
+        if (postId === null || postId === undefined) {
+            axios
+                .post(
+                    'https://cryptic-castle-40575.herokuapp.com/api/v1/post/',
+                    {
+                        meal: { ...copy },
+                        created_at: Number(param.date),
+                        water: 0,
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${sessionStorage.getItem(
+                                'access_token'
+                            )}`,
+                        },
+                    }
+                )
+                .then((response) => {
+                    alert('일지 등록이 완료되었어요☺️');
+                    setPostId(() => {
+                        return {
+                            id: response.data.id,
+                        };
+                    });
+                })
+                .catch((err) => console.log(err));
+        } else {
+            axios
+                .put(
+                    `https://cryptic-castle-40575.herokuapp.com/api/v1/post/${postId}/`,
+                    {
+                        meal: { ...copy },
+                        water: 0,
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${sessionStorage.getItem(
+                                'access_token'
+                            )}`,
+                        },
+                    }
+                )
+                .then((response) => alert('일지 수정이 완료되었어요☺️'))
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    };
+
     return (
         <Container>
             <Contents>
@@ -288,7 +342,7 @@ function Record() {
                     </Label>
                     {selectedImage && (
                         <ImageBox>
-                            {selectedImage.map((item, index) =>
+                            {globalImage[param.when].map((item, index) =>
                                 item === '' ? null : (
                                     <motion.div
                                         key={index}
@@ -385,9 +439,13 @@ function Record() {
                         <ModalInput value={foodName} onChange={onChangeName} />
                     </ModalSearch>
 
-                    <button onClick={onClick} style={{ marginBottom: '30px' }}>
+                    <button
+                        onClick={onClickLast}
+                        style={{ marginBottom: '30px' }}
+                    >
                         저장
                     </button>
+
                     {isLoading ? (
                         <CircularProgress sx={{ marginBottom: 5 }} />
                     ) : (

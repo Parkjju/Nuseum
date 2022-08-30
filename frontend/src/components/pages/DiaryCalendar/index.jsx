@@ -119,7 +119,8 @@ function DiaryCalendar() {
         };
         for (let i in res) {
             copy[i].data = [...res[i].data];
-
+        }
+        for (let i in res) {
             if (res[i].data.length) {
                 res[i].data.forEach((item) => {
                     if (item.post_id) {

@@ -167,7 +167,6 @@ const NutritionList = ({ item }) => {
             setAmount(0);
         }
     };
-    console.log('PERIOD STATE:', period);
 
     const [keyCount, setKeyCount] = useState(0);
 
