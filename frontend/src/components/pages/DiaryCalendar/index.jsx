@@ -26,52 +26,14 @@ function DiaryCalendar() {
     const param = useParams();
     const location = useLocation();
     const [loading, setLoading] = useState(false);
-    const [meal, setMeal] = useRecoilState(periodState);
+    const setMeal = useSetRecoilState(periodState);
     const [date, setDate] = useRecoilState(dateState);
     const setPostId = useSetRecoilState(postIdState);
-    const [today, setToday] = useState(new Date().setHours(0, 0, 0, 0));
+
     const [isDateSelected, setIsDateSelected] = useState(
         param.date !== undefined
     );
 
-    const setMealData = (key, res) => {
-        let data = [];
-        let parsedAmount = [];
-        switch (key) {
-            case 'breakfast':
-                parsedAmount = JSON.parse(res.breakfast_amount);
-                for (let i in parsedAmount) {
-                    data.push([res.breakfast[i], parsedAmount[i]]);
-                }
-                return data;
-            case 'lunch':
-                parsedAmount = JSON.parse(res.lunch_amount);
-                for (let i in parsedAmount) {
-                    data.push([res.lunch[i], parsedAmount[i]]);
-                }
-                return data;
-            case 'dinner':
-                parsedAmount = JSON.parse(res.dinner_amount);
-                for (let i in parsedAmount) {
-                    data.push([res.dinner[i], parsedAmount[i]]);
-                }
-                return data;
-            case 'snack':
-                parsedAmount = JSON.parse(res.snack_amount);
-                for (let i in parsedAmount) {
-                    data.push([res.snack[i], parsedAmount[i]]);
-                }
-                return data;
-            case 'supplement':
-                parsedAmount = JSON.parse(res.supplement_amount);
-                for (let i in parsedAmount) {
-                    data.push([res.supplement[i], parsedAmount[i]]);
-                }
-                return data;
-            default:
-                return null;
-        }
-    };
     const appendImages = (res) => {
         let fetchImages = {
             breakfast: {
@@ -208,7 +170,7 @@ function DiaryCalendar() {
         if (!sessionStorage.getItem('access_token')) {
             navigate('/login');
         }
-    }, []);
+    }, [navigate]);
 
     const onChange = (d) => {
         setLoading(true);

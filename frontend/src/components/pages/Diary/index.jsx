@@ -19,7 +19,7 @@ function Diary() {
         if (!sessionStorage.getItem('access_token')) {
             navigate('/login');
         }
-    }, []);
+    }, [navigate]);
 
     const menu = [
         [morning, '아침', 'breakfast'],

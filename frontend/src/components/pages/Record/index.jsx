@@ -20,12 +20,12 @@ import {
     TagBox,
 } from './styled';
 import { Icon, Name } from '../../atom/Card/styled';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { motion } from 'framer-motion';
 import { ModalTitle } from '../../atom/Modal/styled';
 import { mealImageState, periodState } from '../../../recoil/period/period';
-import { RecoilValueReadOnly, useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import axios from 'axios';
 import Menu from '../../atom/Menu';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -37,8 +37,7 @@ function Record() {
     const navigate = useNavigate();
     const param = useParams();
     // 식사 시간별 데이터 전역상태
-    const [meal, setMeal] = useRecoilState(periodState);
-    const val = useRecoilValue(periodState);
+    const meal = useRecoilValue(periodState);
 
     // postId 얻어서 PUT / POST 구분
     const [postId, setPostId] = useRecoilState(postIdState);
@@ -50,9 +49,6 @@ function Record() {
 
     // 검색 음식명
     const [foodName, setFoodName] = useState();
-
-    // 입력 음식 양
-    const [foodAmount, setFoodAmount] = useState();
 
     // 음식 태그
     const [foodTag, setFoodTag] = useState([]);
@@ -132,9 +128,9 @@ function Record() {
                 [param.when]: [...selectedImage],
             };
         });
-    }, [selectedImage]);
+    }, [selectedImage, param.when, setGlobalImage]);
 
-    const setGlobalImageAfterSelected = () => {
+    const setGlobalImageAfterSelected = useCallback(() => {
         let copy = [];
         for (let i of selectedImage) {
             if (typeof i === 'object') {
@@ -150,7 +146,7 @@ function Record() {
                 [param.when]: [...copy, ...formData],
             };
         });
-    };
+    }, [selectedImage, formData, param.when, setGlobalImage]);
 
     const onChange = (e) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -201,7 +197,7 @@ function Record() {
                     navigate('/login');
                 }
             });
-        setFoodAmount(0);
+
         setFoodName('');
         setIsLoading(false);
     };
