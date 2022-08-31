@@ -18,9 +18,10 @@ import Diary from '../Diary';
 import axios from 'axios';
 import { CircularProgress } from '@mui/material';
 import { mealImageState, periodState } from '../../../recoil/period/period';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { dateState } from '../../../recoil/date/date';
 import { postIdState } from '../../../recoil/postID/postId';
+import { supplementState } from '../../../recoil/supplement/supplement';
 
 function DiaryCalendar() {
     const param = useParams();
@@ -30,6 +31,8 @@ function DiaryCalendar() {
     const [date, setDate] = useRecoilState(dateState);
     const setPostId = useSetRecoilState(postIdState);
     const setGlobalImage = useSetRecoilState(mealImageState);
+    const supplement = useRecoilValue(supplementState);
+    const setSupplement = useSetRecoilState(supplementState);
     const [isDateSelected, setIsDateSelected] = useState(
         param.date !== undefined
     );
@@ -56,6 +59,7 @@ function DiaryCalendar() {
 
         return fetchImages;
     };
+
     const loopFunction = (res) => {
         let copy = {
             breakfast: {
@@ -188,7 +192,7 @@ function DiaryCalendar() {
             .then((response) => {
                 let copy = loopFunction(response.data.meal);
                 let images = appendImages(response.data);
-
+                setSupplement([...response.data.supplement]);
                 updateMeal({ ...copy }, images);
 
                 setGlobalImage(() => {
@@ -247,7 +251,6 @@ function DiaryCalendar() {
         default:
             break;
     }
-    console.log(isDateSelected);
 
     return (
         <Container>

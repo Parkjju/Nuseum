@@ -29,11 +29,15 @@ import imageCompression from 'browser-image-compression';
 import { postIdState } from '../../../recoil/postID/postId';
 import FoodImg from '../../molecules/FoodImg/FoodImg';
 import ImageBox from './ImageBox';
+import ImageCard from '../../molecules/ImageCard';
+import { supplementState } from '../../../recoil/supplement/supplement';
 
 function Record() {
     const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false);
+    const [supplement, setSupplement] = useRecoilState(supplementState);
+
     const param = useParams();
     // 식사 시간별 데이터 전역상태
     const [meal, setMeal] = useRecoilState(periodState);
@@ -43,7 +47,6 @@ function Record() {
 
     // 선택 이미지 상태값 - 삭제할때 활용
     const [globalImage, setGlobalImage] = useRecoilState(mealImageState);
-    const [selectedImage, setSelectedImage] = useState([]);
 
     // 검색 음식명
     const [foodName, setFoodName] = useState();
@@ -56,6 +59,14 @@ function Record() {
 
     // 로딩 인디케이터
     const [isLoading, setIsLoading] = useState(false);
+
+    // 영양제 이미지 추가 버튼함수
+    const addImageCard = () => {
+        setSupplement((prev) => [
+            ...prev,
+            { name: '', manufacturer: '', image: '' },
+        ]);
+    };
 
     const actionImgCompress = async (fileSrc) => {
         const options = {
@@ -86,7 +97,6 @@ function Record() {
 
     // globalImage들 끼니별로 분류하여 불러오고 있음.
     useEffect(() => {
-        setSelectedImage([...meal[param.when].image]);
         setFoodTag([]);
         setFoodTag((prev) => {
             const copy = [...prev];
@@ -118,15 +128,11 @@ function Record() {
 
     let menu = [];
 
-    console.log(globalImage);
-
     const onChange = (e) => {
         if (e.target.files && e.target.files.length > 0) {
-            setSelectedImage((prev) => [...prev, e.target.files[0]]);
             actionImgCompress(e.target.files[0]);
         }
     };
-    console.log(globalImage);
 
     const removeSelectedImage = (index) => {
         setGlobalImage((prev) => {
@@ -245,7 +251,7 @@ function Record() {
                         meal: { ...copy },
                         created_at: Number(param.date),
                         water: 0,
-                        supplement: [],
+                        supplement: [...supplement],
                     },
                     {
                         headers: {
@@ -277,7 +283,7 @@ function Record() {
                     {
                         meal: { ...copy },
                         water: 0,
-                        supplement: [],
+                        supplement: [...supplement],
                     },
                     {
                         headers: {
@@ -288,7 +294,8 @@ function Record() {
                     }
                 )
                 .then((response) => {
-                    alert('일지 수정이 완료되었어요☺️');
+                    console.log(response.data);
+                    alert('일기 수정이 완료되었어요☺️');
                     setLoading(false);
                 })
                 .catch((err) => {
@@ -313,6 +320,16 @@ function Record() {
         });
     };
 
+    const removeImageCard = (index) => {
+        setSupplement((prev) => {
+            const left = prev.slice(0, index);
+            const right = prev.slice(index + 1);
+
+            return [...left, {}, ...right];
+        });
+    };
+    console.log(supplement);
+
     return (
         <Container>
             <Contents>
@@ -321,89 +338,127 @@ function Record() {
                     <Name>{menu[0][1]}</Name>
                 </DiaryTitle>
                 <Name style={{ marginBottom: '5px' }}>
-                    음식 이미지를 업로드하고 식이정보를 입력하세요 :)
+                    {param.when === 'supplement'
+                        ? '오늘 섭취한 영양제를 기록해주세요 :)'
+                        : '음식 이미지를 업로드하고 식이정보를 입력하세요 :)'}
                 </Name>
                 <Name style={{ marginBottom: '50px' }}>
                     {/* 식이정보를 입력하세요 :) */}
                 </Name>
-                <DiaryBody
-                    initial={{ y: 300 }}
-                    animate={{ y: 0 }}
-                    exit={{ y: -300 }}
-                    transition={{
-                        velocity: 1,
-                    }}
-                >
-                    <Label style={{ marginBottom: 30 }} htmlFor='input-file'>
-                        +
-                    </Label>
-
-                    {globalImage[param.when] && (
-                        <ImageBox>
-                            {globalImage[param.when].map((item, index) =>
-                                item === '' ? null : (
-                                    <FoodImg
-                                        data={item}
-                                        removeFunction={removeSelectedImage}
-                                        index={index}
-                                        key={index}
-                                    />
-                                )
-                            )}
-                        </ImageBox>
-                    )}
-                    <TagBox>
-                        {foodTag
-                            ? foodTag.map((item, index) =>
-                                  Object.entries(item).length !== 0 ? (
-                                      <Tag
-                                          onClick={() => onClickTag(index)}
-                                          key={index}
-                                      >
-                                          {item.name}
-                                          {` ${item.amount} (g 또는 ml)`}
-                                      </Tag>
-                                  ) : null
-                              )
-                            : null}
-                    </TagBox>
-
-                    <input
-                        onChange={onChange}
-                        type='file'
-                        id='input-file'
-                        style={{ display: 'none' }}
-                        accept='image/*'
-                    />
-
-                    <ModalTitle>
-                        찾고싶은 음식을 작성한 후 엔터해주세요. 섭취량을 작성한
-                        후 엔터해주세요.
-                    </ModalTitle>
-                    <ModalSearch as='form' onSubmit={onSubmit}>
-                        <span className='material-symbols-outlined'>
-                            search
-                        </span>
-                        <ModalInput value={foodName} onChange={onChangeName} />
-                    </ModalSearch>
-
-                    {loading ? (
-                        <CircularProgress sx={{ marginBottom: 5 }} />
-                    ) : (
+                {param.when === 'supplement' ? (
+                    <>
                         <button
+                            onClick={addImageCard}
+                            style={{ marginBottom: 20 }}
+                        >
+                            추가하기
+                        </button>
+                        {supplement.map((item, index) =>
+                            Object.keys(item).length === 0 ? null : (
+                                <ImageCard
+                                    index={index}
+                                    removeImageCard={() =>
+                                        removeImageCard(index)
+                                    }
+                                    key={item.id}
+                                    data={item}
+                                />
+                            )
+                        )}
+
+                        <button
+                            style={{ marginBottom: 30 }}
                             onClick={onClickLast}
-                            style={{ marginBottom: '30px' }}
                         >
                             저장
                         </button>
-                    )}
+                    </>
+                ) : (
+                    <DiaryBody
+                        initial={{ y: 300 }}
+                        animate={{ y: 0 }}
+                        exit={{ y: -300 }}
+                        transition={{
+                            velocity: 1,
+                        }}
+                    >
+                        <Label
+                            style={{ marginBottom: 30 }}
+                            htmlFor='input-file'
+                        >
+                            +
+                        </Label>
 
-                    {isLoading ? (
-                        <CircularProgress sx={{ marginBottom: 5 }} />
-                    ) : (
-                        <Menu data={result} />
-                    )}
-                </DiaryBody>
+                        {globalImage[param.when] && (
+                            <ImageBox>
+                                {globalImage[param.when].map((item, index) =>
+                                    item === '' ? null : (
+                                        <FoodImg
+                                            data={item}
+                                            removeFunction={removeSelectedImage}
+                                            index={index}
+                                            key={index}
+                                        />
+                                    )
+                                )}
+                            </ImageBox>
+                        )}
+                        <TagBox>
+                            {foodTag
+                                ? foodTag.map((item, index) =>
+                                      Object.entries(item).length !== 0 ? (
+                                          <Tag
+                                              onClick={() => onClickTag(index)}
+                                              key={index}
+                                          >
+                                              {item.name}
+                                              {` ${item.amount} (g 또는 ml)`}
+                                          </Tag>
+                                      ) : null
+                                  )
+                                : null}
+                        </TagBox>
+
+                        <input
+                            onChange={onChange}
+                            type='file'
+                            id='input-file'
+                            style={{ display: 'none' }}
+                            accept='image/*'
+                        />
+
+                        <ModalTitle>
+                            찾고싶은 음식을 작성한 후 엔터해주세요. 섭취량을
+                            작성한 후 엔터해주세요.
+                        </ModalTitle>
+                        <ModalSearch as='form' onSubmit={onSubmit}>
+                            <span className='material-symbols-outlined'>
+                                search
+                            </span>
+                            <ModalInput
+                                value={foodName}
+                                onChange={onChangeName}
+                            />
+                        </ModalSearch>
+
+                        {loading ? (
+                            <CircularProgress sx={{ marginBottom: 5 }} />
+                        ) : (
+                            <button
+                                onClick={onClickLast}
+                                style={{ marginBottom: '30px' }}
+                            >
+                                저장
+                            </button>
+                        )}
+
+                        {isLoading ? (
+                            <CircularProgress sx={{ marginBottom: 5 }} />
+                        ) : (
+                            <Menu data={result} />
+                        )}
+                    </DiaryBody>
+                )}
             </Contents>
         </Container>
     );
