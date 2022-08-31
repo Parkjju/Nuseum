@@ -126,5 +126,5 @@ export const Tag = styled.div`
     color: white;
     margin-right: 5px;
     margin-bottom: 5px;
-    cursor: default;
+    cursor: pointer;
 `;

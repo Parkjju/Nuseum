@@ -17,7 +17,7 @@ import { Name } from '../../atom/Card/styled';
 import Diary from '../Diary';
 import axios from 'axios';
 import { CircularProgress } from '@mui/material';
-import { periodState } from '../../../recoil/period/period';
+import { mealImageState, periodState } from '../../../recoil/period/period';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { dateState } from '../../../recoil/date/date';
 import { postIdState } from '../../../recoil/postID/postId';
@@ -29,7 +29,7 @@ function DiaryCalendar() {
     const setMeal = useSetRecoilState(periodState);
     const [date, setDate] = useRecoilState(dateState);
     const setPostId = useSetRecoilState(postIdState);
-
+    const setGlobalImage = useSetRecoilState(mealImageState);
     const [isDateSelected, setIsDateSelected] = useState(
         param.date !== undefined
     );
@@ -188,7 +188,16 @@ function DiaryCalendar() {
             .then((response) => {
                 let copy = loopFunction(response.data.meal);
                 let images = appendImages(response.data);
+
                 updateMeal({ ...copy }, images);
+
+                setGlobalImage(() => {
+                    let copy = {};
+                    for (let i in images) {
+                        copy[i] = [...images[i].image];
+                    }
+                    return copy;
+                });
 
                 setLoading(false);
             })

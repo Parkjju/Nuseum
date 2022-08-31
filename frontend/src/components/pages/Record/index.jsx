@@ -10,40 +10,36 @@ import drug from '../../../assets/drug.png';
 import {
     DiaryBody,
     DiaryTitle,
-    ImageBox,
-    Img,
     Label,
     ModalInput,
     ModalSearch,
-    Remove,
     Tag,
     TagBox,
 } from './styled';
 import { Icon, Name } from '../../atom/Card/styled';
-import { useCallback, useEffect, useState } from 'react';
-
-import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import { ModalTitle } from '../../atom/Modal/styled';
 import { mealImageState, periodState } from '../../../recoil/period/period';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import axios from 'axios';
 import Menu from '../../atom/Menu';
 import CircularProgress from '@mui/material/CircularProgress';
 import React from 'react';
 import imageCompression from 'browser-image-compression';
 import { postIdState } from '../../../recoil/postID/postId';
+import FoodImg from '../../molecules/FoodImg/FoodImg';
+import ImageBox from './ImageBox';
 
 function Record() {
     const navigate = useNavigate();
     const param = useParams();
     // 식사 시간별 데이터 전역상태
-    const meal = useRecoilValue(periodState);
+    const [meal, setMeal] = useRecoilState(periodState);
 
     // postId 얻어서 PUT / POST 구분
     const [postId, setPostId] = useRecoilState(postIdState);
 
     // 선택 이미지 상태값 - 삭제할때 활용
-    const [formData, setFormData] = useState([]);
     const [globalImage, setGlobalImage] = useRecoilState(mealImageState);
     const [selectedImage, setSelectedImage] = useState([]);
 
@@ -73,7 +69,13 @@ function Record() {
             reader.readAsDataURL(compressedFile);
             reader.onloadend = () => {
                 const base64data = reader.result;
-                setFormData((prev) => [...prev, base64data]);
+
+                setGlobalImage((prev) => {
+                    return {
+                        ...prev,
+                        [param.when]: [...prev[param.when], base64data],
+                    };
+                });
             };
         } catch (error) {
             console.log(error);
@@ -114,39 +116,7 @@ function Record() {
 
     let menu = [];
 
-    // formData 생성 후에 함수가 호출된다. 비동기 처리의 완료
-    useEffect(() => {
-        // formData 생성 되고나서 삽입
-        setGlobalImageAfterSelected();
-    }, [formData]);
-
-    useEffect(() => {
-        // selectedImage 변경에 따라 글로벌이미지 세팅
-        setGlobalImage((prev) => {
-            return {
-                ...prev,
-                [param.when]: [...selectedImage],
-            };
-        });
-    }, [selectedImage, param.when, setGlobalImage]);
-
-    const setGlobalImageAfterSelected = useCallback(() => {
-        let copy = [];
-        for (let i of selectedImage) {
-            if (typeof i === 'object') {
-                continue;
-            } else {
-                copy.push(i);
-            }
-        }
-
-        setGlobalImage((prev) => {
-            return {
-                ...prev,
-                [param.when]: [...copy, ...formData],
-            };
-        });
-    }, [selectedImage, formData, param.when, setGlobalImage]);
+    console.log(globalImage);
 
     const onChange = (e) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -154,6 +124,7 @@ function Record() {
             actionImgCompress(e.target.files[0]);
         }
     };
+    console.log(globalImage);
 
     const removeSelectedImage = (index) => {
         setGlobalImage((prev) => {
@@ -312,6 +283,20 @@ function Record() {
         }
     };
 
+    const onClickTag = (index) => {
+        let left = [...foodTag.slice(0, index)];
+        let right = [...foodTag.slice(index + 1)];
+        setMeal((prev) => {
+            return {
+                ...prev,
+                [param.when]: {
+                    data: [...left, {}, ...right],
+                    image: [...prev[param.when].image],
+                },
+            };
+        });
+    };
+
     return (
         <Container>
             <Contents>
@@ -336,83 +321,34 @@ function Record() {
                     <Label style={{ marginBottom: 30 }} htmlFor='input-file'>
                         +
                     </Label>
-                    {selectedImage && (
+
+                    {globalImage[param.when] && (
                         <ImageBox>
                             {globalImage[param.when].map((item, index) =>
                                 item === '' ? null : (
-                                    <motion.div
+                                    <FoodImg
+                                        data={item}
+                                        removeFunction={removeSelectedImage}
+                                        index={index}
                                         key={index}
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        exit={{ opacity: 0 }}
-                                        transition={{
-                                            velocity: 1,
-                                        }}
-                                        style={{
-                                            width: '90%',
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            flexDirection: 'column',
-                                            alignContent: 'space-between',
-                                        }}
-                                    >
-                                        {item === '' ? null : (
-                                            <Remove
-                                                onClick={() => {
-                                                    return removeSelectedImage(
-                                                        index
-                                                    );
-                                                }}
-                                            >
-                                                <span className='material-symbols-outlined'>
-                                                    close
-                                                </span>
-                                            </Remove>
-                                        )}
-                                        <div
-                                            style={{
-                                                width: '100%',
-                                                display: 'flex',
-                                                justifyContent: 'center',
-                                                height: 'auto',
-                                            }}
-                                        >
-                                            {typeof item === 'object' ? (
-                                                <Img
-                                                    src={URL.createObjectURL(
-                                                        item
-                                                    )}
-                                                    alt='img'
-                                                    style={{ width: '200px' }}
-                                                />
-                                            ) : typeof item === 'string' &&
-                                              item.length > 1 ? (
-                                                <Img
-                                                    src={
-                                                        typeof item === 'object'
-                                                            ? URL.createObjectURL(
-                                                                  item
-                                                              )
-                                                            : item
-                                                    }
-                                                    alt='img'
-                                                    style={{ width: '200px' }}
-                                                />
-                                            ) : null}
-                                        </div>
-                                    </motion.div>
+                                    />
                                 )
                             )}
                         </ImageBox>
                     )}
                     <TagBox>
                         {foodTag
-                            ? foodTag.map((item, index) => (
-                                  <Tag key={index}>
-                                      {item.name}
-                                      {` ${item.amount} (g 또는 ml)`}
-                                  </Tag>
-                              ))
+                            ? foodTag.map((item, index) =>
+                                  Object.entries(item).length !== 0 ? (
+                                      <Tag
+                                          onClick={() => onClickTag(index)}
+                                          key={index}
+                                      >
+                                          {item.name}
+                                          {` ${item.amount} (g 또는 ml)`}
+                                      </Tag>
+                                  ) : null
+                              )
                             : null}
                     </TagBox>
 
