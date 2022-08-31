@@ -88,9 +88,6 @@ export const ModalSearch = styled.div`
     border-radius: 10px;
     display: flex;
     align-items: center;
-
-    /* flex-direction: column; */
-    font-size: 14px;
     margin-bottom: 16px;
 `;
 
