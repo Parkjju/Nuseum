@@ -82,6 +82,7 @@ export const ModalSearch = styled.div`
     width: 90%;
     padding-right: 10px;
     height: 30px;
+    line-height: 1.5;
     padding-left: 10px;
     border: 1px solid black;
     border-radius: 10px;
@@ -99,7 +100,7 @@ export const ModalInput = styled.input`
         border: none;
         outline: none;
     }
-    line-height: 16px;
+    line-height: 1.5;
     width: 100%;
     font-size: 16px;
 `;
