@@ -32,6 +32,8 @@ import ImageBox from './ImageBox';
 
 function Record() {
     const navigate = useNavigate();
+
+    const [loading, setLoading] = useState(false);
     const param = useParams();
     // 식사 시간별 데이터 전역상태
     const [meal, setMeal] = useRecoilState(periodState);
@@ -235,6 +237,7 @@ function Record() {
         copy = deleteFoodName(copy);
 
         if (postId === null || postId === undefined) {
+            setLoading(true);
             axios
                 .post(
                     'https://cryptic-castle-40575.herokuapp.com/api/v1/post/',
@@ -242,6 +245,7 @@ function Record() {
                         meal: { ...copy },
                         created_at: Number(param.date),
                         water: 0,
+                        supplement: [],
                     },
                     {
                         headers: {
@@ -258,15 +262,22 @@ function Record() {
                             id: response.data.id,
                         };
                     });
+                    setLoading(false);
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => {
+                    console.log(err);
+                    alert('오류가 발생했습니다. 개발자에게 문의해주세요 😭');
+                    setLoading(false);
+                });
         } else {
+            setLoading(true);
             axios
                 .put(
                     `https://cryptic-castle-40575.herokuapp.com/api/v1/post/${postId}/`,
                     {
                         meal: { ...copy },
                         water: 0,
+                        supplement: [],
                     },
                     {
                         headers: {
@@ -276,9 +287,14 @@ function Record() {
                         },
                     }
                 )
-                .then((response) => alert('일지 수정이 완료되었어요☺️'))
+                .then((response) => {
+                    alert('일지 수정이 완료되었어요☺️');
+                    setLoading(false);
+                })
                 .catch((err) => {
                     console.log(err);
+                    setLoading(false);
+                    alert('오류가 발생했습니다. 개발자에게 문의해주세요 😭');
                 });
         }
     };
@@ -371,12 +387,16 @@ function Record() {
                         <ModalInput value={foodName} onChange={onChangeName} />
                     </ModalSearch>
 
-                    <button
-                        onClick={onClickLast}
-                        style={{ marginBottom: '30px' }}
-                    >
-                        저장
-                    </button>
+                    {loading ? (
+                        <CircularProgress sx={{ marginBottom: 5 }} />
+                    ) : (
+                        <button
+                            onClick={onClickLast}
+                            style={{ marginBottom: '30px' }}
+                        >
+                            저장
+                        </button>
+                    )}
 
                     {isLoading ? (
                         <CircularProgress sx={{ marginBottom: 5 }} />

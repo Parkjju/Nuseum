@@ -28,7 +28,6 @@ function Diary() {
         [cake, '간식', 'snack'],
         [supplement, '영양제', 'supplement'],
         [water, '물', 'water'],
-        [today, '오늘', 'today'],
     ];
 
     return (
