@@ -247,10 +247,11 @@ function DiaryCalendar() {
         default:
             break;
     }
+    console.log(isDateSelected);
 
     return (
         <Container>
-            <Contents style={{}}>
+            <Contents>
                 <DiaryTitle layoutId={menu[0][2]}>
                     <Name>{menu[0][1]}</Name>
                 </DiaryTitle>
@@ -272,6 +273,22 @@ function DiaryCalendar() {
                         />
                     ) : null}
                 </motion.div>
+                {isDateSelected ? null : (
+                    <Name
+                        style={{
+                            width: '49%',
+                            marginTop: 30,
+                            whiteSpace: 'normal',
+                            lineHeight: 1.5,
+                        }}
+                    >
+                        본 조사는 귀 자녀의 영양상태와 식행동을 평가하기 위해
+                        사용될 것입니다. <br />
+                        <br />귀 자녀가 가정에서는 물론, 어린이집/유치원이나
+                        외식에서 먹는 것도 모두 포함해서 답해주시기
+                        바랍니다(사진, 섭취내용(섭취량))
+                    </Name>
+                )}
             </Contents>
 
             {isDateSelected && !loading ? <Diary date={date} /> : null}
