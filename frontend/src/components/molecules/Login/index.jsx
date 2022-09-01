@@ -85,17 +85,6 @@ function Login() {
 
             <Title text='맞춤형 영양관리 및 정보제공 연구' />
 
-            <div
-                style={{
-                    width: '80%',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    margin: '50px auto',
-                    marginTop: '-50px',
-                }}
-            >
-                <button onClick={installApp}>앱 설치</button>
-            </div>
             <FormBox onSubmit={handleSubmit(onValid)}>
                 <Form
                     {...register('loginId', {
