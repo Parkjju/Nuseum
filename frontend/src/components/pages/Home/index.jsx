@@ -11,8 +11,24 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DiaryTitle } from '../Record/styled';
 import { Name } from '../../atom/Card/styled';
+import { useRecoilState } from 'recoil';
+import { deferredPromptState } from '../../../recoil/deferredPrompt/deferredPrompt';
 
 function Home() {
+    const [deferredPrompt, setDeferredPrompt] =
+        useRecoilState(deferredPromptState);
+
+    const installApp = async () => {
+        // Show the install prompt
+        deferredPrompt.prompt();
+        // Wait for the user to respond to the prompt
+        const { outcome } = await deferredPrompt.userChoice;
+        // Optionally, send analytics event with outcome of user choice
+        console.log(`User response to the install prompt: ${outcome}`);
+        // We've used the prompt, and can't use it again, throw it away
+        setDeferredPrompt(null);
+    };
+
     const navigate = useNavigate();
     useEffect(() => {
         const sessionStorage = window.sessionStorage;
@@ -44,6 +60,16 @@ function Home() {
                 </DiaryTitle>
                 <Card menu={menu} current='home' />
             </Contents>
+            <div
+                style={{
+                    width: '80%',
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    margin: '50px auto',
+                }}
+            >
+                <button onClick={installApp}>앱 설치</button>
+            </div>
         </Container>
     );
 }

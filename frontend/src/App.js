@@ -1,9 +1,9 @@
 import Router from './router';
-import { RecoilRoot, useRecoilState } from 'recoil';
 import { Helmet } from 'react-helmet';
 import ReactDOM from 'react-dom';
 import { createGlobalStyle } from 'styled-components';
 import Footer from './components/atom/Footer';
+import { useRecoilState } from 'recoil';
 import { deferredPromptState } from './recoil/deferredPrompt/deferredPrompt';
 
 const GlobalStyle = createGlobalStyle`
@@ -80,6 +80,7 @@ body{
 function App() {
     const [deferredPrompt, setDeferredPrompt] =
         useRecoilState(deferredPromptState);
+
     window.addEventListener('beforeunload', function (e) {
         // Cancel the event
         e.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
@@ -105,7 +106,7 @@ function App() {
     });
 
     return (
-        <RecoilRoot>
+        <>
             <Helmet>
                 <link
                     rel='stylesheet'
@@ -124,7 +125,7 @@ function App() {
                 <Footer />,
                 document.querySelector('#footer')
             )}
-        </RecoilRoot>
+        </>
     );
 }
 
