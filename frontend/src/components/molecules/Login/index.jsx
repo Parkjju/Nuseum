@@ -38,6 +38,7 @@ function Login() {
                 }
             )
             .then((response) => {
+                console.log('로그인 리스펀스', response);
                 const sessionStorage = window.sessionStorage;
                 const val = sessionStorage.getItem('access_token');
 

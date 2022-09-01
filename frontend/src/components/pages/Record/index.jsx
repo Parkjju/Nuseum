@@ -7,6 +7,8 @@ import mid from '../../../assets/lunch.png';
 import night from '../../../assets/dinner.png';
 import cake from '../../../assets/cake.png';
 import drug from '../../../assets/drug.png';
+import water from '../../../assets/water.png';
+
 import {
     DiaryBody,
     DiaryTitle,
@@ -197,6 +199,8 @@ function Record() {
         case 'supplement':
             menu.push([drug, '영양제', 'supplement']);
             break;
+        case 'water':
+            menu.push([water, '물', 'water']);
         default:
             break;
     }
@@ -328,7 +332,6 @@ function Record() {
             return [...left, {}, ...right];
         });
     };
-    console.log(supplement);
 
     return (
         <Container>
@@ -340,6 +343,8 @@ function Record() {
                 <Name style={{ marginBottom: '5px' }}>
                     {param.when === 'supplement'
                         ? '오늘 섭취한 영양제를 기록해주세요 :)'
+                        : param.when === 'water'
+                        ? '오늘 섭취한 물을 기록해주세요 :)'
                         : '음식 이미지를 업로드하고 식이정보를 입력하세요 :)'}
                 </Name>
                 <Name style={{ marginBottom: '50px' }}>
@@ -372,6 +377,10 @@ function Record() {
                         >
                             저장
                         </button>
+                    </>
+                ) : param.when === 'water' ? (
+                    <>
+                        <button>100ml</button>
                     </>
                 ) : (
                     <DiaryBody
