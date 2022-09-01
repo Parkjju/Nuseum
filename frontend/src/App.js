@@ -1,9 +1,10 @@
 import Router from './router';
-import { RecoilRoot } from 'recoil';
+import { RecoilRoot, useRecoilState } from 'recoil';
 import { Helmet } from 'react-helmet';
 import ReactDOM from 'react-dom';
 import { createGlobalStyle } from 'styled-components';
 import Footer from './components/atom/Footer';
+import { deferredPromptState } from './recoil/deferredPrompt/deferredPrompt';
 
 const GlobalStyle = createGlobalStyle`
 /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -77,6 +78,8 @@ body{
 `;
 
 function App() {
+    const [deferredPrompt, setDeferredPrompt] =
+        useRecoilState(deferredPromptState);
     window.addEventListener('beforeunload', function (e) {
         // Cancel the event
         e.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
@@ -84,14 +87,11 @@ function App() {
         e.returnValue = '';
     });
 
-    // Initialize deferredPrompt for use later to show browser install prompt.
-    let deferredPrompt;
-
     window.addEventListener('beforeinstallprompt', (e) => {
         // Prevent the mini-infobar from appearing on mobile
         e.preventDefault();
         // Stash the event so it can be triggered later.
-        deferredPrompt = e;
+        setDeferredPrompt(e);
         // Update UI notify the user they can install the PWA
         alert('버튼을 클릭하여 앱을 설치해주세요 :)');
         // Optionally, send analytics event that PWA install promo was shown.
@@ -99,7 +99,7 @@ function App() {
     });
     window.addEventListener('appinstalled', () => {
         // Clear the deferredPrompt so it can be garbage collected
-        deferredPrompt = null;
+        setDeferredPrompt(null);
         // Optionally, send analytics event to indicate successful install
         console.log('PWA was installed');
     });

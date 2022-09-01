@@ -13,9 +13,11 @@ import ErrorModal from '../../atom/Modal';
 import { useState } from 'react';
 import SNU from '../../../assets/SNU.png';
 import CircularProgress from '@mui/material/CircularProgress';
+import { deferredPromptState } from '../../../recoil/deferredPrompt/deferredPrompt';
 
 function Login() {
-    let deferredPrompt;
+    const [deferredPrompt, setDeferredPrompt] =
+        useRecoilState(deferredPromptState);
     const installApp = async () => {
         // Show the install prompt
         deferredPrompt.prompt();
@@ -24,7 +26,7 @@ function Login() {
         // Optionally, send analytics event with outcome of user choice
         console.log(`User response to the install prompt: ${outcome}`);
         // We've used the prompt, and can't use it again, throw it away
-        deferredPrompt = null;
+        setDeferredPrompt(null);
     };
     const {
         register,
