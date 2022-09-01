@@ -93,10 +93,17 @@ function App() {
         // Stash the event so it can be triggered later.
         deferredPrompt = e;
         // Update UI notify the user they can install the PWA
-        alert('HELLO PWA!');
+        alert('버튼을 클릭하여 앱을 설치해주세요 :)');
         // Optionally, send analytics event that PWA install promo was shown.
         console.log(`'beforeinstallprompt' event was fired.`);
     });
+    window.addEventListener('appinstalled', () => {
+        // Clear the deferredPrompt so it can be garbage collected
+        deferredPrompt = null;
+        // Optionally, send analytics event to indicate successful install
+        console.log('PWA was installed');
+    });
+
     return (
         <RecoilRoot>
             <Helmet>

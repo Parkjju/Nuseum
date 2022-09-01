@@ -15,6 +15,17 @@ import SNU from '../../../assets/SNU.png';
 import CircularProgress from '@mui/material/CircularProgress';
 
 function Login() {
+    let deferredPrompt;
+    const installApp = async () => {
+        // Show the install prompt
+        deferredPrompt.prompt();
+        // Wait for the user to respond to the prompt
+        const { outcome } = await deferredPrompt.userChoice;
+        // Optionally, send analytics event with outcome of user choice
+        console.log(`User response to the install prompt: ${outcome}`);
+        // We've used the prompt, and can't use it again, throw it away
+        deferredPrompt = null;
+    };
     const {
         register,
         handleSubmit,
@@ -79,7 +90,6 @@ function Login() {
                     type='text'
                     error={errors.loginId}
                 />
-
                 {errors.loginId ? (
                     <Error>{errors.loginId.message}</Error>
                 ) : null}
@@ -98,7 +108,6 @@ function Login() {
                 {errors.loginPassword && !errors.loginId ? (
                     <Error>{errors.loginPassword.message}</Error>
                 ) : null}
-
                 {display ? (
                     <ErrorModal
                         open={display}
@@ -109,7 +118,6 @@ function Login() {
                         message={errors.nonExists.message}
                     />
                 ) : null}
-
                 <BtnBox as='div'>
                     {isLoading ? (
                         <CircularProgress sx={{ marginBottom: 5 }} />
@@ -127,6 +135,16 @@ function Login() {
                     </Link>
                 </BtnBox>
             </FormBox>
+            <div
+                style={{
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    marginBottom: 30,
+                }}
+            >
+                <button onClick={installApp}>앱 설치</button>
+            </div>
         </Container>
     );
 }
