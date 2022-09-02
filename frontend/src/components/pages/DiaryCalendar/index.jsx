@@ -22,6 +22,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { dateState } from '../../../recoil/date/date';
 import { postIdState } from '../../../recoil/postID/postId';
 import { supplementState } from '../../../recoil/supplement/supplement';
+import { waterState } from '../../../recoil/water/water';
 
 function DiaryCalendar() {
     const param = useParams();
@@ -31,7 +32,7 @@ function DiaryCalendar() {
     const [date, setDate] = useRecoilState(dateState);
     const setPostId = useSetRecoilState(postIdState);
     const setGlobalImage = useSetRecoilState(mealImageState);
-    const supplement = useRecoilValue(supplementState);
+    const setWater = useSetRecoilState(waterState);
     const setSupplement = useSetRecoilState(supplementState);
     const [isDateSelected, setIsDateSelected] = useState(
         param.date !== undefined
@@ -190,8 +191,10 @@ function DiaryCalendar() {
                 }
             )
             .then((response) => {
+                console.log(response.data);
                 let copy = loopFunction(response.data.meal);
                 let images = appendImages(response.data);
+                setWater(response.data.water);
                 setSupplement([...response.data.supplement]);
                 updateMeal({ ...copy }, images);
 
@@ -215,13 +218,21 @@ function DiaryCalendar() {
 
                 setMeal((prev) => {
                     return {
-                        breakfast: { data: [], image: '' },
-                        lunch: { data: [], image: '' },
-                        dinner: { data: [], image: '' },
-                        snack: { data: [], image: '' },
-                        supplement: { data: [], image: '' },
+                        breakfast: { data: [], image: [] },
+                        lunch: { data: [], image: [] },
+                        dinner: { data: [], image: [] },
+                        snack: { data: [], image: [] },
                     };
                 });
+                setSupplement([]);
+                setGlobalImage({
+                    breakfast: [],
+                    lunch: [],
+                    dinner: [],
+                    snack: [],
+                    supplement: [],
+                });
+                setWater(0);
                 setLoading(false);
                 setPostId(null);
             });

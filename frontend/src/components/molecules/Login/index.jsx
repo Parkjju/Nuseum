@@ -13,22 +13,24 @@ import ErrorModal from '../../atom/Modal';
 import { useState } from 'react';
 import SNU from '../../../assets/SNU.png';
 import CircularProgress from '@mui/material/CircularProgress';
-import { deferredPromptState } from '../../../recoil/deferredPrompt/deferredPrompt';
+// import { deferredPromptState } from '../../../recoil/deferredPrompt/deferredPrompt';
 
 function Login() {
-    const [deferredPrompt, setDeferredPrompt] =
-        useRecoilState(deferredPromptState);
+    // pwa 설치 관련 코드
+    // const [deferredPrompt, setDeferredPrompt] =
+    //     useRecoilState(deferredPromptState);
 
-    const installApp = async () => {
-        // Show the install prompt
-        deferredPrompt.prompt();
-        // Wait for the user to respond to the prompt
-        const { outcome } = await deferredPrompt.userChoice;
-        // Optionally, send analytics event with outcome of user choice
-        console.log(`User response to the install prompt: ${outcome}`);
-        // We've used the prompt, and can't use it again, throw it away
-        setDeferredPrompt(null);
-    };
+    // const installApp = async () => {
+    //     // Show the install prompt
+    //     deferredPrompt.prompt();
+    //     // Wait for the user to respond to the prompt
+    //     const { outcome } = await deferredPrompt.userChoice;
+    //     // Optionally, send analytics event with outcome of user choice
+    //     console.log(`User response to the install prompt: ${outcome}`);
+    //     // We've used the prompt, and can't use it again, throw it away
+    //     setDeferredPrompt(null);
+    // };
+
     const {
         register,
         handleSubmit,

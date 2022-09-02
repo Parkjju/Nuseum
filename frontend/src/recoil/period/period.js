@@ -5,23 +5,19 @@ export const periodState = atom({
     default: {
         breakfast: {
             data: [],
-            image: '',
+            image: [],
         },
         lunch: {
             data: [],
-            image: '',
+            image: [],
         },
         dinner: {
             data: [],
-            image: '',
+            image: [],
         },
         snack: {
             data: [],
-            image: '',
-        },
-        supplement: {
-            data: [],
-            image: '',
+            image: [],
         },
     },
 });

@@ -33,6 +33,7 @@ import FoodImg from '../../molecules/FoodImg/FoodImg';
 import ImageBox from './ImageBox';
 import ImageCard from '../../molecules/ImageCard';
 import { supplementState } from '../../../recoil/supplement/supplement';
+import Water from '../Water';
 
 function Record() {
     const navigate = useNavigate();
@@ -96,6 +97,7 @@ function Record() {
             console.log(error);
         }
     };
+    console.log(globalImage);
 
     // globalImage들 끼니별로 분류하여 불러오고 있음.
     useEffect(() => {
@@ -379,9 +381,7 @@ function Record() {
                         </button>
                     </>
                 ) : param.when === 'water' ? (
-                    <>
-                        <button>100ml</button>
-                    </>
+                    <Water />
                 ) : (
                     <DiaryBody
                         initial={{ y: 300 }}
