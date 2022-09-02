@@ -97,7 +97,6 @@ function Record() {
             console.log(error);
         }
     };
-    console.log(globalImage);
 
     // globalImage들 끼니별로 분류하여 불러오고 있음.
     useEffect(() => {
@@ -227,6 +226,51 @@ function Record() {
         return { ...postData };
     };
 
+    const isEmpty = (obj) => {
+        for (let period in obj) {
+            for (let i of obj[period].data) {
+                if (Object.entries(i).length !== 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    };
+
+    // object의 data 객체를 순회하며 지우는 함수
+    // object의 빈 이미지 객체를 지우는 함수
+    const removeEmptyObject = (obj) => {
+        for (let period in obj) {
+            let copyObj = [...obj[period].data];
+            let copyImages = [...obj[period].image];
+
+            // 각 끼니의 음식데이터 data 어트리뷰트 배열을 순회
+            // 순회하는 그 객체가 비어있으면 지워야한다
+            for (let index in obj[period].data) {
+                if (Object.entries(obj[period].data[index]).length === 0) {
+                    copyObj = [
+                        ...copyObj.slice(0, index),
+                        ...copyObj.slice(index + 1),
+                    ];
+                }
+            }
+
+            for (let index in obj[period].image) {
+                if (obj[period].image[index] === '') {
+                    copyImages = [
+                        ...copyImages.slice(0, index),
+                        ...copyImages.slice(index + 1),
+                    ];
+                }
+            }
+
+            obj[period].data = [...copyObj];
+            obj[period].image = [...copyImages];
+        }
+
+        return { ...obj };
+    };
+
     const onClickLast = () => {
         let copy = {
             breakfast: {
@@ -248,8 +292,15 @@ function Record() {
         };
         copy = deleteFoodName(copy);
 
+        if (isEmpty(copy)) {
+            alert('최소 식사 한 끼니에 대한 기록이 필요합니다!');
+            return;
+        }
+
         if (postId === null || postId === undefined) {
             setLoading(true);
+            removeEmptyObject(copy);
+
             axios
                 .post(
                     'https://cryptic-castle-40575.herokuapp.com/api/v1/post/',
@@ -300,7 +351,6 @@ function Record() {
                     }
                 )
                 .then((response) => {
-                    console.log(response.data);
                     alert('일기 수정이 완료되었어요☺️');
                     setLoading(false);
                 })
