@@ -16,7 +16,9 @@ const Water = () => {
     const [currentAmount, setCurrentAmount] = useState(0);
     const [intervalId, setIntervalId] = useState(0);
     const boxRef = useRef();
-    const [boxWidth, setBoxWidth] = useState(window.innerWidth * 0.8);
+    const [boxWidth, setBoxWidth] = useState(
+        window.innerWidth > 800 ? 800 * 0.8 : window.innerWidth * 0.8
+    );
     const [mealState, setMealState] = useRecoilState(periodState);
     const [supplement, setSupplement] = useRecoilState(supplementState);
     const postId = useRecoilValue(postIdState);
