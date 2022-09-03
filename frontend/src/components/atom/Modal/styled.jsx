@@ -3,23 +3,24 @@ import styled from 'styled-components';
 export const Modal = styled.div`
     border: 1px solid black;
     width: 280px;
-    max-height: 140px;
+    max-height: 120px;
     position: relative;
     top: 100px;
     background-color: white;
     border-radius: 25px;
-    padding: 15px 25px;
+    padding: 30px 25px;
 `;
 
 export const ModalTitle = styled.p`
-    font-size: 12px;
+    font-size: 16px;
     font-weight: bold;
     height: 15px;
     margin-bottom: 20px;
 `;
 
 export const ModalDescription = styled.p`
-    font-size: 15px;
+    font-size: 16px;
+
     width: 80%;
     height: 20px;
     margin-bottom: 30px;

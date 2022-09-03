@@ -59,7 +59,20 @@ function Register() {
                     });
                     setIsLoading(false);
                     setDisplay(true);
+                    return;
+                } else if (err.response.data.password1) {
+                    setError('AlreadyExists', {
+                        message: '보안에 취약한 비밀번호입니다.',
+                        type: 'custom',
+                    });
+                    setIsLoading(false);
+                    setDisplay(true);
+                    return;
                 }
+
+                alert(
+                    '알 수 없는 오류가 발생했습니다. 개발자에게 문의해주세요!'
+                );
             });
     };
 
