@@ -191,7 +191,6 @@ function DiaryCalendar() {
                 }
             )
             .then((response) => {
-                console.log(response.data);
                 let copy = loopFunction(response.data.meal);
                 let images = appendImages(response.data);
                 setWater(response.data.water);
@@ -206,6 +205,7 @@ function DiaryCalendar() {
                     return copy;
                 });
 
+                console.log(response.data);
                 setLoading(false);
             })
             .catch((err) => {

@@ -241,33 +241,20 @@ function Record() {
     // object의 빈 이미지 객체를 지우는 함수
     const removeEmptyObject = (obj) => {
         for (let period in obj) {
-            let copyObj = [...obj[period].data];
-            let copyImages = [...obj[period].image];
-
             // 각 끼니의 음식데이터 data 어트리뷰트 배열을 순회
             // 순회하는 그 객체가 비어있으면 지워야한다
-            for (let index in obj[period].data) {
-                if (Object.entries(obj[period].data[index]).length === 0) {
-                    copyObj = [
-                        ...copyObj.slice(0, index),
-                        ...copyObj.slice(index + 1),
-                    ];
-                }
-            }
-
-            for (let index in obj[period].image) {
-                if (obj[period].image[index] === '') {
-                    copyImages = [
-                        ...copyImages.slice(0, index),
-                        ...copyImages.slice(index + 1),
-                    ];
-                }
-            }
+            let copyObj = [
+                ...obj[period].data.filter(
+                    (item) => Object.entries(item).length !== 0
+                ),
+            ];
+            let copyImages = [
+                ...obj[period].image.filter((item) => item !== ''),
+            ];
 
             obj[period].data = [...copyObj];
             obj[period].image = [...copyImages];
         }
-
         return { ...obj };
     };
 
@@ -290,6 +277,7 @@ function Record() {
                 image: meal.snack.image,
             },
         };
+
         copy = deleteFoodName(copy);
 
         if (isEmpty(copy)) {
@@ -299,6 +287,7 @@ function Record() {
 
         if (postId === null || postId === undefined) {
             setLoading(true);
+
             removeEmptyObject(copy);
 
             axios
@@ -336,7 +325,9 @@ function Record() {
             setLoading(true);
             axios
                 .put(
-                    `https://cryptic-castle-40575.herokuapp.com/api/v1/post/${postId}/`,
+                    `https://cryptic-castle-40575.herokuapp.com/api/v1/post/${
+                        postId ? postId : postId.id
+                    }/`,
                     {
                         meal: { ...copy },
                         water: 0,
