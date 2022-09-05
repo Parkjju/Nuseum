@@ -18,6 +18,14 @@ export const ModalTitle = styled.p`
     margin-bottom: 20px;
 `;
 
+export const SearchTitle = styled(ModalTitle)`
+    font-size: 12px;
+    font-family: 'Noto Serif KR', serif;
+    line-height: 1.2;
+    text-align: justify;
+    height: 20px;
+`;
+
 export const ModalDescription = styled.p`
     font-size: 16px;
 
