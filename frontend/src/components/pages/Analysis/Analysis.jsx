@@ -5,6 +5,7 @@ import { Contents } from '../Home/styled';
 import { DiaryTitle } from '../Record/styled';
 import * as S from './Analysis.style';
 import carbohydrates from '../../../assets/carbohydrates.png';
+import { faker } from '@faker-js/faker';
 import dha from '../../../assets/dha.png';
 import fat from '../../../assets/fat.png';
 import folic from '../../../assets/folic.png';
@@ -21,9 +22,93 @@ import 'react-calendar/dist/Calendar.css';
 import axios from 'axios';
 import { CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { textAlign } from '@mui/system';
+import {
+    Chart as ChartJS,
+    RadialLinearScale,
+    PointElement,
+    LineElement,
+    Filler,
+    Tooltip,
+    Legend,
+    CategoryScale,
+    BarElement,
+    Title,
+    LinearScale,
+} from 'chart.js';
+import { Radar, Bar } from 'react-chartjs-2';
+import RadarGraph from '../../molecules/RadarGraph';
+ChartJS.register(
+    RadialLinearScale,
+    CategoryScale,
+    BarElement,
+    Title,
+    PointElement,
+    LineElement,
+    Filler,
+    Tooltip,
+    Legend,
+    LinearScale
+);
 
 const Analysis = () => {
+    const labelsForBar = ['실제 섭취율', '권장 섭취율'];
+    const dataForBar = {
+        labels: labelsForBar,
+        datasets: [
+            {
+                label: '탄수화물',
+                data: [
+                    [0, 0.6],
+                    [0, 0.55],
+                ],
+                backgroundColor: '#BEC5C6',
+            },
+            {
+                label: '단백질',
+                data: [
+                    [0, 0.21],
+                    [0, 0.25],
+                ],
+                backgroundColor: '#7f8c8d',
+            },
+            {
+                label: '지방',
+                data: [
+                    [0, 0.18],
+                    [0, 0.2],
+                ],
+                backgroundColor: '#525959',
+            },
+        ],
+    };
+
+    const optionsForBar = {
+        indexAxis: 'y',
+        elements: {
+            bar: {
+                borderWidth: 2,
+            },
+        },
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'bottom',
+            },
+            title: {
+                display: true,
+                text: '탄수화물 단백질 지방 섭취율',
+            },
+        },
+        scales: {
+            y: {
+                stacked: true,
+            },
+            x: {
+                stacked: true,
+            },
+        },
+    };
+
     const [date, setDate] = useState(new Date());
     const [isDateSelected, setIsDateSelected] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -208,6 +293,7 @@ const Analysis = () => {
                 alert('한 달간 입력된 데이터가 없어요 😭');
             });
     };
+
     return (
         <Container>
             <Contents>
@@ -230,117 +316,135 @@ const Analysis = () => {
                     <>
                         {loading ? (
                             <CircularProgress sx={{ marginTop: 10 }} />
-                        ) : (
-                            <S.Box>
-                                <S.IconBox>
-                                    <S.Icon src={carbohydrates} />
-                                    <Name style={{ marginBottom: 5 }}>
-                                        탄수화물
-                                    </Name>
-                                    <Name>
-                                        {nutrition.carbohydrate}g / 100-130g
-                                    </Name>
-                                </S.IconBox>
-                                <S.IconBox>
-                                    <S.Icon src={dha} />
-                                    <Name style={{ marginBottom: 5 }}>
-                                        DHA+EPA
-                                    </Name>
-                                    <Name>{nutrition.dha_epa}mg / 300mg</Name>
-                                </S.IconBox>
-                                <S.IconBox>
-                                    <S.Icon src={fat} />
-                                    <Name style={{ marginBottom: 5 }}>
-                                        지방
-                                    </Name>
-                                    <Name>{nutrition.fat}g / 86-102g</Name>
-                                </S.IconBox>
-                                <S.IconBox>
-                                    <S.Icon src={folic} />
-                                    <Name style={{ marginBottom: 5 }}>
-                                        엽산
-                                    </Name>
-                                    <Name
-                                        style={{
-                                            width: '200px',
-                                            textAlign: 'center',
-                                        }}
-                                    >
-                                        {nutrition.folic_acid}μg DFE  / 180μg
-                                        DFE 
-                                    </Name>
-                                </S.IconBox>
-                                <S.IconBox>
-                                    <S.Icon src={magnesium} />
-                                    <Name style={{ marginBottom: 5 }}>
-                                        마그네슘
-                                    </Name>
-                                    <Name>{nutrition.magnesium}mg / 110mg</Name>
-                                </S.IconBox>
-                                <S.IconBox>
-                                    <S.Icon src={protein} />
-                                    <Name style={{ marginBottom: 5 }}>
-                                        단백질
-                                    </Name>
-                                    <Name>{nutrition.protein}g / 20-25g</Name>
-                                </S.IconBox>
-                                <S.IconBox>
-                                    <S.Icon src={tryptophan} />
-                                    <Name style={{ marginBottom: 5 }}>
-                                        트립토판
-                                    </Name>
-                                    <Name>{nutrition.tryptophan}g / 0.1g</Name>
-                                </S.IconBox>
-                                <S.IconBox>
-                                    <S.Icon src={vitaminA} />
-                                    <Name style={{ marginBottom: 5 }}>
-                                        비타민 A
-                                    </Name>
-                                    <Name
-                                        style={{
-                                            width: '200px',
-                                            textAlign: 'center',
-                                        }}
-                                    >
-                                        {nutrition.vitamin_a}μg RAE / 300μg RAE
-                                    </Name>
-                                </S.IconBox>
-                                <S.IconBox>
-                                    <S.Icon src={vitaminB6} />
-                                    <Name style={{ marginBottom: 5 }}>
-                                        비타민 B6
-                                    </Name>
-                                    <Name>
-                                        {nutrition.vitamin_b6}mg / 0.7mg
-                                    </Name>
-                                </S.IconBox>
-                                <S.IconBox>
-                                    <S.Icon src={fiber} />
-                                    <Name style={{ marginBottom: 5 }}>
-                                        식이섬유
-                                    </Name>
-                                    <Name>
-                                        {nutrition.dietary_fiber}g / 20g
-                                    </Name>
-                                </S.IconBox>
-                                <S.IconBox>
-                                    <S.Icon src={vitaminB12} />
-                                    <Name style={{ marginBottom: 5 }}>
-                                        비타민 B12
-                                    </Name>
-                                    <Name>
-                                        {nutrition.vitamin_b12}μg / 1.1μg
-                                    </Name>
-                                </S.IconBox>
-                                <S.IconBox>
-                                    <S.Icon src={vitaminD} />
-                                    <Name style={{ marginBottom: 5 }}>
-                                        비타민 D
-                                    </Name>
-                                    <Name>{nutrition.vitamin_d}μg / 5μg</Name>
-                                </S.IconBox>
-                            </S.Box>
-                        )}
+                        ) : nutrition ? (
+                            <>
+                                <RadarGraph data={nutrition} />
+                                <Bar
+                                    options={optionsForBar}
+                                    data={dataForBar}
+                                />
+                                <S.Box>
+                                    <S.IconBox>
+                                        <S.Icon src={carbohydrates} />
+                                        <Name style={{ marginBottom: 5 }}>
+                                            탄수화물
+                                        </Name>
+                                        <Name>
+                                            {nutrition.carbohydrate}g / 100-130g
+                                        </Name>
+                                    </S.IconBox>
+                                    <S.IconBox>
+                                        <S.Icon src={dha} />
+                                        <Name style={{ marginBottom: 5 }}>
+                                            DHA+EPA
+                                        </Name>
+                                        <Name>
+                                            {nutrition.dha_epa}mg / 300mg
+                                        </Name>
+                                    </S.IconBox>
+                                    <S.IconBox>
+                                        <S.Icon src={fat} />
+                                        <Name style={{ marginBottom: 5 }}>
+                                            지방
+                                        </Name>
+                                        <Name>{nutrition.fat}g / 86-102g</Name>
+                                    </S.IconBox>
+                                    <S.IconBox>
+                                        <S.Icon src={folic} />
+                                        <Name style={{ marginBottom: 5 }}>
+                                            엽산
+                                        </Name>
+                                        <Name
+                                            style={{
+                                                width: '200px',
+                                                textAlign: 'center',
+                                            }}
+                                        >
+                                            {nutrition.folic_acid}μg DFE  /
+                                            180μg DFE 
+                                        </Name>
+                                    </S.IconBox>
+                                    <S.IconBox>
+                                        <S.Icon src={magnesium} />
+                                        <Name style={{ marginBottom: 5 }}>
+                                            마그네슘
+                                        </Name>
+                                        <Name>
+                                            {nutrition.magnesium}mg / 110mg
+                                        </Name>
+                                    </S.IconBox>
+                                    <S.IconBox>
+                                        <S.Icon src={protein} />
+                                        <Name style={{ marginBottom: 5 }}>
+                                            단백질
+                                        </Name>
+                                        <Name>
+                                            {nutrition.protein}g / 20-25g
+                                        </Name>
+                                    </S.IconBox>
+                                    <S.IconBox>
+                                        <S.Icon src={tryptophan} />
+                                        <Name style={{ marginBottom: 5 }}>
+                                            트립토판
+                                        </Name>
+                                        <Name>
+                                            {nutrition.tryptophan}g / 0.1g
+                                        </Name>
+                                    </S.IconBox>
+                                    <S.IconBox>
+                                        <S.Icon src={vitaminA} />
+                                        <Name style={{ marginBottom: 5 }}>
+                                            비타민 A
+                                        </Name>
+                                        <Name
+                                            style={{
+                                                width: '200px',
+                                                textAlign: 'center',
+                                            }}
+                                        >
+                                            {nutrition.vitamin_a}μg RAE / 300μg
+                                            RAE
+                                        </Name>
+                                    </S.IconBox>
+                                    <S.IconBox>
+                                        <S.Icon src={vitaminB6} />
+                                        <Name style={{ marginBottom: 5 }}>
+                                            비타민 B6
+                                        </Name>
+                                        <Name>
+                                            {nutrition.vitamin_b6}mg / 0.7mg
+                                        </Name>
+                                    </S.IconBox>
+                                    <S.IconBox>
+                                        <S.Icon src={fiber} />
+                                        <Name style={{ marginBottom: 5 }}>
+                                            식이섬유
+                                        </Name>
+                                        <Name>
+                                            {nutrition.dietary_fiber}g / 20g
+                                        </Name>
+                                    </S.IconBox>
+                                    <S.IconBox>
+                                        <S.Icon src={vitaminB12} />
+                                        <Name style={{ marginBottom: 5 }}>
+                                            비타민 B12
+                                        </Name>
+                                        <Name>
+                                            {nutrition.vitamin_b12}μg / 1.1μg
+                                        </Name>
+                                    </S.IconBox>
+                                    <S.IconBox>
+                                        <S.Icon src={vitaminD} />
+                                        <Name style={{ marginBottom: 5 }}>
+                                            비타민 D
+                                        </Name>
+                                        <Name>
+                                            {nutrition.vitamin_d}μg / 5μg
+                                        </Name>
+                                    </S.IconBox>
+                                </S.Box>
+                            </>
+                        ) : null}
                     </>
                 ) : null}
             </Contents>
