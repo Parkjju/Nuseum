@@ -8,6 +8,7 @@ import night from '../../../assets/dinner.png';
 import cake from '../../../assets/cake.png';
 import drug from '../../../assets/drug.png';
 import water from '../../../assets/water.png';
+import today from '../../../assets/today.png';
 
 import {
     DiaryBody,
@@ -20,7 +21,7 @@ import {
 } from './styled';
 import { Icon, Name } from '../../atom/Card/styled';
 import { useEffect, useState } from 'react';
-import { ModalTitle } from '../../atom/Modal/styled';
+import { ModalTitle, SearchTitle } from '../../atom/Modal/styled';
 import { mealImageState, periodState } from '../../../recoil/period/period';
 import { useRecoilState } from 'recoil';
 import axios from 'axios';
@@ -118,9 +119,6 @@ function Record() {
                 case 'snack':
                     newFood = [...meal.snack.data];
                     break;
-                case 'supplement':
-                    newFood = [...meal.supplement.data];
-                    break;
                 default:
                     break;
             }
@@ -202,6 +200,10 @@ function Record() {
             break;
         case 'water':
             menu.push([water, '물', 'water']);
+            break;
+        case 'today':
+            menu.push([today, '오늘', 'today']);
+            break;
         default:
             break;
     }
@@ -318,7 +320,7 @@ function Record() {
                 })
                 .catch((err) => {
                     console.log(err);
-                    alert('오류가 발생했습니다. 개발자에게 문의해주세요 😭');
+                    alert('오류가 발생했습니다. Q&A에 문의해주세요.');
                     setLoading(false);
                 });
         } else {
@@ -348,7 +350,7 @@ function Record() {
                 .catch((err) => {
                     console.log(err);
                     setLoading(false);
-                    alert('오류가 발생했습니다. 개발자에게 문의해주세요 😭');
+                    alert('오류가 발생했습니다. Q&A에 문의해주세요.');
                 });
         }
     };
@@ -401,18 +403,22 @@ function Record() {
                         >
                             추가하기
                         </button>
-                        {supplement.map((item, index) =>
-                            Object.keys(item).length === 0 ? null : (
-                                <ImageCard
-                                    index={index}
-                                    removeImageCard={() =>
-                                        removeImageCard(index)
-                                    }
-                                    key={item.id}
-                                    data={item}
-                                />
-                            )
-                        )}
+                        {console.log(supplement.length)}
+
+                        {supplement.length === 0
+                            ? null
+                            : supplement.map((item, index) =>
+                                  Object.keys(item).length === 0 ? null : (
+                                      <ImageCard
+                                          index={index}
+                                          removeImageCard={() =>
+                                              removeImageCard(index)
+                                          }
+                                          key={item.id}
+                                          data={item}
+                                      />
+                                  )
+                              )}
 
                         <button
                             style={{ marginBottom: 30 }}
@@ -477,10 +483,12 @@ function Record() {
                             accept='image/*'
                         />
 
-                        <ModalTitle>
+                        <SearchTitle>
                             찾고싶은 음식을 작성한 후 엔터해주세요. 섭취량을
-                            작성한 후 엔터해주세요.
-                        </ModalTitle>
+                            작성한 후 엔터해주세요. 찾고 싶은 음식이 없다면 가장
+                            유사한 것으로 선택해주세요. 관련된 내용을 Q&A에
+                            적어주세요.
+                        </SearchTitle>
                         <ModalSearch as='form' onSubmit={onSubmit}>
                             <span className='material-symbols-outlined'>
                                 search
