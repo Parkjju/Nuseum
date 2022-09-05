@@ -68,13 +68,12 @@ const RadarGraph = ({ data }) => {
             },
         ],
     };
-    let options = {
-        responsive: false,
-    };
+    // let options = {
+    //     responsive: false,
+    // };
     return (
         <>
             <Radar
-                options={options}
                 style={{ width: '80%', marginTop: 30, marginBottom: 30 }}
                 data={dataForRadar}
             />
