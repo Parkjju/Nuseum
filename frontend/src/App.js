@@ -47,6 +47,8 @@ html,body {
     min-height:800px;
 }
 
+
+
 button{
     font-family: 'Noto Serif KR', serif;
 }
@@ -78,35 +80,6 @@ body{
 `;
 
 function App() {
-    // deferred state
-    // const [deferredPrompt, setDeferredPrompt] =
-    //     useRecoilState(deferredPromptState);
-
-    // window.addEventListener('beforeunload', function (e) {
-    //     // Cancel the event
-    //     e.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
-    //     // Chrome requires returnValue to be set
-    //     e.returnValue = '';
-    // });
-
-    // 설치 안되었으면 알럿
-    // window.addEventListener('beforeinstallprompt', (e) => {
-    //     // Prevent the mini-infobar from appearing on mobile
-    //     e.preventDefault();
-    //     // Stash the event so it can be triggered later.
-    //     setDeferredPrompt(e);
-    //     // Update UI notify the user they can install the PWA
-    //     alert('버튼을 클릭하여 앱을 설치해주세요 :)');
-    //     // Optionally, send analytics event that PWA install promo was shown.
-    //     console.log(`'beforeinstallprompt' event was fired.`);
-    // });
-    // window.addEventListener('appinstalled', () => {
-    //     // Clear the deferredPrompt so it can be garbage collected
-    //     setDeferredPrompt(null);
-    //     // Optionally, send analytics event to indicate successful install
-    //     console.log('PWA was installed');
-    // });
-
     return (
         <>
             <Helmet>
@@ -117,7 +90,7 @@ function App() {
                 <link
                     href='https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap'
                     rel='stylesheet'
-                ></link>
+                />
             </Helmet>
             <>
                 <GlobalStyle />
