@@ -13,8 +13,8 @@ export const Container = styled.form`
 `;
 
 export const ImageBox = styled.div`
-    width: 120px;
-    height: 120px;
+    width: 7rem;
+    height: 7rem;
     border-radius: 60px;
     display: flex;
     align-items: center;
