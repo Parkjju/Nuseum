@@ -37,6 +37,7 @@ import {
 } from 'chart.js';
 import { Radar, Bar } from 'react-chartjs-2';
 import RadarGraph from '../../molecules/RadarGraph';
+import BarGraph from '../../molecules/BarGraph';
 ChartJS.register(
     RadialLinearScale,
     CategoryScale,
@@ -51,64 +52,6 @@ ChartJS.register(
 );
 
 const Analysis = () => {
-    const labelsForBar = ['실제 섭취율', '권장 섭취율'];
-    const dataForBar = {
-        labels: labelsForBar,
-        datasets: [
-            {
-                label: '탄수화물',
-                data: [
-                    [0, 0.6],
-                    [0, 0.55],
-                ],
-                backgroundColor: '#BEC5C6',
-            },
-            {
-                label: '단백질',
-                data: [
-                    [0, 0.21],
-                    [0, 0.25],
-                ],
-                backgroundColor: '#7f8c8d',
-            },
-            {
-                label: '지방',
-                data: [
-                    [0, 0.18],
-                    [0, 0.2],
-                ],
-                backgroundColor: '#525959',
-            },
-        ],
-    };
-
-    const optionsForBar = {
-        indexAxis: 'y',
-        elements: {
-            bar: {
-                borderWidth: 2,
-            },
-        },
-        responsive: true,
-        plugins: {
-            legend: {
-                position: 'bottom',
-            },
-            title: {
-                display: true,
-                text: '탄수화물 단백질 지방 섭취율',
-            },
-        },
-        scales: {
-            y: {
-                stacked: true,
-            },
-            x: {
-                stacked: true,
-            },
-        },
-    };
-
     const [date, setDate] = useState(new Date());
     const [isDateSelected, setIsDateSelected] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -319,10 +262,8 @@ const Analysis = () => {
                         ) : nutrition ? (
                             <>
                                 <RadarGraph data={nutrition} />
-                                <Bar
-                                    options={optionsForBar}
-                                    data={dataForBar}
-                                />
+                                <BarGraph data={nutrition} />
+
                                 <S.Box>
                                     <S.IconBox>
                                         <S.Icon src={carbohydrates} />
