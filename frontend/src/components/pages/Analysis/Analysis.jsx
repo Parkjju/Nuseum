@@ -72,6 +72,7 @@ const Analysis = () => {
         dha_epa: 0,
         water_amount: 0,
     });
+    const [isClicked, setIsClicked] = useState(true);
 
     const onChange = (d) => {
         setLoading(true);
@@ -247,11 +248,51 @@ const Analysis = () => {
 
                 {loading ? null : (
                     <S.ButtonBox>
-                        <button onClick={fetchWeekData}>
-                            한 주간 섭취 영양소 확인하기
+                        <button
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                backgroundColor: isClicked
+                                    ? '#8D8D8D'
+                                    : '#F9F9F9',
+                                borderRadius: 80,
+                                color: 'white',
+                                height: 50,
+                                width: 170,
+                                border: 'none',
+                            }}
+                            onClick={() => {
+                                fetchWeekData();
+                                setIsClicked(true);
+                            }}
+                        >
+                            <span>한 주간 섭취 영양소</span>
+                            <span>확인하기</span>
                         </button>
-                        <button onClick={fetchMonthData}>
-                            한 달간 섭취 영양소 확인하기
+                        <button
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                backgroundColor: !isClicked
+                                    ? '#8d8d8d'
+                                    : '#F9F9F9',
+                                borderRadius: 80,
+                                color: 'black',
+                                height: 50,
+                                width: 170,
+                                border: 'none',
+                            }}
+                            onClick={() => {
+                                fetchMonthData();
+                                setIsClicked(true);
+                            }}
+                        >
+                            <span>한 달간 섭취 영양소</span>
+                            <span>확인하기</span>
                         </button>
                     </S.ButtonBox>
                 )}

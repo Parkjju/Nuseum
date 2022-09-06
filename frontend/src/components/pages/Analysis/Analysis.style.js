@@ -29,5 +29,5 @@ export const ButtonBox = styled.div`
     display: flex;
     padding-top: 50px;
     justify-content: space-between;
-    width: 25rem;
+    width: 360px;
 `;
