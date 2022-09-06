@@ -311,11 +311,7 @@ function Record() {
                 )
                 .then((response) => {
                     alert('일지 등록이 완료되었어요☺️');
-                    setPostId(() => {
-                        return {
-                            id: response.data.id,
-                        };
-                    });
+                    setPostId(() => response.data.id);
                     setLoading(false);
                 })
                 .catch((err) => {
@@ -327,9 +323,7 @@ function Record() {
             setLoading(true);
             axios
                 .put(
-                    `https://cryptic-castle-40575.herokuapp.com/api/v1/post/${
-                        postId ? postId : postId.id
-                    }/`,
+                    `https://cryptic-castle-40575.herokuapp.com/api/v1/post/${postId}/`,
                     {
                         meal: { ...copy },
                         water: 0,
@@ -403,7 +397,6 @@ function Record() {
                         >
                             추가하기
                         </button>
-                        {console.log(supplement.length)}
 
                         {supplement.length === 0
                             ? null
