@@ -35,7 +35,6 @@ import {
     Title,
     LinearScale,
 } from 'chart.js';
-import { Radar, Bar } from 'react-chartjs-2';
 import RadarGraph from '../../molecules/RadarGraph';
 import BarGraph from '../../molecules/BarGraph';
 ChartJS.register(
@@ -55,6 +54,7 @@ const Analysis = () => {
     const [date, setDate] = useState(new Date());
     const [isDateSelected, setIsDateSelected] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [dateCount, setDateCount] = useState(1);
     const navigate = useNavigate();
     const [nutrition, setNutrition] = useState({
         energy: 0,
@@ -129,6 +129,7 @@ const Analysis = () => {
                 alert('이 날에는 기록하지 않으셨네요!');
             });
         setDate(d);
+        setDateCount(1);
     };
 
     const fetchWeekData = () => {
@@ -144,6 +145,7 @@ const Analysis = () => {
             }
         )
             .then((response) => {
+                console.log(response.data);
                 let res = response.data;
                 for (let i in res) {
                     res[i] = Number.isInteger(res[i])
@@ -153,6 +155,7 @@ const Analysis = () => {
 
                 setNutrition(res);
                 setLoading(false);
+                setDateCount(response.data.day_count);
             })
             .catch((err) => {
                 console.log(err);
@@ -180,6 +183,7 @@ const Analysis = () => {
 
                 setNutrition(initializedNutrition);
                 setLoading(false);
+                setDateCount(1);
                 alert('한 주간 입력된 데이터가 없어요 😭');
             });
     };
@@ -204,6 +208,7 @@ const Analysis = () => {
                         : res[i].toFixed(3);
                 }
 
+                setDateCount(response.data.day_count);
                 setNutrition(res);
                 setLoading(false);
             })
@@ -234,6 +239,7 @@ const Analysis = () => {
 
                 setNutrition(initializedNutrition);
                 setLoading(false);
+                setDateCount(1);
                 alert('한 달간 입력된 데이터가 없어요 😭');
             });
     };
@@ -318,7 +324,8 @@ const Analysis = () => {
                                         </Name>
                                         <Name style={{ fontSize: '0.5rem' }}>
                                             {(
-                                                (nutrition.carbohydrate / 130) *
+                                                (nutrition.carbohydrate /
+                                                    (130 * dateCount)) *
                                                 100
                                             ).toFixed(3)}
                                             %
@@ -336,7 +343,8 @@ const Analysis = () => {
                                         </Name>
                                         <Name style={{ fontSize: '0.5rem' }}>
                                             {(
-                                                (nutrition.dha_epa / 300) *
+                                                (nutrition.dha_epa /
+                                                    (300 * dateCount)) *
                                                 100
                                             ).toFixed(3)}
                                             %
@@ -354,7 +362,8 @@ const Analysis = () => {
                                         </Name>
                                         <Name style={{ fontSize: '0.5rem' }}>
                                             {(
-                                                (nutrition.fat / 102) *
+                                                (nutrition.fat /
+                                                    (102 * dateCount)) *
                                                 100
                                             ).toFixed(3)}
                                             %
@@ -376,7 +385,8 @@ const Analysis = () => {
                                             }}
                                         >
                                             {(
-                                                (nutrition.folic_acid / 180) *
+                                                (nutrition.folic_acid /
+                                                    (180 * dateCount)) *
                                                 100
                                             ).toFixed(3)}
                                             %
@@ -394,7 +404,8 @@ const Analysis = () => {
                                         </Name>
                                         <Name style={{ fontSize: '0.5rem' }}>
                                             {(
-                                                (nutrition.magnesium / 110) *
+                                                (nutrition.magnesium /
+                                                    (110 * dateCount)) *
                                                 100
                                             ).toFixed(3)}
                                             %
@@ -412,7 +423,8 @@ const Analysis = () => {
                                         </Name>
                                         <Name style={{ fontSize: '0.5rem' }}>
                                             {(
-                                                (nutrition.protein / 25) *
+                                                (nutrition.protein /
+                                                    (25 * dateCount)) *
                                                 100
                                             ).toFixed(3)}
                                             %
@@ -430,7 +442,8 @@ const Analysis = () => {
                                         </Name>
                                         <Name style={{ fontSize: '0.5rem' }}>
                                             {(
-                                                (nutrition.tryptophan / 0.1) *
+                                                (nutrition.tryptophan /
+                                                    (0.1 * dateCount)) *
                                                 100
                                             ).toFixed(3)}
                                             %
@@ -452,7 +465,8 @@ const Analysis = () => {
                                             }}
                                         >
                                             {(
-                                                (nutrition.vitamin_a / 300) *
+                                                (nutrition.vitamin_a /
+                                                    (300 * dateCount)) *
                                                 100
                                             ).toFixed(3)}
                                             %
@@ -470,7 +484,8 @@ const Analysis = () => {
                                         </Name>
                                         <Name style={{ fontSize: '0.5rem' }}>
                                             {(
-                                                (nutrition.vitamin_b6 / 0.7) *
+                                                (nutrition.vitamin_b6 /
+                                                    (0.7 * dateCount)) *
                                                 100
                                             ).toFixed(3)}
                                             %
@@ -488,7 +503,8 @@ const Analysis = () => {
                                         </Name>
                                         <Name style={{ fontSize: '0.5rem' }}>
                                             {(
-                                                (nutrition.dietary_fiber / 20) *
+                                                (nutrition.dietary_fiber /
+                                                    (20 * dateCount)) *
                                                 100
                                             ).toFixed(3)}
                                             %
@@ -506,7 +522,8 @@ const Analysis = () => {
                                         </Name>
                                         <Name style={{ fontSize: '0.5rem' }}>
                                             {(
-                                                (nutrition.vitamin_b12 / 1.1) *
+                                                (nutrition.vitamin_b12 /
+                                                    (1.1 * dateCount)) *
                                                 100
                                             ).toFixed(3)}
                                             %
@@ -524,7 +541,8 @@ const Analysis = () => {
                                         </Name>
                                         <Name style={{ fontSize: '0.5rem' }}>
                                             {(
-                                                (nutrition.vitamin_d / 5) *
+                                                (nutrition.vitamin_d /
+                                                    (5 * dateCount)) *
                                                 100
                                             ).toFixed(3)}
                                             %
