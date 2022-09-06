@@ -32,7 +32,7 @@ const RadarGraph = ({ data }) => {
         ],
         datasets: [
             {
-                label: '권장섭취량 대비 실제섭취량(%)',
+                label: '충분/권장섭취량 대비 실제섭취량(%)',
                 data: [
                     (+data.dha_epa / 300) * 100 > 100
                         ? 100
