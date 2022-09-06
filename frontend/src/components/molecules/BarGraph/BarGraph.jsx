@@ -16,7 +16,7 @@ ChartJS.register(
     Tooltip,
     Legend
 );
-const BarGraph = ({ data }) => {
+const BarGraph = ({ count, data }) => {
     const labelsForBar = ['실제 섭취율', '권장 섭취율'];
     const optionsForBar = {
         indexAxis: 'y',
@@ -60,12 +60,13 @@ const BarGraph = ({ data }) => {
             100
         ).toFixed(0),
     ];
+    datasetForBar = datasetForBar.map((item) => +item);
 
     if (datasetForBar.reduce((acc, cur) => +acc + +cur) > 100) {
-        datasetForBar[0] -=
+        datasetForBar[datasetForBar.indexOf(Math.max(...datasetForBar))] -=
             datasetForBar.reduce((acc, cur) => +acc + +cur) - 100;
     } else {
-        datasetForBar[0] +=
+        datasetForBar[datasetForBar.indexOf(Math.min(...datasetForBar))] +=
             100 - datasetForBar.reduce((acc, cur) => +acc + +cur);
     }
 

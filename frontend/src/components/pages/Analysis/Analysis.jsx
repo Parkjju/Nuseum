@@ -309,7 +309,7 @@ const Analysis = () => {
                         ) : nutrition ? (
                             <>
                                 <RadarGraph data={nutrition} />
-                                <BarGraph data={nutrition} />
+                                <BarGraph count={dateCount} data={nutrition} />
 
                                 <S.Box>
                                     <S.IconBox>
