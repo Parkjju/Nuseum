@@ -308,120 +308,226 @@ const Analysis = () => {
                                 <S.Box>
                                     <S.IconBox>
                                         <S.Icon src={carbohydrates} />
-                                        <Name style={{ marginBottom: 5 }}>
+                                        <Name
+                                            style={{
+                                                fontSize: '0.5rem',
+                                                marginBottom: 5,
+                                            }}
+                                        >
                                             탄수화물
                                         </Name>
-                                        <Name>
-                                            {nutrition.carbohydrate}g / 100-130g
+                                        <Name style={{ fontSize: '0.5rem' }}>
+                                            {(
+                                                (nutrition.carbohydrate / 130) *
+                                                100
+                                            ).toFixed(3)}
+                                            %
                                         </Name>
                                     </S.IconBox>
                                     <S.IconBox>
                                         <S.Icon src={dha} />
-                                        <Name style={{ marginBottom: 5 }}>
+                                        <Name
+                                            style={{
+                                                fontSize: '0.5rem',
+                                                marginBottom: 5,
+                                            }}
+                                        >
                                             DHA+EPA
                                         </Name>
-                                        <Name>
-                                            {nutrition.dha_epa}mg / 300mg
+                                        <Name style={{ fontSize: '0.5rem' }}>
+                                            {(
+                                                (nutrition.dha_epa / 300) *
+                                                100
+                                            ).toFixed(3)}
+                                            %
                                         </Name>
                                     </S.IconBox>
                                     <S.IconBox>
                                         <S.Icon src={fat} />
-                                        <Name style={{ marginBottom: 5 }}>
+                                        <Name
+                                            style={{
+                                                fontSize: '0.5rem',
+                                                marginBottom: 5,
+                                            }}
+                                        >
                                             지방
                                         </Name>
-                                        <Name>{nutrition.fat}g / 86-102g</Name>
+                                        <Name style={{ fontSize: '0.5rem' }}>
+                                            {(
+                                                (nutrition.fat / 102) *
+                                                100
+                                            ).toFixed(3)}
+                                            %
+                                        </Name>
                                     </S.IconBox>
                                     <S.IconBox>
                                         <S.Icon src={folic} />
-                                        <Name style={{ marginBottom: 5 }}>
+                                        <Name
+                                            style={{
+                                                marginBottom: 5,
+                                                fontSize: '0.5rem',
+                                            }}
+                                        >
                                             엽산
                                         </Name>
                                         <Name
                                             style={{
-                                                width: '200px',
-                                                textAlign: 'center',
+                                                fontSize: '0.5rem',
                                             }}
                                         >
-                                            {nutrition.folic_acid}μg DFE  /
-                                            180μg DFE 
+                                            {(
+                                                (nutrition.folic_acid / 180) *
+                                                100
+                                            ).toFixed(3)}
+                                            %
                                         </Name>
                                     </S.IconBox>
                                     <S.IconBox>
                                         <S.Icon src={magnesium} />
-                                        <Name style={{ marginBottom: 5 }}>
+                                        <Name
+                                            style={{
+                                                marginBottom: 5,
+                                                fontSize: '0.5rem',
+                                            }}
+                                        >
                                             마그네슘
                                         </Name>
-                                        <Name>
-                                            {nutrition.magnesium}mg / 110mg
+                                        <Name style={{ fontSize: '0.5rem' }}>
+                                            {(
+                                                (nutrition.magnesium / 110) *
+                                                100
+                                            ).toFixed(3)}
+                                            %
                                         </Name>
                                     </S.IconBox>
                                     <S.IconBox>
                                         <S.Icon src={protein} />
-                                        <Name style={{ marginBottom: 5 }}>
+                                        <Name
+                                            style={{
+                                                marginBottom: 5,
+                                                fontSize: '0.5rem',
+                                            }}
+                                        >
                                             단백질
                                         </Name>
-                                        <Name>
-                                            {nutrition.protein}g / 20-25g
+                                        <Name style={{ fontSize: '0.5rem' }}>
+                                            {(
+                                                (nutrition.protein / 25) *
+                                                100
+                                            ).toFixed(3)}
+                                            %
                                         </Name>
                                     </S.IconBox>
                                     <S.IconBox>
                                         <S.Icon src={tryptophan} />
-                                        <Name style={{ marginBottom: 5 }}>
+                                        <Name
+                                            style={{
+                                                marginBottom: 5,
+                                                fontSize: '0.5rem',
+                                            }}
+                                        >
                                             트립토판
                                         </Name>
-                                        <Name>
-                                            {nutrition.tryptophan}g / 0.1g
+                                        <Name style={{ fontSize: '0.5rem' }}>
+                                            {(
+                                                (nutrition.tryptophan / 0.1) *
+                                                100
+                                            ).toFixed(3)}
+                                            %
                                         </Name>
                                     </S.IconBox>
                                     <S.IconBox>
                                         <S.Icon src={vitaminA} />
-                                        <Name style={{ marginBottom: 5 }}>
+                                        <Name
+                                            style={{
+                                                marginBottom: 5,
+                                                fontSize: '0.5rem',
+                                            }}
+                                        >
                                             비타민 A
                                         </Name>
                                         <Name
                                             style={{
-                                                width: '200px',
-                                                textAlign: 'center',
+                                                fontSize: '0.5rem',
                                             }}
                                         >
-                                            {nutrition.vitamin_a}μg RAE / 300μg
-                                            RAE
+                                            {(
+                                                (nutrition.vitamin_a / 300) *
+                                                100
+                                            ).toFixed(3)}
+                                            %
                                         </Name>
                                     </S.IconBox>
                                     <S.IconBox>
                                         <S.Icon src={vitaminB6} />
-                                        <Name style={{ marginBottom: 5 }}>
+                                        <Name
+                                            style={{
+                                                marginBottom: 5,
+                                                fontSize: '0.5rem',
+                                            }}
+                                        >
                                             비타민 B6
                                         </Name>
-                                        <Name>
-                                            {nutrition.vitamin_b6}mg / 0.7mg
+                                        <Name style={{ fontSize: '0.5rem' }}>
+                                            {(
+                                                (nutrition.vitamin_b6 / 0.7) *
+                                                100
+                                            ).toFixed(3)}
+                                            %
                                         </Name>
                                     </S.IconBox>
                                     <S.IconBox>
                                         <S.Icon src={fiber} />
-                                        <Name style={{ marginBottom: 5 }}>
+                                        <Name
+                                            style={{
+                                                marginBottom: 5,
+                                                fontSize: '0.5rem',
+                                            }}
+                                        >
                                             식이섬유
                                         </Name>
-                                        <Name>
-                                            {nutrition.dietary_fiber}g / 20g
+                                        <Name style={{ fontSize: '0.5rem' }}>
+                                            {(
+                                                (nutrition.dietary_fiber / 20) *
+                                                100
+                                            ).toFixed(3)}
+                                            %
                                         </Name>
                                     </S.IconBox>
                                     <S.IconBox>
                                         <S.Icon src={vitaminB12} />
-                                        <Name style={{ marginBottom: 5 }}>
+                                        <Name
+                                            style={{
+                                                marginBottom: 5,
+                                                fontSize: '0.5rem',
+                                            }}
+                                        >
                                             비타민 B12
                                         </Name>
-                                        <Name>
-                                            {nutrition.vitamin_b12}μg / 1.1μg
+                                        <Name style={{ fontSize: '0.5rem' }}>
+                                            {(
+                                                (nutrition.vitamin_b12 / 1.1) *
+                                                100
+                                            ).toFixed(3)}
+                                            %
                                         </Name>
                                     </S.IconBox>
                                     <S.IconBox>
                                         <S.Icon src={vitaminD} />
-                                        <Name style={{ marginBottom: 5 }}>
+                                        <Name
+                                            style={{
+                                                marginBottom: 5,
+                                                fontSize: '0.5rem',
+                                            }}
+                                        >
                                             비타민 D
                                         </Name>
-                                        <Name>
-                                            {nutrition.vitamin_d}μg / 5μg
+                                        <Name style={{ fontSize: '0.5rem' }}>
+                                            {(
+                                                (nutrition.vitamin_d / 5) *
+                                                100
+                                            ).toFixed(3)}
+                                            %
                                         </Name>
                                     </S.IconBox>
                                 </S.Box>

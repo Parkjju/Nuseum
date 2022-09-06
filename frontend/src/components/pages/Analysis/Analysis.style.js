@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
 export const Box = styled.div`
-    width: 70%;
-    height: 400px;
+    width: 80%;
     padding-top: 50px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -13,8 +12,8 @@ export const Box = styled.div`
 `;
 
 export const IconBox = styled.div`
-    height: 120px;
-    width: 140px;
+    height: 7rem;
+    width: 5rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -22,7 +21,7 @@ export const IconBox = styled.div`
 `;
 
 export const Icon = styled.img`
-    width: 40px;
+    width: 2.5rem;
     margin-bottom: 15px;
 `;
 export const ButtonBox = styled.div`
