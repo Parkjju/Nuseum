@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.form`
-    width: 55%;
+    width: 70%;
     height: 140px;
     display: flex;
     align-items: center;
@@ -13,8 +13,8 @@ export const Container = styled.form`
 `;
 
 export const ImageBox = styled.div`
-    width: 7rem;
-    height: 7rem;
+    width: 7.5rem;
+    height: 7.5rem;
     border-radius: 60px;
     display: flex;
     align-items: center;
