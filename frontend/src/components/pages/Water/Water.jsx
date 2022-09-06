@@ -139,7 +139,7 @@ const Water = () => {
             <div
                 style={{
                     display: 'flex',
-                    justifyContent: 'space-between',
+                    justifyContent: 'center',
                     width: '30%',
                     marginTop: 30,
                 }}
@@ -149,18 +149,6 @@ const Water = () => {
                     onClick={() => plusWater(250)}
                 >
                     250ml
-                </button>
-                <button
-                    style={{ width: 100, marginRight: 5 }}
-                    onClick={() => plusWater(750)}
-                >
-                    750ml
-                </button>
-                <button
-                    style={{ width: 100, marginRight: 5 }}
-                    onClick={() => plusWater(1000)}
-                >
-                    1000ml
                 </button>
             </div>
             <div
