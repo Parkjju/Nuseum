@@ -45,22 +45,37 @@ const BarGraph = ({ data }) => {
         },
     };
 
+    let datasetForBar = [
+        (
+            (+data.carbohydrate /
+                (+data.protein + +data.carbohydrate + +data.fat)) *
+            100
+        ).toFixed(0),
+        (
+            (+data.protein / (+data.protein + +data.carbohydrate + +data.fat)) *
+            100
+        ).toFixed(0),
+        (
+            (+data.fat / (+data.protein + +data.carbohydrate + +data.fat)) *
+            100
+        ).toFixed(0),
+    ];
+
+    if (datasetForBar.reduce((acc, cur) => +acc + +cur) > 100) {
+        datasetForBar[0] -=
+            datasetForBar.reduce((acc, cur) => +acc + +cur) - 100;
+    } else {
+        datasetForBar[0] +=
+            100 - datasetForBar.reduce((acc, cur) => +acc + +cur);
+    }
+
     const dataForBar = {
         labels: labelsForBar,
         datasets: [
             {
                 label: '탄수화물',
                 data: [
-                    [
-                        0,
-                        (
-                            (+data.carbohydrate /
-                                (+data.protein +
-                                    +data.carbohydrate +
-                                    +data.fat)) *
-                            100
-                        ).toFixed(0),
-                    ],
+                    [0, datasetForBar[0]],
                     [0, 55],
                 ],
                 backgroundColor: '#BEC5C6',
@@ -68,16 +83,7 @@ const BarGraph = ({ data }) => {
             {
                 label: '단백질',
                 data: [
-                    [
-                        0,
-                        (
-                            (+data.protein /
-                                (+data.protein +
-                                    +data.carbohydrate +
-                                    +data.fat)) *
-                            100
-                        ).toFixed(0),
-                    ],
+                    [0, datasetForBar[1]],
                     [0, 25],
                 ],
                 backgroundColor: '#7f8c8d',
@@ -85,16 +91,7 @@ const BarGraph = ({ data }) => {
             {
                 label: '지방',
                 data: [
-                    [
-                        0,
-                        (
-                            (+data.fat /
-                                (+data.protein +
-                                    +data.carbohydrate +
-                                    +data.fat)) *
-                            100
-                        ).toFixed(0),
-                    ],
+                    [0, datasetForBar[2]],
                     [0, 20],
                 ],
                 backgroundColor: '#525959',
