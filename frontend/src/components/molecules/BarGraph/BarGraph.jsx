@@ -44,13 +44,23 @@ const BarGraph = ({ data }) => {
             },
         },
     };
+
     const dataForBar = {
         labels: labelsForBar,
         datasets: [
             {
                 label: '탄수화물',
                 data: [
-                    [0, ((data.carbohydrate / 130) * 100).toFixed(0)],
+                    [
+                        0,
+                        (
+                            (+data.carbohydrate /
+                                (+data.protein +
+                                    +data.carbohydrate +
+                                    +data.fat)) *
+                            100
+                        ).toFixed(0),
+                    ],
                     [0, 55],
                 ],
                 backgroundColor: '#BEC5C6',
@@ -58,7 +68,16 @@ const BarGraph = ({ data }) => {
             {
                 label: '단백질',
                 data: [
-                    [0, ((data.protein / 25) * 100).toFixed(0)],
+                    [
+                        0,
+                        (
+                            (+data.protein /
+                                (+data.protein +
+                                    +data.carbohydrate +
+                                    +data.fat)) *
+                            100
+                        ).toFixed(0),
+                    ],
                     [0, 25],
                 ],
                 backgroundColor: '#7f8c8d',
@@ -66,7 +85,16 @@ const BarGraph = ({ data }) => {
             {
                 label: '지방',
                 data: [
-                    [0, ((data.fat / 102) * 100).toFixed(0)],
+                    [
+                        0,
+                        (
+                            (+data.fat /
+                                (+data.protein +
+                                    +data.carbohydrate +
+                                    +data.fat)) *
+                            100
+                        ).toFixed(0),
+                    ],
                     [0, 20],
                 ],
                 backgroundColor: '#525959',
