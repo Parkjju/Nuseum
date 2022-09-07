@@ -25,5 +25,5 @@ export const Image = styled.img`
 export const DataBox = styled.div`
     width: 80%;
     height: auto;
-    background-color: ;
+    background-color: black;
 `;
