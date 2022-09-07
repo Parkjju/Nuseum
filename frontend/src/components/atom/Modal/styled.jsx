@@ -23,7 +23,8 @@ export const SearchTitle = styled(ModalTitle)`
     font-family: 'Noto Serif KR', serif;
     line-height: 1.5;
     text-align: justify;
-    height: 1.5rem;
+    white-space: default;
+    height: auto;
 `;
 
 export const ModalDescription = styled.p`
