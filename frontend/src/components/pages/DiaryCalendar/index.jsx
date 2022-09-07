@@ -18,7 +18,7 @@ import Diary from '../Diary';
 import axios from 'axios';
 import { CircularProgress } from '@mui/material';
 import { mealImageState, periodState } from '../../../recoil/period/period';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { dateState } from '../../../recoil/date/date';
 import { postIdState } from '../../../recoil/postID/postId';
 import { supplementState } from '../../../recoil/supplement/supplement';
