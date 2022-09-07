@@ -36,6 +36,7 @@ import ImageCard from '../../molecules/ImageCard';
 import { supplementState } from '../../../recoil/supplement/supplement';
 import Water from '../Water';
 import { waterState } from '../../../recoil/water/water';
+import Today from '../Today';
 
 function Record() {
     const navigate = useNavigate();
@@ -399,11 +400,14 @@ function Record() {
                     <Icon style={{ width: '40px' }} src={menu[0][0]} />
                     <Name>{menu[0][1]}</Name>
                 </DiaryTitle>
+                {/* param.when url에 따라 분기하는 장소 */}
                 <Name style={{ marginBottom: '5px' }}>
                     {param.when === 'supplement'
                         ? '오늘 섭취한 영양제를 기록해주세요 :)'
                         : param.when === 'water'
                         ? '오늘 섭취한 물을 기록해주세요 :)'
+                        : param.when === 'today'
+                        ? '오늘 섭취한 음식정보를 요약합니다.'
                         : '음식 이미지를 업로드하고 식이정보를 입력하세요 :)'}
                 </Name>
                 <Name style={{ marginBottom: '50px' }}>
@@ -444,8 +448,11 @@ function Record() {
                             </button>
                         )}
                     </>
-                ) : param.when === 'water' ? (
+                ) : // URL에 따라 분기하는 장소
+                param.when === 'water' ? (
                     <Water />
+                ) : param.when === 'today' ? (
+                    <Today date={param.date} />
                 ) : (
                     <DiaryBody
                         initial={{ y: 300 }}
