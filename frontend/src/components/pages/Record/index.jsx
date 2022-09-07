@@ -263,6 +263,16 @@ function Record() {
         return { ...obj };
     };
 
+    const isEmptySupplement = () => {
+        for (let i of supplement) {
+            console.log(i.name);
+            if (i.image === '' || i.manufacturer === '' || i.name === '') {
+                return true;
+            }
+        }
+        return false;
+    };
+
     const onClickLast = () => {
         let copy = {
             breakfast: {
@@ -287,6 +297,13 @@ function Record() {
 
         if (isEmpty(copy)) {
             alert('최소 식사 한 끼니에 대한 기록이 필요합니다!');
+            return;
+        }
+
+        if (isEmptySupplement()) {
+            alert(
+                '각 영양제 정보(사진, 제조사, 영양제 이름)은 모두 필수 입력입니다.'
+            );
             return;
         }
 
