@@ -506,7 +506,11 @@ function Record() {
                             유사한 것으로 선택해주세요. 관련된 내용을 Q&A에
                             적어주세요.
                         </SearchTitle>
-                        <ModalSearch as='form' onSubmit={onSubmit}>
+                        <ModalSearch
+                            style={{ marginTop: 20 }}
+                            as='form'
+                            onSubmit={onSubmit}
+                        >
                             <span className='material-symbols-outlined'>
                                 search
                             </span>
