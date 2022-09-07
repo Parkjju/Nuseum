@@ -43,6 +43,13 @@ const Header = () => {
             >
                 <Icon
                     onClick={() => {
+                        if (
+                            locationArray.length > 1 &&
+                            locationArray.length < 4
+                        ) {
+                            navigate('/');
+                            return;
+                        }
                         if (locationArray[1].length > 0) {
                             navigate(-1);
                             return;
