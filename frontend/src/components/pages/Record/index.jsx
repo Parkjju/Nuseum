@@ -21,9 +21,9 @@ import {
 } from './styled';
 import { Icon, Name } from '../../atom/Card/styled';
 import { useEffect, useState } from 'react';
-import { ModalTitle, SearchTitle } from '../../atom/Modal/styled';
+import { SearchTitle } from '../../atom/Modal/styled';
 import { mealImageState, periodState } from '../../../recoil/period/period';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import axios from 'axios';
 import Menu from '../../atom/Menu';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -35,6 +35,7 @@ import ImageBox from './ImageBox';
 import ImageCard from '../../molecules/ImageCard';
 import { supplementState } from '../../../recoil/supplement/supplement';
 import Water from '../Water';
+import { waterState } from '../../../recoil/water/water';
 
 function Record() {
     const navigate = useNavigate();
@@ -52,6 +53,8 @@ function Record() {
     // 선택 이미지 상태값 - 삭제할때 활용
     const [globalImage, setGlobalImage] = useRecoilState(mealImageState);
 
+    // 물 상태값
+    const waterAmount = useRecoilValue(waterState);
     // 검색 음식명
     const [foodName, setFoodName] = useState();
 
@@ -298,7 +301,7 @@ function Record() {
                     {
                         meal: { ...copy },
                         created_at: Number(param.date),
-                        water: 0,
+                        water: waterAmount,
                         supplement: [...supplement],
                     },
                     {
@@ -326,7 +329,7 @@ function Record() {
                     `https://cryptic-castle-40575.herokuapp.com/api/v1/post/${postId}/`,
                     {
                         meal: { ...copy },
-                        water: 0,
+                        water: waterAmount,
                         supplement: [...supplement],
                     },
                     {
