@@ -8,7 +8,6 @@ export const VerticalImageBox = styled.div`
 `;
 export const ImageBox = styled.div`
     width: 90%;
-    height: 90%;
     margin-right: 20px;
     margin-bottom: 20px;
     overflow: hidden;
