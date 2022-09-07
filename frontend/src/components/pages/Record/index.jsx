@@ -433,12 +433,16 @@ function Record() {
                                   )
                               )}
 
-                        <button
-                            style={{ marginBottom: 30 }}
-                            onClick={onClickLast}
-                        >
-                            저장
-                        </button>
+                        {loading ? (
+                            <CircularProgress sx={{ marginBottom: 5 }} />
+                        ) : (
+                            <button
+                                onClick={onClickLast}
+                                style={{ marginBottom: '30px' }}
+                            >
+                                저장
+                            </button>
+                        )}
                     </>
                 ) : param.when === 'water' ? (
                     <Water />
