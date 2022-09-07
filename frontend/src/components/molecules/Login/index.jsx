@@ -6,7 +6,7 @@ import { FormBox, BtnBox, Logo, LogoBox } from './styled';
 import { useForm } from 'react-hook-form';
 import Error from '../../atom/Error';
 import axios from 'axios';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { token } from '../../../recoil/token/token';
 import { Link, useNavigate } from 'react-router-dom';
 import ErrorModal from '../../atom/Modal';
@@ -38,7 +38,8 @@ function Login() {
         setError,
         clearErrors,
     } = useForm();
-    const [tokenValue, tokenSetter] = useRecoilState(token);
+    const tokenSetter = useSetRecoilState(token);
+
     const navigate = useNavigate();
     const [display, setDisplay] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -69,7 +70,7 @@ function Login() {
                     response.data.access_token
                 );
                 setIsLoading(false);
-
+                localStorage.setItem('username', loginId);
                 navigate('/');
             })
             .catch(() => {
