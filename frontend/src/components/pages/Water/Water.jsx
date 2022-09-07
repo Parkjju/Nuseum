@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useCallback } from 'react';
 import { useState } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { periodState } from '../../../recoil/period/period';
 import { Box, Gauge } from './Water.style';
 import axios from 'axios';
@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom';
 import { postIdState } from '../../../recoil/postID/postId';
 import { supplementState } from '../../../recoil/supplement/supplement';
 import { waterState } from '../../../recoil/water/water';
+import { CircularProgress } from '@mui/material';
 
 const Water = () => {
     const [water, setWater] = useRecoilState(waterState);
@@ -19,10 +20,11 @@ const Water = () => {
     const [boxWidth, setBoxWidth] = useState(
         window.innerWidth > 800 ? 800 * 0.8 : window.innerWidth * 0.8
     );
-    const [mealState, setMealState] = useRecoilState(periodState);
-    const [supplement, setSupplement] = useRecoilState(supplementState);
+    const mealState = useRecoilValue(periodState);
+    const supplement = useRecoilValue(supplementState);
     const postId = useRecoilValue(postIdState);
     const params = useParams();
+    const [loading, setLoading] = useState(false);
 
     window.onresize = () => {
         setBoxWidth(boxRef.current.clientWidth);
@@ -33,6 +35,7 @@ const Water = () => {
     };
 
     const saveWater = () => {
+        setLoading(true);
         if (postId) {
             axios
                 .put(
@@ -58,9 +61,11 @@ const Water = () => {
                 )
                 .then((response) => {
                     alert('일기 수정이 완료되었어요!');
+                    setLoading(false);
                 })
                 .catch((err) => {
                     alert(`오류가 발생했습니다. 개발자에게 문의해주세요!`);
+                    setLoading(false);
                 });
         } else {
             axios
@@ -82,10 +87,11 @@ const Water = () => {
                 )
                 .then((response) => {
                     alert('일기 등록이 완료되었어요!');
-                    console.log(response);
+                    setLoading(false);
                 })
                 .catch((err) => {
                     alert('오류가 발생했습니다. 개발자에게 문의해주세요!');
+                    setLoading(false);
                 });
         }
     };
@@ -144,12 +150,16 @@ const Water = () => {
                     marginTop: 30,
                 }}
             >
-                <button
-                    style={{ width: 100, marginRight: 5 }}
-                    onClick={() => plusWater(250)}
-                >
-                    250ml
-                </button>
+                {intervalId ? (
+                    <CircularProgress sx={{ marginBottom: 30 }} />
+                ) : (
+                    <button
+                        style={{ width: 100, marginRight: 5 }}
+                        onClick={() => plusWater(250)}
+                    >
+                        250ml
+                    </button>
+                )}
             </div>
             <div
                 style={{
@@ -159,12 +169,16 @@ const Water = () => {
                     marginTop: 30,
                 }}
             >
-                <button
-                    style={{ width: 100, marginRight: 5 }}
-                    onClick={saveWater}
-                >
-                    저장하기
-                </button>
+                {loading ? (
+                    <CircularProgress sx={{ marginBottom: 5 }} />
+                ) : (
+                    <button
+                        onClick={saveWater}
+                        style={{ width: 100, marginRight: 5 }}
+                    >
+                        저장
+                    </button>
+                )}
             </div>
         </>
     );
