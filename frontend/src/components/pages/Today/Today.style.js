@@ -26,3 +26,19 @@ export const DataBox = styled.div`
     height: auto;
     background-color: black;
 `;
+
+export const Summary = styled.div`
+    width: 80%;
+    height: auto;
+    background-color: #eeeeee;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    padding-top: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+`;
+
+export const SummaryTitle = styled.p`
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+`;
