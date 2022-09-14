@@ -7,6 +7,8 @@ import Diary from './components/pages/Diary';
 import DiaryCalendar from './components/pages/DiaryCalendar';
 import Home from './components/pages/Home';
 import Question from './components/pages/Question';
+import QuestionDetail from './components/pages/QuestionDetail';
+import QuestionForm from './components/pages/QuestionForm';
 import Record from './components/pages/Record';
 
 function Router() {
@@ -22,7 +24,9 @@ function Router() {
                 </Route>
                 <Route path='/analysis' element={<Analysis />} />
                 <Route path='/:category/:date/:when' element={<Record />} />
-                <Route path='/question' element={<Question />}></Route>
+                <Route path='/question' element={<Question />} />
+                <Route path='/question/post' element={<QuestionForm />} />
+                <Route path='/question/:id' element={<QuestionDetail />} />
             </Routes>
         </BrowserRouter>
     );
