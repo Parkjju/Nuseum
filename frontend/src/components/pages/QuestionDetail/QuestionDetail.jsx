@@ -47,8 +47,12 @@ const QuestionDetail = () => {
                 setContent(response.data.question.content);
                 setAnswerData([...response.data.answerList]);
                 setTitle(response.data.question.title);
+                setLoading(false);
+            })
+            .catch((err) => {
+                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                setLoading(false);
             });
-        setLoading(false);
     }, [isPosted]);
 
     const deleteComment = (id) => {
