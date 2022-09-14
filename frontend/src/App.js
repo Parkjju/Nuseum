@@ -29,7 +29,7 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
-input{
+input, textarea{
     font-family: 'Noto Serif KR', serif;
 }
 
