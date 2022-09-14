@@ -4,19 +4,32 @@ import Container from '../../atom/Container';
 import { Contents } from '../Home/styled';
 import { DiaryTitle } from '../Record/styled';
 import * as S from './Analysis.style';
-import carbohydrates from '../../../assets/carbohydrates.png';
 import { faker } from '@faker-js/faker';
-import dha from '../../../assets/dha.png';
-import fat from '../../../assets/fat.png';
-import folic from '../../../assets/folic.png';
-import magnesium from '../../../assets/magnesium.png';
-import protein from '../../../assets/proteins.png';
-import tryptophan from '../../../assets/tryptophan.png';
-import vitaminA from '../../../assets/vitamin-a.png';
-import vitaminB6 from '../../../assets/vitamin-b6.png';
-import fiber from '../../../assets/vegetables.png';
-import vitaminB12 from '../../../assets/vitamin-b12.png';
-import vitaminD from '../../../assets/vitamin-d.png';
+// import carbohydrates from '../../../assets/carbohydrates.png';
+// import dha from '../../../assets/dha.png';
+// import fat from '../../../assets/fat.png';
+// import folic from '../../../assets/folic.png';
+// import magnesium from '../../../assets/magnesium.png';
+// import protein from '../../../assets/proteins.png';
+// import tryptophan from '../../../assets/tryptophan.png';
+// import vitaminA from '../../../assets/vitamin-a.png';
+// import vitaminB6 from '../../../assets/vitamin-b6.png';
+// import fiber from '../../../assets/vegetables.png';
+// import vitaminB12 from '../../../assets/vitamin-b12.png';
+// import vitaminD from '../../../assets/vitamin-d.png';
+import a from '../../../assets/a.png';
+import b from '../../../assets/b.png';
+import c from '../../../assets/c.png';
+import d from '../../../assets/d.png';
+import e from '../../../assets/e.png';
+import f from '../../../assets/f.png';
+import g from '../../../assets/g.png';
+import h from '../../../assets/h.png';
+import i from '../../../assets/i.png';
+import j from '../../../assets/j.png';
+import k from '../../../assets/k.png';
+import l from '../../../assets/l.png';
+
 import { Calendar } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import axios from 'axios';
@@ -314,14 +327,17 @@ const Analysis = () => {
 
                                 <S.Box>
                                     <S.IconBox>
-                                        <S.Icon src={carbohydrates} />
+                                        <S.Icon
+                                            src={a}
+                                            // src={carbohydrates}
+                                        />
                                         <Name
                                             style={{
                                                 fontSize: '0.5rem',
                                                 marginBottom: 5,
                                             }}
                                         >
-                                            탄수화물
+                                            {/* 탄수화물 */}A
                                         </Name>
                                         <Name style={{ fontSize: '0.5rem' }}>
                                             {(
@@ -333,14 +349,17 @@ const Analysis = () => {
                                         </Name>
                                     </S.IconBox>
                                     <S.IconBox>
-                                        <S.Icon src={dha} />
+                                        <S.Icon
+                                            src={b}
+                                            // src={dha}
+                                        />
                                         <Name
                                             style={{
                                                 fontSize: '0.5rem',
                                                 marginBottom: 5,
                                             }}
                                         >
-                                            DHA+EPA
+                                            {/* DHA+EPA */}B
                                         </Name>
                                         <Name style={{ fontSize: '0.5rem' }}>
                                             {(
@@ -352,14 +371,17 @@ const Analysis = () => {
                                         </Name>
                                     </S.IconBox>
                                     <S.IconBox>
-                                        <S.Icon src={fat} />
+                                        <S.Icon
+                                            src={c}
+                                            // src={fat}
+                                        />
                                         <Name
                                             style={{
                                                 fontSize: '0.5rem',
                                                 marginBottom: 5,
                                             }}
                                         >
-                                            지방
+                                            {/* 지방 */}C
                                         </Name>
                                         <Name style={{ fontSize: '0.5rem' }}>
                                             {(
@@ -371,14 +393,17 @@ const Analysis = () => {
                                         </Name>
                                     </S.IconBox>
                                     <S.IconBox>
-                                        <S.Icon src={folic} />
+                                        <S.Icon
+                                            src={d}
+                                            // src={folic}
+                                        />
                                         <Name
                                             style={{
                                                 marginBottom: 5,
                                                 fontSize: '0.5rem',
                                             }}
                                         >
-                                            엽산
+                                            {/* 엽산 */}D
                                         </Name>
                                         <Name
                                             style={{
@@ -394,14 +419,17 @@ const Analysis = () => {
                                         </Name>
                                     </S.IconBox>
                                     <S.IconBox>
-                                        <S.Icon src={magnesium} />
+                                        <S.Icon
+                                            src={e}
+                                            // src={magnesium}
+                                        />
                                         <Name
                                             style={{
                                                 marginBottom: 5,
                                                 fontSize: '0.5rem',
                                             }}
                                         >
-                                            마그네슘
+                                            {/* 마그네슘 */}E
                                         </Name>
                                         <Name style={{ fontSize: '0.5rem' }}>
                                             {(
@@ -413,14 +441,17 @@ const Analysis = () => {
                                         </Name>
                                     </S.IconBox>
                                     <S.IconBox>
-                                        <S.Icon src={protein} />
+                                        <S.Icon
+                                            src={f}
+                                            // src={protein}
+                                        />
                                         <Name
                                             style={{
                                                 marginBottom: 5,
                                                 fontSize: '0.5rem',
                                             }}
                                         >
-                                            단백질
+                                            {/* 단백질 */}F
                                         </Name>
                                         <Name style={{ fontSize: '0.5rem' }}>
                                             {(
@@ -432,14 +463,18 @@ const Analysis = () => {
                                         </Name>
                                     </S.IconBox>
                                     <S.IconBox>
-                                        <S.Icon src={tryptophan} />
+                                        <S.Icon
+                                            src={g}
+                                            // src={tryptophan}
+                                        />
+
                                         <Name
                                             style={{
                                                 marginBottom: 5,
                                                 fontSize: '0.5rem',
                                             }}
                                         >
-                                            트립토판
+                                            {/* 트립토판 */}G
                                         </Name>
                                         <Name style={{ fontSize: '0.5rem' }}>
                                             {(
@@ -451,14 +486,17 @@ const Analysis = () => {
                                         </Name>
                                     </S.IconBox>
                                     <S.IconBox>
-                                        <S.Icon src={vitaminA} />
+                                        <S.Icon
+                                            src={h}
+                                            // src={vitaminA}
+                                        />
                                         <Name
                                             style={{
                                                 marginBottom: 5,
                                                 fontSize: '0.5rem',
                                             }}
                                         >
-                                            비타민 A
+                                            {/* 비타민 A */}H
                                         </Name>
                                         <Name
                                             style={{
@@ -474,14 +512,17 @@ const Analysis = () => {
                                         </Name>
                                     </S.IconBox>
                                     <S.IconBox>
-                                        <S.Icon src={vitaminB6} />
+                                        <S.Icon
+                                            src={i}
+                                            // src={vitaminB6}
+                                        />
                                         <Name
                                             style={{
                                                 marginBottom: 5,
                                                 fontSize: '0.5rem',
                                             }}
                                         >
-                                            비타민 B6
+                                            {/* 비타민 B6 */}I
                                         </Name>
                                         <Name style={{ fontSize: '0.5rem' }}>
                                             {(
@@ -493,14 +534,17 @@ const Analysis = () => {
                                         </Name>
                                     </S.IconBox>
                                     <S.IconBox>
-                                        <S.Icon src={fiber} />
+                                        <S.Icon
+                                            src={j}
+                                            // src={fiber}
+                                        />
                                         <Name
                                             style={{
                                                 marginBottom: 5,
                                                 fontSize: '0.5rem',
                                             }}
                                         >
-                                            식이섬유
+                                            {/* 식이섬유 */}J
                                         </Name>
                                         <Name style={{ fontSize: '0.5rem' }}>
                                             {(
@@ -512,14 +556,17 @@ const Analysis = () => {
                                         </Name>
                                     </S.IconBox>
                                     <S.IconBox>
-                                        <S.Icon src={vitaminB12} />
+                                        <S.Icon
+                                            src={k}
+                                            // src={vitaminB12}
+                                        />
                                         <Name
                                             style={{
                                                 marginBottom: 5,
                                                 fontSize: '0.5rem',
                                             }}
                                         >
-                                            비타민 B12
+                                            {/* 비타민 B12 */}K
                                         </Name>
                                         <Name style={{ fontSize: '0.5rem' }}>
                                             {(
@@ -531,14 +578,17 @@ const Analysis = () => {
                                         </Name>
                                     </S.IconBox>
                                     <S.IconBox>
-                                        <S.Icon src={vitaminD} />
+                                        <S.Icon
+                                            src={l}
+                                            // src={vitaminD}
+                                        />
                                         <Name
                                             style={{
                                                 marginBottom: 5,
                                                 fontSize: '0.5rem',
                                             }}
                                         >
-                                            비타민 D
+                                            {/* 비타민 D */}L
                                         </Name>
                                         <Name style={{ fontSize: '0.5rem' }}>
                                             {(
