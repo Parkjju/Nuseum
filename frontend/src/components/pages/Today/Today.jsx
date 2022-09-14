@@ -88,7 +88,6 @@ const Today = ({ date }) => {
                 }
             )
             .then(async (response) => {
-                console.log(response.data);
                 setMealImages({
                     breakfast: [...response.data.breakfast.image],
                     lunch: [...response.data.lunch.image],
@@ -167,7 +166,9 @@ const Today = ({ date }) => {
             </VerticalImageBox>
             <Summary>
                 <SummaryTitle>오늘 먹은 음식</SummaryTitle>
-                <TagBox style={{ padding: '0px 30px', marginTop: 30 }}>
+                <TagBox
+                    style={{ width: '80%', padding: '0px 30px', marginTop: 30 }}
+                >
                     {foodTag.map((item, index) => (
                         <Tag
                             key={index}
