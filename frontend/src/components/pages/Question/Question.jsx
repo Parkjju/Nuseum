@@ -2,6 +2,7 @@ import { CircularProgress } from '@mui/material';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Button from '../../atom/Button';
 import { Name } from '../../atom/Card/styled';
 import Container from '../../atom/Container';
@@ -24,7 +25,6 @@ const Question = () => {
                 },
             })
             .then((response) => {
-                console.log(response.data);
                 setQuestions([...response.data.results]);
                 setLoading(false);
             })
@@ -52,16 +52,23 @@ const Question = () => {
                     <DiaryTitle layoutId={'question'}>
                         <Name>{'Q&A'}</Name>
                     </DiaryTitle>
-                    {questions.map((item, index) => (
+
+                    {questions.map((item) => (
                         <QuestionCard
-                            data={item.content}
+                            key={item.id}
+                            data={item.title}
+                            id={item.id}
                             isAnswered={item.is_answered}
-                            key={index}
                         />
                     ))}
-                    <div style={{ height: '200px' }}></div>
+                    <div style={{ height: '100px' }}></div>
 
-                    <Button text='문의하기' />
+                    <Link
+                        style={{ textDecoration: 'none' }}
+                        to='/question/post'
+                    >
+                        <Button text='문의하기' />
+                    </Link>
                 </Contents>
             )}
         </Container>
