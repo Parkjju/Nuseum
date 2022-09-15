@@ -1,7 +1,7 @@
 import { CircularProgress } from '@mui/material';
 import axios from 'axios';
 import { useCallback, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Name } from '../../atom/Card/styled';
 
 import Container from '../../atom/Container';
@@ -10,9 +10,16 @@ import { DiaryTitle } from '../Record/styled';
 import { Box, Button, Description, Input, Label } from './QuestionForm.style';
 
 const QuestionForm = () => {
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
+    const location = useLocation();
+    const [title, setTitle] = useState(
+        location.state ? location.state.title : ''
+    );
+    const [description, setDescription] = useState(
+        location.state ? location.state.content : ''
+    );
+
     const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
 
     const onChangeTitle = useCallback((e) => {
@@ -26,25 +33,51 @@ const QuestionForm = () => {
             alert('제목과 내용은 필수 입력입니다.');
             return;
         }
-        if (window.confirm('질문을 등록할까요?')) {
+        if (
+            location.state.id
+                ? window.confirm('질문을 수정할까요?')
+                : window.confirm('질문을 등록할까요?')
+        ) {
             setLoading(true);
             try {
-                await axios.post(
-                    'https://cryptic-castle-40575.herokuapp.com/api/v1/qna/',
-                    {
-                        title,
-                        content: description,
-                    },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${sessionStorage.getItem(
-                                'access_token'
-                            )}`,
+                if (location.state.id) {
+                    await axios.patch(
+                        `https://cryptic-castle-40575.herokuapp.com/api/v1/qna/${location.state.id}/edit/`,
+                        {
+                            title,
+                            content: description,
                         },
-                    }
-                );
+                        {
+                            headers: {
+                                Authorization: `Bearer ${sessionStorage.getItem(
+                                    'access_token'
+                                )}`,
+                            },
+                        }
+                    );
+                } else {
+                    await axios.post(
+                        'https://cryptic-castle-40575.herokuapp.com/api/v1/qna/',
+                        {
+                            title,
+                            content: description,
+                        },
+                        {
+                            headers: {
+                                Authorization: `Bearer ${sessionStorage.getItem(
+                                    'access_token'
+                                )}`,
+                            },
+                        }
+                    );
+                }
 
-                alert('질문 등록이 완료되었습니다!');
+                if (location.state.id) {
+                    alert('질문 수정이 완료되었습니다!');
+                } else {
+                    alert('질문 등록이 완료되었습니다!');
+                }
+
                 navigate('/question');
             } catch (error) {
                 alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
