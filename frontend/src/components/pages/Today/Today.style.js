@@ -12,13 +12,14 @@ export const ImageBox = styled.div`
     margin-bottom: 20px;
     overflow: hidden;
     border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
 `;
 
 export const Image = styled.img`
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 10px;
 `;
 
 export const DataBox = styled.div`
