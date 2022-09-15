@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Name } from '../../atom/Card/styled';
 import Container from '../../atom/Container';
 import { Contents } from '../Home/styled';
 import { DiaryTitle } from '../Record/styled';
 import * as S from './Analysis.style';
-import { faker } from '@faker-js/faker';
 // import carbohydrates from '../../../assets/carbohydrates.png';
 // import dha from '../../../assets/dha.png';
 // import fat from '../../../assets/fat.png';
@@ -217,6 +216,8 @@ const Analysis = () => {
             .then((response) => {
                 let res = response.data;
                 for (let i in res) {
+                    // day_count, category key 제외
+                    if (i === 'day_count' || i === 'category') continue;
                     res[i] = Number.isInteger(+res[i])
                         ? res[i]
                         : res[i].toFixed(3);
@@ -266,23 +267,12 @@ const Analysis = () => {
                 </DiaryTitle>
                 <Calendar locale='en-US' onChange={onChange} value={date} />
 
-                {loading ? null : (
+                {loading && !isDateSelected ? (
+                    <CircularProgress sx={{ marginTop: 10 }} />
+                ) : (
                     <S.ButtonBox>
-                        <button
-                            style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                backgroundColor: isClicked
-                                    ? '#8D8D8D'
-                                    : '#F9F9F9',
-                                borderRadius: 80,
-                                color: 'white',
-                                height: 50,
-                                width: 170,
-                                border: 'none',
-                            }}
+                        <S.FetchButton
+                            isClicked={isClicked}
                             onClick={() => {
                                 fetchWeekData();
                                 setIsClicked(true);
@@ -290,22 +280,9 @@ const Analysis = () => {
                         >
                             <span>한 주간 섭취 영양소</span>
                             <span>확인하기</span>
-                        </button>
-                        <button
-                            style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                backgroundColor: !isClicked
-                                    ? '#8d8d8d'
-                                    : '#F9F9F9',
-                                borderRadius: 80,
-                                color: 'black',
-                                height: 50,
-                                width: 170,
-                                border: 'none',
-                            }}
+                        </S.FetchButton>
+                        <S.FetchButton
+                            isClicked={!isClicked}
                             onClick={() => {
                                 fetchMonthData();
                                 setIsClicked(true);
@@ -313,13 +290,13 @@ const Analysis = () => {
                         >
                             <span>한 달간 섭취 영양소</span>
                             <span>확인하기</span>
-                        </button>
+                        </S.FetchButton>
                     </S.ButtonBox>
                 )}
                 {isDateSelected ? (
                     <>
                         {loading ? (
-                            <CircularProgress sx={{ marginTop: 10 }} />
+                            <CircularProgress sx={{ marginTop: 5 }} />
                         ) : nutrition ? (
                             <>
                                 <RadarGraph data={nutrition} />
