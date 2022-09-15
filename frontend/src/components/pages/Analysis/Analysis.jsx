@@ -68,6 +68,11 @@ const Analysis = () => {
     const [loading, setLoading] = useState(false);
     const [dateCount, setDateCount] = useState(1);
     const navigate = useNavigate();
+
+    // 한주간 데이터 fetch중인지 월간 데이터 fetch중인지 판단을 위한 상태값
+    // 탭 컴포넌트의 urlmatch 로직과 동일
+    const [isWeek, setIsWeek] = useState(true);
+
     const [nutrition, setNutrition] = useState({
         energy: 0,
         protein: 0,
@@ -84,7 +89,6 @@ const Analysis = () => {
         dha_epa: 0,
         water_amount: 0,
     });
-    const [isClicked, setIsClicked] = useState(true);
 
     const onChange = (d) => {
         setLoading(true);
@@ -147,6 +151,7 @@ const Analysis = () => {
 
     const fetchWeekData = () => {
         setLoading(true);
+        setIsWeek(true);
         axios(
             `https://cryptic-castle-40575.herokuapp.com/api/v1/consumption/week/?date=${date.getTime()}`,
             {
@@ -158,7 +163,6 @@ const Analysis = () => {
             }
         )
             .then((response) => {
-                console.log(response.data);
                 let res = response.data;
                 for (let i in res) {
                     res[i] = Number.isInteger(+res[i])
@@ -203,6 +207,7 @@ const Analysis = () => {
 
     const fetchMonthData = () => {
         setLoading(true);
+        setIsWeek(false);
         axios(
             `https://cryptic-castle-40575.herokuapp.com/api/v1/consumption/month/?date=${date.getTime()}`,
             {
@@ -272,21 +277,19 @@ const Analysis = () => {
                 ) : (
                     <S.ButtonBox>
                         <S.FetchButton
-                            isClicked={isClicked}
                             onClick={() => {
                                 fetchWeekData();
-                                setIsClicked(true);
                             }}
+                            isClicked={isWeek ? true : false}
                         >
                             <span>한 주간 섭취 영양소</span>
                             <span>확인하기</span>
                         </S.FetchButton>
                         <S.FetchButton
-                            isClicked={!isClicked}
                             onClick={() => {
                                 fetchMonthData();
-                                setIsClicked(true);
                             }}
+                            isClicked={isWeek ? false : true}
                         >
                             <span>한 달간 섭취 영양소</span>
                             <span>확인하기</span>
