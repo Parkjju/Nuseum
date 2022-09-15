@@ -30,3 +30,17 @@ export const ButtonBox = styled.div`
     justify-content: space-between;
     width: 360px;
 `;
+
+export const FetchButton = styled.button`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: ${(props) => (props.isClicked ? '#8D8D8D' : '#F9F9F9')};
+    border-radius: 80px;
+    color: ${(props) => (props.isClicked ? 'white' : 'black')};
+    height: 50px;
+    width: 170px;
+    border: none;
+    cursor: pointer;
+`;
