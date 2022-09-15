@@ -37,6 +37,7 @@ import { supplementState } from '../../../recoil/supplement/supplement';
 import Water from '../Water';
 import { waterState } from '../../../recoil/water/water';
 import Today from '../Today';
+import { VerticalImageBox } from '../Today/Today.style';
 
 function Record() {
     const navigate = useNavigate();
@@ -470,7 +471,7 @@ function Record() {
                         </Label>
 
                         {globalImage[param.when] && (
-                            <ImageBox>
+                            <VerticalImageBox style={{ width: '100%' }}>
                                 {globalImage[param.when].map((item, index) =>
                                     item === '' ? null : (
                                         <FoodImg
@@ -481,7 +482,7 @@ function Record() {
                                         />
                                     )
                                 )}
-                            </ImageBox>
+                            </VerticalImageBox>
                         )}
                         <TagBox>
                             {foodTag
