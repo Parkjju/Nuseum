@@ -15,5 +15,5 @@ export const Icon = styled.span`
     cursor: ${(props) => (props.active ? 'pointer' : 'default')};
     user-select: none;
     transition: 0.1s linear;
-    color: ${(props) => (props.active ? '#000000' : 'rgb(127,140,141)')};
+    color: black;
 `;

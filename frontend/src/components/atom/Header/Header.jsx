@@ -43,6 +43,7 @@ const Header = () => {
             >
                 <Icon
                     onClick={() => {
+                        if (!backActive) return;
                         if (
                             locationArray.length > 1 &&
                             locationArray.length < 4
@@ -67,6 +68,7 @@ const Header = () => {
                 </Icon>
                 <Icon
                     onClick={() => {
+                        if (!homeActive) return;
                         if (homeActive) {
                             navigate('/');
                         } else {
