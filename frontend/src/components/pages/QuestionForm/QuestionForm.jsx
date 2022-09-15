@@ -34,13 +34,13 @@ const QuestionForm = () => {
             return;
         }
         if (
-            location.state.id
+            location?.state?.id
                 ? window.confirm('질문을 수정할까요?')
                 : window.confirm('질문을 등록할까요?')
         ) {
             setLoading(true);
             try {
-                if (location.state.id) {
+                if (location?.state?.id) {
                     await axios.patch(
                         `https://cryptic-castle-40575.herokuapp.com/api/v1/qna/${location.state.id}/edit/`,
                         {
@@ -72,7 +72,7 @@ const QuestionForm = () => {
                     );
                 }
 
-                if (location.state.id) {
+                if (location?.state?.id) {
                     alert('질문 수정이 완료되었습니다!');
                 } else {
                     alert('질문 등록이 완료되었습니다!');
@@ -80,6 +80,7 @@ const QuestionForm = () => {
 
                 navigate('/question');
             } catch (error) {
+                console.log(error);
                 alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
             }
             setLoading(false);
