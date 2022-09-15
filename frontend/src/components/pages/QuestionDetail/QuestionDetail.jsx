@@ -1,9 +1,8 @@
 import { CircularProgress } from '@mui/material';
-import { fontWeight } from '@mui/system';
 import axios from 'axios';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Name } from '../../atom/Card/styled';
 import Container from '../../atom/Container';
 import { Contents } from '../Home/styled';
@@ -18,7 +17,13 @@ import {
     QuestionContent,
     QuestionTitle,
     Username,
+    UtilBtn,
+    UtilGroup,
+    UtilImg,
 } from './QuestionDetail.style';
+import { Button } from '../QuestionForm/QuestionForm.style';
+import modify from '../../../assets/modifyImg.png';
+import deleteImg from '../../../assets/deleteImg.png';
 
 const QuestionDetail = () => {
     const [title, setTitle] = useState('');
@@ -27,6 +32,7 @@ const QuestionDetail = () => {
     const [loading, setLoading] = useState(false);
     const [comment, setComment] = useState('');
     const [isPosted, setIsPosted] = useState(false);
+    const navigate = useNavigate();
     const param = useParams();
 
     useEffect(() => {
@@ -88,9 +94,40 @@ const QuestionDetail = () => {
     const onChangeComment = (e) => {
         setComment(e.target.value);
     };
+    const deletePost = async () => {
+        if (window.confirm('작성한 질문을 삭제하시겠어요?')) {
+            try {
+                await axios.delete(
+                    `https://cryptic-castle-40575.herokuapp.com/api/v1/qna/${param.id}/delete/`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${sessionStorage.getItem(
+                                'access_token'
+                            )}`,
+                        },
+                    }
+                );
+                alert('질문이 삭제되었습니다!');
+                navigate('/question');
+            } catch (error) {
+                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+            }
+        }
+    };
+
+    const modifyPost = () => {
+        if (window.confirm('질문 내용을 수정할까요?')) {
+            navigate(`/question/post/`, {
+                state: { title, content, id: param.id },
+            });
+        }
+    };
 
     const postComment = async (e) => {
         if (e.keyCode === 13) {
+            if (e.target.value === '') {
+                return;
+            }
             if (window.confirm('댓글을 입력하시겠어요?')) {
                 setLoading(true);
 
@@ -196,6 +233,28 @@ const QuestionDetail = () => {
                             />
                         </div>
                     </>
+                    <div
+                        style={{
+                            width: '80%',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                        }}
+                    >
+                        <UtilGroup onClick={modifyPost}>
+                            <UtilImg src={modify} alt='modify' />
+                            <UtilBtn>수정</UtilBtn>
+                        </UtilGroup>
+                        <UtilGroup
+                            style={{ display: 'flex', alignItems: 'center' }}
+                            onClick={deletePost}
+                        >
+                            <UtilImg src={deleteImg} alt='delete' />
+                            <UtilBtn>삭제</UtilBtn>
+                        </UtilGroup>
+                    </div>
+                    <Link to='/question' style={{ textDecoration: 'none' }}>
+                        <Button style={{ marginTop: 30 }}>목록</Button>
+                    </Link>
                 </Contents>
             )}
         </Container>

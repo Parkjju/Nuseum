@@ -56,3 +56,18 @@ export const InputComment = styled.input`
         outline: none;
     }
 `;
+
+export const UtilBtn = styled.span`
+    font-size: 12px;
+    color: #7f8c8d;
+    border-bottom: 1px solid #7f8c8d;
+`;
+export const UtilImg = styled.img`
+    width: 25px;
+    margin-right: 5px;
+`;
+export const UtilGroup = styled.div`
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+`;
