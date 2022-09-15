@@ -295,290 +295,314 @@ const Analysis = () => {
                 )}
                 {isDateSelected ? (
                     <>
-                        {loading ? (
-                            <CircularProgress sx={{ marginTop: 5 }} />
-                        ) : nutrition ? (
-                            <>
-                                <RadarGraph data={nutrition} />
-                                <BarGraph count={dateCount} data={nutrition} />
+                        <>
+                            {loading ? (
+                                <CircularProgress />
+                            ) : (
+                                <>
+                                    <RadarGraph data={nutrition} />
+                                    <BarGraph
+                                        count={dateCount}
+                                        data={nutrition}
+                                    />
+                                    <S.Box>
+                                        <S.IconBox>
+                                            <S.Icon
+                                                src={a}
+                                                // src={carbohydrates}
+                                            />
+                                            <Name
+                                                style={{
+                                                    fontSize: '0.5rem',
+                                                    marginBottom: 5,
+                                                }}
+                                            >
+                                                {/* 탄수화물 */}A
+                                            </Name>
+                                            <Name
+                                                style={{ fontSize: '0.5rem' }}
+                                            >
+                                                {(
+                                                    (nutrition.carbohydrate /
+                                                        (130 * dateCount)) *
+                                                    100
+                                                ).toFixed(3)}
+                                                %
+                                            </Name>
+                                        </S.IconBox>
+                                        <S.IconBox>
+                                            <S.Icon
+                                                src={b}
+                                                // src={dha}
+                                            />
+                                            <Name
+                                                style={{
+                                                    fontSize: '0.5rem',
+                                                    marginBottom: 5,
+                                                }}
+                                            >
+                                                {/* DHA+EPA */}B
+                                            </Name>
+                                            <Name
+                                                style={{ fontSize: '0.5rem' }}
+                                            >
+                                                {(
+                                                    (nutrition.dha_epa /
+                                                        (300 * dateCount)) *
+                                                    100
+                                                ).toFixed(3)}
+                                                %
+                                            </Name>
+                                        </S.IconBox>
+                                        <S.IconBox>
+                                            <S.Icon
+                                                src={c}
+                                                // src={fat}
+                                            />
+                                            <Name
+                                                style={{
+                                                    fontSize: '0.5rem',
+                                                    marginBottom: 5,
+                                                }}
+                                            >
+                                                {/* 지방 */}C
+                                            </Name>
+                                            <Name
+                                                style={{ fontSize: '0.5rem' }}
+                                            >
+                                                {(
+                                                    (nutrition.fat /
+                                                        (102 * dateCount)) *
+                                                    100
+                                                ).toFixed(3)}
+                                                %
+                                            </Name>
+                                        </S.IconBox>
+                                        <S.IconBox>
+                                            <S.Icon
+                                                src={d}
+                                                // src={folic}
+                                            />
+                                            <Name
+                                                style={{
+                                                    marginBottom: 5,
+                                                    fontSize: '0.5rem',
+                                                }}
+                                            >
+                                                {/* 엽산 */}D
+                                            </Name>
+                                            <Name
+                                                style={{
+                                                    fontSize: '0.5rem',
+                                                }}
+                                            >
+                                                {(
+                                                    (nutrition.folic_acid /
+                                                        (180 * dateCount)) *
+                                                    100
+                                                ).toFixed(3)}
+                                                %
+                                            </Name>
+                                        </S.IconBox>
+                                        <S.IconBox>
+                                            <S.Icon
+                                                src={e}
+                                                // src={magnesium}
+                                            />
+                                            <Name
+                                                style={{
+                                                    marginBottom: 5,
+                                                    fontSize: '0.5rem',
+                                                }}
+                                            >
+                                                {/* 마그네슘 */}E
+                                            </Name>
+                                            <Name
+                                                style={{ fontSize: '0.5rem' }}
+                                            >
+                                                {(
+                                                    (nutrition.magnesium /
+                                                        (110 * dateCount)) *
+                                                    100
+                                                ).toFixed(3)}
+                                                %
+                                            </Name>
+                                        </S.IconBox>
+                                        <S.IconBox>
+                                            <S.Icon
+                                                src={f}
+                                                // src={protein}
+                                            />
+                                            <Name
+                                                style={{
+                                                    marginBottom: 5,
+                                                    fontSize: '0.5rem',
+                                                }}
+                                            >
+                                                {/* 단백질 */}F
+                                            </Name>
+                                            <Name
+                                                style={{ fontSize: '0.5rem' }}
+                                            >
+                                                {(
+                                                    (nutrition.protein /
+                                                        (25 * dateCount)) *
+                                                    100
+                                                ).toFixed(3)}
+                                                %
+                                            </Name>
+                                        </S.IconBox>
+                                        <S.IconBox>
+                                            <S.Icon
+                                                src={g}
+                                                // src={tryptophan}
+                                            />
 
-                                <S.Box>
-                                    <S.IconBox>
-                                        <S.Icon
-                                            src={a}
-                                            // src={carbohydrates}
-                                        />
-                                        <Name
-                                            style={{
-                                                fontSize: '0.5rem',
-                                                marginBottom: 5,
-                                            }}
-                                        >
-                                            {/* 탄수화물 */}A
-                                        </Name>
-                                        <Name style={{ fontSize: '0.5rem' }}>
-                                            {(
-                                                (nutrition.carbohydrate /
-                                                    (130 * dateCount)) *
-                                                100
-                                            ).toFixed(3)}
-                                            %
-                                        </Name>
-                                    </S.IconBox>
-                                    <S.IconBox>
-                                        <S.Icon
-                                            src={b}
-                                            // src={dha}
-                                        />
-                                        <Name
-                                            style={{
-                                                fontSize: '0.5rem',
-                                                marginBottom: 5,
-                                            }}
-                                        >
-                                            {/* DHA+EPA */}B
-                                        </Name>
-                                        <Name style={{ fontSize: '0.5rem' }}>
-                                            {(
-                                                (nutrition.dha_epa /
-                                                    (300 * dateCount)) *
-                                                100
-                                            ).toFixed(3)}
-                                            %
-                                        </Name>
-                                    </S.IconBox>
-                                    <S.IconBox>
-                                        <S.Icon
-                                            src={c}
-                                            // src={fat}
-                                        />
-                                        <Name
-                                            style={{
-                                                fontSize: '0.5rem',
-                                                marginBottom: 5,
-                                            }}
-                                        >
-                                            {/* 지방 */}C
-                                        </Name>
-                                        <Name style={{ fontSize: '0.5rem' }}>
-                                            {(
-                                                (nutrition.fat /
-                                                    (102 * dateCount)) *
-                                                100
-                                            ).toFixed(3)}
-                                            %
-                                        </Name>
-                                    </S.IconBox>
-                                    <S.IconBox>
-                                        <S.Icon
-                                            src={d}
-                                            // src={folic}
-                                        />
-                                        <Name
-                                            style={{
-                                                marginBottom: 5,
-                                                fontSize: '0.5rem',
-                                            }}
-                                        >
-                                            {/* 엽산 */}D
-                                        </Name>
-                                        <Name
-                                            style={{
-                                                fontSize: '0.5rem',
-                                            }}
-                                        >
-                                            {(
-                                                (nutrition.folic_acid /
-                                                    (180 * dateCount)) *
-                                                100
-                                            ).toFixed(3)}
-                                            %
-                                        </Name>
-                                    </S.IconBox>
-                                    <S.IconBox>
-                                        <S.Icon
-                                            src={e}
-                                            // src={magnesium}
-                                        />
-                                        <Name
-                                            style={{
-                                                marginBottom: 5,
-                                                fontSize: '0.5rem',
-                                            }}
-                                        >
-                                            {/* 마그네슘 */}E
-                                        </Name>
-                                        <Name style={{ fontSize: '0.5rem' }}>
-                                            {(
-                                                (nutrition.magnesium /
-                                                    (110 * dateCount)) *
-                                                100
-                                            ).toFixed(3)}
-                                            %
-                                        </Name>
-                                    </S.IconBox>
-                                    <S.IconBox>
-                                        <S.Icon
-                                            src={f}
-                                            // src={protein}
-                                        />
-                                        <Name
-                                            style={{
-                                                marginBottom: 5,
-                                                fontSize: '0.5rem',
-                                            }}
-                                        >
-                                            {/* 단백질 */}F
-                                        </Name>
-                                        <Name style={{ fontSize: '0.5rem' }}>
-                                            {(
-                                                (nutrition.protein /
-                                                    (25 * dateCount)) *
-                                                100
-                                            ).toFixed(3)}
-                                            %
-                                        </Name>
-                                    </S.IconBox>
-                                    <S.IconBox>
-                                        <S.Icon
-                                            src={g}
-                                            // src={tryptophan}
-                                        />
-
-                                        <Name
-                                            style={{
-                                                marginBottom: 5,
-                                                fontSize: '0.5rem',
-                                            }}
-                                        >
-                                            {/* 트립토판 */}G
-                                        </Name>
-                                        <Name style={{ fontSize: '0.5rem' }}>
-                                            {(
-                                                (nutrition.tryptophan /
-                                                    (0.1 * dateCount)) *
-                                                100
-                                            ).toFixed(3)}
-                                            %
-                                        </Name>
-                                    </S.IconBox>
-                                    <S.IconBox>
-                                        <S.Icon
-                                            src={h}
-                                            // src={vitaminA}
-                                        />
-                                        <Name
-                                            style={{
-                                                marginBottom: 5,
-                                                fontSize: '0.5rem',
-                                            }}
-                                        >
-                                            {/* 비타민 A */}H
-                                        </Name>
-                                        <Name
-                                            style={{
-                                                fontSize: '0.5rem',
-                                            }}
-                                        >
-                                            {(
-                                                (nutrition.vitamin_a /
-                                                    (300 * dateCount)) *
-                                                100
-                                            ).toFixed(3)}
-                                            %
-                                        </Name>
-                                    </S.IconBox>
-                                    <S.IconBox>
-                                        <S.Icon
-                                            src={i}
-                                            // src={vitaminB6}
-                                        />
-                                        <Name
-                                            style={{
-                                                marginBottom: 5,
-                                                fontSize: '0.5rem',
-                                            }}
-                                        >
-                                            {/* 비타민 B6 */}I
-                                        </Name>
-                                        <Name style={{ fontSize: '0.5rem' }}>
-                                            {(
-                                                (nutrition.vitamin_b6 /
-                                                    (0.7 * dateCount)) *
-                                                100
-                                            ).toFixed(3)}
-                                            %
-                                        </Name>
-                                    </S.IconBox>
-                                    <S.IconBox>
-                                        <S.Icon
-                                            src={j}
-                                            // src={fiber}
-                                        />
-                                        <Name
-                                            style={{
-                                                marginBottom: 5,
-                                                fontSize: '0.5rem',
-                                            }}
-                                        >
-                                            {/* 식이섬유 */}J
-                                        </Name>
-                                        <Name style={{ fontSize: '0.5rem' }}>
-                                            {(
-                                                (nutrition.dietary_fiber /
-                                                    (20 * dateCount)) *
-                                                100
-                                            ).toFixed(3)}
-                                            %
-                                        </Name>
-                                    </S.IconBox>
-                                    <S.IconBox>
-                                        <S.Icon
-                                            src={k}
-                                            // src={vitaminB12}
-                                        />
-                                        <Name
-                                            style={{
-                                                marginBottom: 5,
-                                                fontSize: '0.5rem',
-                                            }}
-                                        >
-                                            {/* 비타민 B12 */}K
-                                        </Name>
-                                        <Name style={{ fontSize: '0.5rem' }}>
-                                            {(
-                                                (nutrition.vitamin_b12 /
-                                                    (1.1 * dateCount)) *
-                                                100
-                                            ).toFixed(3)}
-                                            %
-                                        </Name>
-                                    </S.IconBox>
-                                    <S.IconBox>
-                                        <S.Icon
-                                            src={l}
-                                            // src={vitaminD}
-                                        />
-                                        <Name
-                                            style={{
-                                                marginBottom: 5,
-                                                fontSize: '0.5rem',
-                                            }}
-                                        >
-                                            {/* 비타민 D */}L
-                                        </Name>
-                                        <Name style={{ fontSize: '0.5rem' }}>
-                                            {(
-                                                (nutrition.vitamin_d /
-                                                    (5 * dateCount)) *
-                                                100
-                                            ).toFixed(3)}
-                                            %
-                                        </Name>
-                                    </S.IconBox>
-                                </S.Box>
-                            </>
-                        ) : null}
+                                            <Name
+                                                style={{
+                                                    marginBottom: 5,
+                                                    fontSize: '0.5rem',
+                                                }}
+                                            >
+                                                {/* 트립토판 */}G
+                                            </Name>
+                                            <Name
+                                                style={{ fontSize: '0.5rem' }}
+                                            >
+                                                {(
+                                                    (nutrition.tryptophan /
+                                                        (0.1 * dateCount)) *
+                                                    100
+                                                ).toFixed(3)}
+                                                %
+                                            </Name>
+                                        </S.IconBox>
+                                        <S.IconBox>
+                                            <S.Icon
+                                                src={h}
+                                                // src={vitaminA}
+                                            />
+                                            <Name
+                                                style={{
+                                                    marginBottom: 5,
+                                                    fontSize: '0.5rem',
+                                                }}
+                                            >
+                                                {/* 비타민 A */}H
+                                            </Name>
+                                            <Name
+                                                style={{
+                                                    fontSize: '0.5rem',
+                                                }}
+                                            >
+                                                {(
+                                                    (nutrition.vitamin_a /
+                                                        (300 * dateCount)) *
+                                                    100
+                                                ).toFixed(3)}
+                                                %
+                                            </Name>
+                                        </S.IconBox>
+                                        <S.IconBox>
+                                            <S.Icon
+                                                src={i}
+                                                // src={vitaminB6}
+                                            />
+                                            <Name
+                                                style={{
+                                                    marginBottom: 5,
+                                                    fontSize: '0.5rem',
+                                                }}
+                                            >
+                                                {/* 비타민 B6 */}I
+                                            </Name>
+                                            <Name
+                                                style={{ fontSize: '0.5rem' }}
+                                            >
+                                                {(
+                                                    (nutrition.vitamin_b6 /
+                                                        (0.7 * dateCount)) *
+                                                    100
+                                                ).toFixed(3)}
+                                                %
+                                            </Name>
+                                        </S.IconBox>
+                                        <S.IconBox>
+                                            <S.Icon
+                                                src={j}
+                                                // src={fiber}
+                                            />
+                                            <Name
+                                                style={{
+                                                    marginBottom: 5,
+                                                    fontSize: '0.5rem',
+                                                }}
+                                            >
+                                                {/* 식이섬유 */}J
+                                            </Name>
+                                            <Name
+                                                style={{ fontSize: '0.5rem' }}
+                                            >
+                                                {(
+                                                    (nutrition.dietary_fiber /
+                                                        (20 * dateCount)) *
+                                                    100
+                                                ).toFixed(3)}
+                                                %
+                                            </Name>
+                                        </S.IconBox>
+                                        <S.IconBox>
+                                            <S.Icon
+                                                src={k}
+                                                // src={vitaminB12}
+                                            />
+                                            <Name
+                                                style={{
+                                                    marginBottom: 5,
+                                                    fontSize: '0.5rem',
+                                                }}
+                                            >
+                                                {/* 비타민 B12 */}K
+                                            </Name>
+                                            <Name
+                                                style={{ fontSize: '0.5rem' }}
+                                            >
+                                                {(
+                                                    (nutrition.vitamin_b12 /
+                                                        (1.1 * dateCount)) *
+                                                    100
+                                                ).toFixed(3)}
+                                                %
+                                            </Name>
+                                        </S.IconBox>
+                                        <S.IconBox>
+                                            <S.Icon
+                                                src={l}
+                                                // src={vitaminD}
+                                            />
+                                            <Name
+                                                style={{
+                                                    marginBottom: 5,
+                                                    fontSize: '0.5rem',
+                                                }}
+                                            >
+                                                {/* 비타민 D */}L
+                                            </Name>
+                                            <Name
+                                                style={{ fontSize: '0.5rem' }}
+                                            >
+                                                {(
+                                                    (nutrition.vitamin_d /
+                                                        (5 * dateCount)) *
+                                                    100
+                                                ).toFixed(3)}
+                                                %
+                                            </Name>
+                                        </S.IconBox>
+                                    </S.Box>
+                                </>
+                            )}
+                        </>
                     </>
                 ) : null}
             </Contents>
