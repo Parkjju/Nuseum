@@ -8,7 +8,7 @@ const Text = styled.h1`
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #7f8c8d;
+    color: black;
     margin-bottom: 90px;
 `;
 
