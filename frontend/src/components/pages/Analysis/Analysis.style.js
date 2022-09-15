@@ -44,3 +44,30 @@ export const FetchButton = styled.button`
     border: none;
     cursor: pointer;
 `;
+
+export const SectionTitle = styled.p`
+    width: 80%;
+    padding: 10px 5px;
+    font-size: 12px;
+    font-weight: 600;
+    border-bottom: 1px solid black;
+    margin-top: 30px;
+`;
+export const NutrientBox = styled.div`
+    box-sizing: border-box;
+    width: 80%;
+
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+export const NutrientList = styled.div`
+    box-sizing: border-box;
+    width: 50%;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+`;

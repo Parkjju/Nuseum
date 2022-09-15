@@ -274,7 +274,7 @@ const Analysis = () => {
 
                 {loading && !isDateSelected ? (
                     <CircularProgress sx={{ marginTop: 10 }} />
-                ) : (
+                ) : isDateSelected ? (
                     <S.ButtonBox>
                         <S.FetchButton
                             onClick={() => {
@@ -295,7 +295,7 @@ const Analysis = () => {
                             <span>확인하기</span>
                         </S.FetchButton>
                     </S.ButtonBox>
-                )}
+                ) : null}
                 {isDateSelected ? (
                     <>
                         <>
@@ -303,6 +303,123 @@ const Analysis = () => {
                                 <CircularProgress />
                             ) : (
                                 <>
+                                    <S.SectionTitle>9대 영양소</S.SectionTitle>
+                                    {/* <S.NutrientBox>
+                                        <S.NutrientList>
+                                            <Name style={{ fontWeight: 400 }}>
+                                                A{' '}
+                                                {(
+                                                    (nutrition.carbohydrate /
+                                                        (130 * dateCount)) *
+                                                    100
+                                                ).toFixed(3)}
+                                                %
+                                            </Name>
+
+                                            <Name style={{ fontWeight: 400 }}>
+                                                B{' '}
+                                                {(
+                                                    (nutrition.dha_epa /
+                                                        (300 * dateCount)) *
+                                                    100
+                                                ).toFixed(3)}
+                                                %
+                                            </Name>
+                                            <Name style={{ fontWeight: 400 }}>
+                                                C{' '}
+                                                {(
+                                                    (nutrition.dha_epa /
+                                                        (300 * dateCount)) *
+                                                    100
+                                                ).toFixed(3)}
+                                                %
+                                            </Name>
+                                            <Name style={{ fontWeight: 400 }}>
+                                                D{' '}
+                                                {(
+                                                    (nutrition.fat /
+                                                        (102 * dateCount)) *
+                                                    100
+                                                ).toFixed(3)}
+                                                %
+                                            </Name>
+                                            <Name style={{ fontWeight: 400 }}>
+                                                E{' '}
+                                                {(
+                                                    (nutrition.magnesium /
+                                                        (110 * dateCount)) *
+                                                    100
+                                                ).toFixed(3)}
+                                                %
+                                            </Name>
+                                            <Name style={{ fontWeight: 400 }}>
+                                                F{' '}
+                                                {(
+                                                    (nutrition.protein /
+                                                        (25 * dateCount)) *
+                                                    100
+                                                ).toFixed(3)}
+                                                %
+                                            </Name>
+                                            <Name style={{ fontWeight: 400 }}>
+                                                G{' '}
+                                                {(
+                                                    (nutrition.tryptophan /
+                                                        (0.1 * dateCount)) *
+                                                    100
+                                                ).toFixed(3)}
+                                                %
+                                            </Name>
+                                            <Name style={{ fontWeight: 400 }}>
+                                                H{' '}
+                                                {(
+                                                    (nutrition.vitamin_a /
+                                                        (300 * dateCount)) *
+                                                    100
+                                                ).toFixed(3)}
+                                                %
+                                            </Name>
+                                            <Name style={{ fontWeight: 400 }}>
+                                                I{' '}
+                                                {(
+                                                    (nutrition.vitamin_b6 /
+                                                        (0.7 * dateCount)) *
+                                                    100
+                                                ).toFixed(3)}
+                                                %
+                                            </Name>
+                                            <Name style={{ fontWeight: 400 }}>
+                                                J{' '}
+                                                {(
+                                                    (nutrition.dietary_fiber /
+                                                        (20 * dateCount)) *
+                                                    100
+                                                ).toFixed(3)}
+                                                %
+                                            </Name>
+                                            <Name style={{ fontWeight: 400 }}>
+                                                K{' '}
+                                                {(
+                                                    (nutrition.vitamin_b12 /
+                                                        (1.1 * dateCount)) *
+                                                    100
+                                                ).toFixed(3)}
+                                                %
+                                            </Name>
+                                            <Name style={{ fontWeight: 400 }}>
+                                                L{' '}
+                                                {(
+                                                    (nutrition.vitamin_d /
+                                                        (5 * dateCount)) *
+                                                    100
+                                                ).toFixed(3)}
+                                                %
+                                            </Name>
+                                        </S.NutrientList>
+
+                                        <div style={{ width: '80%' }}>
+                                        </div>
+                                    </S.NutrientBox> */}
                                     <RadarGraph data={nutrition} />
                                     <BarGraph
                                         count={dateCount}

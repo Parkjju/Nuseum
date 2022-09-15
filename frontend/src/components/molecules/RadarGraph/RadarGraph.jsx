@@ -87,7 +87,10 @@ const RadarGraph = ({ data }) => {
     return (
         <>
             <Radar
-                style={{ width: '80%', marginTop: 30, marginBottom: 30 }}
+                style={{
+                    marginTop: 30,
+                    marginBottom: 30,
+                }}
                 data={dataForRadar}
             />
         </>
