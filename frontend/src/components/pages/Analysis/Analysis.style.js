@@ -19,10 +19,7 @@ export const IconBox = styled.div`
     justify-content: center;
     align-items: center;
     border-radius: 3rem;
-    background: ${(props) =>
-        props.isEat
-            ? 'linear-gradient(rgba(191, 197, 198, 0.1), rgb(191, 197, 198))'
-            : null};
+    background: ${(props) => (props.isEat ? '#DCDFDF' : null)};
     margin-bottom: 20px;
 `;
 
