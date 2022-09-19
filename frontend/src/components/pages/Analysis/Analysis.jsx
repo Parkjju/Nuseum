@@ -206,6 +206,7 @@ const Analysis = () => {
         )
             .then((response) => {
                 let res = response.data;
+                console.log(res);
 
                 for (let i in res) {
                     if (i === 'category' || i === 'day_count') {
@@ -219,17 +220,7 @@ const Analysis = () => {
 
                 setNutrition(res);
                 setLoading(false);
-                setEatCategory({
-                    1: false,
-                    2: false,
-                    3: false,
-                    4: false,
-                    5: false,
-                    6: false,
-                    7: false,
-                    8: false,
-                    9: false,
-                });
+
                 setDateCount(response.data.day_count);
             })
             .catch((err) => {
@@ -258,6 +249,17 @@ const Analysis = () => {
 
                 setNutrition(initializedNutrition);
                 setLoading(false);
+                setEatCategory({
+                    1: false,
+                    2: false,
+                    3: false,
+                    4: false,
+                    5: false,
+                    6: false,
+                    7: false,
+                    8: false,
+                    9: false,
+                });
                 setDateCount(1);
                 alert('한 주간 입력된 데이터가 없어요 😭');
             });
@@ -318,6 +320,17 @@ const Analysis = () => {
 
                 setNutrition(initializedNutrition);
                 setLoading(false);
+                setEatCategory({
+                    1: false,
+                    2: false,
+                    3: false,
+                    4: false,
+                    5: false,
+                    6: false,
+                    7: false,
+                    8: false,
+                    9: false,
+                });
                 setDateCount(1);
                 alert('한 달간 입력된 데이터가 없어요 😭');
             });
