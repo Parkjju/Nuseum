@@ -139,7 +139,7 @@ const Analysis = () => {
                     }
                     res[i] = Number.isInteger(+res[i])
                         ? res[i]
-                        : res[i].toFixed(3);
+                        : res[i].toFixed(1);
                 }
                 categoryCheck(response.data.category);
 
@@ -214,7 +214,7 @@ const Analysis = () => {
                     }
                     res[i] = Number.isInteger(+res[i])
                         ? res[i]
-                        : res[i].toFixed(3);
+                        : res[i].toFixed(1);
                 }
                 categoryCheck(response.data.category);
 
@@ -285,7 +285,7 @@ const Analysis = () => {
                     if (i === 'day_count' || i === 'category') continue;
                     res[i] = Number.isInteger(+res[i])
                         ? res[i]
-                        : res[i].toFixed(3);
+                        : res[i].toFixed(1);
                 }
                 categoryCheck(response.data.category);
 
@@ -384,7 +384,7 @@ const Analysis = () => {
                                                     (nutrition.dha_epa /
                                                         (300 * dateCount)) *
                                                     100
-                                                ).toFixed(3)}
+                                                ).toFixed(1)}
                                                 %
                                             </Name>
                                             <Name style={{ fontWeight: 400 }}>
@@ -393,7 +393,7 @@ const Analysis = () => {
                                                     (nutrition.folic_acid /
                                                         (180 * dateCount)) *
                                                     100
-                                                ).toFixed(3)}
+                                                ).toFixed(1)}
                                                 %
                                             </Name>
 
@@ -407,7 +407,7 @@ const Analysis = () => {
                                                     (nutrition.magnesium /
                                                         (110 * dateCount)) *
                                                     100
-                                                ).toFixed(3)}
+                                                ).toFixed(1)}
                                                 %
                                             </Name>
                                             <S.Divider />
@@ -418,7 +418,7 @@ const Analysis = () => {
                                                     (nutrition.tryptophan /
                                                         (0.1 * dateCount)) *
                                                     100
-                                                ).toFixed(3)}
+                                                ).toFixed(1)}
                                                 %
                                             </Name>
                                             <Name style={{ fontWeight: 400 }}>
@@ -427,7 +427,7 @@ const Analysis = () => {
                                                     (nutrition.vitamin_a /
                                                         (300 * dateCount)) *
                                                     100
-                                                ).toFixed(3)}
+                                                ).toFixed(1)}
                                                 %
                                             </Name>
                                             <Name style={{ fontWeight: 400 }}>
@@ -436,7 +436,7 @@ const Analysis = () => {
                                                     (nutrition.dietary_fiber /
                                                         (20 * dateCount)) *
                                                     100
-                                                ).toFixed(3)}
+                                                ).toFixed(1)}
                                                 %
                                             </Name>
                                             <S.Divider />
@@ -446,7 +446,7 @@ const Analysis = () => {
                                                     (nutrition.vitamin_b6 /
                                                         (0.7 * dateCount)) *
                                                     100
-                                                ).toFixed(3)}
+                                                ).toFixed(1)}
                                                 %
                                             </Name>
 
@@ -456,7 +456,7 @@ const Analysis = () => {
                                                     (nutrition.vitamin_b12 /
                                                         (1.1 * dateCount)) *
                                                     100
-                                                ).toFixed(3)}
+                                                ).toFixed(1)}
                                                 %
                                             </Name>
                                             <Name style={{ fontWeight: 400 }}>
@@ -465,7 +465,7 @@ const Analysis = () => {
                                                     (nutrition.vitamin_d /
                                                         (5 * dateCount)) *
                                                     100
-                                                ).toFixed(3)}
+                                                ).toFixed(1)}
                                                 %
                                             </Name>
                                         </S.NutrientList>
