@@ -90,6 +90,8 @@ const RadarGraph = ({ data }) => {
                 style={{
                     marginTop: 30,
                     marginBottom: 30,
+                    minWidth: 250,
+                    minHeight: 250,
                 }}
                 data={dataForRadar}
             />
