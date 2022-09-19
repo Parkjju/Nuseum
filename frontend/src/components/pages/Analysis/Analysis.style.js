@@ -12,12 +12,18 @@ export const Box = styled.div`
 `;
 
 export const IconBox = styled.div`
-    height: 7rem;
-    width: 5rem;
+    height: 6rem;
+    width: 6rem;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
+    border-radius: 3rem;
+    background: ${(props) =>
+        props.isEat
+            ? 'linear-gradient(rgba(191, 197, 198, 0.1), rgb(191, 197, 198))'
+            : null};
+    margin-bottom: 20px;
 `;
 
 export const Icon = styled.img`
@@ -56,7 +62,6 @@ export const SectionTitle = styled.p`
 export const NutrientBox = styled.div`
     box-sizing: border-box;
     width: 80%;
-
     height: auto;
     display: flex;
     justify-content: space-between;
@@ -70,4 +75,9 @@ export const NutrientList = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
+`;
+
+export const Divider = styled.div`
+    border-bottom: 1px solid #dcdfdf;
+    width: 100%;
 `;

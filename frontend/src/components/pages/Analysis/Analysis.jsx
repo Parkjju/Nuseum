@@ -16,18 +16,15 @@ import * as S from './Analysis.style';
 // import fiber from '../../../assets/vegetables.png';
 // import vitaminB12 from '../../../assets/vitamin-b12.png';
 // import vitaminD from '../../../assets/vitamin-d.png';
-import a from '../../../assets/a.png';
-import b from '../../../assets/b.png';
-import c from '../../../assets/c.png';
-import d from '../../../assets/d.png';
-import e from '../../../assets/e.png';
-import f from '../../../assets/f.png';
-import g from '../../../assets/g.png';
-import h from '../../../assets/h.png';
-import i from '../../../assets/i.png';
-import j from '../../../assets/j.png';
-import k from '../../../assets/k.png';
-import l from '../../../assets/l.png';
+import a from '../../../assets/category/1.png';
+import b from '../../../assets/category/2.png';
+import c from '../../../assets/category/3.png';
+import d from '../../../assets/category/4.png';
+import e from '../../../assets/category/5.png';
+import f from '../../../assets/category/6.png';
+import g from '../../../assets/category/7.png';
+import h from '../../../assets/category/8.png';
+import i from '../../../assets/category/9.png';
 
 import { Calendar } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -68,6 +65,17 @@ const Analysis = () => {
     const [loading, setLoading] = useState(false);
     const [dateCount, setDateCount] = useState(1);
     const navigate = useNavigate();
+    const [eatCategory, setEatCategory] = useState({
+        1: false,
+        2: false,
+        3: false,
+        4: false,
+        5: false,
+        6: false,
+        7: false,
+        8: false,
+        9: false,
+    });
 
     // 한주간 데이터 fetch중인지 월간 데이터 fetch중인지 판단을 위한 상태값
     // 탭 컴포넌트의 urlmatch 로직과 동일
@@ -89,6 +97,16 @@ const Analysis = () => {
         dha_epa: 0,
         water_amount: 0,
     });
+    const categoryCheck = (categoryArray) => {
+        for (let i of categoryArray) {
+            setEatCategory((prev) => {
+                return {
+                    ...prev,
+                    [i]: true,
+                };
+            });
+        }
+    };
 
     const onChange = (d) => {
         setLoading(true);
@@ -107,10 +125,14 @@ const Analysis = () => {
                 let res = response.data;
 
                 for (let i in res) {
+                    if (i === 'category') {
+                        continue;
+                    }
                     res[i] = Number.isInteger(+res[i])
                         ? res[i]
                         : res[i].toFixed(3);
                 }
+                categoryCheck(response.data.category);
 
                 setNutrition(res);
                 setLoading(false);
@@ -142,6 +164,17 @@ const Analysis = () => {
 
                 setNutrition(initializedNutrition);
 
+                // setEatCategory({
+                //     1: false,
+                //     2: false,
+                //     3: false,
+                //     4: false,
+                //     5: false,
+                //     6: false,
+                //     7: false,
+                //     8: false,
+                //     9: false,
+                // });
                 setLoading(false);
                 alert('이 날에는 기록하지 않으셨네요!');
             });
@@ -169,6 +202,7 @@ const Analysis = () => {
                         ? res[i]
                         : res[i].toFixed(3);
                 }
+                categoryCheck(response.data.category);
 
                 setNutrition(res);
                 setLoading(false);
@@ -227,6 +261,7 @@ const Analysis = () => {
                         ? res[i]
                         : res[i].toFixed(3);
                 }
+                categoryCheck(response.data.category);
 
                 setDateCount(response.data.day_count);
                 setNutrition(res);
@@ -304,18 +339,17 @@ const Analysis = () => {
                             ) : (
                                 <>
                                     <S.SectionTitle>9대 영양소</S.SectionTitle>
-                                    {/* <S.NutrientBox>
+                                    <S.NutrientBox>
                                         <S.NutrientList>
                                             <Name style={{ fontWeight: 400 }}>
                                                 A{' '}
                                                 {(
-                                                    (nutrition.carbohydrate /
-                                                        (130 * dateCount)) *
+                                                    (nutrition.dha_epa /
+                                                        (300 * dateCount)) *
                                                     100
                                                 ).toFixed(3)}
                                                 %
                                             </Name>
-
                                             <Name style={{ fontWeight: 400 }}>
                                                 B{' '}
                                                 {(
@@ -325,26 +359,13 @@ const Analysis = () => {
                                                 ).toFixed(3)}
                                                 %
                                             </Name>
-                                            <Name style={{ fontWeight: 400 }}>
+
+                                            <Name
+                                                style={{
+                                                    fontWeight: 400,
+                                                }}
+                                            >
                                                 C{' '}
-                                                {(
-                                                    (nutrition.dha_epa /
-                                                        (300 * dateCount)) *
-                                                    100
-                                                ).toFixed(3)}
-                                                %
-                                            </Name>
-                                            <Name style={{ fontWeight: 400 }}>
-                                                D{' '}
-                                                {(
-                                                    (nutrition.fat /
-                                                        (102 * dateCount)) *
-                                                    100
-                                                ).toFixed(3)}
-                                                %
-                                            </Name>
-                                            <Name style={{ fontWeight: 400 }}>
-                                                E{' '}
                                                 {(
                                                     (nutrition.magnesium /
                                                         (110 * dateCount)) *
@@ -352,17 +373,10 @@ const Analysis = () => {
                                                 ).toFixed(3)}
                                                 %
                                             </Name>
+                                            <S.Divider />
+
                                             <Name style={{ fontWeight: 400 }}>
-                                                F{' '}
-                                                {(
-                                                    (nutrition.protein /
-                                                        (25 * dateCount)) *
-                                                    100
-                                                ).toFixed(3)}
-                                                %
-                                            </Name>
-                                            <Name style={{ fontWeight: 400 }}>
-                                                G{' '}
+                                                D{' '}
                                                 {(
                                                     (nutrition.tryptophan /
                                                         (0.1 * dateCount)) *
@@ -371,7 +385,7 @@ const Analysis = () => {
                                                 %
                                             </Name>
                                             <Name style={{ fontWeight: 400 }}>
-                                                H{' '}
+                                                E{' '}
                                                 {(
                                                     (nutrition.vitamin_a /
                                                         (300 * dateCount)) *
@@ -380,7 +394,7 @@ const Analysis = () => {
                                                 %
                                             </Name>
                                             <Name style={{ fontWeight: 400 }}>
-                                                I{' '}
+                                                F{' '}
                                                 {(
                                                     (nutrition.vitamin_b6 /
                                                         (0.7 * dateCount)) *
@@ -388,8 +402,9 @@ const Analysis = () => {
                                                 ).toFixed(3)}
                                                 %
                                             </Name>
+                                            <S.Divider />
                                             <Name style={{ fontWeight: 400 }}>
-                                                J{' '}
+                                                G{' '}
                                                 {(
                                                     (nutrition.dietary_fiber /
                                                         (20 * dateCount)) *
@@ -397,8 +412,9 @@ const Analysis = () => {
                                                 ).toFixed(3)}
                                                 %
                                             </Name>
+
                                             <Name style={{ fontWeight: 400 }}>
-                                                K{' '}
+                                                H{' '}
                                                 {(
                                                     (nutrition.vitamin_b12 /
                                                         (1.1 * dateCount)) *
@@ -407,7 +423,7 @@ const Analysis = () => {
                                                 %
                                             </Name>
                                             <Name style={{ fontWeight: 400 }}>
-                                                L{' '}
+                                                I{' '}
                                                 {(
                                                     (nutrition.vitamin_d /
                                                         (5 * dateCount)) *
@@ -418,15 +434,18 @@ const Analysis = () => {
                                         </S.NutrientList>
 
                                         <div style={{ width: '80%' }}>
+                                            <RadarGraph data={nutrition} />
                                         </div>
-                                    </S.NutrientBox> */}
-                                    <RadarGraph data={nutrition} />
+                                    </S.NutrientBox>
                                     <BarGraph
                                         count={dateCount}
                                         data={nutrition}
                                     />
+                                    <S.SectionTitle>
+                                        9가지 식품군
+                                    </S.SectionTitle>
                                     <S.Box>
-                                        <S.IconBox>
+                                        <S.IconBox isEat={eatCategory[1]}>
                                             <S.Icon
                                                 src={a}
                                                 // src={carbohydrates}
@@ -437,20 +456,10 @@ const Analysis = () => {
                                                     marginBottom: 5,
                                                 }}
                                             >
-                                                {/* 탄수화물 */}A
-                                            </Name>
-                                            <Name
-                                                style={{ fontSize: '0.5rem' }}
-                                            >
-                                                {(
-                                                    (nutrition.carbohydrate /
-                                                        (130 * dateCount)) *
-                                                    100
-                                                ).toFixed(3)}
-                                                %
+                                                {/* 탄수화물 */}채소
                                             </Name>
                                         </S.IconBox>
-                                        <S.IconBox>
+                                        <S.IconBox isEat={eatCategory[2]}>
                                             <S.Icon
                                                 src={b}
                                                 // src={dha}
@@ -461,20 +470,10 @@ const Analysis = () => {
                                                     marginBottom: 5,
                                                 }}
                                             >
-                                                {/* DHA+EPA */}B
-                                            </Name>
-                                            <Name
-                                                style={{ fontSize: '0.5rem' }}
-                                            >
-                                                {(
-                                                    (nutrition.dha_epa /
-                                                        (300 * dateCount)) *
-                                                    100
-                                                ).toFixed(3)}
-                                                %
+                                                {/* DHA+EPA */}과일
                                             </Name>
                                         </S.IconBox>
-                                        <S.IconBox>
+                                        <S.IconBox isEat={eatCategory[3]}>
                                             <S.Icon
                                                 src={c}
                                                 // src={fat}
@@ -485,20 +484,10 @@ const Analysis = () => {
                                                     marginBottom: 5,
                                                 }}
                                             >
-                                                {/* 지방 */}C
-                                            </Name>
-                                            <Name
-                                                style={{ fontSize: '0.5rem' }}
-                                            >
-                                                {(
-                                                    (nutrition.fat /
-                                                        (102 * dateCount)) *
-                                                    100
-                                                ).toFixed(3)}
-                                                %
+                                                {/* 지방 */}콩/두부
                                             </Name>
                                         </S.IconBox>
-                                        <S.IconBox>
+                                        <S.IconBox isEat={eatCategory[4]}>
                                             <S.Icon
                                                 src={d}
                                                 // src={folic}
@@ -509,22 +498,10 @@ const Analysis = () => {
                                                     fontSize: '0.5rem',
                                                 }}
                                             >
-                                                {/* 엽산 */}D
-                                            </Name>
-                                            <Name
-                                                style={{
-                                                    fontSize: '0.5rem',
-                                                }}
-                                            >
-                                                {(
-                                                    (nutrition.folic_acid /
-                                                        (180 * dateCount)) *
-                                                    100
-                                                ).toFixed(3)}
-                                                %
+                                                {/* 엽산 */}통곡물
                                             </Name>
                                         </S.IconBox>
-                                        <S.IconBox>
+                                        <S.IconBox isEat={eatCategory[5]}>
                                             <S.Icon
                                                 src={e}
                                                 // src={magnesium}
@@ -535,20 +512,10 @@ const Analysis = () => {
                                                     fontSize: '0.5rem',
                                                 }}
                                             >
-                                                {/* 마그네슘 */}E
-                                            </Name>
-                                            <Name
-                                                style={{ fontSize: '0.5rem' }}
-                                            >
-                                                {(
-                                                    (nutrition.magnesium /
-                                                        (110 * dateCount)) *
-                                                    100
-                                                ).toFixed(3)}
-                                                %
+                                                {/* 마그네슘 */}버섯
                                             </Name>
                                         </S.IconBox>
-                                        <S.IconBox>
+                                        <S.IconBox isEat={eatCategory[6]}>
                                             <S.Icon
                                                 src={f}
                                                 // src={protein}
@@ -559,20 +526,10 @@ const Analysis = () => {
                                                     fontSize: '0.5rem',
                                                 }}
                                             >
-                                                {/* 단백질 */}F
-                                            </Name>
-                                            <Name
-                                                style={{ fontSize: '0.5rem' }}
-                                            >
-                                                {(
-                                                    (nutrition.protein /
-                                                        (25 * dateCount)) *
-                                                    100
-                                                ).toFixed(3)}
-                                                %
+                                                {/* 단백질 */}해조류
                                             </Name>
                                         </S.IconBox>
-                                        <S.IconBox>
+                                        <S.IconBox isEat={eatCategory[7]}>
                                             <S.Icon
                                                 src={g}
                                                 // src={tryptophan}
@@ -584,20 +541,10 @@ const Analysis = () => {
                                                     fontSize: '0.5rem',
                                                 }}
                                             >
-                                                {/* 트립토판 */}G
-                                            </Name>
-                                            <Name
-                                                style={{ fontSize: '0.5rem' }}
-                                            >
-                                                {(
-                                                    (nutrition.tryptophan /
-                                                        (0.1 * dateCount)) *
-                                                    100
-                                                ).toFixed(3)}
-                                                %
+                                                {/* 트립토판 */}견과
                                             </Name>
                                         </S.IconBox>
-                                        <S.IconBox>
+                                        <S.IconBox isEat={eatCategory[8]}>
                                             <S.Icon
                                                 src={h}
                                                 // src={vitaminA}
@@ -608,22 +555,10 @@ const Analysis = () => {
                                                     fontSize: '0.5rem',
                                                 }}
                                             >
-                                                {/* 비타민 A */}H
-                                            </Name>
-                                            <Name
-                                                style={{
-                                                    fontSize: '0.5rem',
-                                                }}
-                                            >
-                                                {(
-                                                    (nutrition.vitamin_a /
-                                                        (300 * dateCount)) *
-                                                    100
-                                                ).toFixed(3)}
-                                                %
+                                                {/* 비타민 A */}고기/생선/달걀
                                             </Name>
                                         </S.IconBox>
-                                        <S.IconBox>
+                                        <S.IconBox isEat={eatCategory[9]}>
                                             <S.Icon
                                                 src={i}
                                                 // src={vitaminB6}
@@ -634,89 +569,7 @@ const Analysis = () => {
                                                     fontSize: '0.5rem',
                                                 }}
                                             >
-                                                {/* 비타민 B6 */}I
-                                            </Name>
-                                            <Name
-                                                style={{ fontSize: '0.5rem' }}
-                                            >
-                                                {(
-                                                    (nutrition.vitamin_b6 /
-                                                        (0.7 * dateCount)) *
-                                                    100
-                                                ).toFixed(3)}
-                                                %
-                                            </Name>
-                                        </S.IconBox>
-                                        <S.IconBox>
-                                            <S.Icon
-                                                src={j}
-                                                // src={fiber}
-                                            />
-                                            <Name
-                                                style={{
-                                                    marginBottom: 5,
-                                                    fontSize: '0.5rem',
-                                                }}
-                                            >
-                                                {/* 식이섬유 */}J
-                                            </Name>
-                                            <Name
-                                                style={{ fontSize: '0.5rem' }}
-                                            >
-                                                {(
-                                                    (nutrition.dietary_fiber /
-                                                        (20 * dateCount)) *
-                                                    100
-                                                ).toFixed(3)}
-                                                %
-                                            </Name>
-                                        </S.IconBox>
-                                        <S.IconBox>
-                                            <S.Icon
-                                                src={k}
-                                                // src={vitaminB12}
-                                            />
-                                            <Name
-                                                style={{
-                                                    marginBottom: 5,
-                                                    fontSize: '0.5rem',
-                                                }}
-                                            >
-                                                {/* 비타민 B12 */}K
-                                            </Name>
-                                            <Name
-                                                style={{ fontSize: '0.5rem' }}
-                                            >
-                                                {(
-                                                    (nutrition.vitamin_b12 /
-                                                        (1.1 * dateCount)) *
-                                                    100
-                                                ).toFixed(3)}
-                                                %
-                                            </Name>
-                                        </S.IconBox>
-                                        <S.IconBox>
-                                            <S.Icon
-                                                src={l}
-                                                // src={vitaminD}
-                                            />
-                                            <Name
-                                                style={{
-                                                    marginBottom: 5,
-                                                    fontSize: '0.5rem',
-                                                }}
-                                            >
-                                                {/* 비타민 D */}L
-                                            </Name>
-                                            <Name
-                                                style={{ fontSize: '0.5rem' }}
-                                            >
-                                                {(
-                                                    (nutrition.vitamin_d /
-                                                        (5 * dateCount)) *
-                                                    100
-                                                ).toFixed(3)}
-                                                %
+                                                {/* 비타민 B6 */}유제품
                                             </Name>
                                         </S.IconBox>
                                     </S.Box>
