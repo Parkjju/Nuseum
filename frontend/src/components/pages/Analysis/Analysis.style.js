@@ -67,7 +67,7 @@ export const NutrientBox = styled.div`
 export const NutrientList = styled.div`
     box-sizing: border-box;
     width: 50%;
-    min-width: 110px;
+    min-width: 130px;
     height: 250px;
     display: flex;
     flex-direction: column;
