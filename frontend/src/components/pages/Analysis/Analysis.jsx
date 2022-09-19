@@ -98,14 +98,23 @@ const Analysis = () => {
         water_amount: 0,
     });
     const categoryCheck = (categoryArray) => {
+        let copy = {
+            1: false,
+            2: false,
+            3: false,
+            4: false,
+            5: false,
+            6: false,
+            7: false,
+            8: false,
+            9: false,
+        };
+
         for (let i of categoryArray) {
-            setEatCategory((prev) => {
-                return {
-                    ...prev,
-                    [i]: true,
-                };
-            });
+            copy[i] = true;
         }
+
+        setEatCategory({ ...copy });
     };
 
     const onChange = (d) => {
@@ -164,17 +173,17 @@ const Analysis = () => {
 
                 setNutrition(initializedNutrition);
 
-                // setEatCategory({
-                //     1: false,
-                //     2: false,
-                //     3: false,
-                //     4: false,
-                //     5: false,
-                //     6: false,
-                //     7: false,
-                //     8: false,
-                //     9: false,
-                // });
+                setEatCategory({
+                    1: false,
+                    2: false,
+                    3: false,
+                    4: false,
+                    5: false,
+                    6: false,
+                    7: false,
+                    8: false,
+                    9: false,
+                });
                 setLoading(false);
                 alert('이 날에는 기록하지 않으셨네요!');
             });
@@ -206,6 +215,17 @@ const Analysis = () => {
 
                 setNutrition(res);
                 setLoading(false);
+                setEatCategory({
+                    1: false,
+                    2: false,
+                    3: false,
+                    4: false,
+                    5: false,
+                    6: false,
+                    7: false,
+                    8: false,
+                    9: false,
+                });
                 setDateCount(response.data.day_count);
             })
             .catch((err) => {
