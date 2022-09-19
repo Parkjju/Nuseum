@@ -379,7 +379,7 @@ const Analysis = () => {
                                     <S.NutrientBox>
                                         <S.NutrientList>
                                             <Name style={{ fontWeight: 400 }}>
-                                                A{' '}
+                                                DHA+EPA{' '}
                                                 {(
                                                     (nutrition.dha_epa /
                                                         (300 * dateCount)) *
@@ -388,10 +388,10 @@ const Analysis = () => {
                                                 %
                                             </Name>
                                             <Name style={{ fontWeight: 400 }}>
-                                                B{' '}
+                                                엽산{' '}
                                                 {(
-                                                    (nutrition.dha_epa /
-                                                        (300 * dateCount)) *
+                                                    (nutrition.folic_acid /
+                                                        (180 * dateCount)) *
                                                     100
                                                 ).toFixed(3)}
                                                 %
@@ -402,7 +402,7 @@ const Analysis = () => {
                                                     fontWeight: 400,
                                                 }}
                                             >
-                                                C{' '}
+                                                마그네슘{' '}
                                                 {(
                                                     (nutrition.magnesium /
                                                         (110 * dateCount)) *
@@ -413,7 +413,7 @@ const Analysis = () => {
                                             <S.Divider />
 
                                             <Name style={{ fontWeight: 400 }}>
-                                                D{' '}
+                                                트립토판{' '}
                                                 {(
                                                     (nutrition.tryptophan /
                                                         (0.1 * dateCount)) *
@@ -422,7 +422,7 @@ const Analysis = () => {
                                                 %
                                             </Name>
                                             <Name style={{ fontWeight: 400 }}>
-                                                E{' '}
+                                                비타민 A{' '}
                                                 {(
                                                     (nutrition.vitamin_a /
                                                         (300 * dateCount)) *
@@ -431,17 +431,7 @@ const Analysis = () => {
                                                 %
                                             </Name>
                                             <Name style={{ fontWeight: 400 }}>
-                                                F{' '}
-                                                {(
-                                                    (nutrition.vitamin_b6 /
-                                                        (0.7 * dateCount)) *
-                                                    100
-                                                ).toFixed(3)}
-                                                %
-                                            </Name>
-                                            <S.Divider />
-                                            <Name style={{ fontWeight: 400 }}>
-                                                G{' '}
+                                                식이섬유{' '}
                                                 {(
                                                     (nutrition.dietary_fiber /
                                                         (20 * dateCount)) *
@@ -449,9 +439,19 @@ const Analysis = () => {
                                                 ).toFixed(3)}
                                                 %
                                             </Name>
+                                            <S.Divider />
+                                            <Name style={{ fontWeight: 400 }}>
+                                                비타민 B6{' '}
+                                                {(
+                                                    (nutrition.vitamin_b6 /
+                                                        (0.7 * dateCount)) *
+                                                    100
+                                                ).toFixed(3)}
+                                                %
+                                            </Name>
 
                                             <Name style={{ fontWeight: 400 }}>
-                                                H{' '}
+                                                비타민 B12{' '}
                                                 {(
                                                     (nutrition.vitamin_b12 /
                                                         (1.1 * dateCount)) *
@@ -460,7 +460,7 @@ const Analysis = () => {
                                                 %
                                             </Name>
                                             <Name style={{ fontWeight: 400 }}>
-                                                I{' '}
+                                                비타민 D{' '}
                                                 {(
                                                     (nutrition.vitamin_d /
                                                         (5 * dateCount)) *
