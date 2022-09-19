@@ -134,7 +134,7 @@ const Analysis = () => {
                 let res = response.data;
 
                 for (let i in res) {
-                    if (i === 'category') {
+                    if (i === 'category' || i === 'day_count') {
                         continue;
                     }
                     res[i] = Number.isInteger(+res[i])
@@ -206,7 +206,11 @@ const Analysis = () => {
         )
             .then((response) => {
                 let res = response.data;
+
                 for (let i in res) {
+                    if (i === 'category' || i === 'day_count') {
+                        continue;
+                    }
                     res[i] = Number.isInteger(+res[i])
                         ? res[i]
                         : res[i].toFixed(3);
