@@ -482,11 +482,15 @@ const Analysis = () => {
                                         9가지 식품군
                                     </S.SectionTitle>
                                     <S.Box>
-                                        <S.IconBox isEat={eatCategory[1]}>
-                                            <S.Icon
-                                                src={a}
-                                                // src={carbohydrates}
-                                            />
+                                        <S.IconBox>
+                                            <S.IconWrapper
+                                                isEat={eatCategory[1]}
+                                            >
+                                                <S.Icon
+                                                    src={a}
+                                                    // src={carbohydrates}
+                                                />
+                                            </S.IconWrapper>
                                             <Name
                                                 style={{
                                                     fontSize: '0.5rem',
@@ -496,11 +500,15 @@ const Analysis = () => {
                                                 {/* 탄수화물 */}채소
                                             </Name>
                                         </S.IconBox>
-                                        <S.IconBox isEat={eatCategory[2]}>
-                                            <S.Icon
-                                                src={b}
-                                                // src={dha}
-                                            />
+                                        <S.IconBox>
+                                            <S.IconWrapper
+                                                isEat={eatCategory[2]}
+                                            >
+                                                <S.Icon
+                                                    src={b}
+                                                    // src={dha}
+                                                />
+                                            </S.IconWrapper>
                                             <Name
                                                 style={{
                                                     fontSize: '0.5rem',
@@ -510,11 +518,15 @@ const Analysis = () => {
                                                 {/* DHA+EPA */}과일
                                             </Name>
                                         </S.IconBox>
-                                        <S.IconBox isEat={eatCategory[3]}>
-                                            <S.Icon
-                                                src={c}
-                                                // src={fat}
-                                            />
+                                        <S.IconBox>
+                                            <S.IconWrapper
+                                                isEat={eatCategory[3]}
+                                            >
+                                                <S.Icon
+                                                    src={c}
+                                                    // src={fat}
+                                                />
+                                            </S.IconWrapper>
                                             <Name
                                                 style={{
                                                     fontSize: '0.5rem',
@@ -524,11 +536,15 @@ const Analysis = () => {
                                                 {/* 지방 */}콩/두부
                                             </Name>
                                         </S.IconBox>
-                                        <S.IconBox isEat={eatCategory[4]}>
-                                            <S.Icon
-                                                src={d}
-                                                // src={folic}
-                                            />
+                                        <S.IconBox>
+                                            <S.IconWrapper
+                                                isEat={eatCategory[4]}
+                                            >
+                                                <S.Icon
+                                                    src={d}
+                                                    // src={folic}
+                                                />
+                                            </S.IconWrapper>
                                             <Name
                                                 style={{
                                                     marginBottom: 5,
@@ -538,11 +554,15 @@ const Analysis = () => {
                                                 {/* 엽산 */}통곡물
                                             </Name>
                                         </S.IconBox>
-                                        <S.IconBox isEat={eatCategory[5]}>
-                                            <S.Icon
-                                                src={e}
-                                                // src={magnesium}
-                                            />
+                                        <S.IconBox>
+                                            <S.IconWrapper
+                                                isEat={eatCategory[5]}
+                                            >
+                                                <S.Icon
+                                                    src={e}
+                                                    // src={magnesium}
+                                                />
+                                            </S.IconWrapper>
                                             <Name
                                                 style={{
                                                     marginBottom: 5,
@@ -552,11 +572,16 @@ const Analysis = () => {
                                                 {/* 마그네슘 */}버섯
                                             </Name>
                                         </S.IconBox>
-                                        <S.IconBox isEat={eatCategory[6]}>
-                                            <S.Icon
-                                                src={f}
-                                                // src={protein}
-                                            />
+                                        <S.IconBox>
+                                            <S.IconWrapper
+                                                isEat={eatCategory[6]}
+                                            >
+                                                <S.Icon
+                                                    src={f}
+                                                    // src={protein}
+                                                />
+                                            </S.IconWrapper>
+
                                             <Name
                                                 style={{
                                                     marginBottom: 5,
@@ -566,11 +591,15 @@ const Analysis = () => {
                                                 {/* 단백질 */}해조류
                                             </Name>
                                         </S.IconBox>
-                                        <S.IconBox isEat={eatCategory[7]}>
-                                            <S.Icon
-                                                src={g}
-                                                // src={tryptophan}
-                                            />
+                                        <S.IconBox>
+                                            <S.IconWrapper
+                                                isEat={eatCategory[7]}
+                                            >
+                                                <S.Icon
+                                                    src={g}
+                                                    // src={tryptophan}
+                                                />
+                                            </S.IconWrapper>
 
                                             <Name
                                                 style={{
@@ -581,11 +610,15 @@ const Analysis = () => {
                                                 {/* 트립토판 */}견과
                                             </Name>
                                         </S.IconBox>
-                                        <S.IconBox isEat={eatCategory[8]}>
-                                            <S.Icon
-                                                src={h}
-                                                // src={vitaminA}
-                                            />
+                                        <S.IconBox>
+                                            <S.IconWrapper
+                                                isEat={eatCategory[8]}
+                                            >
+                                                <S.Icon
+                                                    src={h}
+                                                    // src={vitaminA}
+                                                />
+                                            </S.IconWrapper>
                                             <Name
                                                 style={{
                                                     marginBottom: 5,
@@ -595,11 +628,15 @@ const Analysis = () => {
                                                 {/* 비타민 A */}고기/생선/달걀
                                             </Name>
                                         </S.IconBox>
-                                        <S.IconBox isEat={eatCategory[9]}>
-                                            <S.Icon
-                                                src={i}
-                                                // src={vitaminB6}
-                                            />
+                                        <S.IconBox>
+                                            <S.IconWrapper
+                                                isEat={eatCategory[9]}
+                                            >
+                                                <S.Icon
+                                                    src={i}
+                                                    // src={vitaminB6}
+                                                />
+                                            </S.IconWrapper>
                                             <Name
                                                 style={{
                                                     marginBottom: 5,

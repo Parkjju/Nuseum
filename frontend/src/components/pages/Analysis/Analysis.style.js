@@ -18,14 +18,21 @@ export const IconBox = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 3rem;
-    background: ${(props) => (props.isEat ? '#DCDFDF' : null)};
     margin-bottom: 20px;
 `;
 
 export const Icon = styled.img`
     width: 2.5rem;
-    margin-bottom: 15px;
+`;
+export const IconWrapper = styled.div`
+    background-color: ${(props) => (props.isEat ? '#dfdfdf' : null)};
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2rem;
+    margin-bottom: 10px;
 `;
 export const ButtonBox = styled.div`
     display: flex;
