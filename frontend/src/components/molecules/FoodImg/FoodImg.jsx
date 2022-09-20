@@ -26,14 +26,9 @@ const FoodImg = ({ data, removeFunction, index }) => {
             )}
 
             {typeof data === 'object' ? (
-                <Image
-                    style={{ height: '200px' }}
-                    src={URL.createObjectURL(data)}
-                    alt='img'
-                />
+                <Image src={URL.createObjectURL(data)} alt='img' />
             ) : typeof data === 'string' && data.length > 1 ? (
                 <Image
-                    style={{ height: '200px' }}
                     src={
                         typeof data === 'object'
                             ? URL.createObjectURL(data)
