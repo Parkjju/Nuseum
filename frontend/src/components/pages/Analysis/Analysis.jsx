@@ -375,7 +375,10 @@ const Analysis = () => {
                                 <CircularProgress />
                             ) : (
                                 <>
-                                    <S.SectionTitle>9대 영양소</S.SectionTitle>
+                                    <S.SectionTitle>
+                                        Nutrients for Neurobehavioral
+                                        Development
+                                    </S.SectionTitle>
                                     <S.NutrientBox>
                                         <S.NutrientList>
                                             <Name style={{ fontWeight: 400 }}>
@@ -479,7 +482,7 @@ const Analysis = () => {
                                         data={nutrition}
                                     />
                                     <S.SectionTitle>
-                                        9가지 식품군
+                                        Diversity for Nutrients & Microbiome
                                     </S.SectionTitle>
                                     <S.Box>
                                         <S.IconBox>
