@@ -13,6 +13,7 @@ import ErrorModal from '../../atom/Modal';
 import { useState } from 'react';
 import SNU from '../../../assets/SNU.png';
 import CircularProgress from '@mui/material/CircularProgress';
+
 // import { deferredPromptState } from '../../../recoil/deferredPrompt/deferredPrompt';
 
 function Login() {
@@ -47,17 +48,12 @@ function Login() {
     const onValid = ({ loginId, loginPassword }) => {
         setIsLoading(true);
         axios
-            .post(
-                'https://cryptic-castle-40575.herokuapp.com/api/v1/account/login/',
-                {
-                    username: loginId,
-                    password: loginPassword,
-                },
-                {
-                    withCredentials: true,
-                }
-            )
+            .post('/api/v1/account/login/', {
+                username: loginId,
+                password: loginPassword,
+            })
             .then((response) => {
+                console.log(response);
                 const sessionStorage = window.sessionStorage;
                 const val = sessionStorage.getItem('access_token');
 
