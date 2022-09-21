@@ -7,8 +7,8 @@ import { RecoilRoot } from 'recoil';
 import axios from 'axios';
 
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = 'http://localhost:8000';
-// axios.defaults.baseURL = 'https://cryptic-castle-40575.herokuapp.com';
+// axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.baseURL = 'https://cryptic-castle-40575.herokuapp.com';
 // axios.defaults.baseURL =
 //     process.env.NODE_ENV === 'development'
 //         ? 'http://localhost:8000'
