@@ -71,5 +71,6 @@
         "@faker-js/faker": "^7.5.0",
         "babel-loader": "^8.2.5",
         "babel-plugin-module-resolver": "^4.1.0"
-    }
+    },
+    "proxy": "http://localhost:8000"
 }
