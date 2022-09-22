@@ -70,6 +70,7 @@ export const NutrientBox = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-width: 560px;
 `;
 export const NutrientList = styled.div`
     box-sizing: border-box;
