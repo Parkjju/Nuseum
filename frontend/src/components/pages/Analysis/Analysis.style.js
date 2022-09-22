@@ -39,6 +39,7 @@ export const ButtonBox = styled.div`
     padding-top: 50px;
     justify-content: space-between;
     width: 360px;
+    height: 50px;
 `;
 
 export const FetchButton = styled.button`
@@ -49,8 +50,8 @@ export const FetchButton = styled.button`
     background-color: ${(props) => (props.isClicked ? '#8D8D8D' : '#F9F9F9')};
     border-radius: 80px;
     color: ${(props) => (props.isClicked ? 'white' : 'black')};
-    height: 50px;
-    width: 170px;
+    height: 100%;
+    width: 10.625rem;
     border: none;
     cursor: pointer;
 `;
@@ -74,8 +75,9 @@ export const NutrientBox = styled.div`
 `;
 export const NutrientList = styled.div`
     box-sizing: border-box;
-    width: 50%;
-    height: 250px;
+    width: 40%;
+    min-height: 250px;
+    min-width: 115px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
