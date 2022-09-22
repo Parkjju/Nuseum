@@ -100,7 +100,7 @@ const RadarGraph = ({ data }) => {
                             labels: {
                                 // This more specific font property overrides the global property
                                 font: {
-                                    size: 12,
+                                    size: 10,
                                 },
                             },
                         },
@@ -109,9 +109,14 @@ const RadarGraph = ({ data }) => {
                         r: {
                             pointLabels: {
                                 font: {
-                                    size: 10,
+                                    size: 8,
                                 },
                             },
+                        },
+                    },
+                    elements: {
+                        point: {
+                            radius: 2,
                         },
                     },
                 }}
