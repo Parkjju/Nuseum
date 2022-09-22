@@ -381,7 +381,11 @@ const Analysis = () => {
                                     </S.SectionTitle>
                                     <S.NutrientBox>
                                         <S.NutrientList>
-                                            <Name style={{ fontWeight: 400 }}>
+                                            <Name
+                                                style={{
+                                                    fontWeight: 400,
+                                                }}
+                                            >
                                                 DHA+EPA{' '}
                                                 {(
                                                     (nutrition.dha_epa /
@@ -473,7 +477,12 @@ const Analysis = () => {
                                             </Name>
                                         </S.NutrientList>
 
-                                        <div style={{ width: '80%' }}>
+                                        <div
+                                            style={{
+                                                width: '70%',
+                                                boxSizing: 'border-box',
+                                            }}
+                                        >
                                             <RadarGraph data={nutrition} />
                                         </div>
                                     </S.NutrientBox>

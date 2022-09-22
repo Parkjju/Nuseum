@@ -16,6 +16,7 @@ ChartJS.register(
     Tooltip,
     Legend
 );
+ChartJS.defaults.font.size = 8;
 
 const RadarGraph = ({ data }) => {
     let dataForRadar = {
@@ -90,10 +91,30 @@ const RadarGraph = ({ data }) => {
                 style={{
                     marginTop: 30,
                     marginBottom: 30,
-                    minWidth: 250,
-                    minHeight: 250,
+                    width: '100%',
                 }}
                 data={dataForRadar}
+                options={{
+                    plugins: {
+                        legend: {
+                            labels: {
+                                // This more specific font property overrides the global property
+                                font: {
+                                    size: 12,
+                                },
+                            },
+                        },
+                    },
+                    scales: {
+                        r: {
+                            pointLabels: {
+                                font: {
+                                    size: 10,
+                                },
+                            },
+                        },
+                    },
+                }}
             />
         </>
     );
