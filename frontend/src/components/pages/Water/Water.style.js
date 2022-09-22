@@ -11,6 +11,7 @@ export const Gauge = styled.div`
         props.water <= 2000
             ? (props.water / 2000) * props.maxWidth
             : props.maxWidth}px;
+    max-width: 100%;
     background-color: #7f8c8d;
     border-radius: 20px;
 `;

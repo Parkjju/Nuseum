@@ -175,7 +175,9 @@ const QuestionDetail = () => {
             ) : (
                 <Contents>
                     <DiaryTitle layoutId={'question'}>
-                        <Name>{'Q&A'}</Name>
+                        <Name style={{
+                            fontSize: '16px',
+                            fontWeight: 'bold'}}>{'Q&A'}</Name>
                     </DiaryTitle>
                     <QuestionBox>
                         <QuestionTitle>
@@ -195,8 +197,10 @@ const QuestionDetail = () => {
                                     <span>{answer.author}</span>
                                     <span
                                         style={{
-                                            borderBottom: '1px solid black',
+                                            borderBottom: '1px solid #666666',
                                             cursor: 'pointer',
+                                            fontSize: '10px',
+                                            color: '#666666'
                                         }}
                                         onClick={() => deleteComment(answer.id)}
                                     >
@@ -235,9 +239,10 @@ const QuestionDetail = () => {
                     </>
                     <div
                         style={{
-                            width: '80%',
+                            width: '85%',
                             display: 'flex',
                             justifyContent: 'space-between',
+                            marginTop: '50px'
                         }}
                     >
                         <UtilGroup onClick={modifyPost}>
@@ -253,7 +258,7 @@ const QuestionDetail = () => {
                         </UtilGroup>
                     </div>
                     <Link to='/question' style={{ textDecoration: 'none' }}>
-                        <Button style={{ marginTop: 30 }}>목록</Button>
+                        <Button style={{ marginTop: 20 }}>목록</Button>
                     </Link>
                 </Contents>
             )}

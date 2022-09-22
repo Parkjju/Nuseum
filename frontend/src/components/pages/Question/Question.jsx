@@ -50,7 +50,10 @@ const Question = () => {
             ) : (
                 <Contents>
                     <DiaryTitle layoutId={'question'}>
-                        <Name>{'Q&A'}</Name>
+                        <Name style={{
+                            fontSize: '16px',
+                            fontWeight: 'bold'
+                        }}>{'Q&A'}</Name>
                     </DiaryTitle>
 
                     {questions.map((item) => (

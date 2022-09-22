@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const QuestionBox = styled.div`
     width: 80%;
+    margin-top: 15px;
 `;
 
 export const QuestionTitle = styled.p`
@@ -25,8 +26,8 @@ export const AnswerBox = styled.div`
 export const Answer = styled.div`
     box-sizing: border-box;
     width: 100%;
-    background-color: rgb(238, 238, 238);
-    border-bottom: 1px solid rgba(127, 140, 141, 0.7);
+    background-color: rgb(238, 238, 238,0.3);
+    border-bottom: 1px solid rgba(127, 140, 141, 0.2);
     padding: 20px;
 `;
 
@@ -63,7 +64,7 @@ export const UtilBtn = styled.span`
     border-bottom: 1px solid #7f8c8d;
 `;
 export const UtilImg = styled.img`
-    width: 25px;
+    width: 23px;
     margin-right: 5px;
 `;
 export const UtilGroup = styled.div`

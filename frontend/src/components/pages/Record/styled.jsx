@@ -6,7 +6,7 @@ export const DiaryTitle = styled.div`
     padding: 10px 0;
     /*width: 120px;*/
     /*height: 60px;*/
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -124,4 +124,5 @@ export const Tag = styled.div`
     margin-right: 5px;
     margin-bottom: 5px;
     cursor: pointer;
+    line-height: 1.3;
 `;

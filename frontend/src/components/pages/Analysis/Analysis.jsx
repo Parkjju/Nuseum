@@ -340,7 +340,10 @@ const Analysis = () => {
         <Container>
             <Contents>
                 <DiaryTitle>
-                    <Name>식이분석</Name>
+                    <Name style={{
+                        fontWeight: 'bold',
+                        fontSize: '16px'
+                    }}>식이분석</Name>
                 </DiaryTitle>
                 <Calendar locale='en-US' onChange={onChange} value={date} />
 

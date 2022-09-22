@@ -42,4 +42,5 @@ export const SummaryTitle = styled.p`
     width: 100%;
     text-align: center;
     font-size: 14px;
+    text-decoration: 1px solid #7f8c8d underline;
 `;
