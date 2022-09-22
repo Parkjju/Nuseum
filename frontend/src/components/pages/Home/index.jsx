@@ -30,13 +30,12 @@ function Home() {
 
     return (
         <Container>
-            <Contents style={{ height: '500px' }}>
+            <Contents style={{  }}>
                 <DiaryTitle layoutId={menu[0][2]}>
                     <Name
                         style={{
-                            width: '250px',
-                            textAlign: 'center',
                             fontSize: '16px',
+                            fontWeight: 'bold'
                         }}
                     >
                         맞춤형 영양관리 및 정보제공 연구

@@ -35,8 +35,8 @@ const Header = () => {
 
             <div
                 style={{
-                    paddingLeft: 30,
-                    width: 80,
+                    paddingLeft: 15,
+                    width: 63,
                     display: 'flex',
                     justifyContent: 'space-between',
                 }}
@@ -91,7 +91,7 @@ const Header = () => {
                 }}
                 active={homeActive}
                 className='material-symbols-outlined'
-                style={{ paddingRight: 30 }}
+                style={{ paddingRight: 15 }}
             >
                 logout
             </Icon>

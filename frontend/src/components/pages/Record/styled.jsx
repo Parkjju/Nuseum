@@ -2,10 +2,10 @@ import { memo } from 'react';
 import styled from 'styled-components';
 
 export const DiaryTitle = styled.div`
-    margin-top: 50px;
+    /*margin-top: 50px;*/
     padding: 10px 0;
-    width: 120px;
-    height: 60px;
+    /*width: 120px;*/
+    /*height: 60px;*/
     margin-bottom: 10px;
     display: flex;
     flex-direction: column;

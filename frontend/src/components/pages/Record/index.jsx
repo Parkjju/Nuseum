@@ -399,7 +399,10 @@ function Record() {
             <Contents>
                 <DiaryTitle layoutId={menu[0][2]}>
                     <Icon style={{ width: '40px' }} src={menu[0][0]} />
-                    <Name>{menu[0][1]}</Name>
+                    <Name style={{
+                        fontSize: '16px',
+                        fontWeight: 'bold',
+                    }}>{menu[0][1]}</Name>
                 </DiaryTitle>
                 {/* param.when url에 따라 분기하는 장소 */}
                 <Name style={{ marginBottom: '5px' }}>

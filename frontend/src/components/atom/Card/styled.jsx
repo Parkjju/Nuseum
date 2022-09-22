@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
 export const Box = styled.div`
-    margin-top: 40px;
+    margin-top: 25px;
     width: 300px;
     display: flex;
     flex-direction: column;
     justify-items: space-between;
     padding: 10px;
+    align-items: center;
     a {
         text-decoration: none;
     }
@@ -37,7 +38,7 @@ export const IconBox = styled.div`
 export const Name = styled.span`
     font-size: 12px;
     color: rgba(0, 0, 0, 0.8);
-    font-weight: bold;
+    font-weight: 500;
 `;
 
 export const IconName = styled(Name)`
