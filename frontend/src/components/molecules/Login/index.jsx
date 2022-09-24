@@ -48,7 +48,7 @@ function Login() {
     const onValid = ({ loginId, loginPassword }) => {
         setIsLoading(true);
         axios
-            .post('/api/v1/account/login/', {
+            .post('https://www.nuseum.site/api/v1/account/login/', {
                 username: loginId,
                 password: loginPassword,
             })
@@ -69,7 +69,8 @@ function Login() {
                 localStorage.setItem('username', loginId);
                 navigate('/');
             })
-            .catch(() => {
+            .catch((err) => {
+                console.log(err);
                 setError('nonExists', {
                     message: '아이디 또는 비밀번호가 잘못되었습니다.',
                 });
