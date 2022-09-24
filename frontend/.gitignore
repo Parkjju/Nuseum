@@ -8,6 +8,10 @@
 # testing
 /coverage
 
+# mkcert 인증서
+_wildcard.example.com+2-key.pem
+_wildcard.example.com+2.pem
+
 # production
 /build
 
