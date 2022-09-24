@@ -27,7 +27,6 @@ import { waterState } from '../../../recoil/water/water';
 function DiaryCalendar() {
     const param = useParams();
     const location = useLocation();
-    const [loading, setLoading] = useState(false);
     const setMeal = useSetRecoilState(periodState);
     const [date, setDate] = useRecoilState(dateState);
     const setPostId = useSetRecoilState(postIdState);
@@ -178,64 +177,6 @@ function DiaryCalendar() {
     }, [navigate]);
 
     const onChange = (d) => {
-        setLoading(true);
-        axios
-            .get(
-                `https://cryptic-castle-40575.herokuapp.com/api/v1/post/?date=${d.getTime()}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${sessionStorage.getItem(
-                            'access_token'
-                        )}`,
-                    },
-                }
-            )
-            .then((response) => {
-                let copy = loopFunction(response.data.meal);
-                let images = appendImages(response.data);
-                setWater(response.data.water);
-                setSupplement([...response.data.supplement]);
-                updateMeal({ ...copy }, images);
-
-                setGlobalImage(() => {
-                    let copy = {};
-                    for (let i in images) {
-                        copy[i] = [...images[i].image];
-                    }
-                    return copy;
-                });
-
-                console.log(response.data);
-                setLoading(false);
-            })
-            .catch((err) => {
-                console.log(err);
-                if (err.response.status === 403) {
-                    alert('세션이 만료되었습니다. 다시 로그인 해주세요!');
-                    navigate('/login');
-                    return;
-                }
-
-                setMeal((prev) => {
-                    return {
-                        breakfast: { data: [], image: [] },
-                        lunch: { data: [], image: [] },
-                        dinner: { data: [], image: [] },
-                        snack: { data: [], image: [] },
-                    };
-                });
-                setSupplement([]);
-                setGlobalImage({
-                    breakfast: [],
-                    lunch: [],
-                    dinner: [],
-                    snack: [],
-                    supplement: [],
-                });
-                setWater(0);
-                setLoading(false);
-                setPostId(null);
-            });
         setDate(d);
         setIsDateSelected(true);
         navigate(`./${d.getTime()}`);
@@ -277,9 +218,7 @@ function DiaryCalendar() {
                         velocity: 1,
                     }}
                 >
-                    {loading ? (
-                        <CircularProgress sx={{ marginBottom: 5 }} />
-                    ) : location.pathname.split('/')[1] === 'diary' ? (
+                    {location.pathname.split('/')[1] === 'diary' ? (
                         <Calendar
                             locale='en-US'
                             onChange={onChange}
@@ -307,7 +246,7 @@ function DiaryCalendar() {
                 )}
             </Contents>
 
-            {isDateSelected && !loading ? <Diary date={date} /> : null}
+            {isDateSelected ? <Diary date={date} /> : null}
         </Container>
     );
 }
