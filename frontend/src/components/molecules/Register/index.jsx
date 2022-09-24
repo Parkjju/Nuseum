@@ -38,11 +38,14 @@ function Register() {
         setIsLoading(true);
 
         axios
-            .post('https://www.nuseum.site/api/v1/account/registration/', {
-                username: code,
-                password1: password1,
-                password2: password2,
-            })
+            .post(
+                'https://nuseum-v2.herokuapp.com/api/v1/account/registration/',
+                {
+                    username: code,
+                    password1: password1,
+                    password2: password2,
+                }
+            )
             .then(() => {
                 alert('회원 가입이 완료되었습니다!');
                 setIsLoading(false);

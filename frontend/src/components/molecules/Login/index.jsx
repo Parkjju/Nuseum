@@ -48,7 +48,7 @@ function Login() {
     const onValid = ({ loginId, loginPassword }) => {
         setIsLoading(true);
         axios
-            .post('https://www.nuseum.site/api/v1/account/login/', {
+            .post('https://nuseum-v2.herokuapp.com/api/v1/account/login/', {
                 username: loginId,
                 password: loginPassword,
             })
