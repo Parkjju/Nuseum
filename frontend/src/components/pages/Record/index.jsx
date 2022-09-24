@@ -46,9 +46,10 @@ function Record() {
     const [supplement, setSupplement] = useRecoilState(supplementState);
 
     const param = useParams();
+
     // 식사 시간별 데이터 전역상태
     const [meal, setMeal] = useRecoilState(periodState);
-
+    console.log('meal: ', meal);
     // postId 얻어서 PUT / POST 구분
     const [postId, setPostId] = useRecoilState(postIdState);
 
@@ -132,6 +133,15 @@ function Record() {
         });
     }, [param.when, meal]);
 
+    // api - type & date별 데이터 fetching
+    useEffect(() => {
+        axios
+            .get(
+                `https://nuseum-v2.herokuapp.com/api/v1/consumption/food/?date=${param.date}&type=${param.when}`
+            )
+            .then((response) => console.log(response.data));
+    }, [param.when, param.date]);
+
     let menu = [];
 
     const onChange = (e) => {
@@ -158,7 +168,7 @@ function Record() {
         setIsLoading(true);
         await axios
             .get(
-                `https://cryptic-castle-40575.herokuapp.com/api/v1/food/?search=${foodName}`,
+                `https://nuseum-v2.herokuapp.com/api/v1/food/?search=${foodName}`,
                 {
                     headers: {
                         Authorization: `Bearer ${sessionStorage.getItem(
@@ -217,160 +227,6 @@ function Record() {
         setFoodName(e.target.value);
     };
 
-    const deleteFoodName = (postData) => {
-        for (let i of Object.keys(postData)) {
-            if (postData[i].data.length === 0) {
-                continue;
-            }
-            postData[i].image = globalImage[i];
-
-            postData[i].data = postData[i].data.map((meal) => {
-                let copy = { ...meal };
-                delete copy.name;
-                return { ...copy };
-            });
-        }
-        return { ...postData };
-    };
-
-    const isEmpty = (obj) => {
-        for (let period in obj) {
-            for (let i of obj[period].data) {
-                if (Object.entries(i).length !== 0) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    };
-
-    // object의 data 객체를 순회하며 지우는 함수
-    // object의 빈 이미지 객체를 지우는 함수
-    const removeEmptyObject = (obj) => {
-        for (let period in obj) {
-            // 각 끼니의 음식데이터 data 어트리뷰트 배열을 순회
-            // 순회하는 그 객체가 비어있으면 지워야한다
-            let copyObj = [
-                ...obj[period].data.filter(
-                    (item) => Object.entries(item).length !== 0
-                ),
-            ];
-            let copyImages = [
-                ...obj[period].image.filter((item) => item !== ''),
-            ];
-
-            obj[period].data = [...copyObj];
-            obj[period].image = [...copyImages];
-        }
-        return { ...obj };
-    };
-
-    const isEmptySupplement = () => {
-        for (let i of supplement) {
-            console.log(i.name);
-            if (i.image === '' || i.manufacturer === '' || i.name === '') {
-                return true;
-            }
-        }
-        return false;
-    };
-
-    const onClickLast = () => {
-        let copy = {
-            breakfast: {
-                data: [...meal.breakfast.data],
-                image: meal.breakfast.image,
-            },
-            lunch: {
-                data: [...meal.lunch.data],
-                image: meal.lunch.image,
-            },
-            dinner: {
-                data: [...meal.dinner.data],
-                image: meal.dinner.image,
-            },
-            snack: {
-                data: [...meal.snack.data],
-                image: meal.snack.image,
-            },
-        };
-
-        copy = deleteFoodName(copy);
-
-        if (isEmpty(copy)) {
-            alert('최소 식사 한 끼니에 대한 기록이 필요합니다!');
-            return;
-        }
-
-        if (isEmptySupplement()) {
-            alert(
-                '각 영양제 정보(사진, 제조사, 영양제 이름)은 모두 필수 입력입니다.'
-            );
-            return;
-        }
-
-        if (postId === null || postId === undefined) {
-            setLoading(true);
-
-            removeEmptyObject(copy);
-
-            axios
-                .post(
-                    'https://cryptic-castle-40575.herokuapp.com/api/v1/post/',
-                    {
-                        meal: { ...copy },
-                        created_at: Number(param.date),
-                        water: waterAmount,
-                        supplement: [...supplement],
-                    },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${sessionStorage.getItem(
-                                'access_token'
-                            )}`,
-                        },
-                    }
-                )
-                .then((response) => {
-                    alert('일지 등록이 완료되었어요☺️');
-                    setPostId(() => response.data.id);
-                    setLoading(false);
-                })
-                .catch((err) => {
-                    console.log(err);
-                    alert('오류가 발생했습니다. Q&A에 문의해주세요.');
-                    setLoading(false);
-                });
-        } else {
-            setLoading(true);
-            axios
-                .put(
-                    `https://cryptic-castle-40575.herokuapp.com/api/v1/post/${postId}/`,
-                    {
-                        meal: { ...copy },
-                        water: waterAmount,
-                        supplement: [...supplement],
-                    },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${sessionStorage.getItem(
-                                'access_token'
-                            )}`,
-                        },
-                    }
-                )
-                .then((response) => {
-                    alert('일기 수정이 완료되었어요☺️');
-                    setLoading(false);
-                })
-                .catch((err) => {
-                    console.log(err);
-                    setLoading(false);
-                    alert('오류가 발생했습니다. Q&A에 문의해주세요.');
-                });
-        }
-    };
-
     const onClickTag = (index) => {
         let left = [...foodTag.slice(0, index)];
         let right = [...foodTag.slice(index + 1)];
@@ -382,6 +238,21 @@ function Record() {
                     image: [...prev[param.when].image],
                 },
             };
+        });
+    };
+
+    const savePost = () => {
+        axios.post('https://nuseum-v2.herokuapp.com/api/v1/consumption/food/', {
+            type: param.when,
+            created_at: +param.date,
+            images: [
+                ...globalImage[param.when].map((item) => {
+                    return {
+                        image: item,
+                    };
+                }),
+            ],
+            consumptions: [],
         });
     };
 
@@ -442,7 +313,7 @@ function Record() {
                             <CircularProgress sx={{ marginBottom: 5 }} />
                         ) : (
                             <button
-                                onClick={onClickLast}
+                                onClick={savePost}
                                 style={{ marginBottom: '30px' }}
                             >
                                 저장
@@ -527,10 +398,7 @@ function Record() {
                         {loading ? (
                             <CircularProgress sx={{ marginBottom: 5 }} />
                         ) : (
-                            <button
-                                onClick={onClickLast}
-                                style={{ marginBottom: '30px' }}
-                            >
+                            <button style={{ marginBottom: '30px' }}>
                                 저장
                             </button>
                         )}
