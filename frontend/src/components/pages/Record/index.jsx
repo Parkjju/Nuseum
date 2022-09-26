@@ -22,8 +22,7 @@ import {
 import { Icon, Name } from '../../atom/Card/styled';
 import { useEffect, useState } from 'react';
 import { SearchTitle } from '../../atom/Modal/styled';
-import { mealImageState, periodState } from '../../../recoil/period/period';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import axios from 'axios';
 import Menu from '../../atom/Menu';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -39,28 +38,73 @@ import Today from '../Today';
 import { VerticalImageBox } from '../Today/Today.style';
 import { useDispatch, useSelector } from 'react-redux';
 import useActions from '../../../hooks/useActions';
-import { useCallback } from 'react';
+import { postActions } from '../../../store/meal-slice/post-slice';
 
+let init = true;
 function Record() {
-    const navigate = useNavigate();
-
-    const [loading, setLoading] = useState(false);
-    const [supplement, setSupplement] = useRecoilState(supplementState);
-
     const param = useParams();
 
-    // 음식 데이터, 이미지 슬라이싱
-    const data = useSelector((state) => state[param.when].data);
-    const image = useSelector((state) => state[param.when].image);
+    // useEffect로 받아온 데이터가 비어있다면
+    const [isEmpty, setIsEmpty] = useState(false);
 
-    // 처음 실행되는지 여부
-    const isInit = useSelector((state) => state[param.when].isInitial);
+    // 액션 훅 호출
+    const action = useActions(param.when);
 
     // 디스패치 훅 임포트
     const dispatch = useDispatch();
 
-    // 액션 훅 호출
-    const action = useActions(param.when);
+    useEffect(() => {
+        if (init) {
+            init = false;
+            dispatch(action.removeAll());
+            setLoading(true);
+            axios
+                .get(
+                    `https://nuseum-v2.herokuapp.com/api/v1/consumption/food/?date=${param.date}&type=${param.when}`
+                )
+                .then((response) => {
+                    if (response.data && response.data.length === 0) {
+                        setIsEmpty(true);
+                        setLoading(false);
+                        return;
+                    }
+                    if (response.data) {
+                        if (response.data.data.length > 0) {
+                            dispatch(action.getData(response.data.data));
+                        }
+
+                        if (response.data.images.length > 0) {
+                            dispatch(action.getImage(response.data.images));
+                        }
+                    }
+                    setLoading(false);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                    setLoading(false);
+                });
+            return;
+        } else {
+            init = true;
+        }
+    }, [dispatch]);
+
+    // 음식 데이터, 이미지 슬라이싱
+    const data = useSelector((state) => state[param.when].data);
+    const isChanged = useSelector((state) => state[param.when].isChanged);
+    const image = useSelector((state) => state[param.when].image);
+    const navigate = useNavigate();
+
+    // POST 요청을 위한 새 데이터
+    // input onchange에 따라 업데이트 해줘야됨.
+    const forPostData = useSelector((state) => state.post.data);
+    const forPostImage = useSelector((state) => state.post.image);
+
+    const [loading, setLoading] = useState(false);
+    const [supplement, setSupplement] = useRecoilState(supplementState);
+
+    // 처음 실행되는지 여부
 
     // 검색 음식명
     const [foodName, setFoodName] = useState();
@@ -93,7 +137,7 @@ function Record() {
             reader.readAsDataURL(compressedFile);
             reader.onloadend = () => {
                 const base64data = reader.result;
-                dispatch(action.getImage(base64data));
+                dispatch(postActions.addPostImage(base64data));
             };
         } catch (error) {
             console.log(error);
@@ -108,20 +152,50 @@ function Record() {
         }
     };
 
+    const savePost = async () => {
+        if (forPostData.length > 0 || forPostImage.length > 0) {
+            try {
+                setLoading(true);
+                await axios.post(
+                    'https://nuseum-v2.herokuapp.com/api/v1/consumption/food/',
+                    {
+                        consumptions: [...forPostData],
+                        images: [
+                            ...forPostImage.map((item) => {
+                                return {
+                                    image: item,
+                                };
+                            }),
+                        ],
+                        type: param.when,
+                        created_at: param.date,
+                    }
+                );
+                setLoading(false);
+                alert('일지 수정이 완료되었습니다!');
+            } catch (err) {
+                console.log(err);
+                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                setLoading(false);
+            }
+        } else if (forPostData.length === 0 && forPostImage.length === 0) {
+            if (isChanged) {
+                // 사용자 눈속임
+                setLoading(true);
+                setTimeout(() => {
+                    setLoading(false);
+                    alert('일기 수정이 완료되었습니다!');
+                }, 1000);
+            }
+        }
+    };
+
     const onSubmit = async (e) => {
         e.preventDefault();
-        const sessionStorage = window.sessionStorage;
         setIsLoading(true);
         await axios
             .get(
-                `https://nuseum-v2.herokuapp.com/api/v1/food/?search=${foodName}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${sessionStorage.getItem(
-                            'access_token'
-                        )}`,
-                    },
-                }
+                `https://nuseum-v2.herokuapp.com/api/v1/food/?search=${foodName}`
             )
             .then((response) => {
                 if (response.data.results.length === 0) {
@@ -218,7 +292,8 @@ function Record() {
                             <CircularProgress sx={{ marginBottom: 5 }} />
                         ) : (
                             <button
-                                onClick={savePost}
+                                // 영양제 저장하는 버튼이었음
+                                onClick={() => savePost()}
                                 style={{ marginBottom: '30px' }}
                             >
                                 저장
@@ -247,25 +322,88 @@ function Record() {
                         </Label>
 
                         <VerticalImageBox style={{ width: '100%' }}>
-                            {image.map((item, index) => (
-                                <FoodImg
-                                    data={item}
-                                    index={index}
-                                    key={item.id}
-                                />
-                            ))}
+                            {image.length > 0 &&
+                                image.map((item, index) => (
+                                    <FoodImg
+                                        data={item}
+                                        index={index}
+                                        key={item.id}
+                                        isPost={false}
+                                    />
+                                ))}
+                            {forPostImage.length > 0 &&
+                                forPostImage.map((item, index) => (
+                                    <FoodImg
+                                        data={item}
+                                        index={index}
+                                        key={item.id}
+                                        isPost={true}
+                                    />
+                                ))}
                         </VerticalImageBox>
 
+                        {/* GET해온 데이터와 POST전용 데이터를 분리한다. */}
                         <TagBox>
                             {data
                                 ? data.map((item, index) =>
                                       Object.entries(item).length !== 0 ? (
                                           <Tag
-                                              onClick={() =>
-                                                  dispatch(
-                                                      action.removeData(item.id)
-                                                  )
-                                              }
+                                              onClick={async () => {
+                                                  if (
+                                                      window.confirm(
+                                                          '입력하신 데이터를 지우시겠어요?'
+                                                      )
+                                                  ) {
+                                                      // axios delete 호출
+                                                      // 상태값도 지워야 리렌더링 됨
+                                                      try {
+                                                          dispatch(
+                                                              action.removeData(
+                                                                  item.id
+                                                              )
+                                                          );
+                                                          dispatch(
+                                                              action.isChanged()
+                                                          );
+                                                          setLoading(true);
+                                                          await axios.delete(
+                                                              `https://nuseum-v2.herokuapp.com/api/v1/consumption/food/${item.id}/`
+                                                          );
+                                                          setLoading(false);
+                                                      } catch (err) {
+                                                          console.log(err);
+                                                          alert(
+                                                              '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                                                          );
+                                                          setIsLoading(false);
+                                                      }
+                                                  }
+                                              }}
+                                              key={index}
+                                          >
+                                              {item.name}
+                                              {` ${item.amount} (g 또는 ml)`}
+                                          </Tag>
+                                      ) : null
+                                  )
+                                : null}
+                            {forPostData
+                                ? forPostData.map((item, index) =>
+                                      Object.entries(item).length !== 0 ? (
+                                          <Tag
+                                              onClick={() => {
+                                                  if (
+                                                      window.confirm(
+                                                          '입력하신 데이터를 지우시겠어요?'
+                                                      )
+                                                  ) {
+                                                      dispatch(
+                                                          postActions.removePostData(
+                                                              item.id
+                                                          )
+                                                      );
+                                                  }
+                                              }}
                                               key={index}
                                           >
                                               {item.name}
@@ -303,7 +441,11 @@ function Record() {
                         {loading ? (
                             <CircularProgress sx={{ marginBottom: 5 }} />
                         ) : (
-                            <button style={{ marginBottom: '30px' }}>
+                            // 음식데이터 저장버튼
+                            <button
+                                onClick={() => savePost()}
+                                style={{ marginBottom: '30px' }}
+                            >
                                 저장
                             </button>
                         )}
