@@ -31,13 +31,14 @@ import React from 'react';
 import imageCompression from 'browser-image-compression';
 import { postIdState } from '../../../recoil/postID/postId';
 import FoodImg from '../../molecules/FoodImg/FoodImg';
-import ImageBox from './ImageBox';
 import ImageCard from '../../molecules/ImageCard';
 import { supplementState } from '../../../recoil/supplement/supplement';
 import Water from '../Water';
 import { waterState } from '../../../recoil/water/water';
 import Today from '../Today';
 import { VerticalImageBox } from '../Today/Today.style';
+import { useDispatch, useSelector } from 'react-redux';
+import useActions from '../../../hooks/useActions';
 
 function Record() {
     const navigate = useNavigate();
@@ -47,9 +48,19 @@ function Record() {
 
     const param = useParams();
 
+    // 음식 데이터, 이미지 슬라이싱
+    const data = useSelector((state) => state[param.when].data);
+    const image = useSelector((state) => state[param.when].image);
+
+    // 디스패치 훅 임포트
+    const dispatch = useDispatch();
+
+    // 액션 훅 호출
+    const action = useActions(param.when);
+
     // 식사 시간별 데이터 전역상태
     const [meal, setMeal] = useRecoilState(periodState);
-    console.log('meal: ', meal);
+
     // postId 얻어서 PUT / POST 구분
     const [postId, setPostId] = useRecoilState(postIdState);
 
@@ -92,6 +103,7 @@ function Record() {
             reader.readAsDataURL(compressedFile);
             reader.onloadend = () => {
                 const base64data = reader.result;
+                dispatch(action.getImage(base64data));
 
                 setGlobalImage((prev) => {
                     return {
@@ -148,18 +160,6 @@ function Record() {
         if (e.target.files && e.target.files.length > 0) {
             actionImgCompress(e.target.files[0]);
         }
-    };
-
-    const removeSelectedImage = (index) => {
-        setGlobalImage((prev) => {
-            let copy = [...prev[param.when]];
-            let left = [...copy.slice(0, index)];
-            let right = [...copy.slice(index + 1)];
-            return {
-                ...prev,
-                [param.when]: [...left, '', ...right],
-            };
-        });
     };
 
     const onSubmit = async (e) => {
@@ -256,15 +256,6 @@ function Record() {
         });
     };
 
-    const removeImageCard = (index) => {
-        setSupplement((prev) => {
-            const left = prev.slice(0, index);
-            const right = prev.slice(index + 1);
-
-            return [...left, {}, ...right];
-        });
-    };
-
     return (
         <Container>
             <Contents>
@@ -300,9 +291,6 @@ function Record() {
                                   Object.keys(item).length === 0 ? null : (
                                       <ImageCard
                                           index={index}
-                                          removeImageCard={() =>
-                                              removeImageCard(index)
-                                          }
                                           key={item.id}
                                           data={item}
                                       />
@@ -341,26 +329,26 @@ function Record() {
                             +
                         </Label>
 
-                        {globalImage[param.when] && (
-                            <VerticalImageBox style={{ width: '100%' }}>
-                                {globalImage[param.when].map((item, index) =>
-                                    item === '' ? null : (
-                                        <FoodImg
-                                            data={item}
-                                            removeFunction={removeSelectedImage}
-                                            index={index}
-                                            key={index}
-                                        />
-                                    )
-                                )}
-                            </VerticalImageBox>
-                        )}
+                        <VerticalImageBox style={{ width: '100%' }}>
+                            {image.map((item, index) => (
+                                <FoodImg
+                                    data={item}
+                                    index={index}
+                                    key={item.id}
+                                />
+                            ))}
+                        </VerticalImageBox>
+
                         <TagBox>
-                            {foodTag
-                                ? foodTag.map((item, index) =>
+                            {data
+                                ? data.map((item, index) =>
                                       Object.entries(item).length !== 0 ? (
                                           <Tag
-                                              onClick={() => onClickTag(index)}
+                                              onClick={() =>
+                                                  dispatch(
+                                                      action.removeData(item.id)
+                                                  )
+                                              }
                                               key={index}
                                           >
                                               {item.name}
