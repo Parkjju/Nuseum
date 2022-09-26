@@ -14,12 +14,7 @@ import { Name } from '../../atom/Card/styled';
 
 function Home() {
     const navigate = useNavigate();
-    useEffect(() => {
-        const sessionStorage = window.sessionStorage;
-        if (!sessionStorage.getItem('access_token')) {
-            navigate('/login');
-        }
-    }, []);
+
     const menu = [
         [diary, '식단일기', 'diary'],
         [analysis, '식이분석', 'analysis'],
