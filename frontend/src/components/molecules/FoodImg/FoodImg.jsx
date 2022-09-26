@@ -5,12 +5,15 @@ import { Image, ImageBox } from '../../pages/Today/Today.style';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import useActions from '../../../hooks/useActions';
+import axios from 'axios';
+import { postActions } from '../../../store/meal-slice/post-slice';
 
-const FoodImg = ({ data }) => {
-    console.log(data);
+const FoodImg = ({ data, index, isPost }) => {
     const dispatch = useDispatch();
+
     const params = useParams();
     const action = useActions(params.when);
+
     return (
         <ImageBox
             initial={{ opacity: 0 }}
@@ -24,26 +27,35 @@ const FoodImg = ({ data }) => {
         >
             {data === '' ? null : (
                 <Remove
-                    onClick={() => {
-                        dispatch(action.removeImage(data.id));
+                    onClick={async () => {
+                        if (window.confirm('등록한 사진을 삭제하시겠어요?')) {
+                            if (!isPost) {
+                                try {
+                                    dispatch(action.removeImage(data.id));
+                                    await axios.delete(
+                                        `https://nuseum-v2.herokuapp.com/api/v1/consumption/food/image/${data.id}/`
+                                    );
+                                } catch (err) {
+                                    console.log(err);
+                                    alert(
+                                        '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                                    );
+                                }
+                            } else {
+                                dispatch(postActions.removePostimage(index));
+                            }
+                        }
                     }}
                 >
                     <span className='material-symbols-outlined'>close</span>
                 </Remove>
             )}
 
-            {typeof data === 'object' ? (
-                <Image src={URL.createObjectURL(data)} alt='img' />
-            ) : typeof data === 'string' && data.length > 1 ? (
-                <Image
-                    src={
-                        typeof data === 'object'
-                            ? URL.createObjectURL(data)
-                            : data
-                    }
-                    alt='img'
-                />
-            ) : null}
+            {data.image ? (
+                <Image src={data.image} alt='img' />
+            ) : (
+                <Image src={data} alt='img' />
+            )}
         </ImageBox>
     );
 };
