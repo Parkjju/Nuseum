@@ -14,12 +14,6 @@ import { useEffect } from 'react';
 
 function Diary() {
     const navigate = useNavigate();
-    useEffect(() => {
-        const sessionStorage = window.sessionStorage;
-        if (!sessionStorage.getItem('access_token')) {
-            navigate('/login');
-        }
-    }, [navigate]);
 
     const menu = [
         [morning, '아침', 'breakfast'],

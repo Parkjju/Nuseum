@@ -169,12 +169,6 @@ function DiaryCalendar() {
     };
 
     const navigate = useNavigate();
-    useEffect(() => {
-        const sessionStorage = window.sessionStorage;
-        if (!sessionStorage.getItem('access_token')) {
-            navigate('/login');
-        }
-    }, [navigate]);
 
     const onChange = (d) => {
         setDate(d);
