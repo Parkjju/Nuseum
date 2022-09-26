@@ -3,12 +3,16 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     data: [],
     image: [],
+    isInitial: true,
 };
 
 const lunchSlice = createSlice({
     name: 'lunch',
     initialState,
     reducers: {
+        isChanged(state) {
+            state.isInitial = false;
+        },
         getData(state, action) {
             state.data = [...state.data, action.payload];
         },

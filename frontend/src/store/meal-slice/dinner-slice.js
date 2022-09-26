@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+    isInitial: true,
     data: [],
     image: [],
 };
@@ -9,6 +10,9 @@ const dinnerSlice = createSlice({
     name: 'dinner',
     initialState,
     reducers: {
+        isChanged(state) {
+            state.isInitial = false;
+        },
         getData(state, action) {
             state.data = [...state.data, action.payload];
         },
