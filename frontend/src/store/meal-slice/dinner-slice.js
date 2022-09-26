@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    isInitial: true,
+    isChanged: false,
     data: [],
     image: [],
 };
@@ -11,13 +11,13 @@ const dinnerSlice = createSlice({
     initialState,
     reducers: {
         isChanged(state) {
-            state.isInitial = false;
+            state.isChanged = true;
         },
         getData(state, action) {
-            state.data = [...state.data, action.payload];
+            state.data = [...state.data, ...action.payload];
         },
         getImage(state, action) {
-            state.image = [...state.image, action.payload];
+            state.image = [...state.image, ...action.payload];
         },
         removeData(state, action) {
             let count = 0;
@@ -44,6 +44,10 @@ const dinnerSlice = createSlice({
                 ...state.image.slice(0, count),
                 ...state.image.slice(count + 1),
             ];
+        },
+        removeAll(state) {
+            state.data = [];
+            state.image = [];
         },
     },
 });
