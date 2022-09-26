@@ -39,6 +39,7 @@ import Today from '../Today';
 import { VerticalImageBox } from '../Today/Today.style';
 import { useDispatch, useSelector } from 'react-redux';
 import useActions from '../../../hooks/useActions';
+import { useCallback } from 'react';
 
 function Record() {
     const navigate = useNavigate();
@@ -52,28 +53,17 @@ function Record() {
     const data = useSelector((state) => state[param.when].data);
     const image = useSelector((state) => state[param.when].image);
 
+    // 처음 실행되는지 여부
+    const isInit = useSelector((state) => state[param.when].isInitial);
+
     // 디스패치 훅 임포트
     const dispatch = useDispatch();
 
     // 액션 훅 호출
     const action = useActions(param.when);
 
-    // 식사 시간별 데이터 전역상태
-    const [meal, setMeal] = useRecoilState(periodState);
-
-    // postId 얻어서 PUT / POST 구분
-    const [postId, setPostId] = useRecoilState(postIdState);
-
-    // 선택 이미지 상태값 - 삭제할때 활용
-    const [globalImage, setGlobalImage] = useRecoilState(mealImageState);
-
-    // 물 상태값
-    const waterAmount = useRecoilValue(waterState);
     // 검색 음식명
     const [foodName, setFoodName] = useState();
-
-    // 음식 태그
-    const [foodTag, setFoodTag] = useState([]);
 
     // 검색결과 배열
     const [result, setResult] = useState(null);
@@ -104,55 +94,11 @@ function Record() {
             reader.onloadend = () => {
                 const base64data = reader.result;
                 dispatch(action.getImage(base64data));
-
-                setGlobalImage((prev) => {
-                    return {
-                        ...prev,
-                        [param.when]: [...prev[param.when], base64data],
-                    };
-                });
             };
         } catch (error) {
             console.log(error);
         }
     };
-
-    // globalImage들 끼니별로 분류하여 불러오고 있음.
-    useEffect(() => {
-        setFoodTag([]);
-        setFoodTag((prev) => {
-            const copy = [...prev];
-            let newFood = [];
-
-            switch (param.when) {
-                case 'breakfast':
-                    newFood = [...meal.breakfast.data];
-                    break;
-                case 'lunch':
-                    newFood = [...meal.lunch.data];
-                    break;
-                case 'dinner':
-                    newFood = [...meal.dinner.data];
-                    break;
-                case 'snack':
-                    newFood = [...meal.snack.data];
-                    break;
-                default:
-                    break;
-            }
-
-            return [...copy, ...newFood];
-        });
-    }, [param.when, meal]);
-
-    // api - type & date별 데이터 fetching
-    useEffect(() => {
-        axios
-            .get(
-                `https://nuseum-v2.herokuapp.com/api/v1/consumption/food/?date=${param.date}&type=${param.when}`
-            )
-            .then((response) => console.log(response.data));
-    }, [param.when, param.date]);
 
     let menu = [];
 
@@ -225,35 +171,6 @@ function Record() {
 
     const onChangeName = (e) => {
         setFoodName(e.target.value);
-    };
-
-    const onClickTag = (index) => {
-        let left = [...foodTag.slice(0, index)];
-        let right = [...foodTag.slice(index + 1)];
-        setMeal((prev) => {
-            return {
-                ...prev,
-                [param.when]: {
-                    data: [...left, {}, ...right],
-                    image: [...prev[param.when].image],
-                },
-            };
-        });
-    };
-
-    const savePost = () => {
-        axios.post('https://nuseum-v2.herokuapp.com/api/v1/consumption/food/', {
-            type: param.when,
-            created_at: +param.date,
-            images: [
-                ...globalImage[param.when].map((item) => {
-                    return {
-                        image: item,
-                    };
-                }),
-            ],
-            consumptions: [],
-        });
     };
 
     return (
