@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet';
 import ReactDOM from 'react-dom';
 import { createGlobalStyle } from 'styled-components';
 import Footer from './components/atom/Footer';
+import { Provider } from 'react-redux';
+import store from './store/store';
 
 const GlobalStyle = createGlobalStyle`
 /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -62,7 +64,7 @@ body{
 
 function App() {
     return (
-        <>
+        <Provider store={store}>
             <Helmet>
                 <link
                     rel='stylesheet'
@@ -81,7 +83,7 @@ function App() {
                 <Footer />,
                 document.querySelector('#footer')
             )}
-        </>
+        </Provider>
     );
 }
 
