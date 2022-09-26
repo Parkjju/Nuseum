@@ -10,10 +10,10 @@ const snackSlice = createSlice({
     initialState,
     reducers: {
         getData(state, action) {
-            state.data = state.data.push(...action.payload);
+            state.data = [...state.data, action.payload];
         },
         getImage(state, action) {
-            state.image = state.data.push(...action.payload);
+            state.image = [...state.image, action.payload];
         },
         removeData(state, action) {
             let count = 0;
@@ -36,7 +36,7 @@ const snackSlice = createSlice({
                 }
                 count += 1;
             }
-            state.data = [
+            state.image = [
                 ...state.image.slice(0, count),
                 ...state.image.slice(count + 1),
             ];
