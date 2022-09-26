@@ -2,8 +2,14 @@ import { Img, Remove } from '../../pages/Record/styled';
 import { motion } from 'framer-motion';
 import React from 'react';
 import { Image, ImageBox } from '../../pages/Today/Today.style';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import useActions from '../../../hooks/useActions';
 
-const FoodImg = ({ data, removeFunction, index }) => {
+const FoodImg = ({ data }) => {
+    const dispatch = useDispatch();
+    const params = useParams();
+    const action = useActions(params.when);
     return (
         <ImageBox
             initial={{ opacity: 0 }}
@@ -18,7 +24,7 @@ const FoodImg = ({ data, removeFunction, index }) => {
             {data === '' ? null : (
                 <Remove
                     onClick={() => {
-                        return removeFunction(index);
+                        dispatch(action.removeImage(data.id));
                     }}
                 >
                     <span className='material-symbols-outlined'>close</span>
