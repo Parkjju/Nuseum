@@ -54,22 +54,25 @@ function Login() {
             })
             .then((response) => {
                 console.log(response);
-                const sessionStorage = window.sessionStorage;
-                const val = sessionStorage.getItem('access_token');
+                // const sessionStorage = window.sessionStorage;
+                // const val = sessionStorage.getItem('access_token');
 
-                val
-                    ? sessionStorage.removeItem('access_token')
-                    : tokenSetter(response.data.access_token);
+                // val
+                //     ? sessionStorage.removeItem('access_token')
+                //     : tokenSetter(response.data.access_token);
 
-                sessionStorage.setItem(
-                    'access_token',
-                    response.data.access_token
-                );
+                // sessionStorage.setItem(
+                //     'access_token',
+                //     response.data.access_token
+                // );
                 setIsLoading(false);
-                localStorage.setItem('username', loginId);
+                // localStorage.setItem('username', loginId);
                 navigate('/');
             })
             .catch((err) => {
+                if (err.response.status === 401) {
+                    navigate('/login');
+                }
                 console.log(err);
                 setError('nonExists', {
                     message: '아이디 또는 비밀번호가 잘못되었습니다.',
