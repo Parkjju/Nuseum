@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import useActions from '../../../hooks/useActions';
 
 const FoodImg = ({ data }) => {
+    console.log(data);
     const dispatch = useDispatch();
     const params = useParams();
     const action = useActions(params.when);
