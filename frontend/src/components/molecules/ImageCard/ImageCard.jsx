@@ -10,8 +10,15 @@ import imageCompression from 'browser-image-compression';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { supplementState } from '../../../recoil/supplement/supplement';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import useActions from '../../../hooks/useActions';
 
-const ImageCard = ({ removeImageCard, index, data }) => {
+const ImageCard = ({ index, data }) => {
+    const params = useParams();
+    const action = useActions(params.when);
+    const dispatch = useDispatch();
+
     const [currentImage, setCurrentImage] = useState(data ? data.image : null);
     const [supplementName, setSupplementName] = useState(data ? data.name : '');
     const [manufacturer, setManufacturer] = useState(
@@ -128,7 +135,7 @@ const ImageCard = ({ removeImageCard, index, data }) => {
             <span
                 style={{ cursor: 'pointer' }}
                 className='material-symbols-outlined'
-                onClick={() => removeImageCard()}
+                onClick={() => dispatch(action.removeImage())}
             >
                 delete
             </span>
