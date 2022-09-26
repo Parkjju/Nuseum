@@ -5,11 +5,7 @@ import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { periodState } from '../../../recoil/period/period';
 import { useDispatch, useSelector } from 'react-redux';
-import { breakfastActions } from '../../../store/meal-slice/breakfast-slice';
-import { lunchActions } from '../../../store/meal-slice/lunch-slice';
-import { dinnerActions } from '../../../store/meal-slice/dinner-slice';
-import { snackActions } from '../../../store/meal-slice/snack-slice';
-import useActions from '../../../hooks/useActions';
+import { postActions } from '../../../store/meal-slice/post-slice';
 
 export const ResultBox = styled(motion.div)`
     width: 100%;
@@ -62,9 +58,7 @@ const Adornment = styled.span`
 
 const NutritionList = ({ item }) => {
     const param = useParams();
-    const mealData = useSelector((state) => state[param.when].data);
     const dispatch = useDispatch();
-    const action = useActions(param.when);
 
     const [period, setPeriod] = useRecoilState(periodState);
     const [amount, setAmount] = useState(0);
@@ -80,9 +74,9 @@ const NutritionList = ({ item }) => {
     const saveNutrition = (e) => {
         if (e.which === 13) {
             dispatch(
-                action.getData({
+                postActions.addPostData({
                     name: e.target.name,
-                    food_id: Number(e.target.getAttribute('data-itemID')),
+                    food: Number(e.target.getAttribute('data-itemID')),
                     amount: Number(amount),
                 })
             );
