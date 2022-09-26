@@ -4,6 +4,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { periodState } from '../../../recoil/period/period';
+import { useDispatch, useSelector } from 'react-redux';
+import { breakfastActions } from '../../../store/meal-slice/breakfast-slice';
+import { lunchActions } from '../../../store/meal-slice/lunch-slice';
+import { dinnerActions } from '../../../store/meal-slice/dinner-slice';
+import { snackActions } from '../../../store/meal-slice/snack-slice';
+import useActions from '../../../hooks/useActions';
 
 export const ResultBox = styled(motion.div)`
     width: 100%;
@@ -56,6 +62,10 @@ const Adornment = styled.span`
 
 const NutritionList = ({ item }) => {
     const param = useParams();
+    const mealData = useSelector((state) => state[param.when].data);
+    const dispatch = useDispatch();
+    const action = useActions(param.when);
+
     const [period, setPeriod] = useRecoilState(periodState);
     const [amount, setAmount] = useState(0);
 
@@ -69,100 +79,13 @@ const NutritionList = ({ item }) => {
 
     const saveNutrition = (e) => {
         if (e.which === 13) {
-            switch (param.when) {
-                case 'breakfast':
-                    setPeriod((prev) => {
-                        const newFood = {
-                            name: e.target.name,
-                            food_id: Number(
-                                e.target.getAttribute('data-itemID')
-                            ),
-                            amount: Number(amount),
-                        };
-
-                        return {
-                            ...prev,
-                            breakfast: {
-                                data: [...prev.breakfast.data, newFood],
-                                image: [...prev.breakfast.image],
-                            },
-                        };
-                    });
-                    break;
-                case 'lunch':
-                    setPeriod((prev) => {
-                        const newFood = {
-                            name: e.target.name,
-                            food_id: Number(
-                                e.target.getAttribute('data-itemID')
-                            ),
-                            amount: Number(amount),
-                        };
-
-                        return {
-                            ...prev,
-                            lunch: {
-                                data: [...prev.lunch.data, newFood],
-                                image: [...prev.lunch.image],
-                            },
-                        };
-                    });
-                    break;
-                case 'dinner':
-                    setPeriod((prev) => {
-                        const newFood = {
-                            name: e.target.name,
-                            food_id: Number(
-                                e.target.getAttribute('data-itemID')
-                            ),
-                            amount: Number(amount),
-                        };
-
-                        return {
-                            ...prev,
-                            dinner: {
-                                data: [...prev.dinner.data, newFood],
-                                image: [...prev.dinner.image],
-                            },
-                        };
-                    });
-                    break;
-                case 'snack':
-                    setPeriod((prev) => {
-                        const newFood = {
-                            name: e.target.name,
-                            food_id: Number(
-                                e.target.getAttribute('data-itemID')
-                            ),
-                            amount: Number(amount),
-                        };
-
-                        return {
-                            ...prev,
-                            snack: {
-                                data: [...prev.snack.data, newFood],
-                                image: [...prev.snack.image],
-                            },
-                        };
-                    });
-                    break;
-                // case 'supplement':
-                //     setPeriod((prev) => {
-                //         const previousMeal = { ...prev.supplement };
-                //         const newFood = [
-                //             e.target.name,
-                //             Number(e.target.getAttribute('data-itemid')),
-                //             Number(amount),
-                //         ];
-                //         return {
-                //             ...prev,
-                //             supplement: [...previousMeal, newFood],
-                //         };
-                //     });
-                //     break;
-                default:
-                    break;
-            }
+            dispatch(
+                action.getData({
+                    name: e.target.name,
+                    food_id: Number(e.target.getAttribute('data-itemID')),
+                    amount: Number(amount),
+                })
+            );
 
             setAmount(0);
         }
