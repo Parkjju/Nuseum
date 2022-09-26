@@ -7,6 +7,7 @@
         "@emotion/react": "^11.10.0",
         "@emotion/styled": "^11.10.0",
         "@mui/material": "^5.10.0",
+        "@reduxjs/toolkit": "^1.8.5",
         "@testing-library/jest-dom": "^5.16.4",
         "@testing-library/react": "^13.3.0",
         "@testing-library/user-event": "^13.5.0",
@@ -22,6 +23,7 @@
         "react-dom": "^18.2.0",
         "react-helmet": "^6.1.0",
         "react-hook-form": "^7.34.0",
+        "react-redux": "^8.0.4",
         "react-router-dom": "^6.3.0",
         "react-scripts": "5.0.1",
         "recoil": "^0.7.4",
@@ -41,16 +43,10 @@
         "workbox-streams": "^5.1.4"
     },
     "scripts": {
-        "start": "HTTPS=true SSL_CRT_FILE=_wildcard.example.com+2.pem SSL_KEY_FILE=_wildcard.example.com+2-key.pem HOST=0.0.0.0 react-scripts start",
+        "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
-    },
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
-        ]
     },
     "browserslist": {
         "production": [
