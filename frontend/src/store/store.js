@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import breakfastSlice from './meal-slice/breakfast-slice';
 import dinnerSlice from './meal-slice/dinner-slice';
 import lunchSlice from './meal-slice/lunch-slice';
+import postSlice from './meal-slice/post-slice';
 import snackSlice from './meal-slice/snack-slice';
 import supplementSlice from './supplement-slice';
 
@@ -14,6 +15,7 @@ const store = configureStore({
         dinner: dinnerSlice,
         snack: snackSlice,
         supplement: supplementSlice,
+        post: postSlice,
     },
 });
 
