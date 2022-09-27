@@ -7,7 +7,7 @@ import {
     ImageBox,
 } from './ImageCard.style';
 import imageCompression from 'browser-image-compression';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { supplementState } from '../../../recoil/supplement/supplement';
 import { useDispatch } from 'react-redux';
@@ -72,31 +72,13 @@ const ImageCard = ({ index, data }) => {
         setSupplementName(e.target.value);
     };
 
-    useEffect(() => {
-        if (
-            supplementName === '' &&
-            manufacturer === '' &&
-            currentImage === null
-        ) {
-            return;
-        }
-        setGlobalSupplement((prev) => {
-            let modifiedElement = {
-                name: supplementName,
-                image: currentImage,
-                manufacturer: manufacturer,
-            };
-            let left = prev.slice(0, index);
-            let right = prev.slice(index + 1);
-            return [...left, modifiedElement, ...right];
-        });
-    }, [supplementName, manufacturer, currentImage]);
-
     return (
         <Container>
             <ImageBox>
                 {data && data.image ? (
                     <SupplementImage src={data.image} />
+                ) : currentImage ? (
+                    <SupplementImage src={currentImage} />
                 ) : (
                     <>
                         <Label htmlFor='input-file'>
