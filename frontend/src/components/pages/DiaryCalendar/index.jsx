@@ -61,7 +61,7 @@ function DiaryCalendar() {
         default:
             break;
     }
-    console.log(new Date(date));
+
     return (
         <Container>
             <Contents>
