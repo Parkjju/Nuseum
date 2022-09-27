@@ -44,9 +44,15 @@ function Record() {
 
     // useEffect로 받아온 데이터가 비어있다면
     const [isEmpty, setIsEmpty] = useState(false);
+    const supplementData = useSelector((state) => state.supplement.data);
 
     // 액션 훅 호출
     const action = useActions(param.when);
+
+    // POST전용을 dispatch로 다룬다.
+    // useEffect로 저장되는 상태값을 useState로 관리
+    const [fetchedSupplement, setFetchedSupplement] = useState([]);
+    const [isRequestSent, setIsRequestSent] = useState(false);
 
     // 디스패치 훅 임포트
     const dispatch = useDispatch();
@@ -57,53 +63,57 @@ function Record() {
             dispatch(action.removeAll());
             setLoading(true);
 
-            if (param.when === 'supplement') {
-                axios
-                    .get(
-                        `https://nuseum-v2.herokuapp.com/api/v1/consumption/supplement/?date=${param.date}`
-                    )
-                    .then((response) => {
-                        dispatch(action.getData(response.data));
+            axios
+                .get(
+                    `https://nuseum-v2.herokuapp.com/api/v1/consumption/food/?date=${param.date}&type=${param.when}`
+                )
+                .then((response) => {
+                    if (response.data && response.data.length === 0) {
+                        setIsEmpty(true);
                         setLoading(false);
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                        alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-                        setLoading(false);
-                    });
-            } else {
-                axios
-                    .get(
-                        `https://nuseum-v2.herokuapp.com/api/v1/consumption/food/?date=${param.date}&type=${param.when}`
-                    )
-                    .then((response) => {
-                        if (response.data && response.data.length === 0) {
-                            setIsEmpty(true);
-                            setLoading(false);
-                            return;
+                        return;
+                    }
+                    if (response.data) {
+                        if (response.data.data.length > 0) {
+                            dispatch(action.getData(response.data.data));
                         }
-                        if (response.data) {
-                            if (response.data.data.length > 0) {
-                                dispatch(action.getData(response.data.data));
-                            }
 
-                            if (response.data.images.length > 0) {
-                                dispatch(action.getImage(response.data.images));
-                            }
+                        if (response.data.images.length > 0) {
+                            dispatch(action.getImage(response.data.images));
                         }
-                        setLoading(false);
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                        alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-                        setLoading(false);
-                    });
-            }
+                    }
+                    setLoading(false);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                    setLoading(false);
+                });
+
             return;
         } else {
             init = true;
         }
     }, [dispatch]);
+
+    useEffect(() => {
+        axios
+            .get(
+                `https://nuseum-v2.herokuapp.com/api/v1/consumption/supplement/?date=${param.date}`
+            )
+            .then((response) => {
+                if (response.data?.consumptions.length > 0) {
+                    setFetchedSupplement(response.data.consumptions);
+                }
+                dispatch(action.removeAll());
+                setLoading(false);
+            })
+            .catch((err) => {
+                console.log(err);
+                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                setLoading(false);
+            });
+    }, [dispatch, isRequestSent]);
 
     const navigate = useNavigate();
     // 음식 데이터, 이미지 슬라이싱
@@ -116,7 +126,6 @@ function Record() {
     const image = useSelector((state) =>
         param.when !== 'water' ? state[param.when].image : null
     );
-    const supplementData = useSelector((state) => state.supplement.data);
 
     // POST 요청을 위한 새 데이터
     // input onchange에 따라 업데이트 해줘야됨.
@@ -177,7 +186,44 @@ function Record() {
         );
     };
 
-    const saveSupplement = async () => {};
+    const isEmptyFieldExistsInSupplement = () => {
+        for (let obj of supplementData) {
+            for (let key of Object.keys(obj)) {
+                if (key === 'image') continue;
+                if (obj[key] === '') {
+                    return true;
+                }
+            }
+        }
+        return false;
+    };
+
+    const saveSupplement = async () => {
+        if (isEmptyFieldExistsInSupplement()) {
+            alert('제조사와 영양제 이름, 이미지는 필수 입력입니다!');
+            return;
+        }
+        try {
+            setLoading(true);
+            await axios.post(
+                'https://nuseum-v2.herokuapp.com/api/v1/consumption/supplement/',
+                {
+                    type: 'supplement',
+                    created_at: param.date,
+                    consumptions: supplementData,
+                }
+            );
+            alert('일기 저장이 완료되었습니다!');
+            dispatch(action.checkDataSaved());
+            setIsRequestSent(true);
+            setLoading(false);
+        } catch (error) {
+            console.log(error);
+            alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+            setIsRequestSent(false);
+            setLoading(false);
+        }
+    };
 
     const savePost = async () => {
         if (forPostData.length > 0 || forPostImage.length > 0) {
@@ -303,13 +349,29 @@ function Record() {
                             추가하기
                         </button>
 
+                        {fetchedSupplement.length === 0
+                            ? null
+                            : fetchedSupplement.map((item, index) =>
+                                  Object.keys(item).length === 0 ? null : (
+                                      <ImageCard
+                                          isSaved={item?.saved}
+                                          index={index}
+                                          key={index}
+                                          data={item}
+                                          setFetchedSupplement={
+                                              setFetchedSupplement
+                                          }
+                                      />
+                                  )
+                              )}
                         {supplementData.length === 0
                             ? null
                             : supplementData.map((item, index) =>
                                   Object.keys(item).length === 0 ? null : (
                                       <ImageCard
+                                          isSaved={item?.saved}
                                           index={index}
-                                          key={item.id}
+                                          key={index}
                                           data={item}
                                       />
                                   )
