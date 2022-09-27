@@ -31,9 +31,7 @@ import imageCompression from 'browser-image-compression';
 import { postIdState } from '../../../recoil/postID/postId';
 import FoodImg from '../../molecules/FoodImg/FoodImg';
 import ImageCard from '../../molecules/ImageCard';
-import { supplementState } from '../../../recoil/supplement/supplement';
 import Water from '../Water';
-import { waterState } from '../../../recoil/water/water';
 import Today from '../Today';
 import { VerticalImageBox } from '../Today/Today.style';
 import { useDispatch, useSelector } from 'react-redux';
@@ -58,43 +56,67 @@ function Record() {
             init = false;
             dispatch(action.removeAll());
             setLoading(true);
-            axios
-                .get(
-                    `https://nuseum-v2.herokuapp.com/api/v1/consumption/food/?date=${param.date}&type=${param.when}`
-                )
-                .then((response) => {
-                    if (response.data && response.data.length === 0) {
-                        setIsEmpty(true);
-                        setLoading(false);
-                        return;
-                    }
-                    if (response.data) {
-                        if (response.data.data.length > 0) {
-                            dispatch(action.getData(response.data.data));
-                        }
 
-                        if (response.data.images.length > 0) {
-                            dispatch(action.getImage(response.data.images));
+            if (param.when === 'supplement') {
+                axios
+                    .get(
+                        `https://nuseum-v2.herokuapp.com/api/v1/consumption/supplement/?date=${param.date}`
+                    )
+                    .then((response) => {
+                        dispatch(action.getData(response.data));
+                        setLoading(false);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                        setLoading(false);
+                    });
+            } else {
+                axios
+                    .get(
+                        `https://nuseum-v2.herokuapp.com/api/v1/consumption/food/?date=${param.date}&type=${param.when}`
+                    )
+                    .then((response) => {
+                        if (response.data && response.data.length === 0) {
+                            setIsEmpty(true);
+                            setLoading(false);
+                            return;
                         }
-                    }
-                    setLoading(false);
-                })
-                .catch((err) => {
-                    console.log(err);
-                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-                    setLoading(false);
-                });
+                        if (response.data) {
+                            if (response.data.data.length > 0) {
+                                dispatch(action.getData(response.data.data));
+                            }
+
+                            if (response.data.images.length > 0) {
+                                dispatch(action.getImage(response.data.images));
+                            }
+                        }
+                        setLoading(false);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                        setLoading(false);
+                    });
+            }
             return;
         } else {
             init = true;
         }
     }, [dispatch]);
 
-    // 음식 데이터, 이미지 슬라이싱
-    const data = useSelector((state) => state[param.when].data);
-    const isChanged = useSelector((state) => state[param.when].isChanged);
-    const image = useSelector((state) => state[param.when].image);
     const navigate = useNavigate();
+    // 음식 데이터, 이미지 슬라이싱
+    const data = useSelector((state) =>
+        param.when !== 'water' ? state[param.when].data : null
+    );
+    const isChanged = useSelector((state) =>
+        param.when !== 'water' ? state[param.when].isChanged : null
+    );
+    const image = useSelector((state) =>
+        param.when !== 'water' ? state[param.when].image : null
+    );
+    const supplementData = useSelector((state) => state.supplement.data);
 
     // POST 요청을 위한 새 데이터
     // input onchange에 따라 업데이트 해줘야됨.
@@ -102,7 +124,6 @@ function Record() {
     const forPostImage = useSelector((state) => state.post.image);
 
     const [loading, setLoading] = useState(false);
-    const [supplement, setSupplement] = useRecoilState(supplementState);
 
     // 처음 실행되는지 여부
 
@@ -114,14 +135,6 @@ function Record() {
 
     // 로딩 인디케이터
     const [isLoading, setIsLoading] = useState(false);
-
-    // 영양제 이미지 추가 버튼함수
-    const addImageCard = () => {
-        setSupplement((prev) => [
-            ...prev,
-            { name: '', manufacturer: '', image: '' },
-        ]);
-    };
 
     const actionImgCompress = async (fileSrc) => {
         const options = {
@@ -151,6 +164,20 @@ function Record() {
             actionImgCompress(e.target.files[0]);
         }
     };
+
+    const addSupplement = () => {
+        dispatch(
+            action.getData([
+                {
+                    image: '',
+                    name: '',
+                    manufacturer: '',
+                },
+            ])
+        );
+    };
+
+    const saveSupplement = async () => {};
 
     const savePost = async () => {
         if (forPostData.length > 0 || forPostImage.length > 0) {
@@ -270,15 +297,15 @@ function Record() {
                 {param.when === 'supplement' ? (
                     <>
                         <button
-                            onClick={addImageCard}
+                            onClick={addSupplement}
                             style={{ marginBottom: 20 }}
                         >
                             추가하기
                         </button>
 
-                        {supplement.length === 0
+                        {supplementData.length === 0
                             ? null
-                            : supplement.map((item, index) =>
+                            : supplementData.map((item, index) =>
                                   Object.keys(item).length === 0 ? null : (
                                       <ImageCard
                                           index={index}
@@ -293,7 +320,7 @@ function Record() {
                         ) : (
                             <button
                                 // 영양제 저장하는 버튼이었음
-                                onClick={() => savePost()}
+                                onClick={() => saveSupplement()}
                                 style={{ marginBottom: '30px' }}
                             >
                                 저장
