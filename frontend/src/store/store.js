@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import dateSlice from './date-slice';
 
 // directory 묶어서 관리 가능한지 여부 확인
 import breakfastSlice from './meal-slice/breakfast-slice';
@@ -18,6 +19,7 @@ const store = configureStore({
         supplement: supplementSlice,
         post: postSlice,
         water: waterSlice,
+        date: dateSlice,
     },
 });
 
