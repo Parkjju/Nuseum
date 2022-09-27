@@ -1,6 +1,6 @@
 import Container from '../../atom/Container';
 import { Calendar } from 'react-calendar';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import 'react-calendar/dist/Calendar.css';
 import './calendar.css';
 import { Contents } from '../Home/styled';
@@ -15,163 +15,27 @@ import question from '../../../assets/q&a.png';
 import { DiaryTitle } from './styled';
 import { Name } from '../../atom/Card/styled';
 import Diary from '../Diary';
-import axios from 'axios';
-import { CircularProgress } from '@mui/material';
-import { mealImageState, periodState } from '../../../recoil/period/period';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { dateState } from '../../../recoil/date/date';
-import { postIdState } from '../../../recoil/postID/postId';
-import { supplementState } from '../../../recoil/supplement/supplement';
-import { waterState } from '../../../recoil/water/water';
+import { useDispatch, useSelector } from 'react-redux';
+import { dateActions } from '../../../store/date-slice';
 
 function DiaryCalendar() {
+    // 뒤로가기로 돌아왔을때 오늘 선택된 날짜를 알아야 함
     const param = useParams();
     const location = useLocation();
-    const setMeal = useSetRecoilState(periodState);
-    const [date, setDate] = useRecoilState(dateState);
-    const setPostId = useSetRecoilState(postIdState);
-    const setGlobalImage = useSetRecoilState(mealImageState);
-    const setWater = useSetRecoilState(waterState);
-    const setSupplement = useSetRecoilState(supplementState);
+
+    const dispatch = useDispatch();
+
+    // onChange date를 위한 상태값
+    const date = useSelector((state) => state.date.date);
+
     const [isDateSelected, setIsDateSelected] = useState(
         param.date !== undefined
     );
 
-    const appendImages = (res) => {
-        let fetchImages = {
-            breakfast: {
-                image: [],
-            },
-            lunch: {
-                image: [],
-            },
-            dinner: {
-                image: [],
-            },
-            snack: {
-                image: [],
-            },
-        };
-
-        for (let i in res.meal) {
-            fetchImages[i].image = [...res.meal[i].image];
-        }
-
-        return fetchImages;
-    };
-
-    const loopFunction = (res) => {
-        let copy = {
-            breakfast: {
-                data: [],
-                image: null,
-            },
-            lunch: {
-                data: [],
-                image: null,
-            },
-            dinner: {
-                data: [],
-                image: null,
-            },
-            snack: {
-                data: [],
-                image: null,
-            },
-            supplement: {
-                data: [],
-                image: null,
-            },
-        };
-        for (let i in res) {
-            copy[i].data = [...res[i].data];
-        }
-        for (let i in res) {
-            if (res[i].data.length) {
-                res[i].data.forEach((item) => {
-                    if (item.post_id) {
-                        setPostId(item.post_id);
-                        return;
-                    }
-                });
-                break;
-            }
-        }
-
-        return copy;
-    };
-    const updateMeal = (meal, images) => {
-        let promises = [];
-        let names = {
-            breakfast: [],
-            lunch: [],
-            dinner: [],
-            snack: [],
-            supplement: [],
-        };
-
-        for (let key in meal) {
-            meal[key].data.forEach((item) => {
-                promises.push(
-                    axios
-                        .get(
-                            `https://cryptic-castle-40575.herokuapp.com/api/v1/food/name/?id=${item.food_id}`,
-                            {
-                                headers: {
-                                    Authorization: `Bearer ${sessionStorage.getItem(
-                                        'access_token'
-                                    )}`,
-                                },
-                            }
-                        )
-                        .then((response) => {
-                            names[key].push(response.data.name);
-                        })
-                );
-            });
-        }
-
-        Promise.all(promises).then(() => {
-            let copy = { ...meal };
-            for (let i in copy) {
-                let temp = [];
-                copy[i].data.forEach((item) => {
-                    let tempItem = {
-                        name: names[i].shift(),
-                        food_id: item.food_id,
-                        amount: item.amount,
-                    };
-                    temp.push(tempItem);
-                });
-                copy[i].data = [...temp];
-            }
-
-            setMeal({
-                breakfast: {
-                    data: [...copy.breakfast.data],
-                    image: [...images.breakfast.image],
-                },
-                lunch: {
-                    data: [...copy.lunch.data],
-                    image: [...images.lunch.image],
-                },
-                dinner: {
-                    data: [...copy.dinner.data],
-                    image: [...images.dinner.image],
-                },
-                snack: {
-                    data: [...copy.snack.data],
-                    image: [...images.snack.image],
-                },
-                supplement: { data: [...copy.supplement.data], image: null },
-            });
-        });
-    };
-
     const navigate = useNavigate();
 
     const onChange = (d) => {
-        setDate(d);
+        dispatch(dateActions.updateDate(d.getTime()));
         setIsDateSelected(true);
         navigate(`./${d.getTime()}`);
     };
@@ -197,7 +61,7 @@ function DiaryCalendar() {
         default:
             break;
     }
-
+    console.log(new Date(date));
     return (
         <Container>
             <Contents>
@@ -216,7 +80,7 @@ function DiaryCalendar() {
                         <Calendar
                             locale='en-US'
                             onChange={onChange}
-                            value={date}
+                            value={new Date(date)}
                         />
                     ) : null}
                 </motion.div>
@@ -240,7 +104,7 @@ function DiaryCalendar() {
                 )}
             </Contents>
 
-            {isDateSelected ? <Diary date={date} /> : null}
+            {isDateSelected ? <Diary /> : null}
         </Container>
     );
 }
