@@ -11,20 +11,25 @@ const supplementSlice = createSlice({
             state.data = [...state.data, ...action.payload];
         },
         removeData(state, action) {
-            let count = 0;
-            for (let obj of state) {
-                if (obj.id === action.payload) {
-                    break;
-                }
-                count += 1;
-            }
             state.data = [
-                ...state.data.slice(0, count),
-                ...state.data.slice(count + 1),
+                ...state.data.slice(0, action.payload),
+                ...state.data.slice(action.payload + 1),
             ];
         },
         removeAll(state) {
             state.data = [];
+        },
+        addData(state, action) {
+            state.data = [...state.date, action.payload];
+        },
+        modifyData(state, action) {
+            state.data[action.payload.index][action.payload.type] =
+                action.payload.data;
+        },
+        checkDataSaved(state) {
+            for (let index in state.data) {
+                state.data[index].saved = true;
+            }
         },
     },
 });
