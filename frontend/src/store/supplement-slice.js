@@ -8,7 +8,7 @@ const supplementSlice = createSlice({
     initialState,
     reducers: {
         getData(state, action) {
-            state.data = state.data.push(...action.payload);
+            state.data = [...state.data, ...action.payload];
         },
         removeData(state, action) {
             let count = 0;
@@ -22,6 +22,9 @@ const supplementSlice = createSlice({
                 ...state.data.slice(0, count),
                 ...state.data.slice(count + 1),
             ];
+        },
+        removeAll(state) {
+            state.data = [];
         },
     },
 });
