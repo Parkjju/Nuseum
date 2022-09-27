@@ -1,18 +1,24 @@
 import { useEffect, useRef } from 'react';
 import { useCallback } from 'react';
 import { useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { periodState } from '../../../recoil/period/period';
 import { Box, Gauge } from './Water.style';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { postIdState } from '../../../recoil/postID/postId';
-import { supplementState } from '../../../recoil/supplement/supplement';
-import { waterState } from '../../../recoil/water/water';
 import { CircularProgress } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import useActions from '../../../hooks/useActions';
 
+let initial = true;
 const Water = () => {
-    const [water, setWater] = useRecoilState(waterState);
+    const params = useParams();
+
+    // water amount & object id
+    const water = useSelector((state) => state.water.amount);
+    const waterPostId = useSelector((state) => state.water.id);
+
+    const dispatch = useDispatch();
+    const action = useActions(params.when);
+
     const [count, setCount] = useState(0);
     const [currentAmount, setCurrentAmount] = useState(0);
     const [intervalId, setIntervalId] = useState(0);
@@ -20,10 +26,7 @@ const Water = () => {
     const [boxWidth, setBoxWidth] = useState(
         window.innerWidth > 800 ? 800 * 0.8 : window.innerWidth * 0.8
     );
-    const mealState = useRecoilValue(periodState);
-    const supplement = useRecoilValue(supplementState);
-    const postId = useRecoilValue(postIdState);
-    const params = useParams();
+
     const [loading, setLoading] = useState(false);
 
     window.onresize = () => {
@@ -33,84 +36,22 @@ const Water = () => {
     window.onload = () => {
         setBoxWidth(boxRef.current.clientWidth);
     };
-
-    const saveWater = () => {
-        setLoading(true);
-        if (postId) {
+    useEffect(() => {
+        if (initial) {
             axios
-                .put(
-                    `https://cryptic-castle-40575.herokuapp.com/api/v1/post/${postId}/`,
-
-                    {
-                        meal: {
-                            breakfast: { ...mealState.breakfast },
-                            lunch: { ...mealState.lunch },
-                            dinner: { ...mealState.dinner },
-                            snack: { ...mealState.snack },
-                        },
-                        supplement: [...supplement],
-                        water: water,
-                    },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${sessionStorage.getItem(
-                                'access_token'
-                            )}`,
-                        },
-                    }
+                .get(
+                    `https://nuseum-v2.herokuapp.com/api/v1/consumption/water/?date=${params.date}`
                 )
                 .then((response) => {
-                    alert('일기 수정이 완료되었어요!');
-                    setLoading(false);
-                })
-                .catch((err) => {
-                    alert(`오류가 발생했습니다. 개발자에게 문의해주세요!`);
-                    setLoading(false);
+                    dispatch(action.addWaterAmount(response.data[0].amount));
+                    dispatch(action.getId(response.data[0].id));
                 });
+            initial = false;
+            return;
         } else {
-            axios
-                .post(
-                    'https://cryptic-castle-40575.herokuapp.com/api/v1/post/',
-                    {
-                        meal: { ...mealState.meal },
-                        supplement: [...supplement],
-                        water: water,
-                        created_at: `${params.date}`,
-                    },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${sessionStorage.getItem(
-                                'access_token'
-                            )}`,
-                        },
-                    }
-                )
-                .then((response) => {
-                    alert('일기 등록이 완료되었어요!');
-                    setLoading(false);
-                })
-                .catch((err) => {
-                    alert('오류가 발생했습니다. 개발자에게 문의해주세요!');
-                    setLoading(false);
-                });
+            initial = true;
         }
-    };
-
-    const plusWater = useCallback(
-        (amount) => {
-            if (water >= 2000) {
-                setWater((prev) => prev + amount);
-                return;
-            }
-            setCurrentAmount(amount);
-            let id = setInterval(() => {
-                setWater((prev) => prev + 10);
-                setCount((prev) => prev + 10);
-            }, 0);
-            setIntervalId(id);
-        },
-        [water]
-    );
+    }, [dispatch]);
 
     useEffect(() => {
         if (count >= currentAmount) {
@@ -121,6 +62,48 @@ const Water = () => {
         }
     }, [water, count, currentAmount, intervalId, params.date]);
 
+    const sendWaterRequest = async () => {
+        try {
+            setLoading(true);
+            if (water > 0) {
+                await axios.patch(
+                    `https://nuseum-v2.herokuapp.com/api/v1/consumption/water/${waterPostId}/`
+                );
+            } else {
+                await axios.post(
+                    'https://nuseum-v2.herokuapp.com/api/v1/consumption/water/',
+                    {
+                        type: 'water',
+                        created_at: params.date,
+                        amount: water,
+                    }
+                );
+            }
+            alert('수분 입력이 완료되었습니다!');
+            setLoading(false);
+        } catch (err) {
+            console.log(err);
+            alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+            setLoading(false);
+        }
+    };
+
+    // 부드럽게 게이지 올라가도록 하는 함수
+    const plusWater = useCallback(
+        (amount) => {
+            if (water >= 2000) {
+                dispatch(action.addWaterAmount(250));
+                return;
+            }
+            setCurrentAmount(amount);
+            let id = setInterval(() => {
+                dispatch(action.addWaterAmount(10));
+                setCount((prev) => prev + 10);
+            }, 0);
+            setIntervalId(id);
+        },
+        [water]
+    );
     return (
         <>
             <div
@@ -173,7 +156,7 @@ const Water = () => {
                     <CircularProgress sx={{ marginBottom: 5 }} />
                 ) : (
                     <button
-                        onClick={saveWater}
+                        onClick={() => sendWaterRequest()}
                         style={{ width: 100, marginRight: 5 }}
                     >
                         저장
