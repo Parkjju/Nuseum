@@ -7,6 +7,7 @@ import lunchSlice from './meal-slice/lunch-slice';
 import postSlice from './meal-slice/post-slice';
 import snackSlice from './meal-slice/snack-slice';
 import supplementSlice from './supplement-slice';
+import waterSlice from './water-slice';
 
 const store = configureStore({
     reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
         snack: snackSlice,
         supplement: supplementSlice,
         post: postSlice,
+        water: waterSlice,
     },
 });
 
