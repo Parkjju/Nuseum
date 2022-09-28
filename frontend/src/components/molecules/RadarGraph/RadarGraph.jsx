@@ -96,6 +96,9 @@ const RadarGraph = ({ data }) => {
                 data={dataForRadar}
                 options={{
                     plugins: {
+                        title: {
+                            align: 'center',
+                        },
                         legend: {
                             labels: {
                                 // This more specific font property overrides the global property
