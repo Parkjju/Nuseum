@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import authSlice from './auth-slice';
 import dateSlice from './date-slice';
 
 // directory 묶어서 관리 가능한지 여부 확인
@@ -12,6 +13,7 @@ import waterSlice from './water-slice';
 
 const store = configureStore({
     reducer: {
+        auth: authSlice,
         breakfast: breakfastSlice,
         lunch: lunchSlice,
         dinner: dinnerSlice,
