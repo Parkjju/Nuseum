@@ -6,6 +6,7 @@ import Analysis from './components/pages/Analysis';
 import Diary from './components/pages/Diary';
 import DiaryCalendar from './components/pages/DiaryCalendar';
 import Home from './components/pages/Home';
+import NotFound from './components/pages/NotFound/NotFound';
 import Question from './components/pages/Question';
 import QuestionDetail from './components/pages/QuestionDetail';
 import QuestionForm from './components/pages/QuestionForm';
@@ -27,6 +28,7 @@ function Router() {
                 <Route path='/question' element={<Question />} />
                 <Route path='/question/post' element={<QuestionForm />} />
                 <Route path='/question/:id' element={<QuestionDetail />} />
+                <Route path='*' element={<NotFound />} />
             </Routes>
         </BrowserRouter>
     );
