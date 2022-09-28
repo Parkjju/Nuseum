@@ -3,8 +3,11 @@ import { Helmet } from 'react-helmet';
 import ReactDOM from 'react-dom';
 import { createGlobalStyle } from 'styled-components';
 import Footer from './components/atom/Footer';
-import { Provider } from 'react-redux';
-import store from './store/store';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { authActions } from './store/auth-slice';
+import jwt_decode from 'jwt-decode';
 
 const GlobalStyle = createGlobalStyle`
 /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -63,8 +66,67 @@ body{
 `;
 
 function App() {
+    const pathname = window.location.pathname;
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if (pathname === '/login') {
+            return;
+        }
+
+        axios
+            .post(
+                'https://nuseum-v2.herokuapp.com/api/v1/account/token/refresh/',
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxLCJpYXQiOjEsImp0aSI6ImFjZTcxMzE5YmVkMDQwYzFhMWMxODgyNGYzOWUzNTVlIiwidXNlcl9pZCI6MH0.P1e_v6fDHgG4qaODzLDvKTFgGBBNK7pmH_9M--MpfwA`,
+                    },
+                }
+            )
+            .then((response) => {
+                const decodedData = jwt_decode(response.data.access);
+                dispatch(
+                    authActions.login({
+                        token: response.data.access,
+                        expiration_time: decodedData.exp,
+                    })
+                );
+            })
+            .catch((err) => {
+                console.log(err);
+                if (err.response.data.err_code === 'NOT_ACCEPTABLE') {
+                    axios
+                        .post(
+                            'https://nuseum-v2.herokuapp.com/api/v1/account/login/',
+                            {
+                                username: loginId,
+                                password: loginPassword,
+                            }
+                        )
+                        .then((response) => {
+                            const decodedData = jwt_decode(
+                                response.data.access
+                            );
+                            dispatch(
+                                authActions.login({
+                                    token: response.data.access,
+                                    expiration_time: decodedData.exp,
+                                })
+                            );
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                            alert(
+                                '서버 오류가 발생했습니다. 담당자에게 문의해주세요!'
+                            );
+                            setIsLoading(false);
+                        });
+                }
+            });
+    }, []);
+
     return (
-        <Provider store={store}>
+        <>
             <Helmet>
                 <link
                     rel='stylesheet'
@@ -83,7 +145,7 @@ function App() {
                 <Footer />,
                 document.querySelector('#footer')
             )}
-        </Provider>
+        </>
     );
 }
 
