@@ -7,14 +7,10 @@ import record from '../../../assets/record.png';
 import analysis from '../../../assets/analysis.png';
 import food from '../../../assets/food.png';
 import question from '../../../assets/q&a.png';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { DiaryTitle } from '../Record/styled';
 import { Name } from '../../atom/Card/styled';
 
 function Home() {
-    const navigate = useNavigate();
-
     const menu = [
         [diary, '식단일기', 'diary'],
         [analysis, '식이분석', 'analysis'],
