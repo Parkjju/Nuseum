@@ -13,6 +13,7 @@ import SNU from '../../../assets/SNU.png';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useDispatch } from 'react-redux';
 import { authActions } from '../../../store/auth-slice';
+import jwt_decode from 'jwt-decode';
 
 // import { deferredPromptState } from '../../../recoil/deferredPrompt/deferredPrompt';
 
@@ -57,7 +58,15 @@ function Login() {
                     password: loginPassword,
                 }
             );
-            dispatch(authActions.login(response.data.access_token));
+
+            const decodedData = jwt_decode(response.data.access_token);
+            dispatch(
+                authActions.login({
+                    token: response.data.access_token,
+                    expiration_time: decodedData.exp,
+                })
+            );
+
             setIsLoading(false);
             navigate('/');
         } catch (err) {
@@ -75,7 +84,14 @@ function Login() {
                             password: loginPassword,
                         }
                     );
-                    dispatch(authActions.login(response.data.access_token));
+                    const decodedData = jwt_decode(response.data.access_token);
+
+                    dispatch(
+                        authActions.login({
+                            token: response.data.access_token,
+                            expiration_time: decodedData.exp,
+                        })
+                    );
                     navigate('/');
                 }
             } catch (error) {
