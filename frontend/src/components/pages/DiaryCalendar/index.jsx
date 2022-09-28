@@ -68,7 +68,7 @@ function DiaryCalendar() {
                 <DiaryTitle layoutId={menu[0][2]}>
                     <Name>{menu[0][1]}</Name>
                 </DiaryTitle>
-                <motion.div
+                <div
                     initial={{ y: 300 }}
                     animate={{ y: 0 }}
                     exit={{ y: -300 }}
@@ -83,7 +83,7 @@ function DiaryCalendar() {
                             value={new Date(date)}
                         />
                     ) : null}
-                </motion.div>
+                </div>
                 {isDateSelected ? null : (
                     <Name
                         style={{
@@ -92,14 +92,13 @@ function DiaryCalendar() {
                             whiteSpace: 'normal',
                             lineHeight: 2,
                             textAlign: 'justify',
+                            color: '#7E8C8D',
                         }}
                     >
                         본 식단일기는 내아이의 영양상태와 식행동을 분석하기 위해
                         사용됩니다. 아이가 가정에서는 물론 어린이집/유치원이나
                         외식에서 먹는 것도 모두 포함해서 사진과
-                        섭취내용(섭취량)을 기록해주세요. 식사의 전후, 식품과
-                        영양제의 이름과 영양성분표, 식재료구매 영수증이나 외식
-                        영수증의 사진도 도움이 됩니다.
+                        섭취내용(섭취량)을 기록해주세요.
                     </Name>
                 )}
             </Contents>
