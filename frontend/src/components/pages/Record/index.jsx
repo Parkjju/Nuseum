@@ -9,6 +9,7 @@ import cake from '../../../assets/cake.png';
 import drug from '../../../assets/drug.png';
 import water from '../../../assets/water.png';
 import today from '../../../assets/today.png';
+import jwt_decode from 'jwt-decode';
 
 import {
     DiaryBody,
@@ -37,6 +38,7 @@ import { VerticalImageBox } from '../Today/Today.style';
 import { useDispatch, useSelector } from 'react-redux';
 import useActions from '../../../hooks/useActions';
 import { postActions } from '../../../store/meal-slice/post-slice';
+import { authActions } from '../../../store/auth-slice';
 
 let initRecordComponent = true;
 let initSupplementComponent;
@@ -102,6 +104,10 @@ function Record() {
                             }
                         )
                         .then((response) => {
+                            if (response.data.length === 0) {
+                                setLoading(false);
+                                return;
+                            }
                             if (response.data?.consumptions.length > 0) {
                                 setFetchedSupplement(
                                     response.data.consumptions
@@ -145,7 +151,7 @@ function Record() {
                                     })
                                     .catch((err) => {
                                         if (
-                                            err.response.data.detail ===
+                                            err.response.data?.detail ===
                                             'Token is blacklisted'
                                         ) {
                                             dispatch(authActions.logout());
@@ -187,6 +193,7 @@ function Record() {
                                 );
                             })
                             .catch((err) => {
+                                console.log('???', err);
                                 if (
                                     err.response.data?.detail ===
                                     'Token is blacklisted'
@@ -332,6 +339,11 @@ function Record() {
                         ],
                         type: param.when,
                         created_at: param.date,
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
                     }
                 );
                 setLoading(false);
@@ -358,7 +370,12 @@ function Record() {
         setIsLoading(true);
         await axios
             .get(
-                `https://nuseum-v2.herokuapp.com/api/v1/food/?search=${foodName}`
+                `https://nuseum-v2.herokuapp.com/api/v1/food/?search=${foodName}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
             )
             .then((response) => {
                 if (response.data.results.length === 0) {
@@ -367,12 +384,46 @@ function Record() {
                     setResult(response.data.results);
                 }
             })
-            .catch((e) => {
-                if (e.response.data.code === 'token_not_valid') {
-                    alert('세션이 만료되었습니다. 다시 로그인 해주세요!');
-                    const sessionStorage = window.sessionStorage;
-                    sessionStorage.clear();
-                    navigate('/login');
+            .catch((err) => {
+                if (err.response.status === 401) {
+                    // 401이면 액세스토큰 만료임
+                    // 액세스토큰 만료된거면 새로 재발급받고
+                    // 재발급 과정에서 리프레시토큰이 만료된 상태라면
+                    // 406이며 로그인 다시 해야함
+                    axios
+                        .post(
+                            'https://nuseum-v2.herokuapp.com/api/v1/account/token/refresh/',
+                            {},
+                            {
+                                headers: {
+                                    Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxLCJpYXQiOjEsImp0aSI6ImFjZTcxMzE5YmVkMDQwYzFhMWMxODgyNGYzOWUzNTVlIiwidXNlcl9pZCI6MH0.P1e_v6fDHgG4qaODzLDvKTFgGBBNK7pmH_9M--MpfwA`,
+                                },
+                            }
+                        )
+                        .then((response) => {
+                            console.log('response: ', response.data);
+                            const decodedData = jwt_decode(
+                                response.data.access
+                            );
+                            dispatch(
+                                authActions.login({
+                                    token: response.data.access,
+                                    expiration_time: decodedData.exp,
+                                })
+                            );
+                        })
+                        .catch((err) => {
+                            if (
+                                err.response.data?.detail ===
+                                'Token is blacklisted'
+                            ) {
+                                dispatch(authActions.logout());
+                                navigate('/login');
+                            }
+                        });
+                    return;
+                } else {
+                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 }
             });
 
@@ -418,14 +469,20 @@ function Record() {
                     <Name>{menu[0][1]}</Name>
                 </DiaryTitle>
                 {/* param.when url에 따라 분기하는 장소 */}
-                <Name style={{ marginBottom: '5px' }}>
+                <Name
+                    style={{
+                        marginBottom: '5px',
+                        width: 270,
+                        lineHeight: 1.5,
+                    }}
+                >
                     {param.when === 'supplement'
-                        ? '오늘 섭취한 영양제를 기록해주세요 :)'
+                        ? '오늘 섭취한 영양제를 기록해주세요 :) 영양제의 이름과 영양성분표의 사진도 도움이 됩니다.'
                         : param.when === 'water'
                         ? '오늘 섭취한 물을 기록해주세요 :)'
                         : param.when === 'today'
                         ? '오늘 섭취한 음식정보를 요약합니다.'
-                        : '음식 이미지를 업로드하고 식이정보를 입력하세요 :)'}
+                        : `음식 이미지를 업로드하고 식이정보를 입력하세요 :) \n 식사의 전후, 식품과 영양제의 이름과 영양성분표, 식재료구매 영수증이나 외식 영수증의 사진도 도움이 됩니다.`}
                 </Name>
                 <Name style={{ marginBottom: '50px' }}>
                     {/* 식이정보를 입력하세요 :) */}
