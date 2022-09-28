@@ -38,7 +38,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import useActions from '../../../hooks/useActions';
 import { postActions } from '../../../store/meal-slice/post-slice';
 
-let init = true;
+let initRecordComponent = true;
+let initSupplementComponent;
 function Record() {
     const param = useParams();
 
@@ -57,9 +58,12 @@ function Record() {
     // 디스패치 훅 임포트
     const dispatch = useDispatch();
 
+    // useEffect가 두번 실행됨
     useEffect(() => {
-        if (init) {
-            init = false;
+        if (initRecordComponent) {
+            initRecordComponent = false;
+            return;
+        } else {
             dispatch(action.removeAll());
             setLoading(true);
 
@@ -82,37 +86,49 @@ function Record() {
                             dispatch(action.getImage(response.data.images));
                         }
                     }
-                    setLoading(false);
+                    axios
+                        .get(
+                            `https://nuseum-v2.herokuapp.com/api/v1/consumption/supplement/?date=${param.date}`
+                        )
+                        .then((response) => {
+                            if (response.data?.consumptions.length > 0) {
+                                setFetchedSupplement(
+                                    response.data.consumptions
+                                );
+                            }
+                            dispatch(action.removeAll());
+                            setLoading(false);
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                            if (err.response.status === 401) {
+                                alert(
+                                    '세션이 만료되었습니다. 다시 로그인해주세요!'
+                                );
+                                navigate('/login');
+                                return;
+                            } else {
+                                alert(
+                                    '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                                );
+                            }
+                            setLoading(false);
+                        });
                 })
                 .catch((err) => {
                     console.log(err);
-                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                    if (err.response.status === 401) {
+                        alert('세션이 만료되었습니다. 다시 로그인해주세요!');
+                        navigate('/login');
+                        return;
+                    } else {
+                        alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                    }
                     setLoading(false);
                 });
 
-            return;
-        } else {
-            init = true;
+            initRecordComponent = true;
         }
-    }, [dispatch]);
-
-    useEffect(() => {
-        axios
-            .get(
-                `https://nuseum-v2.herokuapp.com/api/v1/consumption/supplement/?date=${param.date}`
-            )
-            .then((response) => {
-                if (response.data?.consumptions.length > 0) {
-                    setFetchedSupplement(response.data.consumptions);
-                }
-                dispatch(action.removeAll());
-                setLoading(false);
-            })
-            .catch((err) => {
-                console.log(err);
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-                setLoading(false);
-            });
     }, [dispatch, isRequestSent]);
 
     const navigate = useNavigate();
