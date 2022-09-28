@@ -42,6 +42,7 @@ let initRecordComponent = true;
 let initSupplementComponent;
 function Record() {
     const param = useParams();
+    const token = useSelector((state) => state.auth.token);
 
     // useEffect로 받아온 데이터가 비어있다면
     const [isEmpty, setIsEmpty] = useState(false);
@@ -69,7 +70,12 @@ function Record() {
 
             axios
                 .get(
-                    `https://nuseum-v2.herokuapp.com/api/v1/consumption/food/?date=${param.date}&type=${param.when}`
+                    `https://nuseum-v2.herokuapp.com/api/v1/consumption/food/?date=${param.date}&type=${param.when}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
                 )
                 .then((response) => {
                     if (response.data && response.data.length === 0) {
@@ -88,7 +94,12 @@ function Record() {
                     }
                     axios
                         .get(
-                            `https://nuseum-v2.herokuapp.com/api/v1/consumption/supplement/?date=${param.date}`
+                            `https://nuseum-v2.herokuapp.com/api/v1/consumption/supplement/?date=${param.date}`,
+                            {
+                                headers: {
+                                    Authorization: `Bearer ${token}`,
+                                },
+                            }
                         )
                         .then((response) => {
                             if (response.data?.consumptions.length > 0) {
@@ -102,10 +113,45 @@ function Record() {
                         .catch((err) => {
                             console.log(err);
                             if (err.response.status === 401) {
-                                alert(
-                                    '세션이 만료되었습니다. 다시 로그인해주세요!'
-                                );
-                                navigate('/login');
+                                // 401이면 액세스토큰 만료임
+                                // 액세스토큰 만료된거면 새로 재발급받고
+                                // 재발급 과정에서 리프레시토큰이 만료된 상태라면
+                                // 406이며 로그인 다시 해야함
+                                axios
+                                    .post(
+                                        'https://nuseum-v2.herokuapp.com/api/v1/account/token/refresh/',
+                                        {},
+                                        {
+                                            headers: {
+                                                Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxLCJpYXQiOjEsImp0aSI6ImFjZTcxMzE5YmVkMDQwYzFhMWMxODgyNGYzOWUzNTVlIiwidXNlcl9pZCI6MH0.P1e_v6fDHgG4qaODzLDvKTFgGBBNK7pmH_9M--MpfwA`,
+                                            },
+                                        }
+                                    )
+                                    .then((response) => {
+                                        console.log(
+                                            'response: ',
+                                            response.data
+                                        );
+                                        const decodedData = jwt_decode(
+                                            response.data.access
+                                        );
+                                        dispatch(
+                                            authActions.login({
+                                                token: response.data.access,
+                                                expiration_time:
+                                                    decodedData.exp,
+                                            })
+                                        );
+                                    })
+                                    .catch((err) => {
+                                        if (
+                                            err.response.data.detail ===
+                                            'Token is blacklisted'
+                                        ) {
+                                            dispatch(authActions.logout());
+                                            navigate('/login');
+                                        }
+                                    });
                                 return;
                             } else {
                                 alert(
@@ -118,9 +164,37 @@ function Record() {
                 .catch((err) => {
                     console.log(err);
                     if (err.response.status === 401) {
-                        alert('세션이 만료되었습니다. 다시 로그인해주세요!');
-                        navigate('/login');
-                        return;
+                        axios
+                            .post(
+                                'https://nuseum-v2.herokuapp.com/api/v1/account/token/refresh/',
+                                {},
+                                {
+                                    headers: {
+                                        Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxLCJpYXQiOjEsImp0aSI6ImFjZTcxMzE5YmVkMDQwYzFhMWMxODgyNGYzOWUzNTVlIiwidXNlcl9pZCI6MH0.P1e_v6fDHgG4qaODzLDvKTFgGBBNK7pmH_9M--MpfwA`,
+                                    },
+                                }
+                            )
+                            .then((response) => {
+                                console.log('response: ', response.data);
+                                const decodedData = jwt_decode(
+                                    response.data.access
+                                );
+                                dispatch(
+                                    authActions.login({
+                                        token: response.data.access,
+                                        expiration_time: decodedData.exp,
+                                    })
+                                );
+                            })
+                            .catch((err) => {
+                                if (
+                                    err.response.data?.detail ===
+                                    'Token is blacklisted'
+                                ) {
+                                    dispatch(authActions.logout());
+                                    navigate('/login');
+                                }
+                            });
                     } else {
                         alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                     }
