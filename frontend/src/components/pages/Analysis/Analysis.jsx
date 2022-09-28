@@ -46,6 +46,7 @@ import {
 } from 'chart.js';
 import RadarGraph from '../../molecules/RadarGraph';
 import BarGraph from '../../molecules/BarGraph';
+import { useSelector } from 'react-redux';
 ChartJS.register(
     RadialLinearScale,
     CategoryScale,
@@ -60,6 +61,7 @@ ChartJS.register(
 );
 
 const Analysis = () => {
+    const token = useSelector((state) => state.auth.token);
     const [date, setDate] = useState(new Date());
     const [isDateSelected, setIsDateSelected] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -79,7 +81,7 @@ const Analysis = () => {
 
     // 한주간 데이터 fetch중인지 월간 데이터 fetch중인지 판단을 위한 상태값
     // 탭 컴포넌트의 urlmatch 로직과 동일
-    const [isWeek, setIsWeek] = useState(true);
+    const [isSelected, setIsSelected] = useState([true, false, false]);
 
     const [nutrition, setNutrition] = useState({
         energy: 0,
@@ -121,12 +123,10 @@ const Analysis = () => {
         setLoading(true);
         axios
             .get(
-                `https://cryptic-castle-40575.herokuapp.com/api/v1/consumption/day/?date=${d.getTime()}`,
+                `https://nuseum-v2.herokuapp.com/api/v1/consumption/day/?date=${d.getTime()}`,
                 {
                     headers: {
-                        Authorization: `Bearer ${sessionStorage.getItem(
-                            'access_token'
-                        )}`,
+                        Authorization: `Bearer ${token}`,
                     },
                 }
             )
@@ -191,16 +191,91 @@ const Analysis = () => {
         setDateCount(1);
     };
 
+    const fetchDailyData = () => {
+        setLoading(true);
+        setIsSelected([true, false, false]);
+        axios
+            .get(
+                `https://nuseum-v2.herokuapp.com/api/v1/consumption/day/?date=${date.getTime()}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+            .then((response) => {
+                let res = response.data;
+                console.log(res);
+
+                for (let i in res) {
+                    if (i === 'category' || i === 'day_count') {
+                        continue;
+                    }
+                    res[i] = Number.isInteger(+res[i])
+                        ? res[i]
+                        : res[i].toFixed(1);
+                }
+                categoryCheck(response.data.category);
+
+                setNutrition(res);
+                setLoading(false);
+
+                setDateCount(response.data.day_count);
+            })
+            .catch((err) => {
+                console.log(err);
+                if (err.response.status === 401) {
+                    // 401이면 액세스토큰 만료임
+                    // 액세스토큰 만료된거면 새로 재발급받고
+                    // 재발급 과정에서 리프레시토큰이 만료된 상태라면
+                    // 406이며 로그인 다시 해야함
+                    axios
+                        .post(
+                            'https://nuseum-v2.herokuapp.com/api/v1/account/token/refresh/',
+                            {},
+                            {
+                                headers: {
+                                    Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxLCJpYXQiOjEsImp0aSI6ImFjZTcxMzE5YmVkMDQwYzFhMWMxODgyNGYzOWUzNTVlIiwidXNlcl9pZCI6MH0.P1e_v6fDHgG4qaODzLDvKTFgGBBNK7pmH_9M--MpfwA`,
+                                },
+                            }
+                        )
+                        .then((response) => {
+                            console.log('response: ', response.data);
+                            const decodedData = jwt_decode(
+                                response.data.access
+                            );
+                            dispatch(
+                                authActions.login({
+                                    token: response.data.access,
+                                    expiration_time: decodedData.exp,
+                                })
+                            );
+                        })
+                        .catch((err) => {
+                            if (
+                                err.response.data?.detail ===
+                                'Token is blacklisted'
+                            ) {
+                                dispatch(authActions.logout());
+                                navigate('/login');
+                            }
+                        });
+                    return;
+                } else {
+                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                }
+                setLoading(false);
+            });
+    };
+
     const fetchWeekData = () => {
         setLoading(true);
-        setIsWeek(true);
+        setIsSelected([false, true, false]);
         axios(
-            `https://cryptic-castle-40575.herokuapp.com/api/v1/consumption/week/?date=${date.getTime()}`,
+            `https://nuseum-v2.herokuapp.com/api/v1/consumption/week/?date=${date.getTime()}`,
             {
                 headers: {
-                    Authorization: `Bearer ${sessionStorage.getItem(
-                        'access_token'
-                    )}`,
+                    Authorization: `Bearer ${token}`,
                 },
             }
         )
@@ -225,11 +300,47 @@ const Analysis = () => {
             })
             .catch((err) => {
                 console.log(err);
-                if (err.response.status === 403) {
-                    alert('세션이 만료되었습니다. 다시 로그인 해주세요!');
-                    navigate('/login');
+                if (err.response.status === 401) {
+                    // 401이면 액세스토큰 만료임
+                    // 액세스토큰 만료된거면 새로 재발급받고
+                    // 재발급 과정에서 리프레시토큰이 만료된 상태라면
+                    // 406이며 로그인 다시 해야함
+                    axios
+                        .post(
+                            'https://nuseum-v2.herokuapp.com/api/v1/account/token/refresh/',
+                            {},
+                            {
+                                headers: {
+                                    Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxLCJpYXQiOjEsImp0aSI6ImFjZTcxMzE5YmVkMDQwYzFhMWMxODgyNGYzOWUzNTVlIiwidXNlcl9pZCI6MH0.P1e_v6fDHgG4qaODzLDvKTFgGBBNK7pmH_9M--MpfwA`,
+                                },
+                            }
+                        )
+                        .then((response) => {
+                            console.log('response: ', response.data);
+                            const decodedData = jwt_decode(
+                                response.data.access
+                            );
+                            dispatch(
+                                authActions.login({
+                                    token: response.data.access,
+                                    expiration_time: decodedData.exp,
+                                })
+                            );
+                        })
+                        .catch((err) => {
+                            if (
+                                err.response.data?.detail ===
+                                'Token is blacklisted'
+                            ) {
+                                dispatch(authActions.logout());
+                                navigate('/login');
+                            }
+                        });
                     return;
+                } else {
+                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 }
+                setLoading(false);
                 let initializedNutrition = {
                     energy: 0,
                     protein: 0,
@@ -267,14 +378,12 @@ const Analysis = () => {
 
     const fetchMonthData = () => {
         setLoading(true);
-        setIsWeek(false);
+        setIsSelected([false, false, true]);
         axios(
-            `https://cryptic-castle-40575.herokuapp.com/api/v1/consumption/month/?date=${date.getTime()}`,
+            `https://nuseum-v2.herokuapp.com/api/v1/consumption/month/?date=${date.getTime()}`,
             {
                 headers: {
-                    Authorization: `Bearer ${sessionStorage.getItem(
-                        'access_token'
-                    )}`,
+                    Authorization: `Bearer ${token}`,
                 },
             }
         )
@@ -295,11 +404,47 @@ const Analysis = () => {
             })
             .catch((err) => {
                 console.log(err);
-                if (err.response.status === 403) {
-                    alert('세션이 만료되었습니다. 다시 로그인 해주세요!');
-                    navigate('/login');
+                if (err.response.status === 401) {
+                    // 401이면 액세스토큰 만료임
+                    // 액세스토큰 만료된거면 새로 재발급받고
+                    // 재발급 과정에서 리프레시토큰이 만료된 상태라면
+                    // 406이며 로그인 다시 해야함
+                    axios
+                        .post(
+                            'https://nuseum-v2.herokuapp.com/api/v1/account/token/refresh/',
+                            {},
+                            {
+                                headers: {
+                                    Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxLCJpYXQiOjEsImp0aSI6ImFjZTcxMzE5YmVkMDQwYzFhMWMxODgyNGYzOWUzNTVlIiwidXNlcl9pZCI6MH0.P1e_v6fDHgG4qaODzLDvKTFgGBBNK7pmH_9M--MpfwA`,
+                                },
+                            }
+                        )
+                        .then((response) => {
+                            console.log('response: ', response.data);
+                            const decodedData = jwt_decode(
+                                response.data.access
+                            );
+                            dispatch(
+                                authActions.login({
+                                    token: response.data.access,
+                                    expiration_time: decodedData.exp,
+                                })
+                            );
+                        })
+                        .catch((err) => {
+                            if (
+                                err.response.data?.detail ===
+                                'Token is blacklisted'
+                            ) {
+                                dispatch(authActions.logout());
+                                navigate('/login');
+                            }
+                        });
                     return;
+                } else {
+                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 }
+                setLoading(false);
 
                 let initializedNutrition = {
                     energy: 0,
@@ -344,15 +489,39 @@ const Analysis = () => {
                 </DiaryTitle>
                 <Calendar locale='en-US' onChange={onChange} value={date} />
 
+                {isDateSelected ? null : (
+                    <Name
+                        style={{
+                            width: '80%',
+                            marginTop: 40,
+                            whiteSpace: 'normal',
+                            lineHeight: 2,
+                            textAlign: 'center',
+                            color: '#7E8C8D',
+                        }}
+                    >
+                        식이분석내용을 확인하고 싶은 날짜를 클릭해주세요 :)
+                    </Name>
+                )}
+
                 {loading && !isDateSelected ? (
                     <CircularProgress sx={{ marginTop: 10 }} />
                 ) : isDateSelected ? (
                     <S.ButtonBox>
                         <S.FetchButton
                             onClick={() => {
+                                fetchDailyData();
+                            }}
+                            isClicked={isSelected[0]}
+                        >
+                            <span>이 날의 섭취 영양소</span>
+                            <span>확인하기</span>
+                        </S.FetchButton>
+                        <S.FetchButton
+                            onClick={() => {
                                 fetchWeekData();
                             }}
-                            isClicked={isWeek ? true : false}
+                            isClicked={isSelected[1]}
                         >
                             <span>한 주간 섭취 영양소</span>
                             <span>확인하기</span>
@@ -361,7 +530,7 @@ const Analysis = () => {
                             onClick={() => {
                                 fetchMonthData();
                             }}
-                            isClicked={isWeek ? false : true}
+                            isClicked={isSelected[2]}
                         >
                             <span>한 달간 섭취 영양소</span>
                             <span>확인하기</span>
@@ -376,8 +545,17 @@ const Analysis = () => {
                             ) : (
                                 <>
                                     <S.SectionTitle>
-                                        Nutrients for Neurobehavioral
-                                        Development
+                                        <p style={{ lineHeight: 1.5 }}>
+                                            Nutrients for Neurobehavioral
+                                            Development
+                                        </p>
+                                        <p style={{ lineHeight: 1.5 }}>
+                                            신경행동발달에 영향을 미치는
+                                            영양성분에 대한 1,787개의 논문들을
+                                            리뷰하여 선별된 아래 9가지
+                                            영양성분들에 대해 섭취내용을
+                                            분석합니다.
+                                        </p>
                                     </S.SectionTitle>
                                     <S.NutrientBox>
                                         <S.NutrientList>
@@ -491,7 +669,18 @@ const Analysis = () => {
                                         data={nutrition}
                                     />
                                     <S.SectionTitle>
-                                        Diversity for Nutrients & Microbiome
+                                        <p style={{ lineHeight: 1.5 }}>
+                                            Diversity for Nutrients & Microbiome
+                                        </p>
+                                        <p style={{ lineHeight: 1.5 }}>
+                                            급격한 성장기의 아동들은 다양한
+                                            식품군을 섭취하여 다양한 영양성분과
+                                            생리활성물질들을 섭취하게 하고, 이는
+                                            장내 다양한 미생물을 서식하게 하여
+                                            건강한 뇌발달에 영향을 미칩니다.
+                                            섭취한 식품군과 섭취가 필요해 보이는
+                                            식품군을 분석합니다.
+                                        </p>
                                     </S.SectionTitle>
                                     <S.Box>
                                         <S.IconBox>

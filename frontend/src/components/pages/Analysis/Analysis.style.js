@@ -38,7 +38,7 @@ export const ButtonBox = styled.div`
     display: flex;
     padding-top: 50px;
     justify-content: space-between;
-    width: 360px;
+    width: 80%;
     height: 50px;
 `;
 
@@ -51,7 +51,8 @@ export const FetchButton = styled.button`
     border-radius: 80px;
     color: ${(props) => (props.isClicked ? 'white' : 'black')};
     height: 100%;
-    width: 10.625rem;
+    width: 6.25rem;
+    font-size: 8px;
     border: none;
     cursor: pointer;
 `;
