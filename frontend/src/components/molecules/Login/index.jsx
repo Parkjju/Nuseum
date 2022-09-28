@@ -6,17 +6,19 @@ import { FormBox, BtnBox, Logo, LogoBox } from './styled';
 import { useForm } from 'react-hook-form';
 import Error from '../../atom/Error';
 import axios from 'axios';
-import { useSetRecoilState } from 'recoil';
-import { token } from '../../../recoil/token/token';
 import { Link, useNavigate } from 'react-router-dom';
 import ErrorModal from '../../atom/Modal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SNU from '../../../assets/SNU.png';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useDispatch } from 'react-redux';
+import { authActions } from '../../../store/auth-slice';
 
 // import { deferredPromptState } from '../../../recoil/deferredPrompt/deferredPrompt';
 
 function Login() {
+    const dispatch = useDispatch();
+    const [token, setToken] = useState(null);
     // pwa 설치 관련 코드
     // const [deferredPrompt, setDeferredPrompt] =
     //     useRecoilState(deferredPromptState);
@@ -39,47 +41,49 @@ function Login() {
         setError,
         clearErrors,
     } = useForm();
-    const tokenSetter = useSetRecoilState(token);
 
     const navigate = useNavigate();
     const [display, setDisplay] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
-    const onValid = ({ loginId, loginPassword }) => {
+    const onValid = async ({ loginId, loginPassword }) => {
         setIsLoading(true);
-        axios
-            .post('https://nuseum-v2.herokuapp.com/api/v1/account/login/', {
-                username: loginId,
-                password: loginPassword,
-            })
-            .then((response) => {
-                console.log(response);
-                // const sessionStorage = window.sessionStorage;
-                // const val = sessionStorage.getItem('access_token');
 
-                // val
-                //     ? sessionStorage.removeItem('access_token')
-                //     : tokenSetter(response.data.access_token);
-
-                // sessionStorage.setItem(
-                //     'access_token',
-                //     response.data.access_token
-                // );
-                setIsLoading(false);
-                // localStorage.setItem('username', loginId);
-                navigate('/');
-            })
-            .catch((err) => {
-                if (err.response.status === 401) {
-                    navigate('/login');
+        try {
+            const response = await axios.post(
+                'https://nuseum-v2.herokuapp.com/api/v1/account/login/',
+                {
+                    username: loginId,
+                    password: loginPassword,
                 }
-                console.log(err);
-                setError('nonExists', {
-                    message: '아이디 또는 비밀번호가 잘못되었습니다.',
-                });
+            );
+            dispatch(authActions.login(response.data.access_token));
+            setIsLoading(false);
+            navigate('/');
+        } catch (err) {
+            if (err.response.status === 401) {
+                navigate('/login');
+                return;
+            }
+
+            try {
+                if (err.response.data.err_code === 'NOT_ACCEPTABLE') {
+                    const response = await axios.post(
+                        'https://nuseum-v2.herokuapp.com/api/v1/account/login/',
+                        {
+                            username: loginId,
+                            password: loginPassword,
+                        }
+                    );
+                    dispatch(authActions.login(response.data.access_token));
+                    navigate('/');
+                }
+            } catch (error) {
+                console.log(error);
+                alert('서버 오류가 발생했습니다. 담당자에게 문의해주세요!');
                 setIsLoading(false);
-                setDisplay(true);
-            });
+            }
+        }
     };
 
     return (
