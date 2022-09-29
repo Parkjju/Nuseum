@@ -76,7 +76,6 @@ function Record() {
                 if (response.data && response.data.length === 0) {
                     setIsEmpty(true);
                     setLoading(false);
-                    return;
                 }
                 if (response.data) {
                     if (response.data.data.length > 0) {
