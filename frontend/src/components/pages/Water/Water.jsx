@@ -91,7 +91,7 @@ const Water = () => {
     // 부드럽게 게이지 올라가도록 하는 함수
     const plusWater = useCallback(
         (amount) => {
-            if (water >= 2000) {
+            if (water >= 1500) {
                 dispatch(action.addWaterAmount(250));
                 return;
             }
@@ -117,7 +117,7 @@ const Water = () => {
                 <span>마신 양 : {water}ml</span>
                 <span>
                     남은 양 :{' '}
-                    {2000 - water > 0 ? 2000 - water : `+ ${water - 2000}`}ml
+                    {1500 - water > 0 ? 1500 - water : `+ ${water - 1500}`}ml
                 </span>
             </div>
 
