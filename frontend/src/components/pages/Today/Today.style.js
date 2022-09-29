@@ -12,6 +12,7 @@ export const ImageBox = styled.div`
     margin-bottom: 20px;
     overflow: hidden;
     border-radius: 10px;
+    max-height: 200px;
     /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
 `;
 

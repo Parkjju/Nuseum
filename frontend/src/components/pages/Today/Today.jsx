@@ -50,6 +50,7 @@ const Today = ({ date }) => {
 
     const [supplementImages, setSupplementImages] = useState([]);
 
+    console.log(date);
     useEffect(() => {
         setLoading(true);
         axios
@@ -62,49 +63,41 @@ const Today = ({ date }) => {
                 }
             )
             .then((response) => {
-                console.log(response.data);
-                for (let key in response.data) {
-                    if (key === 'supplement' || key === 'water') {
-                        continue;
+                setMealImages(() => {
+                    return {
+                        breakfast: [...response.data.breakfast.image],
+                        lunch: [...response.data.lunch.image],
+                        dinner: [...response.data.dinner.image],
+                        snack: [...response.data.snack.image],
+                    };
+                });
+                setSupplementImages(() => {
+                    let copy = [];
+                    for (let obj of response.data.supplement) {
+                        copy.push(obj.image);
                     }
-                    setMealImages(() => {
-                        return {
-                            breakfast: [...response.data[key].image],
-                            lunch: [...response.data[key].image],
-                            dinner: [...response.data[key].image],
-                            snack: [...response.data[key].image],
-                        };
-                    });
-                    setSupplementImages(() => {
-                        let copy = [];
-                        for (let obj of response.data.supplement) {
-                            copy.push(obj.image);
-                        }
-                        return copy;
-                    });
-                    setWaterAmount(response.data.water[0].amount);
-                    setFoodTag(() => {
-                        let copy = [];
-                        for (let key in response.data) {
-                            if (key === 'supplement' || key === 'water')
-                                continue;
-                            copy.push(...response.data[key].data);
-                        }
-                        return copy;
-                    });
-                    setSupplementInformation(() => {
-                        console.log('sup: ', response.data.supplement);
-                        if (response.data.supplement.length === 0) {
-                            return [];
-                        }
-                        let copy = [];
-                        for (let obj of response.data.supplement) {
-                            copy.push(obj);
-                        }
-                        return copy;
-                    });
-                    setLoading(false);
-                }
+                    return copy;
+                });
+                setWaterAmount(response.data.water[0].amount);
+                setFoodTag(() => {
+                    let copy = [];
+                    for (let key in response.data) {
+                        if (key === 'supplement' || key === 'water') continue;
+                        copy.push(...response.data[key].data);
+                    }
+                    return copy;
+                });
+                setSupplementInformation(() => {
+                    if (response.data.supplement.length === 0) {
+                        return [];
+                    }
+                    let copy = [];
+                    for (let obj of response.data.supplement) {
+                        copy.push(obj);
+                    }
+                    return copy;
+                });
+                setLoading(false);
             })
             .catch((err) => {
                 console.log('today err', err);
@@ -171,7 +164,7 @@ const Today = ({ date }) => {
                 {Object.values(mealImages).map((arr) =>
                     arr.map((item, index) => (
                         <ImageBox key={index}>
-                            <Image src={item} />
+                            <Image src={item.image} />
                         </ImageBox>
                     ))
                 )}

@@ -42,85 +42,85 @@ const Water = () => {
 
     useEffect(() => {
         // 두번 실행됨
-        if (initial) {
-            initial = false;
-            return;
-        } else {
-            setLoading(true);
-            axios
-                .get(
-                    `https://nuseum-v2.herokuapp.com/api/v1/consumption/water/?date=${params.date}`,
-                    {
-                        headers: { Authorization: `Bearer ${token}` },
-                    }
-                )
-                .then((response) => {
-                    if (response.data.length === 0) {
-                        setLoading(false);
-                        return;
-                    }
+        // if (initial) {
+        //     initial = false;
+        //     return;
+        // } else {
+        //     initial = true;
+        // }
+        setLoading(true);
+        axios
+            .get(
+                `https://nuseum-v2.herokuapp.com/api/v1/consumption/water/?date=${params.date}`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            )
+            .then((response) => {
+                if (response.data.length === 0) {
+                    setLoading(false);
+                    return;
+                }
 
-                    dispatch(action.addWaterAmount(response.data[0].amount));
-                    dispatch(action.getId(response.data[0].id));
-                    setLoading(false);
-                })
-                .catch((err) => {
-                    console.log(err);
-                    if (err.response.status === 401) {
-                        // 401이면 액세스토큰 만료임
-                        // 액세스토큰 만료된거면 새로 재발급받고
-                        // 재발급 과정에서 리프레시토큰이 만료된 상태라면
-                        // 406이며 로그인 다시 해야함
-                        axios
-                            .post(
-                                'https://nuseum-v2.herokuapp.com/api/v1/account/token/refresh/',
-                                {},
-                                {
-                                    headers: {
-                                        Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxLCJpYXQiOjEsImp0aSI6ImFjZTcxMzE5YmVkMDQwYzFhMWMxODgyNGYzOWUzNTVlIiwidXNlcl9pZCI6MH0.P1e_v6fDHgG4qaODzLDvKTFgGBBNK7pmH_9M--MpfwA`,
-                                    },
-                                }
-                            )
-                            .then((response) => {
-                                const decodedData = jwt_decode(
-                                    response.data.access
+                dispatch(action.addWaterAmount(response.data[0].amount));
+                dispatch(action.getId(response.data[0].id));
+                setLoading(false);
+            })
+            .catch((err) => {
+                console.log(err);
+                if (err.response.status === 401) {
+                    // 401이면 액세스토큰 만료임
+                    // 액세스토큰 만료된거면 새로 재발급받고
+                    // 재발급 과정에서 리프레시토큰이 만료된 상태라면
+                    // 406이며 로그인 다시 해야함
+                    axios
+                        .post(
+                            'https://nuseum-v2.herokuapp.com/api/v1/account/token/refresh/',
+                            {},
+                            {
+                                headers: {
+                                    Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxLCJpYXQiOjEsImp0aSI6ImFjZTcxMzE5YmVkMDQwYzFhMWMxODgyNGYzOWUzNTVlIiwidXNlcl9pZCI6MH0.P1e_v6fDHgG4qaODzLDvKTFgGBBNK7pmH_9M--MpfwA`,
+                                },
+                            }
+                        )
+                        .then((response) => {
+                            const decodedData = jwt_decode(
+                                response.data.access
+                            );
+                            dispatch(
+                                authActions.login({
+                                    token: response.data.access,
+                                    expiration_time: decodedData.exp,
+                                })
+                            );
+                            setLoading(false);
+                        })
+                        .catch((err) => {
+                            if (
+                                err.response.data.messages[0].token_type ===
+                                'refresh'
+                            ) {
+                                alert(
+                                    '세션이 만료되었습니다. 다시 로그인해주세요!'
                                 );
-                                dispatch(
-                                    authActions.login({
-                                        token: response.data.access,
-                                        expiration_time: decodedData.exp,
-                                    })
-                                );
-                                setLoading(false);
-                            })
-                            .catch((err) => {
-                                if (
-                                    err.response.data.messages[0].token_type ===
-                                    'refresh'
-                                ) {
-                                    alert(
-                                        '세션이 만료되었습니다. 다시 로그인해주세요!'
-                                    );
-                                    dispatch(authActions.logout());
-                                    navigate('/login');
-                                }
-                                if (
-                                    err.response.data?.detail ===
-                                    'Token is blacklisted'
-                                ) {
-                                    dispatch(authActions.logout());
-                                    navigate('/login');
-                                }
-                                setLoading(false);
-                            });
-                        return;
-                    } else {
-                        alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-                    }
-                    setLoading(false);
-                });
-            initial = true;
-        }
+                                dispatch(authActions.logout());
+                                navigate('/login');
+                            }
+                            if (
+                                err.response.data?.detail ===
+                                'Token is blacklisted'
+                            ) {
+                                dispatch(authActions.logout());
+                                navigate('/login');
+                            }
+                            setLoading(false);
+                        });
+                    return;
+                } else {
+                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                }
+                setLoading(false);
+            });
     }, [dispatch, token]);
 
     useEffect(() => {
