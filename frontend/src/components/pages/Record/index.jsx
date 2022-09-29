@@ -63,14 +63,14 @@ function Record() {
 
     // useEffect가 두번 실행됨
     useEffect(() => {
-        if (param.when === 'supplement') return;
-        if (param.when === 'today') return;
-        dispatch(action.removeAll());
-        dispatch(postActions.removeAll());
         if (initRecordComponent) {
             initRecordComponent = false;
             return;
         } else {
+            if (param.when === 'supplement') return;
+            if (param.when === 'today') return;
+            dispatch(action.removeAll());
+            dispatch(postActions.removeAll());
             setLoading(true);
 
             axios

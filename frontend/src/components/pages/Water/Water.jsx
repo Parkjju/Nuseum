@@ -131,6 +131,7 @@ const Water = () => {
         }
     }, [water, count, currentAmount, intervalId, params.date]);
 
+    console.log('WATER: ', water);
     const sendWaterRequest = async () => {
         try {
             setLoading(true);
