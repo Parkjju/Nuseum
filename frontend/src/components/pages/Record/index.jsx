@@ -148,6 +148,7 @@ function Record() {
     };
     useEffect(() => {
         if (initRecordComponent) {
+            initRecordComponent = false;
             if (param.when === 'supplement') return;
             if (param.when === 'today') return;
             dispatch(action.removeAll());
@@ -155,7 +156,6 @@ function Record() {
             setLoading(true);
 
             fetchData();
-            initRecordComponent = false;
             return;
         } else {
             initRecordComponent = true;
