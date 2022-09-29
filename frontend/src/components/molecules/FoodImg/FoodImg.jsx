@@ -8,7 +8,7 @@ import useActions from '../../../hooks/useActions';
 import axios from 'axios';
 import { postActions } from '../../../store/meal-slice/post-slice';
 
-const FoodImg = ({ data, index, isPost }) => {
+const FoodImg = ({ data, index, isPost, setLoading }) => {
     const dispatch = useDispatch();
     const token = useSelector((state) => state.auth.token);
 
@@ -32,6 +32,7 @@ const FoodImg = ({ data, index, isPost }) => {
                         if (window.confirm('등록한 사진을 삭제하시겠어요?')) {
                             if (!isPost) {
                                 try {
+                                    setLoading(true);
                                     dispatch(action.removeImage(data.id));
                                     await axios.delete(
                                         `https://nuseum-v2.herokuapp.com/api/v1/consumption/food/image/${data.id}/`,
@@ -41,6 +42,8 @@ const FoodImg = ({ data, index, isPost }) => {
                                             },
                                         }
                                     );
+                                    setLoading(false);
+                                    alert('이미지가 삭제되었습니다!');
                                 } catch (err) {
                                     if (err.response.status === 401) {
                                         // 401이면 액세스토큰 만료임
@@ -107,9 +110,11 @@ const FoodImg = ({ data, index, isPost }) => {
                                             '오류가 발생했습니다. 담당자에게 문의해주세요!'
                                         );
                                     }
+                                    setLoading(false);
                                 }
                             } else {
                                 dispatch(postActions.removePostimage(index));
+                                setLoading(false);
                             }
                         }
                     }}

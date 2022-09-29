@@ -424,6 +424,7 @@ function Record() {
                                         index={index}
                                         key={item.id}
                                         isPost={false}
+                                        setLoading={setLoading}
                                     />
                                 ))}
                             {forPostImage.length > 0 &&
@@ -433,6 +434,7 @@ function Record() {
                                         index={index}
                                         key={item.id}
                                         isPost={true}
+                                        setLoading={setLoading}
                                     />
                                 ))}
                         </VerticalImageBox>
