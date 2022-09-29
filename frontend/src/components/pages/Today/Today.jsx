@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useRef, useState } from 'react';
 import { useCallback } from 'react';
 import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { Contents } from '../Home/styled';
 import { Tag, TagBox } from '../Record/styled';
 import { Box, Gauge } from '../Water/Water.style';
@@ -13,11 +15,18 @@ import {
     SummaryTitle,
     VerticalImageBox,
 } from './Today.style';
+import jwt_decode from 'jwt-decode';
+import { authActions } from '../../../store/auth-slice';
 
 const Today = ({ date }) => {
+    const token = useSelector((state) => state.auth.token);
+
     const username = localStorage.getItem('username');
+    const dispatch = useDispatch();
+
     const [loading, setLoading] = useState(false);
     const [foodTag, setFoodTag] = useState([]);
+    const params = useParams();
     const [supplementInformation, setSupplementInformation] = useState([]);
     // 이미지는 한번에 , 순서없이 나열만 진행
     const [mealImages, setMealImages] = useState({
@@ -41,110 +50,118 @@ const Today = ({ date }) => {
 
     const [supplementImages, setSupplementImages] = useState([]);
 
-    const getFoodName = useCallback(async (data) => {
-        let copy = [];
-        let promises = [];
-
-        // breakfast, lunch...
-        for (let key in data) {
-            if (key === 'supplement') break;
-
-            if (data[key].data) {
-                for (let obj of data[key].data) {
-                    copy.push(obj.food_id);
-                }
-            }
-        }
-
-        for (let id of copy) {
-            let response = await axios.get(
-                `https://cryptic-castle-40575.herokuapp.com/api/v1/food/name/?id=${id}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${sessionStorage.getItem(
-                            'access_token'
-                        )}`,
-                    },
-                }
-            );
-            promises.push(response);
-        }
-        let allResponse = await axios.all(promises);
-
-        return [...allResponse];
-    }, []);
-
     useEffect(() => {
         setLoading(true);
         axios
             .get(
-                `https://cryptic-castle-40575.herokuapp.com/api/v1/consumption/today/?date=${date}`,
+                `https://nuseum-v2.herokuapp.com/api/v1/consumption/today/?date=${date}`,
                 {
                     headers: {
-                        Authorization: `Bearer ${sessionStorage.getItem(
-                            'access_token'
-                        )}`,
+                        Authorization: `Bearer ${token}`,
                     },
                 }
             )
-            .then(async (response) => {
-                setMealImages({
-                    breakfast: [...response.data.breakfast.image],
-                    lunch: [...response.data.lunch.image],
-                    dinner: [...response.data.dinner.image],
-                    snack: [...response.data.snack.image],
-                });
-                setSupplementInformation(() => {
-                    let copy = [];
-                    for (let obj of response.data.supplement) {
-                        copy.push([obj.manufacturer, obj.name]);
+            .then((response) => {
+                console.log(response.data);
+                for (let key in response.data) {
+                    if (key === 'supplement' || key === 'water') {
+                        continue;
                     }
-                    return [...copy];
-                });
-
-                setWaterAmount(response.data.water);
-
-                setSupplementImages(() => {
-                    let copy = [];
-                    for (let obj of response.data.supplement) {
-                        copy.push(obj.image);
-                    }
-
-                    return [...copy];
-                });
-
-                let result = await getFoodName({ ...response.data });
-
-                let nameArray = [];
-                let amountArray = [];
-
-                for (let obj of result) {
-                    nameArray.push([obj.data.name]);
-                }
-                for (let meal in response.data) {
-                    if (meal === 'supplement') break;
-
-                    if (response.data[meal].data) {
-                        for (let obj of response.data[meal].data) {
-                            amountArray.push(obj.amount);
+                    setMealImages(() => {
+                        return {
+                            breakfast: [...response.data[key].image],
+                            lunch: [...response.data[key].image],
+                            dinner: [...response.data[key].image],
+                            snack: [...response.data[key].image],
+                        };
+                    });
+                    setSupplementImages(() => {
+                        let copy = [];
+                        for (let obj of response.data.supplement) {
+                            copy.push(obj.image);
                         }
-                    }
+                        return copy;
+                    });
+                    setWaterAmount(response.data.water[0].amount);
+                    setFoodTag(() => {
+                        let copy = [];
+                        for (let key in response.data) {
+                            if (key === 'supplement' || key === 'water')
+                                continue;
+                            copy.push(...response.data[key].data);
+                        }
+                        return copy;
+                    });
+                    setSupplementInformation(() => {
+                        console.log('sup: ', response.data.supplement);
+                        if (response.data.supplement.length === 0) {
+                            return [];
+                        }
+                        let copy = [];
+                        for (let obj of response.data.supplement) {
+                            copy.push(obj);
+                        }
+                        return copy;
+                    });
+                    setLoading(false);
                 }
-                for (let i in nameArray) {
-                    if (amountArray[i]) {
-                        nameArray[i] = nameArray[i].concat(amountArray[i]);
-                    }
-                }
-
-                setFoodTag(nameArray);
-
-                setLoading(false);
             })
             .catch((err) => {
-                console.log(err);
+                console.log('today err', err);
+                if (err.response.status === 401) {
+                    // 401이면 액세스토큰 만료임
+                    // 액세스토큰 만료된거면 새로 재발급받고
+                    // 재발급 과정에서 리프레시토큰이 만료된 상태라면
+                    // 406이며 로그인 다시 해야함
+                    axios
+                        .post(
+                            'https://nuseum-v2.herokuapp.com/api/v1/account/token/refresh/',
+                            {},
+                            {
+                                headers: {
+                                    Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxLCJpYXQiOjEsImp0aSI6ImFjZTcxMzE5YmVkMDQwYzFhMWMxODgyNGYzOWUzNTVlIiwidXNlcl9pZCI6MH0.P1e_v6fDHgG4qaODzLDvKTFgGBBNK7pmH_9M--MpfwA`,
+                                },
+                            }
+                        )
+                        .then((response) => {
+                            const decodedData = jwt_decode(
+                                response.data.access
+                            );
+                            dispatch(
+                                authActions.login({
+                                    token: response.data.access,
+                                    expiration_time: decodedData.exp,
+                                })
+                            );
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                            // 리프레시토큰 만료
+                            if (
+                                err.response.data.messages[0].token_type ===
+                                'refresh'
+                            ) {
+                                alert(
+                                    '세션이 만료되었습니다. 다시 로그인해주세요!'
+                                );
+                                dispatch(authActions.logout());
+                                navigate('/login');
+                            }
+                            if (
+                                err.response.data?.detail ===
+                                'Token is blacklisted'
+                            ) {
+                                dispatch(authActions.logout());
+                                navigate('/login');
+                            }
+                        });
+                    return;
+                } else {
+                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                }
                 setLoading(false);
             });
-    }, [username, date, getFoodName]);
+    }, [username, date]);
 
     return loading ? (
         <CircularProgress />
@@ -172,13 +189,15 @@ const Today = ({ date }) => {
                     {foodTag.map((item, index) => (
                         <Tag
                             key={index}
-                        >{`${item[0]} ${item[1]}g 또는 ml`}</Tag>
+                        >{`${item.name} ${item.amount}g 또는 ml`}</Tag>
                     ))}
                 </TagBox>
                 <SummaryTitle>영양제</SummaryTitle>
                 <TagBox style={{ padding: '0px 30px', marginTop: 30 }}>
                     {supplementInformation.map((item, index) => (
-                        <Tag key={index}>{`${item[0]} ${item[1]}`}</Tag>
+                        <Tag
+                            key={index}
+                        >{`${item.manufacturer} ${item.name}`}</Tag>
                     ))}
                 </TagBox>
                 <SummaryTitle>오늘 섭취한 물의 양</SummaryTitle>
