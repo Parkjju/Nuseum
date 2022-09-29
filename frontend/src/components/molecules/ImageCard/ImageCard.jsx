@@ -20,6 +20,7 @@ import { CircularProgress } from '@mui/material';
 const ImageCard = ({ isSaved, index, data, setFetchedSupplement }) => {
     // index에 접근하여 해당 데이터 수정
 
+    const token = useSelector((state) => state.auth.token);
     const params = useParams();
     const action = useActions(params.when);
     const supplementData = useSelector((state) => state.supplement.data);
@@ -40,10 +41,6 @@ const ImageCard = ({ isSaved, index, data, setFetchedSupplement }) => {
     const [isNew, setIsNew] = useState(
         data.manufacturer === '' && data.name === '' && data.image === ''
     );
-
-    // 전역상태 값
-    const [globalSupplement, setGlobalSupplement] =
-        useRecoilState(supplementState);
 
     const addFile = (e) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -152,7 +149,10 @@ const ImageCard = ({ isSaved, index, data, setFetchedSupplement }) => {
                         try {
                             if (data.id) {
                                 await axios.delete(
-                                    `https://nuseum-v2.herokuapp.com/api/v1/consumption/supplement/${data.id}/`
+                                    `https://nuseum-v2.herokuapp.com/api/v1/consumption/supplement/${data.id}/`,
+                                    {
+                                        headers: `Bearer ${token}`,
+                                    }
                                 );
 
                                 // fetched로 불러온거 삭제하는 로직
@@ -174,9 +174,60 @@ const ImageCard = ({ isSaved, index, data, setFetchedSupplement }) => {
                             alert('영양제 정보가 삭제되었습니다!');
                         } catch (err) {
                             console.log(err);
-                            alert(
-                                '오류가 발생했습니다. 담당자에게 문의해주세요!'
-                            );
+                            if (err.response.status === 401) {
+                                axios
+                                    .post(
+                                        'https://nuseum-v2.herokuapp.com/api/v1/account/token/refresh/',
+                                        {},
+                                        {
+                                            headers: {
+                                                Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxLCJpYXQiOjEsImp0aSI6ImFjZTcxMzE5YmVkMDQwYzFhMWMxODgyNGYzOWUzNTVlIiwidXNlcl9pZCI6MH0.P1e_v6fDHgG4qaODzLDvKTFgGBBNK7pmH_9M--MpfwA`,
+                                            },
+                                        }
+                                    )
+                                    .then((response) => {
+                                        console.log(
+                                            'response: ',
+                                            response.data
+                                        );
+                                        const decodedData = jwt_decode(
+                                            response.data.access
+                                        );
+                                        dispatch(
+                                            authActions.login({
+                                                token: response.data.access,
+                                                expiration_time:
+                                                    decodedData.exp,
+                                            })
+                                        );
+                                        setLoading(false);
+                                    })
+                                    .catch((err) => {
+                                        // 리프레시토큰 만료
+                                        if (
+                                            err.response.data.code ===
+                                            'token_not_valid'
+                                        ) {
+                                            alert(
+                                                '세션이 만료되었습니다. 다시 로그인해주세요!'
+                                            );
+                                            dispatch(authActions.logout());
+                                            navigate('/login');
+                                        }
+                                        if (
+                                            err.response.data?.detail ===
+                                            'Token is blacklisted'
+                                        ) {
+                                            dispatch(authActions.logout());
+                                            navigate('/login');
+                                        }
+                                        setLoading(false);
+                                    });
+                            } else {
+                                alert(
+                                    '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                                );
+                            }
                             setLoading(false);
                         }
                     }
