@@ -76,6 +76,7 @@ function registerValidSW(swUrl, config) {
                             window.sessionStorage.setItem('updated', true);
 
                             // test
+                            // test
 
                             // Execute callback
                             if (config && config.onUpdate) {
