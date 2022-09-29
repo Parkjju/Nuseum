@@ -121,6 +121,13 @@ function App() {
                         })
                         .catch((error) => {
                             console.log(error);
+                            if (err.response.data.code === 'token_not_valid') {
+                                alert(
+                                    '세션이 만료되었습니다. 다시 로그인해주세요!'
+                                );
+                                dispatch(authActions.logout());
+                                navigate('/login');
+                            }
                             alert(
                                 '서버 오류가 발생했습니다. 담당자에게 문의해주세요!'
                             );
