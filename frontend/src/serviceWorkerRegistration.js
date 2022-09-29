@@ -75,13 +75,11 @@ function registerValidSW(swUrl, config) {
                             );
                             window.sessionStorage.setItem('updated', true);
 
-                            // test
-                            // test
-
                             // Execute callback
                             if (config && config.onUpdate) {
                                 config.onUpdate(registration);
                             }
+                            location.reload();
                         } else {
                             // At this point, everything has been precached.
                             // It's the perfect time to display a

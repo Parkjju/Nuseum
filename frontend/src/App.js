@@ -144,6 +144,7 @@ function App() {
             </Helmet>
             <>
                 <GlobalStyle />
+
                 {JSON.parse(isUpdateAvailable) ? <SimpleSnackbar /> : null}
                 <Router />
             </>
