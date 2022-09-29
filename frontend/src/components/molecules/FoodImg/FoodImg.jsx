@@ -2,7 +2,7 @@ import { Img, Remove } from '../../pages/Record/styled';
 import { motion } from 'framer-motion';
 import React from 'react';
 import { Image, ImageBox } from '../../pages/Today/Today.style';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import useActions from '../../../hooks/useActions';
 import axios from 'axios';
@@ -10,6 +10,7 @@ import { postActions } from '../../../store/meal-slice/post-slice';
 
 const FoodImg = ({ data, index, isPost }) => {
     const dispatch = useDispatch();
+    const token = useSelector((state) => state.auth.token);
 
     const params = useParams();
     const action = useActions(params.when);
@@ -33,7 +34,12 @@ const FoodImg = ({ data, index, isPost }) => {
                                 try {
                                     dispatch(action.removeImage(data.id));
                                     await axios.delete(
-                                        `https://nuseum-v2.herokuapp.com/api/v1/consumption/food/image/${data.id}/`
+                                        `https://nuseum-v2.herokuapp.com/api/v1/consumption/food/image/${data.id}/`,
+                                        {
+                                            headers: {
+                                                Authorization: `Bearer ${token}`,
+                                            },
+                                        }
                                     );
                                 } catch (err) {
                                     if (err.response.status === 401) {

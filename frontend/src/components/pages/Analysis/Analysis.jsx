@@ -247,7 +247,6 @@ const Analysis = () => {
             )
             .then((response) => {
                 let res = response.data;
-                console.log(res);
 
                 for (let i in res) {
                     if (i === 'category' || i === 'day_count') {
@@ -282,7 +281,6 @@ const Analysis = () => {
                             }
                         )
                         .then((response) => {
-                            console.log('response: ', response.data);
                             const decodedData = jwt_decode(
                                 response.data.access
                             );
@@ -334,7 +332,6 @@ const Analysis = () => {
         )
             .then((response) => {
                 let res = response.data;
-                console.log(res);
 
                 for (let i in res) {
                     if (i === 'category' || i === 'day_count') {
@@ -369,7 +366,6 @@ const Analysis = () => {
                             }
                         )
                         .then((response) => {
-                            console.log('response: ', response.data);
                             const decodedData = jwt_decode(
                                 response.data.access
                             );
@@ -484,7 +480,6 @@ const Analysis = () => {
                             }
                         )
                         .then((response) => {
-                            console.log('response: ', response.data);
                             const decodedData = jwt_decode(
                                 response.data.access
                             );

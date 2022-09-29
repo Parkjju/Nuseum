@@ -132,7 +132,6 @@ const Water = () => {
         }
     }, [water, count, currentAmount, intervalId, params.date]);
 
-    console.log('WATER: ', waterPostId);
     const sendWaterRequest = async () => {
         try {
             setLoading(true);
@@ -182,7 +181,6 @@ const Water = () => {
                         }
                     )
                     .then((response) => {
-                        console.log('response: ', response.data);
                         const decodedData = jwt_decode(response.data.access);
                         dispatch(
                             authActions.login({

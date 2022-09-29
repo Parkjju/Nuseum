@@ -44,7 +44,6 @@ function Home() {
                     }
                 )
                 .then((response) => {
-                    console.log('response: ', response.data);
                     const decodedData = jwt_decode(response.data.access);
                     dispatch(
                         authActions.login({

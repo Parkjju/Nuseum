@@ -10,7 +10,6 @@ export default function SimpleSnackbar() {
     const [open, setOpen] = React.useState(false);
 
     useEffect(() => {
-        console.log(isUpdateAvailable);
         if (isUpdateAvailable) {
             setOpen(true);
         } else {

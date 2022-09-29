@@ -16,8 +16,6 @@ const useAxios = (requestConfig, applyData) => {
                 },
                 headers: requestConfig.headers,
             });
-
-            console.log(response.data);
         } catch (error) {
             alert('에러가 발생하였습니다. 개발자에게 문의해주세요!');
         }

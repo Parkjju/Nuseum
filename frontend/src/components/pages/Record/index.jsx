@@ -41,9 +41,7 @@ import { postActions } from '../../../store/meal-slice/post-slice';
 import { authActions } from '../../../store/auth-slice';
 import Supplement from '../Supplement';
 
-let initRecordComponent = true;
 function Record() {
-    console.log('record renderd');
     const param = useParams();
     const token = useSelector((state) => state.auth.token);
 
@@ -107,7 +105,6 @@ function Record() {
                             }
                         )
                         .then((response) => {
-                            console.log('response: ', response.data);
                             const decodedData = jwt_decode(
                                 response.data.access
                             );
@@ -147,7 +144,6 @@ function Record() {
             });
     };
     useEffect(() => {
-        console.log('useEffect run');
         // if (initRecordComponent) {
         //     initRecordComponent = false;
         //     return;
@@ -301,7 +297,6 @@ function Record() {
                             }
                         )
                         .then((response) => {
-                            console.log('response: ', response.data);
                             const decodedData = jwt_decode(
                                 response.data.access
                             );

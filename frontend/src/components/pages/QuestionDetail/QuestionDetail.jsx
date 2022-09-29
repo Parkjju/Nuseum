@@ -49,7 +49,6 @@ const QuestionDetail = () => {
                 }
             )
             .then((response) => {
-                console.log(response.data);
                 setContent(response.data.question.content);
                 setAnswerData([...response.data.answerList]);
                 setTitle(response.data.question.title);

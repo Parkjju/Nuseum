@@ -50,7 +50,6 @@ const Today = ({ date }) => {
 
     const [supplementImages, setSupplementImages] = useState([]);
 
-    console.log(date);
     useEffect(() => {
         setLoading(true);
         axios
@@ -100,7 +99,6 @@ const Today = ({ date }) => {
                 setLoading(false);
             })
             .catch((err) => {
-                console.log('today err', err);
                 if (err.response.status === 401) {
                     // 401이면 액세스토큰 만료임
                     // 액세스토큰 만료된거면 새로 재발급받고
