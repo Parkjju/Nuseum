@@ -42,7 +42,6 @@ import { authActions } from '../../../store/auth-slice';
 import Supplement from '../Supplement';
 
 let initRecordComponent = true;
-let initSupplementComponent;
 function Record() {
     const param = useParams();
     const token = useSelector((state) => state.auth.token);
@@ -62,6 +61,91 @@ function Record() {
     const dispatch = useDispatch();
 
     // useEffect가 두번 실행됨
+    const fetchData = () => {
+        axios
+            .get(
+                `https://nuseum-v2.herokuapp.com/api/v1/consumption/food/?date=${param.date}&type=${param.when}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+            .then((response) => {
+                if (response.data && response.data.length === 0) {
+                    setIsEmpty(true);
+                    setLoading(false);
+                    return;
+                }
+                if (response.data) {
+                    if (response.data.data.length > 0) {
+                        dispatch(action.getData(response.data.data));
+                    }
+
+                    if (response.data.images.length > 0) {
+                        dispatch(action.getImage(response.data.images));
+                    }
+                    setLoading(false);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                if (err.response.data.messages[0].token_type === 'refresh') {
+                    alert('세션이 만료되었습니다. 다시 로그인해주세요!');
+                    dispatch(authActions.logout());
+                    navigate('/login');
+                }
+                if (err.response.status === 401) {
+                    axios
+                        .post(
+                            'https://nuseum-v2.herokuapp.com/api/v1/account/token/refresh/',
+                            {},
+                            {
+                                headers: {
+                                    Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxLCJpYXQiOjEsImp0aSI6ImFjZTcxMzE5YmVkMDQwYzFhMWMxODgyNGYzOWUzNTVlIiwidXNlcl9pZCI6MH0.P1e_v6fDHgG4qaODzLDvKTFgGBBNK7pmH_9M--MpfwA`,
+                                },
+                            }
+                        )
+                        .then((response) => {
+                            console.log('response: ', response.data);
+                            const decodedData = jwt_decode(
+                                response.data.access
+                            );
+                            dispatch(
+                                authActions.login({
+                                    token: response.data.access,
+                                    expiration_time: decodedData.exp,
+                                })
+                            );
+                            setLoading(false);
+                        })
+                        .catch((err) => {
+                            // 리프레시토큰 만료
+                            if (
+                                err.response.data.messages[0].token_type ===
+                                'refresh'
+                            ) {
+                                alert(
+                                    '세션이 만료되었습니다. 다시 로그인해주세요!'
+                                );
+                                dispatch(authActions.logout());
+                                navigate('/login');
+                            }
+                            if (
+                                err.response.data?.detail ===
+                                'Token is blacklisted'
+                            ) {
+                                dispatch(authActions.logout());
+                                navigate('/login');
+                            }
+                            setLoading(false);
+                        });
+                } else {
+                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                }
+                setLoading(false);
+            });
+    };
     useEffect(() => {
         if (initRecordComponent) {
             if (param.when === 'supplement') return;
@@ -70,91 +154,7 @@ function Record() {
             dispatch(postActions.removeAll());
             setLoading(true);
 
-            axios
-                .get(
-                    `https://nuseum-v2.herokuapp.com/api/v1/consumption/food/?date=${param.date}&type=${param.when}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                )
-                .then((response) => {
-                    if (response.data && response.data.length === 0) {
-                        setIsEmpty(true);
-                        setLoading(false);
-                        return;
-                    }
-                    if (response.data) {
-                        if (response.data.data.length > 0) {
-                            dispatch(action.getData(response.data.data));
-                        }
-
-                        if (response.data.images.length > 0) {
-                            dispatch(action.getImage(response.data.images));
-                        }
-                        setLoading(false);
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                    if (
-                        err.response.data.messages[0].token_type === 'refresh'
-                    ) {
-                        alert('세션이 만료되었습니다. 다시 로그인해주세요!');
-                        dispatch(authActions.logout());
-                        navigate('/login');
-                    }
-                    if (err.response.status === 401) {
-                        axios
-                            .post(
-                                'https://nuseum-v2.herokuapp.com/api/v1/account/token/refresh/',
-                                {},
-                                {
-                                    headers: {
-                                        Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxLCJpYXQiOjEsImp0aSI6ImFjZTcxMzE5YmVkMDQwYzFhMWMxODgyNGYzOWUzNTVlIiwidXNlcl9pZCI6MH0.P1e_v6fDHgG4qaODzLDvKTFgGBBNK7pmH_9M--MpfwA`,
-                                    },
-                                }
-                            )
-                            .then((response) => {
-                                console.log('response: ', response.data);
-                                const decodedData = jwt_decode(
-                                    response.data.access
-                                );
-                                dispatch(
-                                    authActions.login({
-                                        token: response.data.access,
-                                        expiration_time: decodedData.exp,
-                                    })
-                                );
-                                setLoading(false);
-                            })
-                            .catch((err) => {
-                                // 리프레시토큰 만료
-                                if (
-                                    err.response.data.messages[0].token_type ===
-                                    'refresh'
-                                ) {
-                                    alert(
-                                        '세션이 만료되었습니다. 다시 로그인해주세요!'
-                                    );
-                                    dispatch(authActions.logout());
-                                    navigate('/login');
-                                }
-                                if (
-                                    err.response.data?.detail ===
-                                    'Token is blacklisted'
-                                ) {
-                                    dispatch(authActions.logout());
-                                    navigate('/login');
-                                }
-                                setLoading(false);
-                            });
-                    } else {
-                        alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-                    }
-                    setLoading(false);
-                });
+            fetchData();
             initRecordComponent = false;
             return;
         } else {
