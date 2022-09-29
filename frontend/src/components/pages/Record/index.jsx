@@ -148,19 +148,19 @@ function Record() {
     };
     useEffect(() => {
         console.log('useEffect run');
-        if (initRecordComponent) {
-            initRecordComponent = false;
-            return;
-        } else {
-            if (param.when === 'supplement') return;
-            if (param.when === 'today') return;
-            dispatch(action.removeAll());
-            dispatch(postActions.removeAll());
-            setLoading(true);
+        // if (initRecordComponent) {
+        //     initRecordComponent = false;
+        //     return;
+        // } else {
+        //     initRecordComponent = true;
+        // }
+        if (param.when === 'supplement') return;
+        if (param.when === 'today') return;
+        dispatch(action.removeAll());
+        dispatch(postActions.removeAll());
+        setLoading(true);
 
-            fetchData();
-            initRecordComponent = true;
-        }
+        fetchData();
     }, [dispatch, token]);
 
     const navigate = useNavigate();
