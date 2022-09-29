@@ -43,6 +43,7 @@ import Supplement from '../Supplement';
 
 let initRecordComponent = true;
 function Record() {
+    console.log('record renderd');
     const param = useParams();
     const token = useSelector((state) => state.auth.token);
 
@@ -147,6 +148,7 @@ function Record() {
             });
     };
     useEffect(() => {
+        console.log('useEffect run');
         if (initRecordComponent) {
             initRecordComponent = false;
             if (param.when === 'supplement') return;
