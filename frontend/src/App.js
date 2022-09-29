@@ -8,6 +8,8 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { authActions } from './store/auth-slice';
 import jwt_decode from 'jwt-decode';
+import SimpleSnackbar from './components/atom/SimpleSnackbar/SimpleSnackbar';
+import { useState } from 'react';
 
 const GlobalStyle = createGlobalStyle`
 /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -65,9 +67,12 @@ body{
 
 `;
 
+const isUpdateAvailable = window.sessionStorage.getItem('updated');
+
 function App() {
     const pathname = window.location.pathname;
     const dispatch = useDispatch();
+
     useEffect(() => {
         if (pathname === '/login') {
             return;
@@ -139,6 +144,7 @@ function App() {
             </Helmet>
             <>
                 <GlobalStyle />
+                {JSON.parse(isUpdateAvailable) ? <SimpleSnackbar /> : null}
                 <Router />
             </>
             {ReactDOM.createPortal(
