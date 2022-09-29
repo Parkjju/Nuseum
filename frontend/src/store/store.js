@@ -10,9 +10,10 @@ import postSlice from './meal-slice/post-slice';
 import snackSlice from './meal-slice/snack-slice';
 import supplementSlice from './supplement-slice';
 import waterSlice from './water-slice';
-
+import todaySlice from './today-slice';
 const store = configureStore({
     reducer: {
+        today: todaySlice,
         auth: authSlice,
         breakfast: breakfastSlice,
         lunch: lunchSlice,
