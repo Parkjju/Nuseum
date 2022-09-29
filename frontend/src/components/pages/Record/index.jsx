@@ -158,7 +158,6 @@ function Record() {
                     }
                     setLoading(false);
                 });
-            initRecordComponent = true;
         }
     }, [dispatch]);
 
