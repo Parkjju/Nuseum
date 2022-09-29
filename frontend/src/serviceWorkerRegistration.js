@@ -76,6 +76,7 @@ function registerValidSW(swUrl, config) {
                             alert(
                                 '새 컨텐츠가 등록되었습니다. 새로고침 버튼을 눌러주세요!'
                             );
+                            // test
 
                             // Execute callback
                             if (config && config.onUpdate) {
