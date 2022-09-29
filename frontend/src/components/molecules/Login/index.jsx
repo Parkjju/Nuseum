@@ -92,6 +92,7 @@ function Login() {
                             expiration_time: decodedData.exp,
                         })
                     );
+                    window.sessionStorage.setItem('isLoggedIn', true);
                     navigate('/');
                 }
             } catch (error) {

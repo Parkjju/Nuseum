@@ -19,10 +19,13 @@ import { authActions } from '../../../store/auth-slice';
 let init = true;
 
 function Home() {
-    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+    const isLoggedIn = window.sessionStorage.getItem('isLoggedIn');
     const dispatch = useDispatch();
     const navigate = useNavigate();
     useEffect(() => {
+        if (!isLoggedIn) {
+            navigate('/login');
+        }
         if (init) {
             init = false;
             return;
