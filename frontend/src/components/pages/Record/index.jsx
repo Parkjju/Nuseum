@@ -78,11 +78,11 @@ function Record() {
                     setLoading(false);
                 }
                 if (response.data) {
-                    if (response.data.data.length > 0) {
+                    if (response.data?.data.length > 0) {
                         dispatch(action.getData(response.data.data));
                     }
 
-                    if (response.data.images.length > 0) {
+                    if (response.data?.images.length > 0) {
                         dispatch(action.getImage(response.data.images));
                     }
                     setLoading(false);
@@ -161,7 +161,7 @@ function Record() {
             fetchData();
             initRecordComponent = true;
         }
-    }, [dispatch]);
+    }, [dispatch, token]);
 
     const navigate = useNavigate();
     // 음식 데이터, 이미지 슬라이싱
