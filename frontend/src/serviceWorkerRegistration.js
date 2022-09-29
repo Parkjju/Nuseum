@@ -73,6 +73,9 @@ function registerValidSW(swUrl, config) {
                                 'New content is available and will be used when all ' +
                                     'tabs for this page are closed. See https://cra.link/PWA.'
                             );
+                            alert(
+                                '새 컨텐츠가 등록되었습니다. 새로고침 버튼을 눌러주세요!'
+                            );
 
                             // Execute callback
                             if (config && config.onUpdate) {
