@@ -11,6 +11,7 @@ import useActions from '../../../hooks/useActions';
 let initial = true;
 const Water = () => {
     const params = useParams();
+    const token = useSelector((state) => state.auth.token);
 
     // water amount & object id
     const water = useSelector((state) => state.water.amount);
@@ -40,7 +41,10 @@ const Water = () => {
         if (initial) {
             axios
                 .get(
-                    `https://nuseum-v2.herokuapp.com/api/v1/consumption/water/?date=${params.date}`
+                    `https://nuseum-v2.herokuapp.com/api/v1/consumption/water/?date=${params.date}`,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
                 )
                 .then((response) => {
                     dispatch(action.addWaterAmount(response.data[0].amount));

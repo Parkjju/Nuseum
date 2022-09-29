@@ -149,10 +149,52 @@ const Analysis = () => {
             })
             .catch((err) => {
                 console.log(err);
-                if (err.response.status === 403) {
-                    alert('세션이 만료되었습니다. 다시 로그인 해주세요!');
-                    navigate('/login');
-                    return;
+                if (err.response.status === 401) {
+                    axios
+                        .post(
+                            'https://nuseum-v2.herokuapp.com/api/v1/account/token/refresh/',
+                            {},
+                            {
+                                headers: {
+                                    Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxLCJpYXQiOjEsImp0aSI6ImFjZTcxMzE5YmVkMDQwYzFhMWMxODgyNGYzOWUzNTVlIiwidXNlcl9pZCI6MH0.P1e_v6fDHgG4qaODzLDvKTFgGBBNK7pmH_9M--MpfwA`,
+                                },
+                            }
+                        )
+                        .then((response) => {
+                            const decodedData = jwt_decode(
+                                response.data.access
+                            );
+                            dispatch(
+                                authActions.login({
+                                    token: response.data.access,
+                                    expiration_time: decodedData.exp,
+                                })
+                            );
+                            setLoading(false);
+                        })
+                        .catch((err) => {
+                            // 리프레시토큰 만료
+                            if (
+                                err.response.data.messages[0].token_type ===
+                                'refresh'
+                            ) {
+                                alert(
+                                    '세션이 만료되었습니다. 다시 로그인해주세요!'
+                                );
+                                dispatch(authActions.logout());
+                                navigate('/login');
+                            }
+                            if (
+                                err.response.data?.detail ===
+                                'Token is blacklisted'
+                            ) {
+                                dispatch(authActions.logout());
+                                navigate('/login');
+                            }
+                            setLoading(false);
+                        });
+                } else {
+                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 }
                 let initializedNutrition = {
                     energy: 0,
@@ -253,7 +295,10 @@ const Analysis = () => {
                         })
                         .catch((err) => {
                             // 리프레시토큰 만료
-                            if (err.response.data.code === 'token_not_valid') {
+                            if (
+                                err.response.data.messages[0].token_type ===
+                                'refresh'
+                            ) {
                                 alert(
                                     '세션이 만료되었습니다. 다시 로그인해주세요!'
                                 );
@@ -337,7 +382,10 @@ const Analysis = () => {
                         })
                         .catch((err) => {
                             // 리프레시토큰 만료
-                            if (err.response.data.code === 'token_not_valid') {
+                            if (
+                                err.response.data.messages[0].token_type ===
+                                'refresh'
+                            ) {
                                 alert(
                                     '세션이 만료되었습니다. 다시 로그인해주세요!'
                                 );
@@ -449,7 +497,10 @@ const Analysis = () => {
                         })
                         .catch((err) => {
                             // 리프레시토큰 만료
-                            if (err.response.data.code === 'token_not_valid') {
+                            if (
+                                err.response.data.messages[0].token_type ===
+                                'refresh'
+                            ) {
                                 alert(
                                     '세션이 만료되었습니다. 다시 로그인해주세요!'
                                 );

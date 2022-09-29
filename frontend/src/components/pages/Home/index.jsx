@@ -52,7 +52,9 @@ function Home() {
                 })
                 .catch((err) => {
                     // 리프레시토큰 만료
-                    if (err.response.data.code === 'token_not_valid') {
+                    if (
+                        err.response.data.messages[0].token_type === 'refresh'
+                    ) {
                         alert('세션이 만료되었습니다. 다시 로그인해주세요!');
                         dispatch(authActions.logout());
                         navigate('/login');
