@@ -33,6 +33,10 @@ const postSlice = createSlice({
                 ...state.image.slice(action.payload + 1),
             ];
         },
+        removeAll(state) {
+            state.data = [];
+            state.image = [];
+        },
     },
 });
 
