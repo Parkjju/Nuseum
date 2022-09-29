@@ -64,7 +64,47 @@ const Supplement = () => {
             setLoading(false);
         } catch (error) {
             console.log(error);
-            alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+            if (err.response.status === 401) {
+                axios
+                    .post(
+                        'https://nuseum-v2.herokuapp.com/api/v1/account/token/refresh/',
+                        {},
+                        {
+                            headers: {
+                                Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxLCJpYXQiOjEsImp0aSI6ImFjZTcxMzE5YmVkMDQwYzFhMWMxODgyNGYzOWUzNTVlIiwidXNlcl9pZCI6MH0.P1e_v6fDHgG4qaODzLDvKTFgGBBNK7pmH_9M--MpfwA`,
+                            },
+                        }
+                    )
+                    .then((response) => {
+                        const decodedData = jwt_decode(response.data.access);
+                        dispatch(
+                            authActions.login({
+                                token: response.data.access,
+                                expiration_time: decodedData.exp,
+                            })
+                        );
+                        setLoading(false);
+                    })
+                    .catch((err) => {
+                        // 리프레시토큰 만료
+                        if (err.response.data.code === 'token_not_valid') {
+                            alert(
+                                '세션이 만료되었습니다. 다시 로그인해주세요!'
+                            );
+                            dispatch(authActions.logout());
+                            navigate('/login');
+                        }
+                        if (
+                            err.response.data?.detail === 'Token is blacklisted'
+                        ) {
+                            dispatch(authActions.logout());
+                            navigate('/login');
+                        }
+                        setLoading(false);
+                    });
+            } else {
+                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+            }
             setIsRequestSent(false);
             setLoading(false);
         }
@@ -76,7 +116,6 @@ const Supplement = () => {
             initial = false;
             return;
         } else {
-            initial = true;
             setLoading(true);
             axios
                 .get(
@@ -105,6 +144,7 @@ const Supplement = () => {
                         // 액세스토큰 만료된거면 새로 재발급받고
                         // 재발급 과정에서 리프레시토큰이 만료된 상태라면
                         // 406이며 로그인 다시 해야함
+
                         axios
                             .post(
                                 'https://nuseum-v2.herokuapp.com/api/v1/account/token/refresh/',
@@ -127,7 +167,16 @@ const Supplement = () => {
                                 );
                             })
                             .catch((err) => {
-                                console.log(err);
+                                // 리프레시토큰 만료
+                                if (
+                                    err.response.data.code === 'token_not_valid'
+                                ) {
+                                    alert(
+                                        '세션이 만료되었습니다. 다시 로그인해주세요!'
+                                    );
+                                    dispatch(authActions.logout());
+                                    navigate('/login');
+                                }
                                 if (
                                     err.response.data?.detail ===
                                     'Token is blacklisted'
@@ -143,7 +192,7 @@ const Supplement = () => {
                     setLoading(false);
                 });
         }
-    }, [isRequestSent, dispatch, token]);
+    }, [isRequestSent, dispatch]);
 
     return loading ? (
         <CircularProgress />
