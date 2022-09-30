@@ -23,15 +23,12 @@ import {
 import { Icon, Name } from '../../atom/Card/styled';
 import { useEffect, useState } from 'react';
 import { SearchTitle } from '../../atom/Modal/styled';
-import { useRecoilState } from 'recoil';
 import axios from 'axios';
 import Menu from '../../atom/Menu';
 import CircularProgress from '@mui/material/CircularProgress';
 import React from 'react';
 import imageCompression from 'browser-image-compression';
-import { postIdState } from '../../../recoil/postID/postId';
 import FoodImg from '../../molecules/FoodImg/FoodImg';
-import ImageCard from '../../molecules/ImageCard';
 import Water from '../Water';
 import Today from '../Today';
 import { VerticalImageBox } from '../Today/Today.style';
@@ -40,6 +37,7 @@ import useActions from '../../../hooks/useActions';
 import { postActions } from '../../../store/meal-slice/post-slice';
 import { authActions } from '../../../store/auth-slice';
 import Supplement from '../Supplement';
+import { onSilentRefresh } from '../../../helpers/onSilentRefresh';
 
 function Record() {
     const param = useParams();
@@ -50,11 +48,6 @@ function Record() {
 
     // 액션 훅 호출
     const action = useActions(param.when);
-
-    // POST전용을 dispatch로 다룬다.
-    // useEffect로 저장되는 상태값을 useState로 관리
-    const [fetchedSupplement, setFetchedSupplement] = useState([]);
-    const [isRequestSent, setIsRequestSent] = useState(false);
 
     // 디스패치 훅 임포트
     const dispatch = useDispatch();
@@ -94,49 +87,9 @@ function Record() {
                     navigate('/login');
                 }
                 if (err.response.status === 401) {
-                    axios
-                        .post(
-                            'https://nuseum-v2.herokuapp.com/api/v1/account/token/refresh/',
-                            {},
-                            {
-                                headers: {
-                                    Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxLCJpYXQiOjEsImp0aSI6ImFjZTcxMzE5YmVkMDQwYzFhMWMxODgyNGYzOWUzNTVlIiwidXNlcl9pZCI6MH0.P1e_v6fDHgG4qaODzLDvKTFgGBBNK7pmH_9M--MpfwA`,
-                                },
-                            }
-                        )
-                        .then((response) => {
-                            const decodedData = jwt_decode(
-                                response.data.access
-                            );
-                            dispatch(
-                                authActions.login({
-                                    token: response.data.access,
-                                    expiration_time: decodedData.exp,
-                                })
-                            );
-                            setLoading(false);
-                        })
-                        .catch((err) => {
-                            // 리프레시토큰 만료
-                            if (
-                                err.response.data.messages[0].token_type ===
-                                'refresh'
-                            ) {
-                                alert(
-                                    '세션이 만료되었습니다. 다시 로그인해주세요!'
-                                );
-                                dispatch(authActions.logout());
-                                navigate('/login');
-                            }
-                            if (
-                                err.response.data?.detail ===
-                                'Token is blacklisted'
-                            ) {
-                                dispatch(authActions.logout());
-                                navigate('/login');
-                            }
-                            setLoading(false);
-                        });
+                    const refreshResponse = onSilentRefresh();
+
+                    console.log(refreshResponse);
                 } else {
                     alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 }

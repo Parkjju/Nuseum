@@ -2,6 +2,7 @@ import { CircularProgress } from '@mui/material';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Button from '../../atom/Button';
 import { Name } from '../../atom/Card/styled';
@@ -13,15 +14,14 @@ import { DiaryTitle } from '../Record/styled';
 const Question = () => {
     const [loading, setLoading] = useState(false);
     const [questions, setQuestions] = useState([]);
+    const token = useSelector((state) => state.auth.token);
 
     useEffect(() => {
         setLoading(true);
         axios
-            .get('https://cryptic-castle-40575.herokuapp.com/api/v1/qna/', {
+            .get('https://nuseum-v2.herokuapp.com/api/v1/qna/', {
                 headers: {
-                    Authorization: `Bearer ${sessionStorage.getItem(
-                        'access_token'
-                    )}`,
+                    Authorization: `Bearer ${token}`,
                 },
             })
             .then((response) => {

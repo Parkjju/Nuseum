@@ -24,6 +24,7 @@ import {
 import { Button } from '../QuestionForm/QuestionForm.style';
 import modify from '../../../assets/modifyImg.png';
 import deleteImg from '../../../assets/deleteImg.png';
+import { useSelector } from 'react-redux';
 
 const QuestionDetail = () => {
     const [title, setTitle] = useState('');
@@ -34,20 +35,16 @@ const QuestionDetail = () => {
     const [isPosted, setIsPosted] = useState(false);
     const navigate = useNavigate();
     const param = useParams();
+    const token = useSelector((state) => state.auth.token);
 
     useEffect(() => {
         setLoading(true);
         axios
-            .get(
-                `https://cryptic-castle-40575.herokuapp.com/api/v1/qna/${param.id}/`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${sessionStorage.getItem(
-                            'access_token'
-                        )}`,
-                    },
-                }
-            )
+            .get(`https://nuseum-v2.herokuapp.com/api/v1/qna/${param.id}/`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
             .then((response) => {
                 setContent(response.data.question.content);
                 setAnswerData([...response.data.answerList]);
@@ -65,12 +62,10 @@ const QuestionDetail = () => {
             setLoading(true);
             axios
                 .delete(
-                    `https://cryptic-castle-40575.herokuapp.com/api/v1/qna/answer/${id}/`,
+                    `https://nuseum-v2.herokuapp.com/api/v1/qna/answer/${id}/`,
                     {
                         headers: {
-                            Authorization: `Bearer ${sessionStorage.getItem(
-                                'access_token'
-                            )}`,
+                            Authorization: `Bearer ${token}`,
                         },
                     }
                 )
@@ -97,7 +92,7 @@ const QuestionDetail = () => {
         if (window.confirm('작성한 질문을 삭제하시겠어요?')) {
             try {
                 await axios.delete(
-                    `https://cryptic-castle-40575.herokuapp.com/api/v1/qna/${param.id}/delete/`,
+                    `https://nuseum-v2.herokuapp.com/api/v1/qna/${param.id}/delete/`,
                     {
                         headers: {
                             Authorization: `Bearer ${sessionStorage.getItem(
