@@ -12,9 +12,10 @@ export const handleExpired = async () => {
                 },
             }
         );
-        decodedData = jwt_decode(response.data.access);
-        return decodedData;
+        const decodedData = jwt_decode(response.data.access);
+        return { token: response, exp: decodedData.exp };
     } catch (err) {
+        console.log('handle Exipred err', err);
         switch (err.response.data.detail) {
             case 'Token is blacklisted':
                 return (() => {

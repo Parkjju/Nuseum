@@ -85,7 +85,14 @@ function Record() {
                 // 액세스토큰이 만료되면
                 // 리프레시토큰을 가지고 새로 발급받는다.
                 if (err.response.status === 401) {
-                    handleExpired();
+                    const data = handleExpired();
+
+                    dispatch(
+                        authActions.login({
+                            token,
+                            exp,
+                        })
+                    );
                 } else {
                     alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 }
@@ -231,7 +238,13 @@ function Record() {
             })
             .catch((err) => {
                 if (err.response.status === 401) {
-                    handleExpired();
+                    const { token, exp } = handleExpired();
+                    dispatch(
+                        authActions.login({
+                            token,
+                            exp,
+                        })
+                    );
                 } else {
                     alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 }
@@ -383,7 +396,19 @@ function Record() {
                                                                   .status ===
                                                               401
                                                           ) {
-                                                              handleExpired();
+                                                              const {
+                                                                  exp,
+                                                                  token,
+                                                              } =
+                                                                  handleExpired();
+                                                              dispatch(
+                                                                  authActions.login(
+                                                                      {
+                                                                          token,
+                                                                          exp,
+                                                                      }
+                                                                  )
+                                                              );
                                                           } else {
                                                               alert(
                                                                   '오류가 발생했습니다. 담당자에게 문의해주세요!'
