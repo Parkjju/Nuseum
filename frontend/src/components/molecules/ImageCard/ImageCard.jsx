@@ -16,6 +16,7 @@ import useActions from '../../../hooks/useActions';
 import { supplementActions } from '../../../store/supplement-slice';
 import axios from 'axios';
 import { CircularProgress } from '@mui/material';
+import handleExpired from '../../../helpers/handleExpired';
 
 const ImageCard = ({ isSaved, index, data, setFetchedSupplement }) => {
     // index에 접근하여 해당 데이터 수정
@@ -175,50 +176,7 @@ const ImageCard = ({ isSaved, index, data, setFetchedSupplement }) => {
                         } catch (err) {
                             console.log(err);
                             if (err.response.status === 401) {
-                                axios
-                                    .post(
-                                        'https://nuseum-v2.herokuapp.com/api/v1/account/token/refresh/',
-                                        {},
-                                        {
-                                            headers: {
-                                                Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxLCJpYXQiOjEsImp0aSI6ImFjZTcxMzE5YmVkMDQwYzFhMWMxODgyNGYzOWUzNTVlIiwidXNlcl9pZCI6MH0.P1e_v6fDHgG4qaODzLDvKTFgGBBNK7pmH_9M--MpfwA`,
-                                            },
-                                        }
-                                    )
-                                    .then((response) => {
-                                        const decodedData = jwt_decode(
-                                            response.data.access
-                                        );
-                                        dispatch(
-                                            authActions.login({
-                                                token: response.data.access,
-                                                expiration_time:
-                                                    decodedData.exp,
-                                            })
-                                        );
-                                        setLoading(false);
-                                    })
-                                    .catch((err) => {
-                                        // 리프레시토큰 만료
-                                        if (
-                                            err.response.data.messages[0]
-                                                .token_type === 'refresh'
-                                        ) {
-                                            alert(
-                                                '세션이 만료되었습니다. 다시 로그인해주세요!'
-                                            );
-                                            dispatch(authActions.logout());
-                                            navigate('/login');
-                                        }
-                                        if (
-                                            err.response.data?.detail ===
-                                            'Token is blacklisted'
-                                        ) {
-                                            dispatch(authActions.logout());
-                                            navigate('/login');
-                                        }
-                                        setLoading(false);
-                                    });
+                                handleExpired();
                             } else {
                                 alert(
                                     '오류가 발생했습니다. 담당자에게 문의해주세요!'
