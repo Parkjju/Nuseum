@@ -52,7 +52,7 @@ const FoodImg = ({ data, index, isPost, setLoading }) => {
                                             await handleExpired();
                                         dispatch(
                                             authActions.login({
-                                                token,
+                                                token: token.data.access,
                                                 exp,
                                             })
                                         );

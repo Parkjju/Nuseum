@@ -104,7 +104,7 @@ const Today = ({ date }) => {
                     const { exp, token } = await handleExpired();
                     dispatch(
                         authActions.login({
-                            token,
+                            token: token.data.access,
                             exp,
                         })
                     );

@@ -68,7 +68,7 @@ function Record() {
                     setIsEmpty(true);
                     setLoading(false);
                 }
-                if (response.data) {
+                if (response.data && response.data?.length !== 0) {
                     if (response.data?.data.length > 0) {
                         dispatch(action.getData(response.data.data));
                     }
@@ -86,9 +86,10 @@ function Record() {
                 // 리프레시토큰을 가지고 새로 발급받는다.
                 if (err.response.status === 401) {
                     const { exp, token } = await handleExpired();
+
                     dispatch(
                         authActions.login({
-                            token,
+                            token: token.data.access,
                             exp,
                         })
                     );
@@ -240,7 +241,7 @@ function Record() {
                     const { exp, token } = await handleExpired();
                     dispatch(
                         authActions.login({
-                            token,
+                            token: token.data.access,
                             exp,
                         })
                     );

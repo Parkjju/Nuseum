@@ -179,7 +179,7 @@ const ImageCard = ({ isSaved, index, data, setFetchedSupplement }) => {
                                 const { exp, token } = await handleExpired();
                                 dispatch(
                                     authActions.login({
-                                        token,
+                                        token: token.data.access,
                                         exp,
                                     })
                                 );
