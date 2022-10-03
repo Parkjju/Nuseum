@@ -1,7 +1,10 @@
 import { CircularProgress } from '@mui/material';
 import axios from 'axios';
 import { useCallback, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
+import handleExpired from '../../../helpers/handleExpired';
+import { authActions } from '../../../store/auth-slice';
 import { Name } from '../../atom/Card/styled';
 
 import Container from '../../atom/Container';
@@ -10,6 +13,8 @@ import { DiaryTitle } from '../Record/styled';
 import { Box, Button, Description, Input, Label } from './QuestionForm.style';
 
 const QuestionForm = () => {
+    const token = useSelector((state) => state.auth.token);
+    const dispatch = useDispatch();
     const location = useLocation();
     const [title, setTitle] = useState(
         location.state ? location.state.title : ''
@@ -42,34 +47,48 @@ const QuestionForm = () => {
             try {
                 if (location?.state?.id) {
                     await axios.patch(
-                        `https://cryptic-castle-40575.herokuapp.com/api/v1/qna/${location.state.id}/edit/`,
+                        `https://nuseum-v2.herokuapp.com/api/v1/qna/${location.state.id}/edit/`,
                         {
                             title,
                             content: description,
                         },
                         {
                             headers: {
-                                Authorization: `Bearer ${sessionStorage.getItem(
-                                    'access_token'
-                                )}`,
+                                Authorization: `Bearer ${token}`,
                             },
                         }
                     );
                 } else {
-                    await axios.post(
-                        'https://cryptic-castle-40575.herokuapp.com/api/v1/qna/',
-                        {
-                            title,
-                            content: description,
-                        },
-                        {
-                            headers: {
-                                Authorization: `Bearer ${sessionStorage.getItem(
-                                    'access_token'
-                                )}`,
+                    try {
+                        await axios.post(
+                            'https://nuseum-v2.herokuapp.com/api/v1/qna/',
+                            {
+                                title,
+                                content: description,
                             },
+                            {
+                                headers: {
+                                    Authorization: `Bearer ${token}`,
+                                },
+                            }
+                        );
+                    } catch (err) {
+                        console.log(err);
+                        if (err.response.status === 401) {
+                            const { exp, token } = await handleExpired();
+                            dispatch(
+                                authActions.login({
+                                    token: token.data.access,
+                                    exp,
+                                })
+                            );
+                        } else {
+                            alert(
+                                '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                            );
                         }
-                    );
+                        setLoading(false);
+                    }
                 }
 
                 if (location?.state?.id) {

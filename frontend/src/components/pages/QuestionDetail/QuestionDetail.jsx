@@ -24,9 +24,12 @@ import {
 import { Button } from '../QuestionForm/QuestionForm.style';
 import modify from '../../../assets/modifyImg.png';
 import deleteImg from '../../../assets/deleteImg.png';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import handleExpired from '../../../helpers/handleExpired';
+import { authActions } from '../../../store/auth-slice';
 
 const QuestionDetail = () => {
+    const dispatch = useDispatch();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [answerData, setAnswerData] = useState([]);
@@ -51,8 +54,19 @@ const QuestionDetail = () => {
                 setTitle(response.data.question.title);
                 setLoading(false);
             })
-            .catch((err) => {
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+            .catch(async (err) => {
+                console.log(err);
+                if (err.response.status === 401) {
+                    const { exp, token } = await handleExpired();
+                    dispatch(
+                        authActions.login({
+                            token: token.data.access,
+                            exp,
+                        })
+                    );
+                } else {
+                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                }
                 setLoading(false);
             });
     }, [isPosted]);
@@ -74,13 +88,24 @@ const QuestionDetail = () => {
                     setLoading(false);
                     setIsPosted((prev) => !prev);
                 })
-                .catch((err) => {
+                .catch(async (err) => {
                     if (err.response.data.validation_err) {
                         alert('작성자 본인만 삭제할 수 있습니다.');
                         setLoading(false);
                         return;
                     }
-                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                    console.log(err);
+                    if (err.response.status === 401) {
+                        const { exp, token } = await handleExpired();
+                        dispatch(
+                            authActions.login({
+                                token: token.data.access,
+                                exp,
+                            })
+                        );
+                    } else {
+                        alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                    }
                     setLoading(false);
                 });
         }
@@ -95,16 +120,28 @@ const QuestionDetail = () => {
                     `https://nuseum-v2.herokuapp.com/api/v1/qna/${param.id}/delete/`,
                     {
                         headers: {
-                            Authorization: `Bearer ${sessionStorage.getItem(
-                                'access_token'
-                            )}`,
+                            Authorization: `Bearer ${token}`,
                         },
                     }
                 );
                 alert('질문이 삭제되었습니다!');
                 navigate('/question');
             } catch (error) {
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                console.log(err);
+                if (err.response.status === 401) {
+                    const { exp, token } = await handleExpired();
+                    dispatch(
+                        authActions.login({
+                            token: token.data.access,
+                            exp,
+                        })
+                    );
+                    setLoading(false);
+                } else {
+                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                    setLoading(false);
+                    return;
+                }
             }
         }
     };
@@ -127,20 +164,28 @@ const QuestionDetail = () => {
 
                 try {
                     await axios.post(
-                        `https://cryptic-castle-40575.herokuapp.com/api/v1/qna/${param.id}/answer/`,
+                        `https://nuseum-v2.herokuapp.com/api/v1/qna/${param.id}/answer/`,
                         {
                             content: comment,
                         },
                         {
                             headers: {
-                                Authorization: `Bearer ${sessionStorage.getItem(
-                                    'access_token'
-                                )}`,
+                                Authorization: `Bearer ${token}`,
                             },
                         }
                     );
                 } catch (error) {
-                    console.log(error);
+                    if (err.response.status === 401) {
+                        const { exp, token } = await handleExpired();
+                        dispatch(
+                            authActions.login({
+                                token: token.data.access,
+                                exp,
+                            })
+                        );
+                    } else {
+                        alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                    }
                     alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 }
                 setLoading(false);
