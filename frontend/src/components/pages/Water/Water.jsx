@@ -67,10 +67,16 @@ const Water = () => {
                 dispatch(action.getId(response.data[0].id));
                 setLoading(false);
             })
-            .catch((err) => {
+            .catch(async (err) => {
                 console.log(err);
                 if (err.response.status === 401) {
-                    handleExpired();
+                    const { exp, token } = await handleExpired();
+                    dispatch(
+                        authActions.login({
+                            token,
+                            exp,
+                        })
+                    );
                 } else {
                     alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 }
@@ -121,7 +127,13 @@ const Water = () => {
             setLoading(false);
         } catch (err) {
             if (err.response.status === 401) {
-                handleExpired();
+                const { exp, token } = await handleExpired();
+                dispatch(
+                    authActions.login({
+                        token,
+                        exp,
+                    })
+                );
             } else {
                 alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
             }

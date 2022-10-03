@@ -79,14 +79,13 @@ function Record() {
                     setLoading(false);
                 }
             })
-            .catch((err) => {
+            .catch(async (err) => {
                 console.log(err);
 
                 // 액세스토큰이 만료되면
                 // 리프레시토큰을 가지고 새로 발급받는다.
                 if (err.response.status === 401) {
-                    const data = handleExpired();
-
+                    const { exp, token } = await handleExpired();
                     dispatch(
                         authActions.login({
                             token,
@@ -236,9 +235,9 @@ function Record() {
                     setResult(response.data.results);
                 }
             })
-            .catch((err) => {
+            .catch(async (err) => {
                 if (err.response.status === 401) {
-                    const { token, exp } = handleExpired();
+                    const { exp, token } = await handleExpired();
                     dispatch(
                         authActions.login({
                             token,

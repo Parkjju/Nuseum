@@ -99,9 +99,15 @@ const Today = ({ date }) => {
                 });
                 setLoading(false);
             })
-            .catch((err) => {
+            .catch(async (err) => {
                 if (err.response.status === 401) {
-                    handleExpired();
+                    const { exp, token } = await handleExpired();
+                    dispatch(
+                        authActions.login({
+                            token,
+                            exp,
+                        })
+                    );
                 } else {
                     alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 }

@@ -120,7 +120,7 @@ const Analysis = () => {
         setEatCategory({ ...copy });
     };
 
-    const onChange = (d) => {
+    const onChange = async (d) => {
         setLoading(true);
         axios
             .get(
@@ -148,10 +148,16 @@ const Analysis = () => {
                 setLoading(false);
                 setIsDateSelected(true);
             })
-            .catch((err) => {
+            .catch(async (err) => {
                 console.log(err);
                 if (err.response.status === 401) {
-                    handleExpired();
+                    const { exp, token } = await handleExpired();
+                    dispatch(
+                        authActions.login({
+                            token,
+                            exp,
+                        })
+                    );
                     setLoading(false);
                 } else {
                     alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
@@ -223,10 +229,16 @@ const Analysis = () => {
 
                 setDateCount(response.data.day_count);
             })
-            .catch((err) => {
+            .catch(async (err) => {
                 console.log(err);
                 if (err.response.status === 401) {
-                    handleExpired();
+                    const { exp, token } = await handleExpired();
+                    dispatch(
+                        authActions.login({
+                            token,
+                            exp,
+                        })
+                    );
                 } else {
                     alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 }
@@ -263,10 +275,16 @@ const Analysis = () => {
 
                 setDateCount(response.data.day_count);
             })
-            .catch((err) => {
+            .catch(async (err) => {
                 console.log(err);
                 if (err.response.status === 401) {
-                    handleExpired();
+                    const { exp, token } = await handleExpired();
+                    dispatch(
+                        authActions.login({
+                            token,
+                            exp,
+                        })
+                    );
                 } else {
                     alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 }
@@ -332,10 +350,16 @@ const Analysis = () => {
                 setNutrition(res);
                 setLoading(false);
             })
-            .catch((err) => {
+            .catch(async (err) => {
                 console.log(err);
                 if (err.response.status === 401) {
-                    handleExpired();
+                    const { exp, token } = await handleExpired();
+                    dispatch(
+                        authActions.login({
+                            token,
+                            exp,
+                        })
+                    );
                 } else {
                     alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 }

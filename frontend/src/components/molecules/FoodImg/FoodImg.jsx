@@ -48,7 +48,8 @@ const FoodImg = ({ data, index, isPost, setLoading }) => {
                                     alert('이미지가 삭제되었습니다!');
                                 } catch (err) {
                                     if (err.response.status === 401) {
-                                        const { exp, token } = handleExpired();
+                                        const { exp, token } =
+                                            await handleExpired();
                                         dispatch(
                                             authActions.login({
                                                 token,
