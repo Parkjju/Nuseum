@@ -9,6 +9,7 @@ import store from './store/store';
 import { Provider } from 'react-redux';
 
 axios.defaults.withCredentials = true;
+axios.defaults.baseURL = 'https://www.nuseum.site/';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <RecoilRoot>
