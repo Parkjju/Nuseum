@@ -46,8 +46,10 @@ import {
 } from 'chart.js';
 import RadarGraph from '../../molecules/RadarGraph';
 import BarGraph from '../../molecules/BarGraph';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import handleExpired from '../../../helpers/handleExpired';
+import { authActions } from '../../../store/auth-slice';
+
 ChartJS.register(
     RadialLinearScale,
     CategoryScale,
@@ -63,6 +65,7 @@ ChartJS.register(
 
 const Analysis = () => {
     const token = useSelector((state) => state.auth.token);
+    const dispatch = useDispatch();
     const [date, setDate] = useState(new Date());
     const [isDateSelected, setIsDateSelected] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -123,14 +126,11 @@ const Analysis = () => {
     const onChange = async (d) => {
         setLoading(true);
         axios
-            .get(
-                `https://nuseum-v2.herokuapp.com/api/v1/consumption/day/?date=${d.getTime()}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            )
+            .get(`/api/v1/consumption/day/?date=${d.getTime()}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
             .then((response) => {
                 let res = response.data;
 
@@ -203,14 +203,11 @@ const Analysis = () => {
         setLoading(true);
         setIsSelected([true, false, false]);
         axios
-            .get(
-                `https://nuseum-v2.herokuapp.com/api/v1/consumption/day/?date=${date.getTime()}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            )
+            .get(`/api/v1/consumption/day/?date=${date.getTime()}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
             .then((response) => {
                 let res = response.data;
 
@@ -249,14 +246,11 @@ const Analysis = () => {
     const fetchWeekData = () => {
         setLoading(true);
         setIsSelected([false, true, false]);
-        axios(
-            `https://nuseum-v2.herokuapp.com/api/v1/consumption/week/?date=${date.getTime()}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            }
-        )
+        axios(`/api/v1/consumption/week/?date=${date.getTime()}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
             .then((response) => {
                 let res = response.data;
 
@@ -327,14 +321,11 @@ const Analysis = () => {
     const fetchMonthData = () => {
         setLoading(true);
         setIsSelected([false, false, true]);
-        axios(
-            `https://nuseum-v2.herokuapp.com/api/v1/consumption/month/?date=${date.getTime()}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            }
-        )
+        axios(`/api/v1/consumption/month/?date=${date.getTime()}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
             .then((response) => {
                 let res = response.data;
                 for (let i in res) {
@@ -602,10 +593,8 @@ const Analysis = () => {
                                         </p>
                                     </S.SectionTitle>
                                     <S.Box>
-                                        <S.IconBox>
-                                            <S.IconWrapper
-                                                isEat={eatCategory[1]}
-                                            >
+                                        <S.IconBox isEat={eatCategory[1]}>
+                                            <S.IconWrapper>
                                                 <S.Icon
                                                     src={a}
                                                     // src={carbohydrates}
@@ -620,10 +609,8 @@ const Analysis = () => {
                                                 {/* 탄수화물 */}채소
                                             </Name>
                                         </S.IconBox>
-                                        <S.IconBox>
-                                            <S.IconWrapper
-                                                isEat={eatCategory[2]}
-                                            >
+                                        <S.IconBox isEat={eatCategory[2]}>
+                                            <S.IconWrapper>
                                                 <S.Icon
                                                     src={b}
                                                     // src={dha}
@@ -638,10 +625,8 @@ const Analysis = () => {
                                                 {/* DHA+EPA */}과일
                                             </Name>
                                         </S.IconBox>
-                                        <S.IconBox>
-                                            <S.IconWrapper
-                                                isEat={eatCategory[3]}
-                                            >
+                                        <S.IconBox isEat={eatCategory[3]}>
+                                            <S.IconWrapper>
                                                 <S.Icon
                                                     src={c}
                                                     // src={fat}
@@ -656,10 +641,8 @@ const Analysis = () => {
                                                 {/* 지방 */}콩/두부
                                             </Name>
                                         </S.IconBox>
-                                        <S.IconBox>
-                                            <S.IconWrapper
-                                                isEat={eatCategory[4]}
-                                            >
+                                        <S.IconBox isEat={eatCategory[4]}>
+                                            <S.IconWrapper>
                                                 <S.Icon
                                                     src={d}
                                                     // src={folic}
@@ -674,10 +657,8 @@ const Analysis = () => {
                                                 {/* 엽산 */}통곡물
                                             </Name>
                                         </S.IconBox>
-                                        <S.IconBox>
-                                            <S.IconWrapper
-                                                isEat={eatCategory[5]}
-                                            >
+                                        <S.IconBox isEat={eatCategory[5]}>
+                                            <S.IconWrapper>
                                                 <S.Icon
                                                     src={e}
                                                     // src={magnesium}
@@ -692,10 +673,8 @@ const Analysis = () => {
                                                 {/* 마그네슘 */}버섯
                                             </Name>
                                         </S.IconBox>
-                                        <S.IconBox>
-                                            <S.IconWrapper
-                                                isEat={eatCategory[6]}
-                                            >
+                                        <S.IconBox isEat={eatCategory[6]}>
+                                            <S.IconWrapper>
                                                 <S.Icon
                                                     src={f}
                                                     // src={protein}
@@ -711,10 +690,8 @@ const Analysis = () => {
                                                 {/* 단백질 */}해조류
                                             </Name>
                                         </S.IconBox>
-                                        <S.IconBox>
-                                            <S.IconWrapper
-                                                isEat={eatCategory[7]}
-                                            >
+                                        <S.IconBox isEat={eatCategory[7]}>
+                                            <S.IconWrapper>
                                                 <S.Icon
                                                     src={g}
                                                     // src={tryptophan}
@@ -730,10 +707,8 @@ const Analysis = () => {
                                                 {/* 트립토판 */}견과
                                             </Name>
                                         </S.IconBox>
-                                        <S.IconBox>
-                                            <S.IconWrapper
-                                                isEat={eatCategory[8]}
-                                            >
+                                        <S.IconBox isEat={eatCategory[8]}>
+                                            <S.IconWrapper>
                                                 <S.Icon
                                                     src={h}
                                                     // src={vitaminA}
@@ -748,10 +723,8 @@ const Analysis = () => {
                                                 {/* 비타민 A */}고기/생선/달걀
                                             </Name>
                                         </S.IconBox>
-                                        <S.IconBox>
-                                            <S.IconWrapper
-                                                isEat={eatCategory[9]}
-                                            >
+                                        <S.IconBox isEat={eatCategory[9]}>
+                                            <S.IconWrapper>
                                                 <S.Icon
                                                     src={i}
                                                     // src={vitaminB6}
