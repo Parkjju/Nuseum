@@ -19,7 +19,12 @@ import jwt_decode from 'jwt-decode';
 
 function Login() {
     const dispatch = useDispatch();
+
     const [token, setToken] = useState(null);
+
+    useEffect(() => {
+        window.sessionStorage.removeItem('isLoggedIn');
+    }, []);
     // pwa 설치 관련 코드
     // const [deferredPrompt, setDeferredPrompt] =
     //     useRecoilState(deferredPromptState);

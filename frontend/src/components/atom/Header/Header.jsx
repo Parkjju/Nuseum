@@ -9,22 +9,25 @@ import { authActions } from '../../../store/auth-slice';
 const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const location = useLocation();
-    const locationArray = location.pathname.split('/');
-    const isLoggedIn = window.sessionStorage.getItem('isLoggedIn');
+    const loc = useLocation();
+    const locationArray = loc.pathname.split('/');
 
     const [backActive, setBackActive] = useState(true);
     const [homeActive, setHomeActive] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState(
+        window.sessionStorage.getItem('isLoggedIn')
+    );
 
     useEffect(() => {
-        if (isLoggedIn === 'false') {
-            setBackActive(false);
-            setHomeActive(false);
-        } else {
-            setBackActive(true);
-            setHomeActive(true);
+        if (
+            location.pathname === '/login' &&
+            window.sessionStorage.getItem('isLoggedIn')
+        ) {
+            window.sessionStorage.removeItem('isLoggedIn');
+            setIsLoggedIn(null);
+            location.reload();
         }
-    }, [location]);
+    }, []);
 
     return (
         <HeaderBox>
@@ -45,45 +48,49 @@ const Header = () => {
                             justifyContent: 'space-between',
                         }}
                     >
-                        <Icon
-                            onClick={() => {
-                                if (!backActive) return;
-                                if (
-                                    locationArray.length > 1 &&
-                                    locationArray.length < 4
-                                ) {
-                                    navigate('/');
-                                    return;
-                                }
-                                if (locationArray[1].length > 0) {
-                                    navigate(-1);
-                                    return;
-                                }
-                                if (backActive) {
-                                    navigate(-1);
-                                } else {
-                                    return null;
-                                }
-                            }}
-                            active={backActive}
-                            className='material-symbols-outlined'
-                        >
-                            arrow_back
-                        </Icon>
-                        <Icon
-                            onClick={() => {
-                                if (!homeActive) return;
-                                if (homeActive) {
-                                    navigate('/');
-                                } else {
-                                    return null;
-                                }
-                            }}
-                            active={homeActive}
-                            className='material-symbols-outlined'
-                        >
-                            home
-                        </Icon>
+                        {location.pathname === '/' ? null : (
+                            <>
+                                <Icon
+                                    onClick={() => {
+                                        if (!backActive) return;
+                                        if (
+                                            locationArray.length > 1 &&
+                                            locationArray.length < 4
+                                        ) {
+                                            navigate('/');
+                                            return;
+                                        }
+                                        if (locationArray[1].length > 0) {
+                                            navigate(-1);
+                                            return;
+                                        }
+                                        if (backActive) {
+                                            navigate(-1);
+                                        } else {
+                                            return null;
+                                        }
+                                    }}
+                                    active={backActive}
+                                    className='material-symbols-outlined'
+                                >
+                                    arrow_back
+                                </Icon>
+                                <Icon
+                                    onClick={() => {
+                                        if (!homeActive) return;
+                                        if (homeActive) {
+                                            navigate('/');
+                                        } else {
+                                            return null;
+                                        }
+                                    }}
+                                    active={homeActive}
+                                    className='material-symbols-outlined'
+                                >
+                                    home
+                                </Icon>
+                            </>
+                        )}
                     </div>
 
                     <Icon
