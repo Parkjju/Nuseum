@@ -11,6 +11,7 @@ const Header = () => {
     const dispatch = useDispatch();
     const loc = useLocation();
     const locationArray = loc.pathname.split('/');
+    console.log('HEADER');
 
     const [backActive, setBackActive] = useState(true);
     const [homeActive, setHomeActive] = useState(true);
@@ -19,6 +20,7 @@ const Header = () => {
     );
 
     useEffect(() => {
+        setIsLoggedIn(window.sessionStorage.getItem('isLoggedIn'));
         if (
             location.pathname === '/login' &&
             window.sessionStorage.getItem('isLoggedIn')
