@@ -51,13 +51,10 @@ function Login() {
         setIsLoading(true);
 
         try {
-            const response = await axios.post(
-                'https://nuseum-v2.herokuapp.com/api/v1/account/login/',
-                {
-                    username: loginId,
-                    password: loginPassword,
-                }
-            );
+            const response = await axios.post('/api/v1/account/login/', {
+                username: loginId,
+                password: loginPassword,
+            });
 
             const decodedData = jwt_decode(response.data.access_token);
             dispatch(
@@ -70,15 +67,22 @@ function Login() {
             setIsLoading(false);
             navigate('/');
         } catch (err) {
-            if (err.response.status === 401) {
-                navigate('/login');
-                return;
+            console.log(err);
+            if (
+                err.response?.data?.non_field_errors?.[0] ===
+                '주어진 자격 증명으로 로그인이 불가능합니다.'
+            ) {
+                setError('nonExists', {
+                    message: '아이디 또는 비밀번호가 잘못되었습니다.',
+                });
+                setIsLoading(false);
+                setDisplay(true);
             }
 
             try {
-                if (err.response.data.err_code === 'NOT_ACCEPTABLE') {
+                if (err.response?.data?.err_code === 'NOT_ACCEPTABLE') {
                     const response = await axios.post(
-                        'https://nuseum-v2.herokuapp.com/api/v1/account/login/',
+                        '/api/v1/account/login/',
                         {
                             username: loginId,
                             password: loginPassword,
