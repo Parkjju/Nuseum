@@ -12,20 +12,23 @@ export const Box = styled.div`
 `;
 
 export const IconBox = styled.div`
-    height: 6rem;
-    width: 6rem;
+    height: 80px;
+    width: 80px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
+    background-color: ${(props) => (props.isEat ? '#EEEEEE' : null)};
+    border-radius: 20px;
+    padding: 10px;
 `;
 
 export const Icon = styled.img`
     width: 2.5rem;
 `;
 export const IconWrapper = styled.div`
-    background-color: ${(props) => (props.isEat ? '#dfdfdf' : null)};
+    /* background-color: ${(props) => (props.isEat ? '#dfdfdf' : null)}; */
     width: 4rem;
     height: 4rem;
     display: flex;
