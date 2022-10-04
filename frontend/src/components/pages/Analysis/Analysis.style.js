@@ -4,7 +4,13 @@ export const Box = styled.div`
     width: 80%;
     padding-top: 50px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    @media all and (min-width: 390px) and (max-width: 480px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    @media all and (max-width: 389px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(3, 1fr);
     justify-items: center;
     align-items: center;
@@ -19,7 +25,8 @@ export const IconBox = styled.div`
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
-    background-color: ${(props) => (props.isEat ? '#EEEEEE' : null)};
+    background-color: ${(props) =>
+        props.isEat ? '#EEEEEE' : props.isPoint ? '#BFC5C6' : null};
     border-radius: 20px;
     padding: 10px;
 `;
@@ -60,7 +67,7 @@ export const FetchButton = styled.button`
     cursor: pointer;
 `;
 
-export const SectionTitle = styled.p`
+export const SectionTitle = styled.div`
     width: 80%;
     padding: 10px 5px;
     font-size: 12px;
@@ -91,4 +98,10 @@ export const NutrientList = styled.div`
 export const Divider = styled.div`
     border-bottom: 1px solid #dcdfdf;
     width: 100%;
+`;
+
+export const Point = styled.p`
+    color: white;
+    font-size: 36px;
+    font-weight: bold;
 `;

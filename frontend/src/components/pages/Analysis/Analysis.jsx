@@ -25,6 +25,7 @@ import f from '../../../assets/category/6.png';
 import g from '../../../assets/category/7.png';
 import h from '../../../assets/category/8.png';
 import i from '../../../assets/category/9.png';
+import kid from '../../../assets/kid.png';
 
 import { Calendar } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -49,6 +50,7 @@ import BarGraph from '../../molecules/BarGraph';
 import { useDispatch, useSelector } from 'react-redux';
 import handleExpired from '../../../helpers/handleExpired';
 import { authActions } from '../../../store/auth-slice';
+import { useEffect } from 'react';
 
 ChartJS.register(
     RadialLinearScale,
@@ -71,6 +73,8 @@ const Analysis = () => {
     const [loading, setLoading] = useState(false);
     const [dateCount, setDateCount] = useState(1);
     const navigate = useNavigate();
+    const [nutrientPoint, setNutrientPoint] = useState(0);
+    const [microbiomePoint, setMicrobiomePoint] = useState(0);
     const [eatCategory, setEatCategory] = useState({
         1: false,
         2: false,
@@ -82,6 +86,25 @@ const Analysis = () => {
         8: false,
         9: false,
     });
+
+    useEffect(() => {
+        let pointNutrient = 0;
+        let pointMicro = 0;
+
+        for (let i in eatCategory) {
+            if (eatCategory[i]) {
+                pointNutrient += 1;
+
+                if (i === 8 || i === 9) {
+                    continue;
+                }
+                pointMicro += 1;
+            }
+        }
+
+        setNutrientPoint(pointNutrient);
+        setMicrobiomePoint(pointMicro);
+    }, [eatCategory]);
 
     // 한주간 데이터 fetch중인지 월간 데이터 fetch중인지 판단을 위한 상태값
     // 탭 컴포넌트의 urlmatch 로직과 동일
@@ -134,6 +157,17 @@ const Analysis = () => {
             .then((response) => {
                 let res = response.data;
 
+                setEatCategory({
+                    1: false,
+                    2: false,
+                    3: false,
+                    4: false,
+                    5: false,
+                    6: false,
+                    7: false,
+                    8: false,
+                    9: false,
+                });
                 for (let i in res) {
                     if (i === 'category' || i === 'day_count') {
                         continue;
@@ -143,6 +177,8 @@ const Analysis = () => {
                         : res[i].toFixed(1);
                 }
                 categoryCheck(response.data.category);
+
+                // {'채소': 1, '과일': 2, '콩/두부': 3, '통곡물': 4, '버섯': 5, '해조류': 6, '견과': 7, '고기/생선/달걀': 8, '유제품': 9}
 
                 setNutrition(res);
                 setLoading(false);
@@ -160,6 +196,7 @@ const Analysis = () => {
                     );
                     setLoading(false);
                 } else {
+                    console.log(err);
                     alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 }
                 let initializedNutrition = {
@@ -211,6 +248,18 @@ const Analysis = () => {
             .then((response) => {
                 let res = response.data;
 
+                setEatCategory({
+                    1: false,
+                    2: false,
+                    3: false,
+                    4: false,
+                    5: false,
+                    6: false,
+                    7: false,
+                    8: false,
+                    9: false,
+                });
+
                 for (let i in res) {
                     if (i === 'category' || i === 'day_count') {
                         continue;
@@ -239,6 +288,8 @@ const Analysis = () => {
                 } else {
                     alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 }
+                nu;
+
                 setLoading(false);
             });
     };
@@ -253,6 +304,18 @@ const Analysis = () => {
         })
             .then((response) => {
                 let res = response.data;
+
+                setEatCategory({
+                    1: false,
+                    2: false,
+                    3: false,
+                    4: false,
+                    5: false,
+                    6: false,
+                    7: false,
+                    8: false,
+                    9: false,
+                });
 
                 for (let i in res) {
                     if (i === 'category' || i === 'day_count') {
@@ -314,6 +377,8 @@ const Analysis = () => {
                     9: false,
                 });
                 setDateCount(1);
+                nu;
+
                 alert('한 주간 입력된 데이터가 없어요 😭');
             });
     };
@@ -328,6 +393,18 @@ const Analysis = () => {
         })
             .then((response) => {
                 let res = response.data;
+
+                setEatCategory({
+                    1: false,
+                    2: false,
+                    3: false,
+                    4: false,
+                    5: false,
+                    6: false,
+                    7: false,
+                    8: false,
+                    9: false,
+                });
                 for (let i in res) {
                     // day_count, category key 제외
                     if (i === 'day_count' || i === 'category') continue;
@@ -387,6 +464,8 @@ const Analysis = () => {
                     9: false,
                 });
                 setDateCount(1);
+                nu;
+
                 alert('한 달간 입력된 데이터가 없어요 😭');
             });
     };
@@ -593,6 +672,67 @@ const Analysis = () => {
                                         </p>
                                     </S.SectionTitle>
                                     <S.Box>
+                                        <S.IconBox isPoint={true}>
+                                            <S.IconWrapper>
+                                                <S.Point>
+                                                    {(
+                                                        (nutrientPoint / 9) *
+                                                        100
+                                                    ).toFixed(0)}
+                                                </S.Point>
+                                            </S.IconWrapper>
+                                            <Name
+                                                style={{
+                                                    fontSize: '0.5rem',
+                                                    marginBottom: 5,
+                                                    color: 'white',
+                                                }}
+                                            >
+                                                {nutrientPoint}
+                                                /9
+                                            </Name>
+                                            <Name
+                                                style={{
+                                                    fontSize: '0.5rem',
+                                                    marginBottom: 5,
+                                                    color: 'white',
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                Nutrients
+                                            </Name>
+                                        </S.IconBox>
+                                        <S.IconBox isPoint={true}>
+                                            <S.IconWrapper>
+                                                <S.Point>
+                                                    {(
+                                                        (microbiomePoint / 7) *
+                                                        100
+                                                    ).toFixed(0)}
+                                                </S.Point>
+                                            </S.IconWrapper>
+                                            <Name
+                                                style={{
+                                                    fontSize: '0.5rem',
+                                                    marginBottom: 5,
+                                                    color: 'white',
+                                                }}
+                                            >
+                                                {microbiomePoint}
+                                                /7
+                                            </Name>
+                                            <Name
+                                                style={{
+                                                    fontSize: '0.5rem',
+                                                    marginBottom: 5,
+                                                    color: 'white',
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                Nutrients
+                                            </Name>
+                                        </S.IconBox>
+                                        {/* 아래부터 실제 데이터 */}
                                         <S.IconBox isEat={eatCategory[1]}>
                                             <S.IconWrapper>
                                                 <S.Icon
@@ -738,6 +878,16 @@ const Analysis = () => {
                                             >
                                                 {/* 비타민 B6 */}유제품
                                             </Name>
+                                        </S.IconBox>
+                                        <S.IconBox isPoint={true}>
+                                            <S.Icon
+                                                style={{
+                                                    height: 55,
+                                                    width: 55,
+                                                }}
+                                                src={kid}
+                                                // src={vitaminB6}
+                                            />
                                         </S.IconBox>
                                     </S.Box>
                                 </>
