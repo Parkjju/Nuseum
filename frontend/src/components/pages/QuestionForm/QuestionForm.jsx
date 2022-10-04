@@ -47,7 +47,7 @@ const QuestionForm = () => {
             try {
                 if (location?.state?.id) {
                     await axios.patch(
-                        `https://nuseum-v2.herokuapp.com/api/v1/qna/${location.state.id}/edit/`,
+                        `/api/v1/qna/${location.state.id}/edit/`,
                         {
                             title,
                             content: description,
@@ -61,7 +61,7 @@ const QuestionForm = () => {
                 } else {
                     try {
                         await axios.post(
-                            'https://nuseum-v2.herokuapp.com/api/v1/qna/',
+                            '/api/v1/qna/',
                             {
                                 title,
                                 content: description,

@@ -43,7 +43,7 @@ const QuestionDetail = () => {
     useEffect(() => {
         setLoading(true);
         axios
-            .get(`https://nuseum-v2.herokuapp.com/api/v1/qna/${param.id}/`, {
+            .get(`/api/v1/qna/${param.id}/`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -75,14 +75,11 @@ const QuestionDetail = () => {
         if (window.confirm('댓글을 지우시겠어요?')) {
             setLoading(true);
             axios
-                .delete(
-                    `https://nuseum-v2.herokuapp.com/api/v1/qna/answer/${id}/`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                )
+                .delete(`/api/v1/qna/answer/${id}/`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
                 .then(() => {
                     alert('해당 댓글을 삭제하였습니다!');
                     setLoading(false);
@@ -116,14 +113,11 @@ const QuestionDetail = () => {
     const deletePost = async () => {
         if (window.confirm('작성한 질문을 삭제하시겠어요?')) {
             try {
-                await axios.delete(
-                    `https://nuseum-v2.herokuapp.com/api/v1/qna/${param.id}/delete/`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                );
+                await axios.delete(`/api/v1/qna/${param.id}/delete/`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
                 alert('질문이 삭제되었습니다!');
                 navigate('/question');
             } catch (error) {
@@ -164,7 +158,7 @@ const QuestionDetail = () => {
 
                 try {
                     await axios.post(
-                        `https://nuseum-v2.herokuapp.com/api/v1/qna/${param.id}/answer/`,
+                        `/api/v1/qna/${param.id}/answer/`,
                         {
                             content: comment,
                         },

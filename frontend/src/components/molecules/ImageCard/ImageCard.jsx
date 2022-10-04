@@ -8,8 +8,6 @@ import {
 } from './ImageCard.style';
 import imageCompression from 'browser-image-compression';
 import { useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { supplementState } from '../../../recoil/supplement/supplement';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import useActions from '../../../hooks/useActions';
@@ -150,7 +148,7 @@ const ImageCard = ({ isSaved, index, data, setFetchedSupplement }) => {
                         try {
                             if (data.id) {
                                 await axios.delete(
-                                    `https://nuseum-v2.herokuapp.com/api/v1/consumption/supplement/${data.id}/`,
+                                    `/api/v1/consumption/supplement/${data.id}/`,
                                     {
                                         headers: `Bearer ${token}`,
                                     }

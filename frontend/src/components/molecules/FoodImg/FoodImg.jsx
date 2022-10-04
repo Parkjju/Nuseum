@@ -37,7 +37,7 @@ const FoodImg = ({ data, index, isPost, setLoading }) => {
                                     setLoading(true);
                                     dispatch(action.removeImage(data.id));
                                     await axios.delete(
-                                        `https://nuseum-v2.herokuapp.com/api/v1/consumption/food/image/${data.id}/`,
+                                        `/api/v1/consumption/food/image/${data.id}/`,
                                         {
                                             headers: {
                                                 Authorization: `Bearer ${token}`,

@@ -22,7 +22,7 @@ const Question = () => {
     useEffect(() => {
         setLoading(true);
         axios
-            .get('https://nuseum-v2.herokuapp.com/api/v1/qna/', {
+            .get('/api/v1/qna/', {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

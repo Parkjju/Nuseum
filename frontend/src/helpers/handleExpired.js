@@ -4,7 +4,7 @@ import jwt_decode from 'jwt-decode';
 export const handleExpired = async () => {
     try {
         const response = await axios.post(
-            'https://nuseum-v2.herokuapp.com/api/v1/account/token/refresh/',
+            '/api/v1/account/token/refresh/',
             {},
             {
                 headers: {

@@ -51,12 +51,9 @@ const Water = () => {
         // }
         setLoading(true);
         axios
-            .get(
-                `https://nuseum-v2.herokuapp.com/api/v1/consumption/water/?date=${params.date}`,
-                {
-                    headers: { Authorization: `Bearer ${token}` },
-                }
-            )
+            .get(`/api/v1/consumption/water/?date=${params.date}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
             .then((response) => {
                 if (response.data.length === 0) {
                     setLoading(false);
@@ -98,7 +95,7 @@ const Water = () => {
             setLoading(true);
             if (water > 0 && waterPostId) {
                 await axios.patch(
-                    `https://nuseum-v2.herokuapp.com/api/v1/consumption/water/${waterPostId}/`,
+                    `/api/v1/consumption/water/${waterPostId}/`,
                     {
                         amount: water,
                     },
@@ -110,7 +107,7 @@ const Water = () => {
                 );
             } else {
                 await axios.post(
-                    'https://nuseum-v2.herokuapp.com/api/v1/consumption/water/',
+                    '/api/v1/consumption/water/',
                     {
                         type: 'water',
                         created_at: params.date,

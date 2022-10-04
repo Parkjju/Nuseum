@@ -47,7 +47,7 @@ const Supplement = () => {
         try {
             setLoading(true);
             await axios.post(
-                'https://nuseum-v2.herokuapp.com/api/v1/consumption/supplement/',
+                '/api/v1/consumption/supplement/',
                 {
                     type: 'supplement',
                     created_at: param.date,
@@ -63,8 +63,8 @@ const Supplement = () => {
             dispatch(supplementActions.checkDataSaved());
             setIsRequestSent(true);
             setLoading(false);
-        } catch (error) {
-            console.log(error);
+        } catch (err) {
+            console.log(err);
             if (err.response.status === 401) {
                 const { exp, token } = await handleExpired();
                 dispatch(
@@ -90,14 +90,11 @@ const Supplement = () => {
         // }
         setLoading(true);
         axios
-            .get(
-                `https://nuseum-v2.herokuapp.com/api/v1/consumption/supplement/?date=${param.date}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            )
+            .get(`/api/v1/consumption/supplement/?date=${param.date}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
             .then((response) => {
                 if (response.data.length === 0) {
                     setLoading(false);

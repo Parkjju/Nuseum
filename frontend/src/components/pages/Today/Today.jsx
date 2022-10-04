@@ -1,7 +1,6 @@
 import { CircularProgress } from '@mui/material';
 import axios from 'axios';
 import { useRef, useState } from 'react';
-import { useCallback } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -15,7 +14,6 @@ import {
     SummaryTitle,
     VerticalImageBox,
 } from './Today.style';
-import jwt_decode from 'jwt-decode';
 import { authActions } from '../../../store/auth-slice';
 import handleExpired from '../../../helpers/handleExpired';
 
@@ -54,14 +52,11 @@ const Today = ({ date }) => {
     useEffect(() => {
         setLoading(true);
         axios
-            .get(
-                `https://nuseum-v2.herokuapp.com/api/v1/consumption/today/?date=${date}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            )
+            .get(`/api/v1/consumption/today/?date=${date}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
             .then((response) => {
                 setMealImages(() => {
                     return {
@@ -78,7 +73,10 @@ const Today = ({ date }) => {
                     }
                     return copy;
                 });
-                setWaterAmount(response.data.water[0].amount);
+
+                if (response.data?.water?.length > 0) {
+                    setWaterAmount(response.data.water[0].amount);
+                }
                 setFoodTag(() => {
                     let copy = [];
                     for (let key in response.data) {
@@ -100,6 +98,7 @@ const Today = ({ date }) => {
                 setLoading(false);
             })
             .catch(async (err) => {
+                console.log(err);
                 if (err.response.status === 401) {
                     const { exp, token } = await handleExpired();
                     dispatch(

@@ -56,7 +56,7 @@ function Record() {
     const fetchData = () => {
         axios
             .get(
-                `https://nuseum-v2.herokuapp.com/api/v1/consumption/food/?date=${param.date}&type=${param.when}`,
+                `/api/v1/consumption/food/?date=${param.date}&type=${param.when}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -179,7 +179,7 @@ function Record() {
             try {
                 setLoading(true);
                 await axios.post(
-                    'https://nuseum-v2.herokuapp.com/api/v1/consumption/food/',
+                    '/api/v1/consumption/food/',
                     {
                         consumptions: [...forPostData],
                         images: [
@@ -199,7 +199,7 @@ function Record() {
                     }
                 );
                 setLoading(false);
-                alert('일지 수정이 완료되었습니다!');
+                alert('일지 작성이 완료되었습니다!');
             } catch (err) {
                 console.log(err);
                 alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
@@ -221,14 +221,11 @@ function Record() {
         e.preventDefault();
         setIsLoading(true);
         await axios
-            .get(
-                `https://nuseum-v2.herokuapp.com/api/v1/food/?search=${foodName}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            )
+            .get(`/api/v1/food/?search=${foodName}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
             .then((response) => {
                 if (response.data.results.length === 0) {
                     alert('검색 결과가 없어요!');
@@ -381,7 +378,7 @@ function Record() {
                                                           );
                                                           setLoading(true);
                                                           await axios.delete(
-                                                              `https://nuseum-v2.herokuapp.com/api/v1/consumption/food/${item.id}/`,
+                                                              `/api/v1/consumption/food/${item.id}/`,
                                                               {
                                                                   headers: {
                                                                       Authorization: `Bearer ${token}`,
