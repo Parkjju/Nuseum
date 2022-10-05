@@ -20,11 +20,13 @@ let init = true;
 
 function Home() {
     const isLoggedIn = window.sessionStorage.getItem('isLoggedIn');
+    console.log('ISLOGGEDIN?', isLoggedIn);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     useEffect(() => {
         if (!isLoggedIn) {
             navigate('/login');
+            return;
         }
         fetchTokenInHome();
     }, [dispatch]);
