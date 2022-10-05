@@ -473,8 +473,10 @@ const Analysis = () => {
     return (
         <Container>
             <Contents>
-                <DiaryTitle>
-                    <Name>식이분석</Name>
+                <DiaryTitle style={{
+                        height: 'auto',
+                    }}>
+                    <Name style={{fontSize:'16px'}}>식이분석</Name>
                 </DiaryTitle>
                 <Calendar locale='en-US' onChange={onChange} value={date} />
 
@@ -487,6 +489,8 @@ const Analysis = () => {
                             lineHeight: 2,
                             textAlign: 'center',
                             color: '#7E8C8D',
+                            fontWeight: 500,
+                            fontSize: '13px'
                         }}
                     >
                         식이분석내용을 확인하고 싶은 날짜를 클릭해주세요 :)
@@ -533,17 +537,11 @@ const Analysis = () => {
                                 <CircularProgress />
                             ) : (
                                 <>
-                                    <S.SectionTitle>
-                                        <p style={{ lineHeight: 1.5 }}>
-                                            Nutrients for Neurobehavioral
-                                            Development
-                                        </p>
-                                        <p style={{ lineHeight: 1.5 }}>
-                                            신경행동발달에 영향을 미치는
-                                            영양성분에 대한 1,787개의 논문들을
-                                            리뷰하여 선별된 아래 9가지
-                                            영양성분들에 대해 섭취내용을
-                                            분석합니다.
+                                    <S.SectionTitle>                                        
+                                        <p style={{ lineHeight: 1.5 , fontWeight: 500}}>
+                                        아래의 영양성분들은 신경행동발달에 영향을 미치는 영양성분들에 
+                                        대해 총 1,787개의 논문들을 리뷰하여 선별되었으며 
+                                        이들에 대한 섭취내용을 분석합니다.
                                         </p>
                                     </S.SectionTitle>
                                     <S.NutrientBox>
@@ -653,85 +651,54 @@ const Analysis = () => {
                                             <RadarGraph data={nutrition} />
                                         </div>
                                     </S.NutrientBox>
-                                    <BarGraph
-                                        count={dateCount}
-                                        data={nutrition}
-                                    />
-                                    <S.SectionTitle>
-                                        <p style={{ lineHeight: 1.5 }}>
-                                            Diversity for Nutrients & Microbiome
-                                        </p>
-                                        <p style={{ lineHeight: 1.5 }}>
-                                            급격한 성장기의 아동들은 다양한
-                                            식품군을 섭취하여 다양한 영양성분과
-                                            생리활성물질들을 섭취하게 하고, 이는
-                                            장내 다양한 미생물을 서식하게 하여
-                                            건강한 뇌발달에 영향을 미칩니다.
-                                            섭취한 식품군과 섭취가 필요해 보이는
-                                            식품군을 분석합니다.
+                                    <div
+                                        style={{
+                                            width: '90%',
+                                        }}
+                                    >
+                                        <BarGraph
+                                            count={dateCount}
+                                            data={nutrition}
+                                        />
+                                    </div>
+                                    <S.SectionTitle>                                        
+                                        <p style={{ lineHeight: 1.5, fontWeight: 500 }}>
+                                        다양한 식품군의 섭취는 다양한 영양성분과 생리활성물질을 섭취하게 하고, 
+                                        이는 장내 다양한 미생물을 서식하게 하여, 건강한 뇌발달에 영향을 미칩니다. 섭취한 식품군과 섭취가 필요해 보이는 식품군을 분석합니다.
                                         </p>
                                     </S.SectionTitle>
                                     <S.Box>
-                                        <S.IconBox isPoint={true}>
+                                        <S.IconBox isPoint={true} style={{boxShadow : 'inset 0px 3px 7px rgba(0, 0, 0, 0.1)'}}>
+                                            <Name
+                                                style={{
+                                                    fontSize: '12px',
+                                                    marginTop: 5,
+                                                    marginBottom: 5,
+                                                    color: 'white',
+                                                    fontWeight: '500',
+                                                }}
+                                            >
+                                                골고루 지수
+                                            </Name>
                                             <S.IconWrapper>
                                                 <S.Point>
                                                     {(
                                                         (nutrientPoint / 9) *
                                                         100
-                                                    ).toFixed(0)}
+                                                    ).toFixed(0)} <span style={{fontSize:'17px'}}>점</span>
                                                 </S.Point>
                                             </S.IconWrapper>
                                             <Name
                                                 style={{
-                                                    fontSize: '0.5rem',
+                                                    fontSize: '11px',
                                                     marginBottom: 5,
                                                     color: 'white',
                                                 }}
                                             >
                                                 {nutrientPoint}
                                                 /9
-                                            </Name>
-                                            <Name
-                                                style={{
-                                                    fontSize: '0.5rem',
-                                                    marginBottom: 5,
-                                                    color: 'white',
-                                                    fontWeight: 'bold',
-                                                }}
-                                            >
-                                                Nutrients
-                                            </Name>
-                                        </S.IconBox>
-                                        <S.IconBox isPoint={true}>
-                                            <S.IconWrapper>
-                                                <S.Point>
-                                                    {(
-                                                        (microbiomePoint / 7) *
-                                                        100
-                                                    ).toFixed(0)}
-                                                </S.Point>
-                                            </S.IconWrapper>
-                                            <Name
-                                                style={{
-                                                    fontSize: '0.5rem',
-                                                    marginBottom: 5,
-                                                    color: 'white',
-                                                }}
-                                            >
-                                                {microbiomePoint}
-                                                /7
-                                            </Name>
-                                            <Name
-                                                style={{
-                                                    fontSize: '0.5rem',
-                                                    marginBottom: 5,
-                                                    color: 'white',
-                                                    fontWeight: 'bold',
-                                                }}
-                                            >
-                                                Nutrients
-                                            </Name>
-                                        </S.IconBox>
+                                            </Name>                                            
+                                        </S.IconBox>                                        
                                         {/* 아래부터 실제 데이터 */}
                                         <S.IconBox isEat={eatCategory[1]}>
                                             <S.IconWrapper>
@@ -742,7 +709,7 @@ const Analysis = () => {
                                             </S.IconWrapper>
                                             <Name
                                                 style={{
-                                                    fontSize: '0.5rem',
+                                                    fontSize: '12px',
                                                     marginBottom: 5,
                                                 }}
                                             >
@@ -758,7 +725,7 @@ const Analysis = () => {
                                             </S.IconWrapper>
                                             <Name
                                                 style={{
-                                                    fontSize: '0.5rem',
+                                                    fontSize: '12px',
                                                     marginBottom: 5,
                                                 }}
                                             >
@@ -774,7 +741,7 @@ const Analysis = () => {
                                             </S.IconWrapper>
                                             <Name
                                                 style={{
-                                                    fontSize: '0.5rem',
+                                                    fontSize: '12px',
                                                     marginBottom: 5,
                                                 }}
                                             >
@@ -790,8 +757,8 @@ const Analysis = () => {
                                             </S.IconWrapper>
                                             <Name
                                                 style={{
+                                                    fontSize: '12px',
                                                     marginBottom: 5,
-                                                    fontSize: '0.5rem',
                                                 }}
                                             >
                                                 {/* 엽산 */}통곡물
@@ -806,8 +773,8 @@ const Analysis = () => {
                                             </S.IconWrapper>
                                             <Name
                                                 style={{
+                                                    fontSize: '12px',
                                                     marginBottom: 5,
-                                                    fontSize: '0.5rem',
                                                 }}
                                             >
                                                 {/* 마그네슘 */}버섯
@@ -823,8 +790,8 @@ const Analysis = () => {
 
                                             <Name
                                                 style={{
+                                                    fontSize: '12px',
                                                     marginBottom: 5,
-                                                    fontSize: '0.5rem',
                                                 }}
                                             >
                                                 {/* 단백질 */}해조류
@@ -840,8 +807,8 @@ const Analysis = () => {
 
                                             <Name
                                                 style={{
+                                                    fontSize: '12px',
                                                     marginBottom: 5,
-                                                    fontSize: '0.5rem',
                                                 }}
                                             >
                                                 {/* 트립토판 */}견과
@@ -856,8 +823,8 @@ const Analysis = () => {
                                             </S.IconWrapper>
                                             <Name
                                                 style={{
+                                                    fontSize: '12px',
                                                     marginBottom: 5,
-                                                    fontSize: '0.5rem',
                                                 }}
                                             >
                                                 {/* 비타민 A */}고기/생선/달걀
@@ -872,22 +839,12 @@ const Analysis = () => {
                                             </S.IconWrapper>
                                             <Name
                                                 style={{
+                                                    fontSize: '12px',
                                                     marginBottom: 5,
-                                                    fontSize: '0.5rem',
                                                 }}
                                             >
                                                 {/* 비타민 B6 */}유제품
                                             </Name>
-                                        </S.IconBox>
-                                        <S.IconBox isPoint={true}>
-                                            <S.Icon
-                                                style={{
-                                                    height: 55,
-                                                    width: 55,
-                                                }}
-                                                src={kid}
-                                                // src={vitaminB6}
-                                            />
                                         </S.IconBox>
                                     </S.Box>
                                 </>

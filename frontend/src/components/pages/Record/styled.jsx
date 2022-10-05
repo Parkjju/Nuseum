@@ -2,11 +2,10 @@ import { memo } from 'react';
 import styled from 'styled-components';
 
 export const DiaryTitle = styled.div`
-    margin-top: 50px;
     padding: 10px 0;
-    width: 120px;
+    width: 80%;
     height: 60px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -15,6 +14,9 @@ export const DiaryTitle = styled.div`
         background-color: #ecf0f1;
         transition: 0.2s linear;
     } */
+    span{
+        font-size: 15px;
+    }
 `;
 
 export const DiaryBody = styled.div`
@@ -26,7 +28,6 @@ export const DiaryBody = styled.div`
 export const Label = styled.label`
     padding: 6px 25px;
     font-size: 30px;
-
     border-radius: 4px;
     color: black;
     cursor: pointer;
