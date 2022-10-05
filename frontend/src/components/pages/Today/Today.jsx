@@ -164,9 +164,9 @@ const Today = ({ date }) => {
                     <span>마신 양 : {waterAmount}ml</span>
                     <span>
                         남은 양 :{' '}
-                        {2000 - waterAmount > 0
-                            ? 2000 - waterAmount
-                            : `+ ${waterAmount - 2000}`}
+                        {1500 - waterAmount > 0
+                            ? 1500 - waterAmount
+                            : `+ ${waterAmount - 1500}`}
                         ml
                     </span>
                 </div>
