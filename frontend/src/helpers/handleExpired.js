@@ -1,6 +1,27 @@
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 
+export const checkBrowser = () => {
+    let userAgent = navigator.userAgent;
+    let browserName;
+
+    if (userAgent.match(/chrome|chromium|crios/i)) {
+        browserName = 'chrome';
+    } else if (userAgent.match(/firefox|fxios/i)) {
+        browserName = 'firefox';
+    } else if (userAgent.match(/safari/i)) {
+        browserName = 'safari';
+    } else if (userAgent.match(/opr\//i)) {
+        browserName = 'opera';
+    } else if (userAgent.match(/edg/i)) {
+        browserName = 'edge';
+    } else {
+        browserName = 'No browser detection';
+    }
+
+    return browserName;
+};
+
 export const handleExpired = async () => {
     try {
         const response = await axios.post(
@@ -16,6 +37,11 @@ export const handleExpired = async () => {
         return { token: response, exp: decodedData.exp };
     } catch (err) {
         console.log('handle Exipred err', err);
+
+        if (checkBrowser() === 'safari') {
+            return;
+        }
+
         switch (err.response.data.detail) {
             case 'Token is blacklisted':
                 return (() => {
