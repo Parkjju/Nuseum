@@ -57,9 +57,9 @@ const RadarGraph = ({ data }) => {
                     (+data.magnesium / 110) * 100 > 100
                         ? 100
                         : (+data.magnesium / 110) * 100,
-                    (+data.tryptophan / 0.1) * 100 > 100
+                    (+data.tryptophan / 100) * 100 > 100
                         ? 100
-                        : (+data.tryptophan / 0.1) * 100,
+                        : (+data.tryptophan / 100) * 100,
                     (+data.vitamin_a / 300) * 100 > 100
                         ? 100
                         : (+data.vitamin_a / 300) * 100,

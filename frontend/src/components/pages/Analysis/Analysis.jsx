@@ -590,7 +590,7 @@ const Analysis = () => {
                                                 트립토판{' '}
                                                 {(
                                                     (nutrition.tryptophan /
-                                                        (0.1 * dateCount)) *
+                                                        (100 * dateCount)) *
                                                     100
                                                 ).toFixed(1)}
                                                 %
