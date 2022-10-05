@@ -38,10 +38,6 @@ export const handleExpired = async () => {
     } catch (err) {
         console.log('handle Exipred err', err);
 
-        if (checkBrowser() === 'safari') {
-            return;
-        }
-
         switch (err.response.data.detail) {
             case 'Token is blacklisted':
                 return (() => {
@@ -57,6 +53,9 @@ export const handleExpired = async () => {
                 })();
             default:
                 return (() => {
+                    if (checkBrowser() === 'safari') {
+                        return;
+                    }
                     alert(
                         '알 수 없는 오류가 발생하였습니다. 담당자에게 문의해주세요!'
                     );
