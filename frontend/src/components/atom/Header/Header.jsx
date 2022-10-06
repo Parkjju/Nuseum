@@ -11,7 +11,6 @@ const Header = () => {
     const dispatch = useDispatch();
     const loc = useLocation();
     const locationArray = loc.pathname.split('/');
-    console.log('HEADER');
 
     const [backActive, setBackActive] = useState(true);
     const [homeActive, setHomeActive] = useState(true);
@@ -29,7 +28,7 @@ const Header = () => {
             setIsLoggedIn(null);
             location.reload();
         }
-    }, []);
+    }, [loc.pathname]);
 
     return (
         <HeaderBox>
