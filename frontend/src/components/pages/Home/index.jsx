@@ -20,7 +20,7 @@ let init = true;
 
 function Home() {
     const isLoggedIn = window.sessionStorage.getItem('isLoggedIn');
-    console.log('ISLOGGEDIN?', isLoggedIn);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     useEffect(() => {
@@ -38,7 +38,6 @@ function Home() {
                 exp,
             })
         );
-        console.log('REFRESHED');
     };
     const menu = [
         [diary, '식단일기', 'diary'],
@@ -50,14 +49,14 @@ function Home() {
 
     return (
         <Container>
-            <Contents style={{ }}>
+            <Contents style={{}}>
                 <DiaryTitle layoutId={menu[0][2]}>
                     <Name
                         style={{
                             width: '80%',
                             textAlign: 'center',
                             fontSize: '16px',
-                            fontWeight: 'bold'
+                            fontWeight: 'bold',
                         }}
                     >
                         맞춤형 영양관리 및 정보제공 연구
