@@ -31,7 +31,7 @@ const Supplement = () => {
     const isEmptyFieldExistsInSupplement = () => {
         for (let obj of supplementData) {
             for (let key of Object.keys(obj)) {
-                if (key === 'image') continue;
+                // if (key === 'image') continue;
                 if (obj[key] === '') {
                     return true;
                 }
