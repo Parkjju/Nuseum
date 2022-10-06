@@ -21,6 +21,7 @@ export const ModalTitle = styled.p`
 export const SearchTitle = styled(ModalTitle)`
     font-size: 12px;
     font-family: 'Noto Serif KR', serif;
+    font-weight: 400;
     line-height: 1.5;
     text-align: justify;
     white-space: default;
@@ -29,7 +30,6 @@ export const SearchTitle = styled(ModalTitle)`
 
 export const ModalDescription = styled.p`
     font-size: 16px;
-
     width: 80%;
     height: 20px;
     margin-bottom: 30px;
@@ -38,7 +38,6 @@ export const ModalBtn = styled.button`
     height: 40px;
     width: 100%;
     border-radius: 10px;
-
     color: black;
     border: none;
     background-color: white;

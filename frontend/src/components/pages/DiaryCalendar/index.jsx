@@ -93,6 +93,8 @@ function DiaryCalendar() {
                             lineHeight: 2,
                             textAlign: 'justify',
                             color: '#7E8C8D',
+                            fontWeight: '400',
+                            fontSize: '13px'
                         }}
                     >
                         본 식단일기는 내아이의 영양상태와 식행동을 분석하기 위해

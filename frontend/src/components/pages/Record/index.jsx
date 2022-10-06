@@ -286,7 +286,10 @@ function Record() {
             <Contents>
                 <DiaryTitle layoutId={menu[0][2]}>
                     <Icon style={{ width: '40px' }} src={menu[0][0]} />
-                    <Name>{menu[0][1]}</Name>
+                    <Name style={{
+                        fontSize: '16px',
+                        fontWeight: 'bold',
+                    }}>{menu[0][1]}</Name>
                 </DiaryTitle>
                 {/* param.when url에 따라 분기하는 장소 */}
                 <Name
@@ -294,6 +297,7 @@ function Record() {
                         marginBottom: '5px',
                         width: 270,
                         lineHeight: 1.5,
+                        textAlign: 'center',
                     }}
                 >
                     {param.when === 'supplement'

@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
 export const Box = styled.div`
-    margin-top: 40px;
+    margin-top: 25px;
     width: 300px;
     display: flex;
     flex-direction: column;
     justify-items: space-between;
     padding: 10px;
+    align-items: center;
     a {
         text-decoration: none;
     }
@@ -23,7 +24,7 @@ export const Tab = styled.div`
 `;
 
 export const Icon = styled.img`
-    width: 30px;
+    width: 33px;
     margin-bottom: 10px;
 `;
 export const IconBox = styled.div`
@@ -41,7 +42,7 @@ export const Name = styled.span`
 `;
 
 export const IconName = styled(Name)`
-    font-size: 10px;
+    font-size: 11px;
     color: rgba(0, 0, 0, 0.8);
     font-weight: bold;
     width: 100%;
