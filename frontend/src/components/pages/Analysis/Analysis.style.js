@@ -10,7 +10,7 @@ export const Box = styled.div`
     @media all and (max-width: 490px){
         grid-template-columns: repeat(3, 1fr); 
     }
-    @media all and (max-width: 360px) {
+    @media all and (max-width: 340px) {
         grid-template-columns: repeat(2, 1fr);
     }
     grid-template-columns: repeat(4, 1fr);
@@ -83,7 +83,7 @@ export const FetchButton = styled.button`
         }
         @media all and (max-width: 389px) {
             font-size: 10px;
-    }
+        }
     }
 `;
 
@@ -92,10 +92,11 @@ export const SectionTitle = styled.div`
     padding: 10px 5px;
     font-size: 12px;
     font-weight: 600;
+    border-top: 1px dotted #8d8d8d;
     border-bottom: 1px dotted #8d8d8d;
     margin-top: 30px;
-    @media all and (max-width: 480px) {
-            width: 83%;
+    @media all and (max-width: 680px) {
+            width: 90%;
         }
 `;
 export const NutrientBox = styled.div`
@@ -109,13 +110,22 @@ export const NutrientBox = styled.div`
 `;
 export const NutrientList = styled.div`
     box-sizing: border-box;
-    width: 40%;
-    min-height: 250px;
-    min-width: 115px;
+    width: 29%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
+    span{
+        padding: 8px 0;
+        @media all and (max-width: 390px) {
+            font-size: 11px;
+            padding: 6px 0;
+        }
+        @media all and (max-width: 320px) {
+            font-size: 10px;
+            padding: 4px 0;
+        }
+    }
 `;
 
 export const Divider = styled.div`

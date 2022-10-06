@@ -483,7 +483,7 @@ const Analysis = () => {
                 {isDateSelected ? null : (
                     <Name
                         style={{
-                            width: '80%',
+                            width: '90%',
                             marginTop: 40,
                             whiteSpace: 'normal',
                             lineHeight: 2,
@@ -654,6 +654,7 @@ const Analysis = () => {
                                     <div
                                         style={{
                                             width: '90%',
+                                            marginBottom: '30px',
                                         }}
                                     >
                                         <BarGraph

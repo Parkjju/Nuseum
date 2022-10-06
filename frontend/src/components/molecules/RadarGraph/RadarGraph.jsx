@@ -106,6 +106,7 @@ const RadarGraph = ({ data }) => {
                                     family: 'Noto Serif KR,serif',
                                     size: 11,
                                 },
+                                boxWidth:20
                             },
                         },
                     },
@@ -114,7 +115,7 @@ const RadarGraph = ({ data }) => {
                             pointLabels: {
                                 font: {
                                     family: 'Noto Serif KR,serif',
-                                    size: 9,
+                                    size: 10,
                                 },
                             },
                             max: 100,
