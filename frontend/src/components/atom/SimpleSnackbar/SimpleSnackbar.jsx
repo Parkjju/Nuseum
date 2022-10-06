@@ -32,9 +32,11 @@ export default function SimpleSnackbar() {
 
     const action = (
         <React.Fragment>
-            <Button color='secondary' size='small' onClick={handleUpdate}>
-                닫기
-            </Button>
+            {/* <Button
+                color='secondary'
+                size='small'
+                onClick={handleUpdate}
+            ></Button> */}
             <IconButton
                 size='small'
                 aria-label='close'
