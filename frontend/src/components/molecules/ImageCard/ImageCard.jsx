@@ -150,7 +150,9 @@ const ImageCard = ({ isSaved, index, data, setFetchedSupplement }) => {
                                 await axios.delete(
                                     `/api/v1/consumption/supplement/${data.id}/`,
                                     {
-                                        headers: `Bearer ${token}`,
+                                        headers: {
+                                            Authorization: `Bearer ${token}`,
+                                        },
                                     }
                                 );
 
@@ -173,7 +175,7 @@ const ImageCard = ({ isSaved, index, data, setFetchedSupplement }) => {
                             alert('영양제 정보가 삭제되었습니다!');
                         } catch (err) {
                             console.log(err);
-                            if (err.response.status === 401) {
+                            if (err.response?.status === 401) {
                                 const { exp, token } = await handleExpired();
                                 dispatch(
                                     authActions.login({
