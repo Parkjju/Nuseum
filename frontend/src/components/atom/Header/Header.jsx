@@ -96,23 +96,25 @@ const Header = () => {
 
                     <Icon
                         onClick={async () => {
-                            if (homeActive) {
-                                try {
-                                    await axios.post(
-                                        'https://www.nuseum.site/api/v1/account/logout/'
-                                    );
+                            if (window.confirm('로그아웃 하시겠습니까?')) {
+                                if (homeActive) {
+                                    try {
+                                        await axios.post(
+                                            'https://www.nuseum.site/api/v1/account/logout/'
+                                        );
 
-                                    dispatch(authActions.logout());
-                                    window.sessionStorage.removeItem(
-                                        'isLoggedIn'
-                                    );
-                                    alert('로그아웃 되었습니다!');
-                                    navigate('/login');
-                                } catch (error) {
-                                    console.log(error);
+                                        dispatch(authActions.logout());
+                                        window.sessionStorage.removeItem(
+                                            'isLoggedIn'
+                                        );
+                                        alert('로그아웃 되었습니다!');
+                                        navigate('/login');
+                                    } catch (error) {
+                                        console.log(error);
+                                    }
+                                } else {
+                                    return null;
                                 }
-                            } else {
-                                return null;
                             }
                         }}
                         active={homeActive}
