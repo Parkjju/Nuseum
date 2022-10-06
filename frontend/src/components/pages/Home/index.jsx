@@ -53,7 +53,7 @@ function Home() {
                 <DiaryTitle layoutId={menu[0][2]}>
                     <Name
                         style={{
-                            width: '80%',
+                            width: '90%',
                             textAlign: 'center',
                             fontSize: '16px',
                             fontWeight: 'bold',

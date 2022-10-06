@@ -4,7 +4,6 @@ import styled from 'styled-components';
 export const DiaryTitle = styled.div`
     padding: 10px 0;
     width: 80%;
-    height: 60px;
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
