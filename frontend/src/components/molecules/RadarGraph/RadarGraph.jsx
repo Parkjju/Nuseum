@@ -117,8 +117,10 @@ const RadarGraph = ({ data }) => {
                                     size: 9,
                                 },
                             },
+                            max: 100,
                         },
                     },
+
                     elements: {
                         point: {
                             radius: 2,
