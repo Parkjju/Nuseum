@@ -26,6 +26,7 @@ export default function SimpleSnackbar() {
     };
     const handleUpdate = () => {
         sessionStorage.setItem('updated', false);
+        self.opener = self;
         window.close();
     };
 
