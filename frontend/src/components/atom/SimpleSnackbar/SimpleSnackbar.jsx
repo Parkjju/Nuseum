@@ -26,13 +26,13 @@ export default function SimpleSnackbar() {
     };
     const handleUpdate = () => {
         sessionStorage.setItem('updated', false);
-        location.reload();
+        window.close();
     };
 
     const action = (
         <React.Fragment>
             <Button color='secondary' size='small' onClick={handleUpdate}>
-                새로고침
+                닫기
             </Button>
             <IconButton
                 size='small'
@@ -51,7 +51,7 @@ export default function SimpleSnackbar() {
                 open={open}
                 autoHideDuration={6000}
                 onClose={handleClose}
-                message='버전이 업데이트 되었습니다. 버튼을 눌러 새로고침 해주세요!'
+                message='버전이 업데이트 되었습니다. 탭을 닫은 뒤 다시 접속해주세요!'
                 action={action}
             />
         </div>
