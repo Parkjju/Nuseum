@@ -18,7 +18,7 @@ ChartJS.register(
 );
 ChartJS.defaults.font.size = 8;
 
-const RadarGraph = ({ data }) => {
+const RadarGraph = ({ dateCount, data }) => {
     let dataForRadar = {
         labels: [
             // 'A',
@@ -48,33 +48,64 @@ const RadarGraph = ({ data }) => {
             {
                 label: '충분/권장섭취량 대비 실제섭취량(%)',
                 data: [
-                    (+data.dha_epa / 300) * 100 > 100
+                    ((+data.dha_epa / (300 * dateCount)) * 100).toFixed(1) > 100
                         ? 100
-                        : (+data.dha_epa / 300) * 100,
-                    (+data.folic_acid / 180) * 100 > 100
+                        : ((+data.dha_epa / (300 * dateCount)) * 100).toFixed(
+                              1
+                          ) * 100,
+                    ((+data.folic_acid / (180 * dateCount)) * 100).toFixed(1) >
+                    100
                         ? 100
-                        : (+data.folic_acid / 180) * 100,
-                    (+data.magnesium / 110) * 100 > 100
+                        : (
+                              (+data.folic_acid / (180 * dateCount)) *
+                              100
+                          ).toFixed(1),
+                    ((+data.magnesium / (110 * dateCount)) * 100).toFixed(1) >
+                    100
                         ? 100
-                        : (+data.magnesium / 110) * 100,
-                    (+data.tryptophan / 100) * 100 > 100
+                        : ((+data.magnesium / (110 * dateCount)) * 100).toFixed(
+                              1
+                          ),
+                    ((+data.tryptophan / (100 * dateCount)) * 100).toFixed(1) >
+                    100
                         ? 100
-                        : (+data.tryptophan / 100) * 100,
-                    (+data.vitamin_a / 300) * 100 > 100
+                        : (
+                              (+data.tryptophan / (100 * dateCount)) *
+                              100
+                          ).toFixed(1),
+                    ((+data.vitamin_a / (300 * dateCount)) * 100).toFixed(1) >
+                    100
                         ? 100
-                        : (+data.vitamin_a / 300) * 100,
-                    (+data.dietary_fiber / 20) * 100 > 100
+                        : ((+data.vitamin_a / (300 * dateCount)) * 100).toFixed(
+                              1
+                          ),
+                    ((+data.dietary_fiber / (20 * dateCount)) * 100).toFixed(
+                        1
+                    ) > 100
                         ? 100
-                        : (+data.dietary_fiber / 20) * 100,
-                    (+data.vitamin_b6 / 0.7) * 100 > 100
+                        : (
+                              (+data.dietary_fiber / (20 * dateCount)) *
+                              100
+                          ).toFixed(1),
+                    ((+data.vitamin_b6 / (0.7 * dateCount)) * 100).toFixed(1) >
+                    100
                         ? 100
-                        : (+data.vitamin_b6 / 0.7) * 100,
-                    (+data.vitamin_b12 / 1.1) * 100 > 100
+                        : (
+                              (+data.vitamin_b6 / (0.7 * dateCount)) *
+                              100
+                          ).toFixed(1),
+                    ((+data.vitamin_b12 / (1.1 * dateCount)) * 100).toFixed(1) >
+                    100
                         ? 100
-                        : (+data.vitamin_b12 / 1.1) * 100,
-                    (+data.vitamin_d / 5) * 100 > 100
+                        : (
+                              (+data.vitamin_b12 / (1.1 * dateCount)) *
+                              100
+                          ).toFixed(1),
+                    ((+data.vitamin_d / (5 * dateCount)) * 100).toFixed(1) > 100
                         ? 100
-                        : (+data.vitamin_d / 5) * 100,
+                        : ((+data.vitamin_d / (5 * dateCount)) * 100).toFixed(
+                              1
+                          ),
                 ],
                 backgroundColor: '#BEC5C6',
                 borderColor: 'black',
@@ -106,7 +137,7 @@ const RadarGraph = ({ data }) => {
                                     family: 'Noto Serif KR,serif',
                                     size: 11,
                                 },
-                                boxWidth:20
+                                boxWidth: 20,
                             },
                         },
                     },

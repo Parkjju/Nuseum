@@ -473,10 +473,12 @@ const Analysis = () => {
     return (
         <Container>
             <Contents>
-                <DiaryTitle style={{
+                <DiaryTitle
+                    style={{
                         height: 'auto',
-                    }}>
-                    <Name style={{fontSize:'16px'}}>식이분석</Name>
+                    }}
+                >
+                    <Name style={{ fontSize: '16px' }}>식이분석</Name>
                 </DiaryTitle>
                 <Calendar locale='en-US' onChange={onChange} value={date} />
 
@@ -490,7 +492,7 @@ const Analysis = () => {
                             textAlign: 'center',
                             color: '#7E8C8D',
                             fontWeight: 500,
-                            fontSize: '13px'
+                            fontSize: '13px',
                         }}
                     >
                         식이분석내용을 확인하고 싶은 날짜를 클릭해주세요 :)
@@ -537,11 +539,18 @@ const Analysis = () => {
                                 <CircularProgress />
                             ) : (
                                 <>
-                                    <S.SectionTitle>                                        
-                                        <p style={{ lineHeight: 1.5 , fontWeight: 500}}>
-                                        아래의 영양성분들은 신경행동발달에 영향을 미치는 영양성분들에 
-                                        대해 총 1,787개의 논문들을 리뷰하여 선별되었으며 
-                                        이들에 대한 섭취내용을 분석합니다.
+                                    <S.SectionTitle>
+                                        <p
+                                            style={{
+                                                lineHeight: 1.5,
+                                                fontWeight: 500,
+                                            }}
+                                        >
+                                            아래의 영양성분들은 신경행동발달에
+                                            영향을 미치는 영양성분들에 대해 총
+                                            1,787개의 논문들을 리뷰하여
+                                            선별되었으며 이들에 대한 섭취내용을
+                                            분석합니다.
                                         </p>
                                     </S.SectionTitle>
                                     <S.NutrientBox>
@@ -648,7 +657,10 @@ const Analysis = () => {
                                                 boxSizing: 'border-box',
                                             }}
                                         >
-                                            <RadarGraph data={nutrition} />
+                                            <RadarGraph
+                                                dateCount={dateCount}
+                                                data={nutrition}
+                                            />
                                         </div>
                                     </S.NutrientBox>
                                     <div
@@ -662,14 +674,30 @@ const Analysis = () => {
                                             data={nutrition}
                                         />
                                     </div>
-                                    <S.SectionTitle>                                        
-                                        <p style={{ lineHeight: 1.5, fontWeight: 500 }}>
-                                        다양한 식품군의 섭취는 다양한 영양성분과 생리활성물질을 섭취하게 하고, 
-                                        이는 장내 다양한 미생물을 서식하게 하여, 건강한 뇌발달에 영향을 미칩니다. 섭취한 식품군과 섭취가 필요해 보이는 식품군을 분석합니다.
+                                    <S.SectionTitle>
+                                        <p
+                                            style={{
+                                                lineHeight: 1.5,
+                                                fontWeight: 500,
+                                            }}
+                                        >
+                                            다양한 식품군의 섭취는 다양한
+                                            영양성분과 생리활성물질을 섭취하게
+                                            하고, 이는 장내 다양한 미생물을
+                                            서식하게 하여, 건강한 뇌발달에
+                                            영향을 미칩니다. 섭취한 식품군과
+                                            섭취가 필요해 보이는 식품군을
+                                            분석합니다.
                                         </p>
                                     </S.SectionTitle>
                                     <S.Box>
-                                        <S.IconBox isPoint={true} style={{boxShadow : 'inset 0px 3px 7px rgba(0, 0, 0, 0.1)'}}>
+                                        <S.IconBox
+                                            isPoint={true}
+                                            style={{
+                                                boxShadow:
+                                                    'inset 0px 3px 7px rgba(0, 0, 0, 0.1)',
+                                            }}
+                                        >
                                             <Name
                                                 style={{
                                                     fontSize: '12px',
@@ -686,7 +714,14 @@ const Analysis = () => {
                                                     {(
                                                         (nutrientPoint / 9) *
                                                         100
-                                                    ).toFixed(0)} <span style={{fontSize:'17px'}}>점</span>
+                                                    ).toFixed(0)}{' '}
+                                                    <span
+                                                        style={{
+                                                            fontSize: '17px',
+                                                        }}
+                                                    >
+                                                        점
+                                                    </span>
                                                 </S.Point>
                                             </S.IconWrapper>
                                             <Name
@@ -698,8 +733,8 @@ const Analysis = () => {
                                             >
                                                 {nutrientPoint}
                                                 /9
-                                            </Name>                                            
-                                        </S.IconBox>                                        
+                                            </Name>
+                                        </S.IconBox>
                                         {/* 아래부터 실제 데이터 */}
                                         <S.IconBox isEat={eatCategory[1]}>
                                             <S.IconWrapper>
