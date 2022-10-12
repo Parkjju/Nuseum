@@ -178,9 +178,13 @@ const Today = ({ date }) => {
                         paddingBottom: 30,
                     }}
                 >
-                    <Gauge water={waterAmount} maxWidth={boxWidth} style={{
-                        maxWidth: '100%'
-                    }}/>
+                    <Gauge
+                        water={waterAmount}
+                        maxWidth={boxWidth}
+                        style={{
+                            maxWidth: '100%',
+                        }}
+                    />
                 </Box>
             </Summary>
         </Contents>

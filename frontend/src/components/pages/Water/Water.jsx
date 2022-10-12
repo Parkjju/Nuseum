@@ -147,8 +147,8 @@ const Water = () => {
             }
             setCurrentAmount(amount);
             let id = setInterval(() => {
-                dispatch(action.addWaterAmount(50));
-                setCount((prev) => prev + 50);
+                dispatch(action.addWaterAmount(250));
+                setCount((prev) => prev + 250);
             }, 0);
             setIntervalId(id);
         },
