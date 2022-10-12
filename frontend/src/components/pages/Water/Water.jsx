@@ -25,7 +25,7 @@ const Water = () => {
 
     const [count, setCount] = useState(0);
     const [currentAmount, setCurrentAmount] = useState(0);
-    const [intervalId, setIntervalId] = useState(0);
+
     const boxRef = useRef();
     const [boxWidth, setBoxWidth] = useState(
         window.innerWidth > 800 ? 800 * 0.8 : window.innerWidth * 0.8
@@ -83,12 +83,10 @@ const Water = () => {
 
     useEffect(() => {
         if (count >= currentAmount) {
-            clearInterval(intervalId);
             setCount(0);
             setCurrentAmount(0);
-            setIntervalId(null);
         }
-    }, [water, count, currentAmount, intervalId, params.date]);
+    }, [water, count, currentAmount, params.date]);
 
     const sendWaterRequest = async () => {
         try {
@@ -146,11 +144,11 @@ const Water = () => {
                 return;
             }
             setCurrentAmount(amount);
-            let id = setInterval(() => {
-                dispatch(action.addWaterAmount(250));
-                setCount((prev) => prev + 250);
-            }, 0);
-            setIntervalId(id);
+            dispatch(action.addWaterAmount(250));
+            setCount((prev) => prev + 250);
+            // let id = setInterval(() => {
+            // }, 0);
+            // setIntervalId(id);
         },
         [water]
     );
@@ -183,16 +181,12 @@ const Water = () => {
                     marginTop: 30,
                 }}
             >
-                {intervalId ? (
-                    <CircularProgress sx={{ marginBottom: 30 }} />
-                ) : (
-                    <button
-                        style={{ width: 100, marginRight: 5 }}
-                        onClick={() => plusWater(250)}
-                    >
-                        250ml
-                    </button>
-                )}
+                <button
+                    style={{ width: 100, marginRight: 5 }}
+                    onClick={() => plusWater(250)}
+                >
+                    250ml
+                </button>
             </div>
             <div
                 style={{
