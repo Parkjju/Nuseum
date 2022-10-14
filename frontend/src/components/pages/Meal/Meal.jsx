@@ -5,6 +5,7 @@ import { SearchTitle } from '../../atom/Modal/styled';
 import FoodImg from '../../molecules/FoodImg/FoodImg';
 import { authActions } from '../../../store/auth-slice';
 import { postActions } from '../../../store/meal-slice/post-slice';
+import imageCompression from 'browser-image-compression';
 import {
     DiaryBody,
     Label,
@@ -161,6 +162,27 @@ const Meal = () => {
             setIsFetching(false);
         }
     }, [page, searchParam]);
+
+    const actionImgCompress = async (fileSrc) => {
+        const options = {
+            maxSizeMB: 3,
+            maxWidthOrHeight: 1920,
+            useWebWorker: true,
+        };
+        try {
+            // 압축 결과
+            const compressedFile = await imageCompression(fileSrc, options);
+
+            const reader = new FileReader();
+            reader.readAsDataURL(compressedFile);
+            reader.onloadend = () => {
+                const base64data = reader.result;
+                dispatch(postActions.addPostImage(base64data));
+            };
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     // 검색 음식명
     const [foodName, setFoodName] = useState();
