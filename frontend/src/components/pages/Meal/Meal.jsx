@@ -85,6 +85,7 @@ const Meal = () => {
                     );
                 } else {
                     alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                    setLoading(false);
                 }
                 setLoading(false);
             });
@@ -142,12 +143,14 @@ const Meal = () => {
                     },
                 }
             );
+
             setResult((prev) => [...prev, ...response.data.results]);
             setPage((prev) => prev + 1);
             setHasNextPage(response.data.next ? true : false);
             setIsFetching(false);
         } catch (err) {
             console.log(err);
+
             if (err.response.status === 401) {
                 const { exp, token } = await handleExpired();
                 dispatch(
@@ -161,7 +164,7 @@ const Meal = () => {
             }
             setIsFetching(false);
         }
-    }, [page, searchParam]);
+    }, [page]);
 
     const actionImgCompress = async (fileSrc) => {
         const options = {
@@ -242,6 +245,7 @@ const Meal = () => {
             actionImgCompress(e.target.files[0]);
         }
     };
+
     const onSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
@@ -256,7 +260,7 @@ const Meal = () => {
                     alert('검색 결과가 없어요!');
                 } else {
                     setResult(response.data.results);
-                    console.log(response.data);
+                    setHasNextPage(response.data.next ? true : false);
                 }
             })
             .catch(async (err) => {
