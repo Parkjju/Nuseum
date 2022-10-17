@@ -222,6 +222,8 @@ const Meal = () => {
                     }
                 );
                 setLoading(false);
+                dispatch(postActions.removeAll());
+                location.reload();
                 alert('일지 작성이 완료되었습니다!');
             } catch (err) {
                 console.log(err);
