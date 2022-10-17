@@ -39,6 +39,7 @@ const Meal = () => {
     const [loading, setLoading] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
+    console.log(image, forPostImage);
     const data = useSelector((state) =>
         param.when !== 'water' ? state[param.when].data : null
     );
@@ -66,6 +67,7 @@ const Meal = () => {
                     if (response.data?.images.length > 0) {
                         dispatch(action.getImage(response.data.images));
                     }
+
                     setLoading(false);
                 }
             })
@@ -99,12 +101,12 @@ const Meal = () => {
         // }
         if (param.when === 'supplement') return;
         if (param.when === 'today') return;
-        dispatch(action.removeAll());
-        dispatch(postActions.removeAll());
         setLoading(true);
+        // 데이터 fetch이전 초기화진행
+        dispatch(action.removeAll());
 
         fetchData();
-    }, [dispatch, token]);
+    }, [dispatch]);
     // 액션 훅 호출
     const action = useActions(param.when);
 
@@ -222,8 +224,9 @@ const Meal = () => {
                     }
                 );
                 setLoading(false);
+                dispatch(action.getData(forPostData));
+                dispatch(action.getImage(forPostImage));
                 dispatch(postActions.removeAll());
-                location.reload();
                 alert('일지 작성이 완료되었습니다!');
             } catch (err) {
                 console.log(err);
@@ -231,14 +234,14 @@ const Meal = () => {
                 setLoading(false);
             }
         } else if (forPostData.length === 0 && forPostImage.length === 0) {
-            if (isChanged) {
-                // 사용자 눈속임
-                setLoading(true);
-                setTimeout(() => {
-                    setLoading(false);
-                    alert('일기 수정이 완료되었습니다!');
-                }, 1000);
-            }
+            // 사용자 눈속임
+            setLoading(true);
+            setTimeout(() => {
+                dispatch(postActions.removeAll());
+
+                setLoading(false);
+                alert('일기 수정이 완료되었습니다!');
+            }, 1000);
         }
     };
 
