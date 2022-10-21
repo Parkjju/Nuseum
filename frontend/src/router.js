@@ -12,6 +12,7 @@ import Question from './components/pages/Question';
 import QuestionDetail from './components/pages/QuestionDetail';
 import QuestionForm from './components/pages/QuestionForm';
 import Record from './components/pages/Record';
+import My from './components/pages/My';
 // import MailDetail from './components/atom/New/MailDetail';
 
 function Router() {
@@ -34,6 +35,7 @@ function Router() {
                 <Route path='/question' element={<Question />} />
                 <Route path='/question/post' element={<QuestionForm />} />
                 <Route path='/question/:id' element={<QuestionDetail />} />
+                <Route path='/record' element={<My />} />
                 {/* <Route path='*' element={<NotFound />} /> */}
             </Routes>
         </BrowserRouter>
