@@ -7,23 +7,10 @@ import { authActions } from '../../../store/auth-slice';
 // import { Document, Page } from 'react-pdf';
 import Container from '../../atom/Container';
 import { Contents } from '../Home/styled';
-import { pdfjs } from 'react-pdf';
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-import {
-    PDFViewer,
-    Document,
-    Page,
-    Text,
-    View,
-    StyleSheet,
-} from '@react-pdf/renderer';
 
 const My = () => {
     const token = useSelector((state) => state.auth.token);
     const [user, setUser] = useState('');
-    const dispatch = useDispatch();
-    const [numPages, setNumPages] = useState(null);
-    const [pageNumber, setPageNumber] = useState(1);
 
     useEffect(() => {
         axios
@@ -34,10 +21,6 @@ const My = () => {
             })
             .then((response) => setUser(response.data.user));
     }, []);
-
-    const onDocumentLoadSuccess = ({ numPages }) => {
-        setNumPages(numPages);
-    };
 
     return (
         <Container>
