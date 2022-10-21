@@ -14,7 +14,7 @@ import supplement from '../../../assets/curation/supplement.png';
 import vegetable from '../../../assets/curation/vegetable.png';
 import axios from 'axios';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import handleExpired from '../../../helpers/handleExpired';
 import { authActions } from '../../../store/auth-slice';
 import { useState } from 'react';
@@ -102,6 +102,7 @@ const dummyData = {
 };
 
 const Curation = () => {
+    const dispatch = useDispatch();
     const [recommendId, setRecommendId] = useState(null);
     const token = useSelector((state) => state.auth.token);
     const [recommendData, setRecommendData] = useState(null);
@@ -113,10 +114,11 @@ const Curation = () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
+            console.log(response);
             setRecommendId(response.data[0].id);
         } catch (err) {
             console.log(err);
-            if (err.response.status === 401) {
+            if (err.response?.status === 401) {
                 const { exp, token } = await handleExpired();
                 dispatch(
                     authActions.login({
@@ -127,7 +129,6 @@ const Curation = () => {
             } else {
                 alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
             }
-            setLoading(false);
         }
     };
     console.log(recommendData);
@@ -143,7 +144,7 @@ const Curation = () => {
                 }
             );
             setRecommendData(response.data);
-        } catch (error) {
+        } catch (err) {
             console.log(err);
             if (err.response.status === 401) {
                 const { exp, token } = await handleExpired();
@@ -156,7 +157,6 @@ const Curation = () => {
             } else {
                 alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
             }
-            setLoading(false);
         }
     };
 
