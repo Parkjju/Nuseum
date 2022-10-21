@@ -7,8 +7,8 @@ export const Box = styled.div`
     @media all and (max-width: 550px) {
         width: 91%;
     }
-    @media all and (max-width: 490px){
-        grid-template-columns: repeat(3, 1fr); 
+    @media all and (max-width: 490px) {
+        grid-template-columns: repeat(3, 1fr);
     }
     @media all and (max-width: 340px) {
         grid-template-columns: repeat(2, 1fr);
@@ -29,9 +29,17 @@ export const IconBox = styled.div`
     justify-content: center;
     align-items: center;
     background-color: ${(props) =>
-        props.isEat ? 'rgba(238, 238, 238, 0.5)' : props.isPoint ? '#BFC5C6' : null};
-    box-shadow: ${(props) => 
-        props.isEat ? '0px 3px 3px rgba(0, 0, 0, 0.1)' : props.isPoint ? 'none' : null};
+        props.isEat
+            ? 'rgba(238, 238, 238, 0.5)'
+            : props.isPoint
+            ? '#BFC5C6'
+            : null};
+    box-shadow: ${(props) =>
+        props.isEat
+            ? '0px 3px 3px rgba(0, 0, 0, 0.1)'
+            : props.isPoint
+            ? 'none'
+            : null};
     border-radius: 20px;
     padding: 10px;
 `;
@@ -55,10 +63,10 @@ export const ButtonBox = styled.div`
     justify-content: space-between;
     width: 85%;
     @media all and (max-width: 480px) {
-            width: 90%;
-        }
+        width: 90%;
+    }
     @media all and (max-width: 389px) {
-            width: 97%;
+        width: 97%;
     }
 `;
 
@@ -75,8 +83,9 @@ export const FetchButton = styled.button`
     font-size: 8px;
     border: none;
     cursor: pointer;
-    box-shadow: ${(props) => (props.isClicked ? '0px 3px 3px rgba(0, 0, 0, 0.2)' : 'none')};
-    span{
+    box-shadow: ${(props) =>
+        props.isClicked ? '0px 3px 3px rgba(0, 0, 0, 0.2)' : 'none'};
+    span {
         font-size: 12px;
         @media all and (max-width: 480px) {
             font-size: 11px;
@@ -96,8 +105,8 @@ export const SectionTitle = styled.div`
     border-bottom: 1px dotted #8d8d8d;
     margin-top: 30px;
     @media all and (max-width: 680px) {
-            width: 90%;
-        }
+        width: 90%;
+    }
 `;
 export const NutrientBox = styled.div`
     box-sizing: border-box;
@@ -115,7 +124,7 @@ export const NutrientList = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
-    span{
+    span {
         padding: 8px 0;
         @media all and (max-width: 390px) {
             font-size: 11px;

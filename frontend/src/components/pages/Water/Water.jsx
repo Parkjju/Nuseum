@@ -10,8 +10,8 @@ import useActions from '../../../hooks/useActions';
 import jwt_decode from 'jwt-decode';
 import { authActions } from '../../../store/auth-slice';
 import handleExpired from '../../../helpers/handleExpired';
+import { waterActions } from '../../../store/water-slice';
 
-let initial = true;
 const Water = () => {
     const params = useParams();
     const token = useSelector((state) => state.auth.token);
@@ -42,25 +42,22 @@ const Water = () => {
     };
 
     useEffect(() => {
-        // 두번 실행됨
-        // if (initial) {
-        //     initial = false;
-        //     return;
-        // } else {
-        //     initial = true;
-        // }
         setLoading(true);
         axios
             .get(`/api/v1/consumption/water/?date=${params.date}`, {
                 headers: { Authorization: `Bearer ${token}` },
             })
             .then((response) => {
+                console.log(response.data);
+
                 if (response.data.length === 0) {
+                    dispatch(action.removeAll());
+                    dispatch(action.getId(null));
                     setLoading(false);
                     return;
                 }
-
-                dispatch(action.addWaterAmount(response.data[0].amount));
+                console.log(response.data[0]);
+                dispatch(action.initializeAmount(response.data[0].amount));
                 dispatch(action.getId(response.data[0].id));
                 setLoading(false);
             })

@@ -27,6 +27,7 @@ const Meal = () => {
     const forPostImage = useSelector((state) => state.post.image);
     const forPostData = useSelector((state) => state.post.data);
     const token = useSelector((state) => state.auth.token);
+    const [isChanged, setIsChanged] = useState(false);
 
     const [page, setPage] = useState(2);
     const [hasNextPage, setHasNextPage] = useState(true);
@@ -39,7 +40,6 @@ const Meal = () => {
     const [loading, setLoading] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
-    console.log(image, forPostImage);
     const data = useSelector((state) =>
         param.when !== 'water' ? state[param.when].data : null
     );
@@ -106,7 +106,8 @@ const Meal = () => {
         dispatch(action.removeAll());
 
         fetchData();
-    }, [dispatch]);
+        // token에러 발생 후 재요청 필요
+    }, [token, isChanged]);
     // 액션 훅 호출
     const action = useActions(param.when);
 
@@ -228,20 +229,16 @@ const Meal = () => {
                 dispatch(action.getImage(forPostImage));
                 dispatch(postActions.removeAll());
                 alert('일지 작성이 완료되었습니다!');
+                setIsChanged((prev) => !prev);
             } catch (err) {
                 console.log(err);
                 alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 setLoading(false);
             }
         } else if (forPostData.length === 0 && forPostImage.length === 0) {
-            // 사용자 눈속임
             setLoading(true);
-            setTimeout(() => {
-                dispatch(postActions.removeAll());
-
-                setLoading(false);
-                alert('일기 수정이 완료되었습니다!');
-            }, 1000);
+            setIsChanged((prev) => !prev);
+            alert('일기 수정이 완료되었습니다!');
         }
     };
 

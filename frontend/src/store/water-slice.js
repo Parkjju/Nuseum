@@ -9,6 +9,9 @@ const waterSlice = createSlice({
     name: 'water',
     initialState,
     reducers: {
+        initializeAmount(state, action) {
+            state.amount = action.payload;
+        },
         addWaterAmount(state, action) {
             state.amount = state.amount + action.payload;
         },
