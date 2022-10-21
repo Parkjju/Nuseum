@@ -118,6 +118,7 @@ const Curation = () => {
             setRecommendId(response.data[0].id);
         } catch (err) {
             console.log(err);
+            if (!recommendId) return;
             if (err.response?.status === 401) {
                 const { exp, token } = await handleExpired();
                 dispatch(
@@ -127,6 +128,7 @@ const Curation = () => {
                     })
                 );
             } else {
+                if (!recommendId) return;
                 alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
             }
         }
@@ -146,6 +148,7 @@ const Curation = () => {
             setRecommendData(response.data);
         } catch (err) {
             console.log(err);
+            if (!recommendId) return;
             if (err.response.status === 401) {
                 const { exp, token } = await handleExpired();
                 dispatch(
