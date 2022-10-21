@@ -25,15 +25,12 @@ const My = () => {
     return (
         <Container>
             <Contents>
-                {user === 'NPP02' ? (
-                    <embed
-                        src='https://s3.ap-northeast-2.amazonaws.com/jinhyung.test.aws/result/NPP02/2022.10.20+%EC%9D%BC%EB%B0%98%EA%B2%B0%EA%B3%BC%EC%A7%80+(NPP-02+%E3%84%B1%E3%85%8E%E3%84%B9).pdf#toolbar=0&navpanes=0&scrollbar=0'
-                        type='application/pdf'
-                        frameBorder='0'
-                        scrolling='auto'
-                        height={1000}
+                {user === 'NPP02' || user === '오이' ? (
+                    <object
                         width='100%'
-                    ></embed>
+                        height='1000'
+                        data='https://s3.ap-northeast-2.amazonaws.com/jinhyung.test.aws/result/NPP02/2022.10.20+%EC%9D%BC%EB%B0%98%EA%B2%B0%EA%B3%BC%EC%A7%80+(NPP-02+%E3%84%B1%E3%85%8E%E3%84%B9).pdf'
+                    ></object>
                 ) : null}
             </Contents>
         </Container>
