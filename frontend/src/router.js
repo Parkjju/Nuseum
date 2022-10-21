@@ -12,7 +12,7 @@ import Question from './components/pages/Question';
 import QuestionDetail from './components/pages/QuestionDetail';
 import QuestionForm from './components/pages/QuestionForm';
 import Record from './components/pages/Record';
-import MailDetail from './components/atom/New/MailDetail';
+// import MailDetail from './components/atom/New/MailDetail';
 
 function Router() {
     return (
@@ -22,7 +22,7 @@ function Router() {
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='/' element={<Home />}>
-                    <Route path='/:id' element={<MailDetail />} />
+                    {/* <Route path='/:id' element={<MailDetail />} /> */}
                 </Route>
 
                 <Route path='/diary' element={<DiaryCalendar />}>
