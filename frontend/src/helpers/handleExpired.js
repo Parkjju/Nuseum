@@ -22,6 +22,7 @@ export const checkBrowser = () => {
     return browserName;
 };
 
+let init = true;
 export const handleExpired = async () => {
     try {
         const response = await axios.post(
@@ -40,10 +41,14 @@ export const handleExpired = async () => {
             case 'Token is blacklisted':
                 return (() => {
                     alert(
-                        '다른 기기에서의 접속이 이루어졌습니다. 다시 로그인해주세요!'
+                        '세션이 만료되었거나 다른 곳에서 접속이 이루어졌습니다. 다시 로그인해주세요!'
                     );
-                    location.pathname = '/login';
+                    if (location.pathname !== '/login') {
+                        location.pathname = '/login';
+                    }
                 })();
+
+                break;
             case 'Token is invalid or expired':
                 return (() => {
                     alert('세션이 만료되었습니다. 다시 로그인해주세요!');
