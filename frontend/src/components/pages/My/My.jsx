@@ -103,7 +103,7 @@ const My = () => {
                     loading={
                         <div
                             style={{
-                                width: window.innerWidth,
+                                width,
                                 display: 'flex',
                                 justifyContent: 'center',
                             }}
