@@ -100,7 +100,17 @@ const My = () => {
                         cMapPacked: true,
                     }}
                     file={url}
-                    loading={<CircularProgress style={{ margin: '0 auto' }} />}
+                    loading={
+                        <div
+                            style={{
+                                width: window.innerWidth,
+                                display: 'flex',
+                                justifyContent: 'center',
+                            }}
+                        >
+                            <CircularProgress style={{ margin: '0 auto' }} />
+                        </div>
+                    }
                 >
                     <Page width={width} pageNumber={1} />
                 </Document>
