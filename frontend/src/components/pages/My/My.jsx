@@ -1,16 +1,69 @@
+import { CircularProgress } from '@mui/material';
 import axios from 'axios';
-import { useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useEffect } from 'react';
+// import * as pdfjs from '../../../../node_modules/pdfjs-dist/build/pdf';
+import { pdfjs } from 'react-pdf';
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+
+console.log('pdfjs: ', pdfjs);
+
+import { Page, Document } from 'react-pdf';
+
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import handleExpired from '../../../helpers/handleExpired';
 import { authActions } from '../../../store/auth-slice';
-// import { Document, Page } from 'react-pdf';
 import Container from '../../atom/Container';
-import { Contents } from '../Home/styled';
 
 const My = () => {
     const token = useSelector((state) => state.auth.token);
     const [user, setUser] = useState('');
+    const [url, setUrl] = useState('');
+    const canvasRef = useRef();
+
+    const [pdfRef, setPdfRef] = useState();
+
+    const width = 800 ? 800 : window.innerWidth;
+    const dispatch = useDispatch();
+
+    const renderPage = useCallback(
+        (pageNum, pdf = pdfRef) => {
+            pdf &&
+                pdf.getPage(pageNum).then(function (page) {
+                    const viewport = page.getViewport({ scale: 1.5 });
+                    const canvas = canvasRef.current;
+
+                    if (!canvas) return;
+
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+                    const renderContext = {
+                        canvasContext: canvas.getContext('2d'),
+                        viewport: viewport,
+                    };
+                    page.render(renderContext);
+                });
+        },
+        [pdfRef]
+    );
+    useEffect(() => {
+        if (!url) {
+            return;
+        }
+
+        const loadingTask = pdfjs.getDocument({
+            url,
+        });
+        loadingTask.promise.then(
+            (loadedPdf) => {
+                setPdfRef(loadedPdf);
+            },
+            function (reason) {
+                console.error(reason);
+            }
+        );
+    }, [url, pdfjs]);
 
     useEffect(() => {
         axios
@@ -19,21 +72,44 @@ const My = () => {
                     Authorization: `Bearer ${token}`,
                 },
             })
-            .then((response) => setUser(response.data.user));
-    }, []);
+            .then((response) => {
+                console.log('response', response.data);
+                setUser(response.data.user);
+                setUrl(response.data.data);
+            })
+            .catch(async (err) => {
+                if (err.response.status === 401) {
+                    const { exp, token } = await handleExpired();
+                    dispatch(
+                        authActions.login({
+                            token: token.data.access,
+                            exp,
+                        })
+                    );
+                } else {
+                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                }
+            });
+    }, [token]);
+
+    useEffect(() => {
+        renderPage(1, pdfRef);
+    }, [pdfRef, renderPage]);
 
     return (
         <Container>
-            <Contents>
-                {user === 'NPP02' || user === '오이' ? (
-                    <object
-                        data='https://s3.ap-northeast-2.amazonaws.com/jinhyung.test.aws/result/NPP02/2022.10.20+%EC%9D%BC%EB%B0%98%EA%B2%B0%EA%B3%BC%EC%A7%80+(NPP-02+%E3%84%B1%E3%85%8E%E3%84%B9).pdf'
-                        type='application/pdf'
-                        width='100%'
-                        height='1000px'
-                    ></object>
-                ) : null}
-            </Contents>
+            {url ? (
+                <Document
+                    options={{
+                        cMapUrl: `https://unpkg.com/pdfjs-dist@${pdfjs.version}/cmaps/`,
+                        cMapPacked: true,
+                    }}
+                    file={url}
+                    loading={<CircularProgress style={{ margin: '0 auto' }} />}
+                >
+                    <Page width={width} pageNumber={1} />
+                </Document>
+            ) : null}
         </Container>
     );
 };
