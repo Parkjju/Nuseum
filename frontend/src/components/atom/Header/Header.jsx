@@ -48,32 +48,32 @@ const Header = () => {
     }, [loc.pathname]);
 
     // 헤더 공지사항 GET 로직
-    useEffect(() => {
-        axios
-            .get('https://www.nuseum.site/api/v1/notice/', {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            .then((response) => {
-                setList(response.data);
-            })
-            .catch(async (err) => {
-                console.log(err);
-                if (err.response.status === 401) {
-                    const { exp, token } = await handleExpired();
-                    dispatch(
-                        authActions.login({
-                            token: token.data.access,
-                            exp,
-                        })
-                    );
-                } else {
-                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-                }
-                setLoading(false);
-            });
-    }, [token]);
+    // useEffect(() => {
+    //     axios
+    //         .get('https://www.nuseum.site/api/v1/notice/', {
+    //             headers: {
+    //                 Authorization: `Bearer ${token}`,
+    //             },
+    //         })
+    //         .then((response) => {
+    //             setList(response.data);
+    //         })
+    //         .catch(async (err) => {
+    //             console.log(err);
+    //             if (err.response.status === 401) {
+    //                 const { exp, token } = await handleExpired();
+    //                 dispatch(
+    //                     authActions.login({
+    //                         token: token.data.access,
+    //                         exp,
+    //                     })
+    //                 );
+    //             } else {
+    //                 alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+    //             }
+    //             setLoading(false);
+    //         });
+    // }, [token]);
 
     return (
         <HeaderBox>
