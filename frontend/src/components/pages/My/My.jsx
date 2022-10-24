@@ -6,8 +6,6 @@ import { useEffect } from 'react';
 import { pdfjs } from 'react-pdf';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-console.log('pdfjs: ', pdfjs);
-
 import { Page, Document } from 'react-pdf';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,13 +16,12 @@ import Container from '../../atom/Container';
 
 const My = () => {
     const token = useSelector((state) => state.auth.token);
-    const [user, setUser] = useState('');
     const [url, setUrl] = useState('');
     const canvasRef = useRef();
 
     const [pdfRef, setPdfRef] = useState();
 
-    const width = 800 ? 800 : window.innerWidth;
+    const width = window.innerWidth > 800 ? 800 : window.innerWidth;
     const dispatch = useDispatch();
 
     const renderPage = useCallback(
@@ -73,8 +70,6 @@ const My = () => {
                 },
             })
             .then((response) => {
-                console.log('response', response.data);
-                setUser(response.data.user);
                 setUrl(response.data.data);
             })
             .catch(async (err) => {
