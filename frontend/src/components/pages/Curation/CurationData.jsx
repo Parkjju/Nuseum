@@ -46,7 +46,11 @@ const CurationData = ({ data }) => {
                     />
                 ) : null}
                 <CurationTypeName>
-                    {data.type === '주의' ? '피해야할 식품' : data.type}
+                    {data.type === '주의'
+                        ? '피해야할 식품'
+                        : data.type === '영양제'
+                        ? '보충제'
+                        : data.type}
                 </CurationTypeName>
             </CurationType>
             <CurationFood>
