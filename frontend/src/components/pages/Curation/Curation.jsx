@@ -33,7 +33,7 @@ const Curation = () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            console.log('추천 결과들', response);
+
             setRecommendId(response.data[0].id);
         } catch (err) {
             console.log(err);
@@ -122,9 +122,6 @@ const Curation = () => {
                             ))}
                     </WarningList>
                 </WarningBox>
-                {console.log(
-                    recommendData?.data.filter((item) => item.type === '주의')
-                )}
 
                 <Title>내 아이 맞춤식품</Title>
                 <CurationDataWrapper rows={recommendData?.data.length / 2}>
@@ -132,6 +129,7 @@ const Curation = () => {
                         <CurationData data={item} key={index} />
                     ))}
                 </CurationDataWrapper>
+
                 <CommentBox>{recommendData?.comment}</CommentBox>
             </Contents>
         </Container>

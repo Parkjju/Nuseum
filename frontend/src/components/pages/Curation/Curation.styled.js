@@ -71,6 +71,7 @@ export const CommentBox = styled.div`
     line-height: 2;
     margin-top: 50px;
     border-radius: 30px;
+    white-space: pre-line;
 `;
 
 export const WarningBox = styled.div`
