@@ -90,7 +90,7 @@ const Curation = () => {
     return (
         <Container>
             <Contents>
-                <Title>피해야할 식품</Title>
+                <Title>피해야 할 식품</Title>
                 <WarningBox>
                     <WarningTitle>
                         <CurationTypeImage src={avoid} alt='피해야할 음식' />
