@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const CurationBox = styled.div`
     width: 100%;
-    height: 200px;
+    height: auto;
 `;
 
 export const CurationType = styled.div`
@@ -27,6 +27,7 @@ export const CurationTypeName = styled.span`
 
 export const CurationFood = styled.div`
     width: 100%;
+    height: auto;
     padding-top: 15px;
     padding-bottom: 15px;
     display: flex;

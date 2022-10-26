@@ -127,7 +127,7 @@ const Curation = () => {
                 )}
 
                 <Title>내 아이 맞춤식품</Title>
-                <CurationDataWrapper>
+                <CurationDataWrapper rows={recommendData?.data.length / 2}>
                     {recommendData?.data.map((item, index) => (
                         <CurationData data={item} key={index} />
                     ))}
