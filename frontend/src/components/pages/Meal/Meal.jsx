@@ -55,7 +55,6 @@ const Meal = () => {
             )
             .then((response) => {
                 if (response.data && response.data.length === 0) {
-                    setIsEmpty(true);
                     setLoading(false);
                 }
                 if (response.data && response.data?.length !== 0) {
@@ -127,7 +126,6 @@ const Meal = () => {
             }
         };
     }, [document.documentElement.scrollTop]);
-    console.log('isFetching?', isFetching);
 
     useEffect(() => {
         if (isFetching && hasNextPage) fetchFoods(); // nextPage가 null이면
@@ -135,6 +133,11 @@ const Meal = () => {
     }, [isFetching]);
 
     const fetchFoods = useCallback(async () => {
+        if (searchParam === '') {
+            setIsFetching(false);
+            setIsLoading(false);
+            return;
+        }
         try {
             const response = await axios.get(
                 `/api/v1/food/?page=${page}&search=${searchParam}`,
@@ -150,11 +153,12 @@ const Meal = () => {
             setIsFetching(false);
         } catch (error) {
             // handleExpired 로직 추가 필요
+            console.log(error);
         }
     }, [page, searchParam]);
 
     // 검색 음식명
-    const [foodName, setFoodName] = useState();
+    const [foodName, setFoodName] = useState('');
 
     const onChangeName = (e) => {
         setFoodName(e.target.value);
