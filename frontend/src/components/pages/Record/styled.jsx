@@ -13,7 +13,7 @@ export const DiaryTitle = styled.div`
         background-color: #ecf0f1;
         transition: 0.2s linear;
     } */
-    span{
+    span {
         font-size: 15px;
     }
 `;
