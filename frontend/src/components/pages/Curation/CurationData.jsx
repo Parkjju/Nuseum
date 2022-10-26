@@ -36,7 +36,7 @@ const images = {
     주의: avoid,
 };
 const CurationData = ({ data }) => {
-    return (
+    return data.type === '주의' ? null : (
         <CurationBox>
             <CurationType>
                 {images[data.type] ? (
@@ -53,7 +53,12 @@ const CurationData = ({ data }) => {
                 <CurationFoodTitle>{data.main}</CurationFoodTitle>
                 <CurationFoodList>
                     {data.list.map((item, index) => (
-                        <span key={index}>{item}</span>
+                        <span
+                            style={{ margin: 5, lineHeight: 1.5 }}
+                            key={index}
+                        >
+                            {item}
+                        </span>
                     ))}
                 </CurationFoodList>
             </CurationFood>
