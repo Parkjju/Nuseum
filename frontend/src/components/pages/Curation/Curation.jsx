@@ -1,30 +1,24 @@
 import Container from '../../atom/Container';
+import { AnimatePresence } from 'framer-motion';
 import { Contents } from '../Home/styled';
-import CurationData from './CurationData';
-import avoid from '../../../assets/curation/avoid.png';
+
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import handleExpired from '../../../helpers/handleExpired';
 import { authActions } from '../../../store/auth-slice';
 import { useState } from 'react';
-import {
-    CommentBox,
-    CurationDataWrapper,
-    CurationTypeImage,
-    Title,
-    WarningBox,
-    WarningFood,
-    WarningList,
-    WarningMain,
-    WarningTitle,
-} from './Curation.styled';
+import { Title } from './Curation.styled';
+import Slide from './components/Slide';
 
 const Curation = () => {
     const dispatch = useDispatch();
     const [recommendId, setRecommendId] = useState(null);
     const token = useSelector((state) => state.auth.token);
     const [recommendData, setRecommendData] = useState(null);
+    const [currentRecommendIndex, setCurrentRecommendIndex] = useState(-1);
+
+    const [recommendList, setRecommendList] = useState([]);
 
     const fetchId = async () => {
         try {
@@ -34,7 +28,8 @@ const Curation = () => {
                 },
             });
 
-            setRecommendId(response.data[0].id);
+            setRecommendId(response.data.at(currentRecommendIndex).id);
+            setRecommendList(response.data);
         } catch (err) {
             console.log(err);
             if (!recommendId) return;
@@ -87,50 +82,27 @@ const Curation = () => {
     useEffect(() => {
         fetchRecommend();
     }, [recommendId]);
+
+    useEffect(() => {
+        if (recommendList.length === 0) {
+            return;
+        }
+
+        setRecommendId(recommendList.at(currentRecommendIndex).id);
+    }, [currentRecommendIndex]);
+    console.log(recommendData);
+
     return (
         <Container>
             <Contents>
-                <Title>피해야 할 식품</Title>
-                <WarningBox>
-                    <WarningTitle>
-                        <CurationTypeImage src={avoid} alt='피해야할 음식' />
-                        <WarningMain>
-                            {
-                                recommendData?.data
-                                    .filter((item) => item.type === '주의')[0]
-                                    .main.split('(')[0]
-                            }
-
-                            {recommendData?.data
-                                .filter((item) => item.type === '주의')[0]
-                                .main.split('(')[1]
-                                ? `\n(${
-                                      recommendData?.data
-                                          .filter(
-                                              (item) => item.type === '주의'
-                                          )[0]
-                                          .main.split('(')[1]
-                                  }`
-                                : null}
-                        </WarningMain>
-                    </WarningTitle>
-                    <WarningList>
-                        {recommendData?.data
-                            .filter((item) => item.type === '주의')[0]
-                            .list.map((food, index) => (
-                                <WarningFood key={index}>{food}</WarningFood>
-                            ))}
-                    </WarningList>
-                </WarningBox>
-
-                <Title>내 아이 맞춤식품</Title>
-                <CurationDataWrapper rows={recommendData?.data.length / 2}>
-                    {recommendData?.data.map((item, index) => (
-                        <CurationData data={item} key={index} />
-                    ))}
-                </CurationDataWrapper>
-
-                <CommentBox>{recommendData?.comment}</CommentBox>
+                <AnimatePresence>
+                    <Slide
+                        setRecommendId={setRecommendId}
+                        recommendDataInfo={recommendList}
+                        recommendData={recommendData}
+                        setCurrentRecommendIndex={setCurrentRecommendIndex}
+                    />
+                </AnimatePresence>
             </Contents>
         </Container>
     );

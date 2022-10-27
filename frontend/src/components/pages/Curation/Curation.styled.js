@@ -40,8 +40,9 @@ export const CurationFood = styled.div`
 
 export const CurationFoodTitle = styled.span`
     font-size: 14px;
+    max-width: 60%;
     font-weight: 500;
-    border-bottom: 1px solid black;
+    text-decoration: underline;
     text-align: center;
 `;
 export const CurationFoodList = styled.div`
