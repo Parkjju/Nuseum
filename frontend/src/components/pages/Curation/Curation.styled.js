@@ -44,6 +44,7 @@ export const CurationFoodTitle = styled.span`
     font-weight: 500;
     text-decoration: underline;
     text-align: center;
+    line-height: 1.5;
 `;
 export const CurationFoodList = styled.div`
     min-height: 60px;
@@ -67,6 +68,7 @@ export const CommentBox = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     background-color: #e5e5e5;
     font-size: 14px;
     line-height: 2;
@@ -138,4 +140,11 @@ export const Title = styled.p`
     font-weight: 600;
     text-align: center;
     margin: 20px 0;
+`;
+export const HashTag = styled.a`
+    text-decoration: none;
+    color: #656f70;
+    &:hover {
+        opacity: 0.6;
+    }
 `;
