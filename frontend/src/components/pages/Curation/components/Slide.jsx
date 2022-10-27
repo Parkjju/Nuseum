@@ -2,90 +2,170 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
     CommentBox,
     CurationDataWrapper,
-    CurationTypeImage,
+    HashTag,
     Title,
-    WarningBox,
-    WarningFood,
-    WarningList,
-    WarningMain,
-    WarningTitle,
 } from '../Curation.styled';
 import CurationData from '../CurationData';
-import avoid from '../../../../assets/curation/avoid.png';
-import { useEffect } from 'react';
 
-const Slide = ({
-    recommendData,
-    recommendDataInfo,
-    setRecommend,
-    setCurrentRecommendIndex,
-}) => {
-    return (
-        <motion.div
-            style={{
-                width: '100%',
-                height: 'auto',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-            }}
-            initial={{ x: 300, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: -300, opacity: 0 }}
-            drag='x'
-            dragSnapToOrigin
-            onDragEnd={(event, info) => {
-                if (info.offset.x < -100) {
-                    setCurrentRecommendIndex((prev) => prev - 1);
-                } else if (info.offset.x > 100) {
-                    setCurrentRecommendIndex((prev) => prev + 1);
-                } else {
-                    console.log('no change');
+import React, { useEffect, useState } from 'react';
+import Warn from './Warn';
+import { useDispatch, useSelector } from 'react-redux';
+import { authActions } from '../../../../store/auth-slice';
+import handleExpired from '../../../../helpers/handleExpired';
+import axios from 'axios';
+
+const Slide = ({ date, id }) => {
+    const token = useSelector((state) => state.auth.token);
+    const dispatch = useDispatch();
+
+    // 각 id 메타데이터에 대한 실제 추천데이터
+    const [recommend, setRecommend] = useState({
+        data: [
+            {
+                type: '과일',
+                main: ' ',
+                list: [],
+                order: 0,
+            },
+            {
+                type: '채소',
+                main: ' ',
+                list: [],
+                order: 1,
+            },
+            {
+                type: '콩/두부',
+                main: ' ',
+                list: [],
+                order: 2,
+            },
+            {
+                type: '통곡물',
+                main: ' ',
+                list: [],
+                order: 3,
+            },
+            {
+                type: '버섯',
+                main: ' ',
+                list: [],
+                order: 4,
+            },
+            {
+                type: '해조류',
+                main: ' ',
+                list: [],
+                order: 5,
+            },
+            {
+                type: '견과',
+                main: ' ',
+                list: [],
+                order: 6,
+            },
+            {
+                type: '고기/생선/달걀',
+                main: ' ',
+                list: [],
+                order: 7,
+            },
+            {
+                type: '유제품',
+                main: ' ',
+                list: [],
+                order: 8,
+            },
+            {
+                type: '가공 식품',
+                main: ' ',
+                list: [],
+                order: 9,
+            },
+            {
+                type: '영양제',
+                main: ' ',
+                list: [],
+                order: 10,
+            },
+            {
+                type: '주의',
+                main: ' ',
+                list: [],
+                order: 11,
+            },
+        ],
+        comment: '',
+    });
+
+    const fetchRecommend = async () => {
+        try {
+            const response = await axios.get(
+                `/api/v1/recommendation/user/${id}/`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
                 }
-            }}
-        >
-            <Title>22.10.16</Title>
-            <Title>피해야 할 식품</Title>
-            <WarningBox>
-                <WarningTitle>
-                    <CurationTypeImage src={avoid} alt='피해야할 음식' />
-                    <WarningMain>
-                        {
-                            recommendData?.data
-                                .filter((item) => item.type === '주의')[0]
-                                .main.split('(')[0]
-                        }
+            );
+            setRecommend(response.data);
+        } catch (err) {
+            console.log(err);
+            if (!id) return;
+            if (err.response.status === 401) {
+                const { exp, token } = await handleExpired();
+                dispatch(
+                    authActions.login({
+                        token: token.data.access,
+                        exp,
+                    })
+                );
+            } else {
+                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+            }
+        }
+    };
+    useEffect(() => {
+        fetchRecommend();
+    }, [id]);
 
-                        {recommendData?.data
-                            .filter((item) => item.type === '주의')[0]
-                            .main.split('(')[1]
-                            ? `\n(${
-                                  recommendData?.data
-                                      .filter((item) => item.type === '주의')[0]
-                                      .main.split('(')[1]
-                              }`
-                            : null}
-                    </WarningMain>
-                </WarningTitle>
-                <WarningList>
-                    {recommendData?.data
-                        .filter((item) => item.type === '주의')[0]
-                        .list.map((food, index) => (
-                            <WarningFood key={index}>{food}</WarningFood>
-                        ))}
-                </WarningList>
-            </WarningBox>
+    return (
+        <>
+            <Title>{date.split('T')[0].split('-').join('.')}</Title>
+            <Warn recommendData={recommend} />
 
             <Title>내 아이 맞춤식품</Title>
-            <CurationDataWrapper rows={recommendData?.data.length / 2}>
-                {recommendData?.data.map((item, index) => (
+            <CurationDataWrapper rows={recommend?.data.length / 2}>
+                {recommend?.data.map((item, index) => (
                     <CurationData data={item} key={index} />
                 ))}
             </CurationDataWrapper>
 
-            <CommentBox>{recommendData?.comment}</CommentBox>
-        </motion.div>
+            <CommentBox>
+                {recommend?.comment}
+
+                <p
+                    style={{
+                        marginTop: 30,
+                        width: '80%',
+                        textAlign: 'center',
+                    }}
+                >
+                    {recommend?.hashtag?.split('#').map((tag, index) =>
+                        tag === '' ? null : (
+                            <HashTag
+                                href={`https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=${tag}`}
+                                target='_blank'
+                                key={index}
+                            >
+                                {' '}
+                                #{tag}
+                            </HashTag>
+                        )
+                    )}
+                </p>
+            </CommentBox>
+        </>
     );
 };
 
-export default Slide;
+export default React.memo(Slide);
