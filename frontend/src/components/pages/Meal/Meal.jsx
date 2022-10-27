@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Menu from '../../atom/Menu';
 import { SearchTitle } from '../../atom/Modal/styled';
 import FoodImg from '../../molecules/FoodImg/FoodImg';
+import imageCompression from 'browser-image-compression';
 import { authActions } from '../../../store/auth-slice';
 import { postActions } from '../../../store/meal-slice/post-slice';
 import {
@@ -209,7 +210,26 @@ const Meal = () => {
             }
         }
     };
+    const actionImgCompress = async (fileSrc) => {
+        const options = {
+            maxSizeMB: 3,
+            maxWidthOrHeight: 1920,
+            useWebWorker: true,
+        };
+        try {
+            // 압축 결과
+            const compressedFile = await imageCompression(fileSrc, options);
 
+            const reader = new FileReader();
+            reader.readAsDataURL(compressedFile);
+            reader.onloadend = () => {
+                const base64data = reader.result;
+                dispatch(postActions.addPostImage(base64data));
+            };
+        } catch (error) {
+            console.log(error);
+        }
+    };
     const onChange = (e) => {
         if (e.target.files && e.target.files.length > 0) {
             actionImgCompress(e.target.files[0]);
