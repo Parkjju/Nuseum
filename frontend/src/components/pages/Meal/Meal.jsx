@@ -103,7 +103,7 @@ const Meal = () => {
         setLoading(true);
 
         fetchData();
-    }, [dispatch]);
+    }, [dispatch, token]);
     // 액션 훅 호출
     const action = useActions(param.when);
 
@@ -136,6 +136,7 @@ const Meal = () => {
     const fetchFoods = useCallback(async () => {
         if (searchParam === '') {
             setIsFetching(false);
+            setIsLoading(false);
             return;
         }
         try {
@@ -152,22 +153,10 @@ const Meal = () => {
             setHasNextPage(response.data.next ? true : false);
             setIsFetching(false);
         } catch (error) {
-            console.log(err);
-
-            if (err.response.status === 401) {
-                const { exp, token } = await handleExpired();
-                dispatch(
-                    authActions.login({
-                        token: token.data.access,
-                        exp,
-                    })
-                );
-            } else {
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-            }
-            setIsFetching(false);
+            // handleExpired 로직 추가 필요
+            console.log(error);
         }
-    }, [page]);
+    }, [page, searchParam]);
 
     // 검색 음식명
     const [foodName, setFoodName] = useState('');
