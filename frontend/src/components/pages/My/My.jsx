@@ -1,5 +1,6 @@
 import { CircularProgress } from '@mui/material';
 import axios from 'axios';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useCallback, useRef, useState } from 'react';
 import { useEffect } from 'react';
 // import * as pdfjs from '../../../../node_modules/pdfjs-dist/build/pdf';
@@ -20,6 +21,11 @@ const My = () => {
     const canvasRef = useRef();
 
     const [pdfRef, setPdfRef] = useState();
+
+    const [isNegative, setIsNegative] = useState(false);
+    const [pageNum, setPageNum] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageNumArray, setPageNumArray] = useState([]);
 
     const width = window.innerWidth > 800 ? 800 : window.innerWidth;
     const dispatch = useDispatch();
@@ -44,6 +50,26 @@ const My = () => {
         },
         [pdfRef]
     );
+    const setNextPage = (event, info) => {
+        if (info.offset.x < -200) {
+            if (currentPage === pageNum) {
+                return;
+            }
+            setIsNegative(true);
+            setCurrentPage((prev) => prev + 1);
+
+            console.log('next!');
+        } else if (info.offset.x > 200) {
+            if (currentPage === 1) {
+                return;
+            }
+            setIsNegative(false);
+            setCurrentPage((prev) => prev - 1);
+            console.log('prev!');
+        } else {
+            console.log('no changes!');
+        }
+    };
     useEffect(() => {
         if (!url) {
             return;
@@ -88,32 +114,64 @@ const My = () => {
     }, [token]);
 
     useEffect(() => {
-        renderPage(1, pdfRef);
-    }, [pdfRef, renderPage]);
+        setPageNum(pdfRef?._pdfInfo.numPages);
+        renderPage(currentPage, pdfRef);
+        console.log('pdfRef', pdfRef);
+    }, [pdfRef, renderPage, currentPage]);
+
+    useEffect(() => {
+        let copy = [];
+        for (let i = 1; i <= pageNum; i++) {
+            copy.push(i);
+        }
+        setPageNumArray([...copy]);
+    }, [pageNum]);
+    console.log(pageNumArray);
 
     return (
         <Container>
             {url ? (
-                <Document
-                    options={{
-                        cMapUrl: `https://unpkg.com/pdfjs-dist@${pdfjs.version}/cmaps/`,
-                        cMapPacked: true,
-                    }}
-                    file={url}
-                    loading={
-                        <div
-                            style={{
-                                width,
-                                display: 'flex',
-                                justifyContent: 'center',
-                            }}
-                        >
-                            <CircularProgress style={{ margin: '0 auto' }} />
-                        </div>
-                    }
-                >
-                    <Page width={width} pageNumber={1} />
-                </Document>
+                <AnimatePresence>
+                    {pageNumArray.map((idx, index) =>
+                        idx === currentPage ? (
+                            <motion.div
+                                drag='x'
+                                onDragEnd={setNextPage}
+                                key={currentPage}
+                                dragSnapToOrigin
+                                initial={{ x: isNegative ? -300 : 300 }}
+                                animate={{ x: 0 }}
+                                transition='none'
+                            >
+                                <Document
+                                    options={{
+                                        cMapUrl: `https://unpkg.com/pdfjs-dist@${pdfjs.version}/cmaps/`,
+                                        cMapPacked: true,
+                                    }}
+                                    file={url}
+                                    loading={
+                                        <div
+                                            style={{
+                                                width,
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                            }}
+                                        >
+                                            <CircularProgress
+                                                style={{ margin: '0 auto' }}
+                                            />
+                                        </div>
+                                    }
+                                >
+                                    <Page
+                                        width={width}
+                                        pageNumber={currentPage}
+                                    />
+                                </Document>
+                            </motion.div>
+                        ) : null
+                    )}
+                </AnimatePresence>
             ) : null}
         </Container>
     );
