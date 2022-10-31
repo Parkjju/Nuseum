@@ -14,7 +14,7 @@ function Footer() {
                 </Text>
                 <Text>
                     © 2022 서울대학교 영양생리약리연구실. All rights reserved.
-                    v.0.0.1
+                    v.0.0.2
                 </Text>
             </Content>
         </Box>
