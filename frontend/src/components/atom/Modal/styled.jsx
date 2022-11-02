@@ -45,7 +45,7 @@ export const ModalBtn = styled.button`
 
 export const Container = styled.div`
     width: 100vw;
-    position: absolute;
+    position: fixed;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.8);
     top: 0;
