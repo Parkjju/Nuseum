@@ -55,3 +55,21 @@ export const URL = styled.a`
     cursor: pointer;
     text-decoration: underline;
 `;
+export const CloseButton = styled.button`
+    width: 102px;
+    height: 32px;
+    color: #838383;
+    font-size: 11px;
+    line-height: 16px;
+    border: 1px solid #838383;
+    border-radius: 20px;
+    display: block;
+    margin: 0 auto;
+    &:hover {
+        opacity: 0.8;
+    }
+    &:active {
+        opacity: 0.6;
+    }
+    cursor: pointer;
+`;

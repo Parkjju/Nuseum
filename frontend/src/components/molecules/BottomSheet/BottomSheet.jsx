@@ -2,6 +2,7 @@ import { AnimatePresence, useIsPresent } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import {
     Background,
+    CloseButton,
     Modal,
     TagName,
     URL,
@@ -80,6 +81,7 @@ const BottomSheet = ({ setIsOpen, clickedTag }) => {
                         setIsOpen={setIsOpen}
                         clickedTag={clickedTag}
                         urlList={urlList}
+                        setIsOpenModal={setIsOpenModal}
                     />
                 ) : null}
             </AnimatePresence>

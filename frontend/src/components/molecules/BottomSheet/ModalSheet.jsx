@@ -1,8 +1,15 @@
 import { useIsPresent } from 'framer-motion';
 import { useEffect } from 'react';
-import { Modal, TagName, URL, URLBox, URLName } from './BottomSheet.styled';
+import {
+    CloseButton,
+    Modal,
+    TagName,
+    URL,
+    URLBox,
+    URLName,
+} from './BottomSheet.styled';
 
-const ModalSheet = ({ clickedTag, urlList, setIsOpen }) => {
+const ModalSheet = ({ clickedTag, urlList, setIsOpen, setIsOpenModal }) => {
     const isPresent = useIsPresent();
 
     useEffect(() => {
@@ -37,6 +44,9 @@ const ModalSheet = ({ clickedTag, urlList, setIsOpen }) => {
                     </URL>
                 </URLBox>
             ))}
+            <CloseButton onClick={() => setIsOpenModal(false)}>
+                닫기
+            </CloseButton>
         </Modal>
     );
 };
