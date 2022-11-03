@@ -134,7 +134,7 @@ const My = () => {
     return (
         <Container>
             {loading ? (
-                <CircularProgress sx={{ display: 'block', margin: '0 auto' }} />
+                <CircularProgress sx={{ display: 'block' }} />
             ) : url ? (
                 <AnimatePresence>
                     {pageNumArray.map((idx, index) =>
@@ -144,7 +144,14 @@ const My = () => {
                                 onDragEnd={setNextPage}
                                 key={currentPage}
                                 dragSnapToOrigin
-                                initial={{ x: isNegative ? -300 : 300 }}
+                                initial={{
+                                    x:
+                                        index === 0
+                                            ? 0
+                                            : isNegative
+                                            ? -300
+                                            : 300,
+                                }}
                                 animate={{ x: 0 }}
                                 transition='none'
                             >
@@ -154,19 +161,19 @@ const My = () => {
                                         cMapPacked: true,
                                     }}
                                     file={url}
-                                    // loading={
-                                    //     <div
-                                    //         style={{
-                                    //             width,
-                                    //             display: 'flex',
-                                    //             justifyContent: 'center',
-                                    //         }}
-                                    //     >
-                                    //         <CircularProgress
-                                    //             style={{ margin: '0 auto' }}
-                                    //         />
-                                    //     </div>
-                                    // }
+                                    loading={
+                                        <div
+                                            style={{
+                                                width,
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                            }}
+                                        >
+                                            <CircularProgress
+                                                style={{ margin: '0 auto' }}
+                                            />
+                                        </div>
+                                    }
                                 >
                                     <Page
                                         width={width}
