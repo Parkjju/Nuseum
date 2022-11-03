@@ -19,6 +19,7 @@ const My = () => {
     const [url, setUrl] = useState('');
     const canvasRef = useRef();
     const [loading, setLoading] = useState(false);
+    const [textLoading, setTextLoading] = useState(false);
 
     const [pdfRef, setPdfRef] = useState();
 
@@ -139,7 +140,7 @@ const My = () => {
 
     return (
         <Container>
-            {loading ? (
+            {loading && !textLoading ? (
                 <CircularProgress sx={{ display: 'block', margin: '0 auto' }} />
             ) : url ? (
                 <AnimatePresence>
@@ -167,6 +168,8 @@ const My = () => {
                                         cMapPacked: true,
                                     }}
                                     file={url}
+                                    onLoadProgress={() => console.log('?')}
+                                    onLoadSuccess={() => console.log('!')}
                                     loading={
                                         <div
                                             style={{
@@ -181,7 +184,22 @@ const My = () => {
                                         </div>
                                     }
                                 >
+                                    {textLoading ? (
+                                        <CircularProgress
+                                            sx={{
+                                                display: 'block',
+                                                margin: '0 auto',
+                                            }}
+                                        />
+                                    ) : null}
                                     <Page
+                                        onGetAnnotationsSuccess={() => {
+                                            setLoading(false);
+                                            setTextLoading(true);
+                                        }}
+                                        onGetTextSuccess={() =>
+                                            setTextLoading(false)
+                                        }
                                         width={width}
                                         pageNumber={currentPage}
                                     />
