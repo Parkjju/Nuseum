@@ -192,16 +192,23 @@ const My = () => {
                                         />
                                     ) : null}
                                     <Page
+                                        onRenderSuccess={() => {
+                                            console.log('onRenderSuccess!');
+                                            setTextLoading(false);
+                                        }}
                                         onGetAnnotationsSuccess={() => {
+                                            console.log(
+                                                'onGetAnnotationsSuccess!'
+                                            );
                                             // url세팅 및 CDN로딩 false
                                             setLoading(false);
 
                                             // pdf 부착 후 최종로딩
                                             setTextLoading(true);
                                         }}
-                                        onGetTextSuccess={() =>
-                                            setTextLoading(false)
-                                        }
+                                        onGetTextSuccess={() => {
+                                            console.log('onGetTextSuccess!');
+                                        }}
                                         width={width}
                                         pageNumber={currentPage}
                                     />
