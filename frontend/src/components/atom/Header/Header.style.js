@@ -12,6 +12,7 @@ export const HeaderBox = styled.div`
     justify-content: space-between;
 `;
 export const Icon = styled.span`
+    padding: 10px;
     cursor: ${(props) => (props.active ? 'pointer' : 'default')};
     user-select: none;
     transition: 0.1s linear;

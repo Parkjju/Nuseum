@@ -142,9 +142,10 @@ const Slide = ({ date, id }) => {
             <CommentBox>{recommend?.comment}</CommentBox>
             <div
                 style={{
-                    marginTop: 30,
+                    marginTop: 25,
+                    marginBottom: 30,
                     display: 'flex',
-                    width: '50%',
+                    width: '90%',
                     flexWrap: 'wrap',
                 }}
             >
