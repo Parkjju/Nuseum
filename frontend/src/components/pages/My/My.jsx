@@ -86,7 +86,6 @@ const My = () => {
 
         loadingTask.promise.then(
             (loadedPdf) => {
-                setLoading(false);
                 setPdfRef(loadedPdf);
             },
             function (reason) {
@@ -105,7 +104,6 @@ const My = () => {
             })
             .then((response) => {
                 setUrl(response.data.data);
-                setLoading(false);
             })
             .catch(async (err) => {
                 if (err.response.status === 401) {
@@ -128,6 +126,9 @@ const My = () => {
         // renderPage(currentPage, pdfRef);
 
         console.log('pdfRef', pdfRef);
+        if (pdfRef) {
+            setLoading(false);
+        }
     }, [pdfRef, renderPage, currentPage]);
 
     useEffect(() => {
@@ -168,8 +169,6 @@ const My = () => {
                                         cMapPacked: true,
                                     }}
                                     file={url}
-                                    onLoadProgress={() => console.log('?')}
-                                    onLoadSuccess={() => console.log('!')}
                                     loading={
                                         <div
                                             style={{
@@ -194,7 +193,10 @@ const My = () => {
                                     ) : null}
                                     <Page
                                         onGetAnnotationsSuccess={() => {
+                                            // url세팅 및 CDN로딩 false
                                             setLoading(false);
+
+                                            // pdf 부착 후 최종로딩
                                             setTextLoading(true);
                                         }}
                                         onGetTextSuccess={() =>
