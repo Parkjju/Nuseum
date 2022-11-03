@@ -10,7 +10,6 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 import { Page, Document } from 'react-pdf';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import handleExpired from '../../../helpers/handleExpired';
 import { authActions } from '../../../store/auth-slice';
 import Container from '../../atom/Container';
@@ -19,6 +18,7 @@ const My = () => {
     const token = useSelector((state) => state.auth.token);
     const [url, setUrl] = useState('');
     const canvasRef = useRef();
+    const [loading, setLoading] = useState(false);
 
     const [pdfRef, setPdfRef] = useState();
 
@@ -89,6 +89,7 @@ const My = () => {
     }, [url, pdfjs]);
 
     useEffect(() => {
+        setLoading(true);
         axios
             .get('/api/v1/result/examination/', {
                 headers: {
@@ -97,6 +98,7 @@ const My = () => {
             })
             .then((response) => {
                 setUrl(response.data.data);
+                setLoading(false);
             })
             .catch(async (err) => {
                 if (err.response.status === 401) {
@@ -110,6 +112,7 @@ const My = () => {
                 } else {
                     alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 }
+                setLoading(false);
             });
     }, [token]);
 
@@ -130,7 +133,9 @@ const My = () => {
 
     return (
         <Container>
-            {url ? (
+            {loading ? (
+                <CircularProgress sx={{ display: 'block', margin: '0 auto' }} />
+            ) : url ? (
                 <AnimatePresence>
                     {pageNumArray.map((idx, index) =>
                         idx === currentPage ? (
