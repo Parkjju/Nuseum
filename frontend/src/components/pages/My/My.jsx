@@ -45,7 +45,9 @@ const My = () => {
                         canvasContext: canvas.getContext('2d'),
                         viewport: viewport,
                     };
+
                     page.render(renderContext);
+                    // setLoading(false);
                 });
         },
         [pdfRef]
@@ -70,6 +72,7 @@ const My = () => {
             console.log('no changes!');
         }
     };
+
     useEffect(() => {
         if (!url) {
             return;
@@ -78,8 +81,11 @@ const My = () => {
         const loadingTask = pdfjs.getDocument({
             url,
         });
+        setLoading(true);
+
         loadingTask.promise.then(
             (loadedPdf) => {
+                setLoading(false);
                 setPdfRef(loadedPdf);
             },
             function (reason) {
@@ -118,7 +124,8 @@ const My = () => {
 
     useEffect(() => {
         setPageNum(pdfRef?._pdfInfo.numPages);
-        renderPage(currentPage, pdfRef);
+        // renderPage(currentPage, pdfRef);
+
         console.log('pdfRef', pdfRef);
     }, [pdfRef, renderPage, currentPage]);
 
@@ -129,12 +136,11 @@ const My = () => {
         }
         setPageNumArray([...copy]);
     }, [pageNum]);
-    console.log(pageNumArray);
 
     return (
         <Container>
             {loading ? (
-                <CircularProgress sx={{ display: 'block' }} />
+                <CircularProgress sx={{ display: 'block', margin: '0 auto' }} />
             ) : url ? (
                 <AnimatePresence>
                     {pageNumArray.map((idx, index) =>
