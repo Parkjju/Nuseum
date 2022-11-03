@@ -10,7 +10,6 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 import { Page, Document } from 'react-pdf';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import handleExpired from '../../../helpers/handleExpired';
 import { authActions } from '../../../store/auth-slice';
 import Container from '../../atom/Container';
@@ -19,6 +18,9 @@ const My = () => {
     const token = useSelector((state) => state.auth.token);
     const [url, setUrl] = useState('');
     const canvasRef = useRef();
+    const [loading, setLoading] = useState(false);
+    const [fetchLoading, setFetchLoading] = useState(false);
+    const [textLoading, setTextLoading] = useState(false);
 
     const [pdfRef, setPdfRef] = useState();
 
@@ -45,7 +47,9 @@ const My = () => {
                         canvasContext: canvas.getContext('2d'),
                         viewport: viewport,
                     };
+
                     page.render(renderContext);
+                    // setLoading(false);
                 });
         },
         [pdfRef]
@@ -70,7 +74,10 @@ const My = () => {
             console.log('no changes!');
         }
     };
+
     useEffect(() => {
+        console.log('url, pdfjs useEffect called!');
+
         if (!url) {
             return;
         }
@@ -78,6 +85,7 @@ const My = () => {
         const loadingTask = pdfjs.getDocument({
             url,
         });
+
         loadingTask.promise.then(
             (loadedPdf) => {
                 setPdfRef(loadedPdf);
@@ -96,6 +104,7 @@ const My = () => {
                 },
             })
             .then((response) => {
+                setLoading(true);
                 setUrl(response.data.data);
             })
             .catch(async (err) => {
@@ -110,27 +119,37 @@ const My = () => {
                 } else {
                     alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 }
+                setFetchLoading(false);
             });
     }, [token]);
 
     useEffect(() => {
+        console.log('pdfRef, rednerpage, currentPage useEffect Called!');
         setPageNum(pdfRef?._pdfInfo.numPages);
         renderPage(currentPage, pdfRef);
-        console.log('pdfRef', pdfRef);
     }, [pdfRef, renderPage, currentPage]);
 
     useEffect(() => {
+        console.log('pageNum useEffect called!');
         let copy = [];
         for (let i = 1; i <= pageNum; i++) {
             copy.push(i);
         }
         setPageNumArray([...copy]);
     }, [pageNum]);
-    console.log(pageNumArray);
 
     return (
         <Container>
-            {url ? (
+            {loading ? (
+                <CircularProgress
+                    sx={{
+                        display: 'block',
+                        margin: '0 auto',
+                        marginBottom: 30,
+                    }}
+                />
+            ) : null}
+            {url.length > 0 ? (
                 <AnimatePresence>
                     {pageNumArray.map((idx, index) =>
                         idx === currentPage ? (
@@ -139,7 +158,14 @@ const My = () => {
                                 onDragEnd={setNextPage}
                                 key={currentPage}
                                 dragSnapToOrigin
-                                initial={{ x: isNegative ? -300 : 300 }}
+                                initial={{
+                                    x:
+                                        index === 0
+                                            ? 0
+                                            : isNegative
+                                            ? -300
+                                            : 300,
+                                }}
                                 animate={{ x: 0 }}
                                 transition='none'
                             >
@@ -157,13 +183,23 @@ const My = () => {
                                                 justifyContent: 'center',
                                             }}
                                         >
-                                            <CircularProgress
-                                                style={{ margin: '0 auto' }}
-                                            />
+                                            {null}
                                         </div>
                                     }
                                 >
                                     <Page
+                                        onRenderSuccess={() => {
+                                            console.log('onRenderSuccess!');
+                                            setLoading(false);
+                                        }}
+                                        onGetAnnotationsSuccess={() => {
+                                            console.log(
+                                                'onGetAnnotationsSuccess!'
+                                            );
+                                        }}
+                                        onGetTextSuccess={() => {
+                                            console.log('onGetTextSuccess!');
+                                        }}
                                         width={width}
                                         pageNumber={currentPage}
                                     />
