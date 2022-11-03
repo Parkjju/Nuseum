@@ -9,7 +9,7 @@ export const Box = styled.div`
 `;
 
 export const Content = styled.footer`
-    width: 80%;
+    width: 85%;
     border-top: 1px solid #7f8c8d;
     padding-top: 20px;
     display: flex;

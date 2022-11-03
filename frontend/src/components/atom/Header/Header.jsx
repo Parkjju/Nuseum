@@ -88,8 +88,7 @@ const Header = () => {
                 <>
                     <div
                         style={{
-                            paddingLeft: 30,
-                            width: 70,
+                            paddingLeft: 20,
                             display: 'flex',
                             justifyContent: 'space-between',
                         }}
@@ -142,8 +141,7 @@ const Header = () => {
 
                     <div
                         style={{
-                            paddingRight: 30,
-                            width: 70,
+                            paddingRight: 20,
                             display: 'flex',
                             justifyContent: 'space-between',
                         }}
