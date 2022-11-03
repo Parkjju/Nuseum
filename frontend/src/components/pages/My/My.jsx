@@ -141,7 +141,13 @@ const My = () => {
     return (
         <Container>
             {loading ? (
-                <CircularProgress sx={{ display: 'block', margin: '0 auto' }} />
+                <CircularProgress
+                    sx={{
+                        display: 'block',
+                        margin: '0 auto',
+                        marginBottom: 30,
+                    }}
+                />
             ) : null}
             {url.length > 0 ? (
                 <AnimatePresence>
