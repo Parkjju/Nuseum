@@ -6,7 +6,6 @@ import { useEffect } from 'react';
 // import * as pdfjs from '../../../../node_modules/pdfjs-dist/build/pdf';
 import { pdfjs } from 'react-pdf';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-
 import { Page, Document } from 'react-pdf';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,8 +18,6 @@ const My = () => {
     const [url, setUrl] = useState('');
     const canvasRef = useRef();
     const [loading, setLoading] = useState(false);
-    const [fetchLoading, setFetchLoading] = useState(false);
-    const [textLoading, setTextLoading] = useState(false);
 
     const [pdfRef, setPdfRef] = useState();
 
@@ -76,8 +73,6 @@ const My = () => {
     };
 
     useEffect(() => {
-        console.log('url, pdfjs useEffect called!');
-
         if (!url) {
             return;
         }
@@ -119,18 +114,15 @@ const My = () => {
                 } else {
                     alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 }
-                setFetchLoading(false);
             });
     }, [token]);
 
     useEffect(() => {
-        console.log('pdfRef, rednerpage, currentPage useEffect Called!');
         setPageNum(pdfRef?._pdfInfo.numPages);
         renderPage(currentPage, pdfRef);
     }, [pdfRef, renderPage, currentPage]);
 
     useEffect(() => {
-        console.log('pageNum useEffect called!');
         let copy = [];
         for (let i = 1; i <= pageNum; i++) {
             copy.push(i);
@@ -189,16 +181,7 @@ const My = () => {
                                 >
                                     <Page
                                         onRenderSuccess={() => {
-                                            console.log('onRenderSuccess!');
                                             setLoading(false);
-                                        }}
-                                        onGetAnnotationsSuccess={() => {
-                                            console.log(
-                                                'onGetAnnotationsSuccess!'
-                                            );
-                                        }}
-                                        onGetTextSuccess={() => {
-                                            console.log('onGetTextSuccess!');
                                         }}
                                         width={width}
                                         pageNumber={currentPage}
