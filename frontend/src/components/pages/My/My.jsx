@@ -19,6 +19,7 @@ const My = () => {
     const [url, setUrl] = useState('');
     const canvasRef = useRef();
     const [loading, setLoading] = useState(false);
+    const [fetchLoading, setFetchLoading] = useState(false);
     const [textLoading, setTextLoading] = useState(false);
 
     const [pdfRef, setPdfRef] = useState();
@@ -75,6 +76,8 @@ const My = () => {
     };
 
     useEffect(() => {
+        console.log('url, pdfjs useEffect called!');
+
         if (!url) {
             return;
         }
@@ -82,7 +85,6 @@ const My = () => {
         const loadingTask = pdfjs.getDocument({
             url,
         });
-        setLoading(true);
 
         loadingTask.promise.then(
             (loadedPdf) => {
@@ -95,7 +97,6 @@ const My = () => {
     }, [url, pdfjs]);
 
     useEffect(() => {
-        setLoading(true);
         axios
             .get('/api/v1/result/examination/', {
                 headers: {
@@ -103,6 +104,7 @@ const My = () => {
                 },
             })
             .then((response) => {
+                setLoading(true);
                 setUrl(response.data.data);
             })
             .catch(async (err) => {
@@ -117,21 +119,18 @@ const My = () => {
                 } else {
                     alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 }
-                setLoading(false);
+                setFetchLoading(false);
             });
     }, [token]);
 
     useEffect(() => {
+        console.log('pdfRef, rednerpage, currentPage useEffect Called!');
         setPageNum(pdfRef?._pdfInfo.numPages);
-        // renderPage(currentPage, pdfRef);
-
-        console.log('pdfRef', pdfRef);
-        if (pdfRef) {
-            setLoading(false);
-        }
+        renderPage(currentPage, pdfRef);
     }, [pdfRef, renderPage, currentPage]);
 
     useEffect(() => {
+        console.log('pageNum useEffect called!');
         let copy = [];
         for (let i = 1; i <= pageNum; i++) {
             copy.push(i);
@@ -141,9 +140,10 @@ const My = () => {
 
     return (
         <Container>
-            {loading && !textLoading ? (
+            {loading ? (
                 <CircularProgress sx={{ display: 'block', margin: '0 auto' }} />
-            ) : url ? (
+            ) : null}
+            {url.length > 0 ? (
                 <AnimatePresence>
                     {pageNumArray.map((idx, index) =>
                         idx === currentPage ? (
@@ -177,34 +177,19 @@ const My = () => {
                                                 justifyContent: 'center',
                                             }}
                                         >
-                                            <CircularProgress
-                                                style={{ margin: '0 auto' }}
-                                            />
+                                            {null}
                                         </div>
                                     }
                                 >
-                                    {textLoading ? (
-                                        <CircularProgress
-                                            sx={{
-                                                display: 'block',
-                                                margin: '0 auto',
-                                            }}
-                                        />
-                                    ) : null}
                                     <Page
                                         onRenderSuccess={() => {
                                             console.log('onRenderSuccess!');
-                                            setTextLoading(false);
+                                            setLoading(false);
                                         }}
                                         onGetAnnotationsSuccess={() => {
                                             console.log(
                                                 'onGetAnnotationsSuccess!'
                                             );
-                                            // url세팅 및 CDN로딩 false
-                                            setLoading(false);
-
-                                            // pdf 부착 후 최종로딩
-                                            setTextLoading(true);
                                         }}
                                         onGetTextSuccess={() => {
                                             console.log('onGetTextSuccess!');
