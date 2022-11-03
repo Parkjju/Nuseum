@@ -154,19 +154,19 @@ const My = () => {
                                         cMapPacked: true,
                                     }}
                                     file={url}
-                                    loading={
-                                        <div
-                                            style={{
-                                                width,
-                                                display: 'flex',
-                                                justifyContent: 'center',
-                                            }}
-                                        >
-                                            <CircularProgress
-                                                style={{ margin: '0 auto' }}
-                                            />
-                                        </div>
-                                    }
+                                    // loading={
+                                    //     <div
+                                    //         style={{
+                                    //             width,
+                                    //             display: 'flex',
+                                    //             justifyContent: 'center',
+                                    //         }}
+                                    //     >
+                                    //         <CircularProgress
+                                    //             style={{ margin: '0 auto' }}
+                                    //         />
+                                    //     </div>
+                                    // }
                                 >
                                     <Page
                                         width={width}
