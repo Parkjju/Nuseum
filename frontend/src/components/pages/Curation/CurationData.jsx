@@ -35,7 +35,7 @@ const images = {
     채소: vegetable,
     주의: avoid,
 };
-const CurationData = ({ data }) => {
+const CurationData = ({ setIsOpen, setClickedTag, data }) => {
     return data.type === '주의' ? null : (
         <CurationBox>
             <CurationType>
@@ -54,12 +54,27 @@ const CurationData = ({ data }) => {
                 </CurationTypeName>
             </CurationType>
             <CurationFood>
-                <CurationFoodTitle>{data.main}</CurationFoodTitle>
+                <CurationFoodTitle
+                    onClick={() => {
+                        setIsOpen(true);
+                        setClickedTag(`#${data.main}`);
+                    }}
+                >
+                    {data.main}
+                </CurationFoodTitle>
                 <CurationFoodList>
                     {data.list.map((item, index) => (
                         <span
-                            style={{ margin: 5, lineHeight: 1.5 }}
+                            style={{
+                                margin: 5,
+                                lineHeight: 1.5,
+                                cursor: 'pointer',
+                            }}
                             key={index}
+                            onClick={() => {
+                                setIsOpen(true);
+                                setClickedTag(`#${item}`);
+                            }}
                         >
                             {item}
                         </span>

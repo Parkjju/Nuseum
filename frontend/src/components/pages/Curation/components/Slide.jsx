@@ -135,7 +135,12 @@ const Slide = ({ date, id }) => {
             <Title>내 아이 맞춤식품</Title>
             <CurationDataWrapper rows={recommend?.data.length / 2}>
                 {recommend?.data.map((item, index) => (
-                    <CurationData data={item} key={index} />
+                    <CurationData
+                        setIsOpen={setIsOpen}
+                        setClickedTag={setClickedTag}
+                        data={item}
+                        key={index}
+                    />
                 ))}
             </CurationDataWrapper>
 
