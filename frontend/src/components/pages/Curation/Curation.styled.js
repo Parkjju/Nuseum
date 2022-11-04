@@ -45,6 +45,7 @@ export const CurationFoodTitle = styled.span`
     text-decoration: underline;
     text-align: center;
     line-height: 1.5;
+    cursor: pointer;
 `;
 export const CurationFoodList = styled.div`
     width: 95%;
@@ -102,7 +103,7 @@ export const WarningTitle = styled.div`
 export const WarningList = styled.div`
     width: 100%;
     display: flex;
-    justify-content:center;
+    justify-content: center;
     align-items: flex-start;
     flex-wrap: wrap;
 `;
