@@ -419,7 +419,7 @@ const Meal = () => {
                 // 음식데이터 저장버튼
                 <button
                     onClick={() => savePost()}
-                    style={{ marginBottom: '30px' }}
+                    style={{ marginBottom: '30px', background: '#8A8A8E', border:'none', borderRadius: '20px', padding: '5px 35px', color: 'white' }}
                 >
                     저장
                 </button>

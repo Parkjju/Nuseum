@@ -127,7 +127,7 @@ const Supplement = () => {
         <CircularProgress />
     ) : (
         <>
-            <button onClick={addSupplement} style={{ marginBottom: 20 }}>
+            <button onClick={addSupplement} style={{ marginBottom: 20 , border: 'none', borderRadius: '20px', padding: '5px 35px'}}>
                 추가하기
             </button>
 
@@ -163,7 +163,7 @@ const Supplement = () => {
                 <button
                     // 영양제 저장하는 버튼이었음
                     onClick={() => saveSupplement()}
-                    style={{ marginBottom: '30px' }}
+                    style={{ marginBottom: '30px', background: '#8A8A8E', border:'none', borderRadius: '20px', padding: '5px 35px', color: 'white'  }}
                 >
                     저장
                 </button>

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const HeaderBox = styled.div`
     height: 50px;
     max-width: 800px;
-    width: 100vw;
+    width: 100%;
     margin: auto;
     top: 0;
     left: 0;
