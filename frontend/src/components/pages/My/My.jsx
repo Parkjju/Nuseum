@@ -6,6 +6,8 @@ import { useEffect } from 'react';
 // import * as pdfjs from '../../../../node_modules/pdfjs-dist/build/pdf';
 import { pdfjs } from 'react-pdf';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+import prev from '../../../assets/prev.png';
+import next from '../../../assets/next.png';
 
 import { Page, Document } from 'react-pdf';
 
@@ -13,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import handleExpired from '../../../helpers/handleExpired';
 import { authActions } from '../../../store/auth-slice';
 import Container from '../../atom/Container';
+import { Title } from '../Curation/Curation.styled';
 
 const My = () => {
     const token = useSelector((state) => state.auth.token);
@@ -20,7 +23,8 @@ const My = () => {
     const canvasRef = useRef();
     const [loading, setLoading] = useState(false);
     const [fetchLoading, setFetchLoading] = useState(false);
-    const [textLoading, setTextLoading] = useState(false);
+
+    const [visibleIndex, setVisibleIndex] = useState(0);
 
     const [pdfRef, setPdfRef] = useState();
 
@@ -54,26 +58,6 @@ const My = () => {
         },
         [pdfRef]
     );
-    const setNextPage = (event, info) => {
-        if (info.offset.x < -200) {
-            if (currentPage === pageNum) {
-                return;
-            }
-            setIsNegative(true);
-            setCurrentPage((prev) => prev + 1);
-
-            console.log('next!');
-        } else if (info.offset.x > 200) {
-            if (currentPage === 1) {
-                return;
-            }
-            setIsNegative(false);
-            setCurrentPage((prev) => prev - 1);
-            console.log('prev!');
-        } else {
-            console.log('no changes!');
-        }
-    };
 
     useEffect(() => {
         console.log('url, pdfjs useEffect called!');
@@ -138,6 +122,26 @@ const My = () => {
         setPageNumArray([...copy]);
     }, [pageNum]);
 
+    const onClick = useCallback(
+        (type) => {
+            switch (type) {
+                case 'prev':
+                    if (currentPage === 1) {
+                        return;
+                    }
+                    setCurrentPage((prev) => prev - 1);
+                    return;
+                case 'next':
+                    if (currentPage === pageNum) {
+                        return;
+                    }
+                    setCurrentPage((prev) => prev + 1);
+                    return;
+            }
+        },
+        [currentPage, pageNum]
+    );
+
     return (
         <Container>
             {loading ? (
@@ -149,13 +153,12 @@ const My = () => {
                     }}
                 />
             ) : null}
+
             {url.length > 0 ? (
                 <AnimatePresence>
                     {pageNumArray.map((idx, index) =>
                         idx === currentPage ? (
                             <motion.div
-                                drag='x'
-                                onDragEnd={setNextPage}
                                 key={currentPage}
                                 dragSnapToOrigin
                                 initial={{
@@ -169,6 +172,35 @@ const My = () => {
                                 animate={{ x: 0 }}
                                 transition='none'
                             >
+                                <Title>
+                                    <img
+                                        onClick={() => onClick('prev')}
+                                        src={prev}
+                                        style={{
+                                            width: 30,
+                                            cursor: 'pointer',
+                                            opacity: `${
+                                                currentPage === 1 ? 0.5 : null
+                                            }`,
+                                        }}
+                                        alt='Previous'
+                                    />
+
+                                    <img
+                                        onClick={() => onClick('next')}
+                                        src={next}
+                                        style={{
+                                            width: 30,
+                                            cursor: 'pointer',
+                                            opacity: `${
+                                                currentPage === pageNum
+                                                    ? 0.5
+                                                    : null
+                                            }`,
+                                        }}
+                                        alt='Next'
+                                    />
+                                </Title>
                                 <Document
                                     options={{
                                         cMapUrl: `https://unpkg.com/pdfjs-dist@${pdfjs.version}/cmaps/`,
