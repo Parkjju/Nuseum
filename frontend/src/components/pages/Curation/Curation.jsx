@@ -28,7 +28,7 @@ const Curation = () => {
                 },
             });
 
-            setRecommendList(response.data);
+            setRecommendList(response.data.reverse());
         } catch (err) {
             console.log(err);
             if (err.response?.status === 401) {
@@ -94,6 +94,8 @@ const Curation = () => {
                                     date={recommendData.created_at}
                                     id={recommendData.id}
                                     setVisibleIndex={onClick}
+                                    visibleIndex={visibleIndex}
+                                    length={recommendList.length}
                                 />
                             </motion.div>
                         ) : null

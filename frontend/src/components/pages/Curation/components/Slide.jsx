@@ -13,7 +13,7 @@ import HashTag from './HashTag';
 import prev from '../../../../assets/prev.png';
 import next from '../../../../assets/next.png';
 
-const Slide = ({ date, id, setVisibleIndex }) => {
+const Slide = ({ date, id, setVisibleIndex, visibleIndex, length }) => {
     const token = useSelector((state) => state.auth.token);
     const dispatch = useDispatch();
     const [isOpen, setIsOpen] = useState(false);
@@ -135,7 +135,11 @@ const Slide = ({ date, id, setVisibleIndex }) => {
                 <img
                     onClick={() => setVisibleIndex('prev')}
                     src={prev}
-                    style={{ width: 30, cursor: 'pointer' }}
+                    style={{
+                        width: 30,
+                        cursor: 'pointer',
+                        opacity: `${visibleIndex === 0 ? 0.5 : null}`,
+                    }}
                     alt='Previous'
                 />
                 <span style={{ margin: '0 20px' }}>
@@ -144,7 +148,11 @@ const Slide = ({ date, id, setVisibleIndex }) => {
                 <img
                     onClick={() => setVisibleIndex('next')}
                     src={next}
-                    style={{ width: 30, cursor: 'pointer' }}
+                    style={{
+                        width: 30,
+                        cursor: 'pointer',
+                        opacity: `${visibleIndex === length - 1 ? 0.5 : null}`,
+                    }}
                     alt='Next'
                 />
             </Title>
