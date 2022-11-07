@@ -134,11 +134,13 @@ export const CurationDataWrapper = styled.div`
     margin-bottom: 30px;
 `;
 
-export const Title = styled.p`
+export const Title = styled.div`
     width: 100%;
     font-size: 18px;
     font-weight: 600;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 20px 0;
 `;
 export const HashTag = styled.a`

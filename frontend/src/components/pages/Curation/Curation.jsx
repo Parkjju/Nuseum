@@ -3,7 +3,7 @@ import Container from '../../atom/Container';
 import { Contents } from '../Home/styled';
 
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import handleExpired from '../../../helpers/handleExpired';
 import { authActions } from '../../../store/auth-slice';
@@ -45,29 +45,29 @@ const Curation = () => {
         }
     };
 
-    const setNextPage = (event, info) => {
-        if (info.offset.x < -200) {
-            if (visibleIndex === 0) {
-                return;
-            }
-            setIsNegative(false);
-            setVisibleIndex((prev) => prev - 1);
-            console.log('prev!');
-        } else if (info.offset.x > 200) {
-            if (visibleIndex === recommendList.length - 1) {
-                return;
-            }
-            setIsNegative(true);
-            setVisibleIndex((prev) => prev + 1);
-            console.log('next!');
-        } else {
-            console.log('no changes!');
-        }
-    };
-
     useEffect(() => {
         fetchId();
     }, []);
+
+    const onClick = useCallback(
+        (type) => {
+            switch (type) {
+                case 'prev':
+                    if (visibleIndex === 0) {
+                        return;
+                    }
+                    setVisibleIndex((prev) => prev - 1);
+                    return;
+                case 'next':
+                    if (visibleIndex === recommendList.length - 1) {
+                        return;
+                    }
+                    setVisibleIndex((prev) => prev + 1);
+                    return;
+            }
+        },
+        [visibleIndex]
+    );
 
     return (
         <Container>
@@ -84,8 +84,6 @@ const Curation = () => {
                                     flexDirection: 'column',
                                     alignItems: 'center',
                                 }}
-                                drag='x'
-                                onDragEnd={setNextPage}
                                 key={recommendData.id}
                                 dragSnapToOrigin
                                 initial={{ x: isNegative ? -300 : 300 }}
@@ -95,6 +93,7 @@ const Curation = () => {
                                 <Slide
                                     date={recommendData.created_at}
                                     id={recommendData.id}
+                                    setVisibleIndex={onClick}
                                 />
                             </motion.div>
                         ) : null

@@ -10,8 +10,10 @@ import handleExpired from '../../../../helpers/handleExpired';
 import axios from 'axios';
 import BottomSheet from '../../../molecules/BottomSheet';
 import HashTag from './HashTag';
+import prev from '../../../../assets/prev.png';
+import next from '../../../../assets/next.png';
 
-const Slide = ({ date, id }) => {
+const Slide = ({ date, id, setVisibleIndex }) => {
     const token = useSelector((state) => state.auth.token);
     const dispatch = useDispatch();
     const [isOpen, setIsOpen] = useState(false);
@@ -129,7 +131,23 @@ const Slide = ({ date, id }) => {
 
     return (
         <>
-            <Title>{date.split('T')[0].split('-').join('.')}</Title>
+            <Title>
+                <img
+                    onClick={() => setVisibleIndex('prev')}
+                    src={prev}
+                    style={{ width: 30, cursor: 'pointer' }}
+                    alt='Previous'
+                />
+                <span style={{ margin: '0 20px' }}>
+                    {date.split('T')[0].split('-').join('.')}
+                </span>
+                <img
+                    onClick={() => setVisibleIndex('next')}
+                    src={next}
+                    style={{ width: 30, cursor: 'pointer' }}
+                    alt='Next'
+                />
+            </Title>
             <Warn recommendData={recommend} />
 
             <Title>내 아이 맞춤식품</Title>
