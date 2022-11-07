@@ -185,6 +185,7 @@ const My = () => {
                                         }}
                                         alt='Previous'
                                     />
+                                    <div style={{ width: 100 }}></div>
 
                                     <img
                                         onClick={() => onClick('next')}
