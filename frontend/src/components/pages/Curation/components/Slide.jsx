@@ -1,4 +1,3 @@
-import { motion, AnimatePresence } from 'framer-motion';
 import { CommentBox, CurationDataWrapper, Title } from '../Curation.styled';
 import CurationData from '../CurationData';
 
@@ -12,6 +11,8 @@ import BottomSheet from '../../../molecules/BottomSheet';
 import HashTag from './HashTag';
 import prev from '../../../../assets/prev.png';
 import next from '../../../../assets/next.png';
+import { Link } from 'react-router-dom';
+import Btn from '../../../atom/Button/styled';
 
 const Slide = ({ date, id, setVisibleIndex, visibleIndex, length }) => {
     const token = useSelector((state) => state.auth.token);
@@ -166,14 +167,17 @@ const Slide = ({ date, id, setVisibleIndex, visibleIndex, length }) => {
             </CurationDataWrapper>
 
             <CommentBox>{recommend?.comment}</CommentBox>
+
             <div
                 style={{
                     marginTop: 30,
+                    marginBottom: 50,
                     display: 'flex',
                     width: '50%',
                     flexWrap: 'wrap',
                 }}
             >
+                <Title>편리하게 준비해요</Title>
                 {recommend?.hashtag?.split('#').map((tag, index) =>
                     tag === '' ? null : (
                         <HashTag
@@ -188,6 +192,35 @@ const Slide = ({ date, id, setVisibleIndex, visibleIndex, length }) => {
                         </HashTag>
                     )
                 )}
+            </div>
+
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                }}
+            >
+                <p
+                    style={{
+                        whiteSpace: 'pre-line',
+                        textAlign: 'center',
+                        lineHeight: 1.5,
+                        fontWeight: 400,
+                        marginBottom: 10,
+                    }}
+                >
+                    궁금한 점이 있으시다면 Q&A에 남겨주세요. {'\n'}저희 연구진이
+                    돕겠습니다:)
+                </p>
+
+                <Btn
+                    as={Link}
+                    to='/question'
+                    style={{ textDecoration: 'none' }}
+                >
+                    Q&A
+                </Btn>
             </div>
 
             {isOpen ? (
