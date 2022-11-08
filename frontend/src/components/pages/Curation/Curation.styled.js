@@ -132,7 +132,7 @@ export const CurationDataWrapper = styled.div`
     margin-bottom: 30px;
 `;
 
-export const Title = styled.p`
+export const Title = styled.div`
     width: 100%;
     font-size: 18px;
     font-weight: 600;

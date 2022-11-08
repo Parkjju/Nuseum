@@ -1,4 +1,3 @@
-import { motion, AnimatePresence } from 'framer-motion';
 import { CommentBox, CurationDataWrapper, Title } from '../Curation.styled';
 import CurationData from '../CurationData';
 
@@ -10,8 +9,12 @@ import handleExpired from '../../../../helpers/handleExpired';
 import axios from 'axios';
 import BottomSheet from '../../../molecules/BottomSheet';
 import HashTag from './HashTag';
+import prev from '../../../../assets/prev.png';
+import next from '../../../../assets/next.png';
+import { Link } from 'react-router-dom';
+import Btn from '../../../atom/Button/styled';
 
-const Slide = ({ date, id }) => {
+const Slide = ({ date, id, setVisibleIndex, visibleIndex, length }) => {
     const token = useSelector((state) => state.auth.token);
     const dispatch = useDispatch();
     const [isOpen, setIsOpen] = useState(false);
@@ -129,7 +132,31 @@ const Slide = ({ date, id }) => {
 
     return (
         <>
-            <Title>{date.split('T')[0].split('-').join('.')}</Title>
+            <Title>
+                <img
+                    onClick={() => setVisibleIndex('prev')}
+                    src={prev}
+                    style={{
+                        width: 30,
+                        cursor: 'pointer',
+                        opacity: `${visibleIndex === 0 ? 0.5 : null}`,
+                    }}
+                    alt='Previous'
+                />
+                <span style={{ margin: '0 20px' }}>
+                    {date.split('T')[0].split('-').join('.')}
+                </span>
+                <img
+                    onClick={() => setVisibleIndex('next')}
+                    src={next}
+                    style={{
+                        width: 30,
+                        cursor: 'pointer',
+                        opacity: `${visibleIndex === length - 1 ? 0.5 : null}`,
+                    }}
+                    alt='Next'
+                />
+            </Title>
             <Warn recommendData={recommend} />
 
             <Title>내 아이 맞춤식품</Title>
@@ -145,6 +172,7 @@ const Slide = ({ date, id }) => {
             </CurationDataWrapper>
 
             <CommentBox>{recommend?.comment}</CommentBox>
+
             <div
                 style={{
                     marginTop: 25,
@@ -154,6 +182,7 @@ const Slide = ({ date, id }) => {
                     flexWrap: 'wrap',
                 }}
             >
+                <Title>편리하게 준비해요</Title>
                 {recommend?.hashtag?.split('#').map((tag, index) =>
                     tag === '' ? null : (
                         <HashTag
@@ -168,6 +197,35 @@ const Slide = ({ date, id }) => {
                         </HashTag>
                     )
                 )}
+            </div>
+
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                }}
+            >
+                <p
+                    style={{
+                        whiteSpace: 'pre-line',
+                        textAlign: 'center',
+                        lineHeight: 1.5,
+                        fontWeight: 400,
+                        marginBottom: 10,
+                    }}
+                >
+                    궁금한 점이 있으시다면 Q&A에 남겨주세요. {'\n'}저희 연구진이
+                    돕겠습니다:)
+                </p>
+
+                <Btn
+                    as={Link}
+                    to='/question'
+                    style={{ textDecoration: 'none' }}
+                >
+                    Q&A
+                </Btn>
             </div>
 
             {isOpen ? (
