@@ -136,7 +136,9 @@ export const Title = styled.div`
     width: 100%;
     font-size: 18px;
     font-weight: 600;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin: 0 0 20px;
 `;
 export const HashTag = styled.a`
