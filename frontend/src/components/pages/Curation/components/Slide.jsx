@@ -162,7 +162,12 @@ const Slide = ({ date, id, setVisibleIndex, visibleIndex, length }) => {
             <Title>내 아이 맞춤식품</Title>
             <CurationDataWrapper rows={recommend?.data.length / 2}>
                 {recommend?.data.map((item, index) => (
-                    <CurationData data={item} key={index} />
+                    <CurationData
+                        setIsOpen={setIsOpen}
+                        setClickedTag={setClickedTag}
+                        data={item}
+                        key={index}
+                    />
                 ))}
             </CurationDataWrapper>
 
@@ -170,10 +175,10 @@ const Slide = ({ date, id, setVisibleIndex, visibleIndex, length }) => {
 
             <div
                 style={{
-                    marginTop: 30,
-                    marginBottom: 50,
+                    marginTop: 25,
+                    marginBottom: 30,
                     display: 'flex',
-                    width: '50%',
+                    width: '90%',
                     flexWrap: 'wrap',
                 }}
             >

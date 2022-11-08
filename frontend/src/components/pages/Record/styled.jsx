@@ -87,7 +87,7 @@ export const ModalSearch = styled.div`
     border-radius: 10px;
     display: flex;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 30px;
 `;
 
 export const ModalInput = styled.input`

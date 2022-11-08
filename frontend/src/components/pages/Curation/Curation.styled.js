@@ -17,8 +17,8 @@ export const CurationType = styled.div`
     border-top-right-radius: 30px;
 `;
 export const CurationTypeImage = styled.img`
-    height: 40px;
-    width: 40px;
+    height: 35px;
+    width: 35px;
     margin-right: 10px;
 `;
 export const CurationTypeName = styled.span`
@@ -40,25 +40,24 @@ export const CurationFood = styled.div`
 
 export const CurationFoodTitle = styled.span`
     font-size: 14px;
-    max-width: 60%;
+    max-width: 90%;
     font-weight: 500;
     text-decoration: underline;
     text-align: center;
     line-height: 1.5;
+    cursor: pointer;
 `;
 export const CurationFoodList = styled.div`
-    min-height: 60px;
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    justify-items: center;
+    width: 95%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     align-items: flex-start;
     text-align: center;
-    margin-top: 15px;
+    margin-top: 10px;
     font-size: 12px;
     font-weight: 100;
-    grid-auto-rows: auto;
-    padding: 5px;
+    padding: 0 5px;
 `;
 
 export const CommentBox = styled.div`
@@ -71,23 +70,23 @@ export const CommentBox = styled.div`
     flex-direction: column;
     background-color: #e5e5e5;
     font-size: 14px;
-    line-height: 2;
-    margin-top: 50px;
+    line-height: 1.7;
+    margin-top: 35px;
     border-radius: 30px;
     white-space: pre-line;
 `;
 
 export const WarningBox = styled.div`
-    width: 80%;
+    width: 90%;
     min-height: 110px;
-    max-width: 430px;
+    max-width: 480px;
     background-color: #f7f7f7;
     margin: 0 auto;
     border-radius: 30px;
-    padding: 20px 30px;
+    padding: 10px 10px 5px;
     border: 1px solid #eeeeee;
     box-sizing: border-box;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -103,17 +102,16 @@ export const WarningTitle = styled.div`
 
 export const WarningList = styled.div`
     width: 100%;
-    display: grid;
-    grid-template-rows: repeat(2, auto);
-    grid-template-columns: repeat(3, 1fr);
-    justify-items: center;
+    display: flex;
+    justify-content: center;
     align-items: flex-start;
-    row-gap: 10px;
+    flex-wrap: wrap;
 `;
 export const WarningFood = styled.span`
     font-size: 13px;
     font-weight: 100;
     line-height: 1.5;
+    padding: 10px;
 `;
 export const WarningMain = styled.span`
     font-size: 13px;
@@ -125,8 +123,8 @@ export const WarningMain = styled.span`
 `;
 
 export const CurationDataWrapper = styled.div`
-    width: 80%;
-    max-width: 430px;
+    width: 90%;
+    max-width: 480px;
     display: grid;
     column-gap: 10px;
     row-gap: 30px;
@@ -139,9 +137,9 @@ export const Title = styled.div`
     font-size: 18px;
     font-weight: 600;
     display: flex;
-    justify-content: center;
     align-items: center;
-    margin: 20px 0;
+    justify-content: center;
+    margin: 0 0 20px;
 `;
 export const HashTag = styled.a`
     text-decoration: none;

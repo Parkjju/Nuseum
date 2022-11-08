@@ -179,7 +179,7 @@ const Water = () => {
                 }}
             >
                 <button
-                    style={{ width: 100, marginRight: 5 }}
+                    style={{ border:'none', borderRadius: '20px', padding: '5px 35px'}}
                     onClick={() => plusWater(250)}
                 >
                     250ml
@@ -198,7 +198,7 @@ const Water = () => {
                 ) : (
                     <button
                         onClick={() => sendWaterRequest()}
-                        style={{ width: 100, marginRight: 5 }}
+                        style={{ background: '#8A8A8E', border:'none', borderRadius: '20px', padding: '5px 35px', color: 'white' }}
                     >
                         저장
                     </button>

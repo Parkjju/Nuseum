@@ -16,13 +16,18 @@ export const Background = styled.div`
 export const Modal = styled(motion.div)`
     box-sizing: border-box;
     width: 100%;
+    height: 500px;
+    overflow-y: scroll;
     position: fixed;
     bottom: 0;
     background: #f7f7f7;
-    box-shadow: 0px -2px 7px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px -2px 15px rgba(255, 255, 255, 0.2);
     border-radius: 30px 30px 0px 0px;
     padding: 40px 20px;
     max-width: 600px;
+    ::-webkit-scrollbar{
+        display:none;
+    }
 `;
 
 export const TagName = styled.p`
