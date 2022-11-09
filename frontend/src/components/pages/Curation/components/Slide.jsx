@@ -1,4 +1,9 @@
-import { CommentBox, CurationDataWrapper, Title } from '../Curation.styled';
+import {
+    CommentBox,
+    CurationDataWrapper,
+    SubTitle,
+    Title,
+} from '../Curation.styled';
 import CurationData from '../CurationData';
 
 import React, { useEffect, useState } from 'react';
@@ -159,7 +164,10 @@ const Slide = ({ date, id, setVisibleIndex, visibleIndex, length }) => {
             </Title>
             <Warn recommendData={recommend} />
 
-            <Title>내 아이 맞춤식품</Title>
+            <Title style={{ marginBottom: 0, lineHeight: 1.5 }}>
+                내 아이 맞춤식품
+            </Title>
+            <SubTitle>식재료를 터치해보세요</SubTitle>
             <CurationDataWrapper rows={recommend?.data.length / 2}>
                 {recommend?.data.map((item, index) => (
                     <CurationData
@@ -173,16 +181,18 @@ const Slide = ({ date, id, setVisibleIndex, visibleIndex, length }) => {
 
             <CommentBox>{recommend?.comment}</CommentBox>
 
+            <Title style={{ marginTop: 40, marginBottom: 0, lineHeight: 1.5 }}>
+                편리하게 준비해요
+            </Title>
+            <SubTitle>식재료를 터치해보세요</SubTitle>
             <div
                 style={{
-                    marginTop: 25,
                     marginBottom: 30,
                     display: 'flex',
                     width: '90%',
                     flexWrap: 'wrap',
                 }}
             >
-                <Title>편리하게 준비해요</Title>
                 {recommend?.hashtag?.split('#').map((tag, index) =>
                     tag === '' ? null : (
                         <HashTag
@@ -204,6 +214,7 @@ const Slide = ({ date, id, setVisibleIndex, visibleIndex, length }) => {
                     display: 'flex',
                     alignItems: 'center',
                     flexDirection: 'column',
+                    marginTop: 40,
                 }}
             >
                 <p
