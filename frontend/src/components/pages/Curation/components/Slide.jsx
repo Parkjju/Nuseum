@@ -167,7 +167,7 @@ const Slide = ({ date, id, setVisibleIndex, visibleIndex, length }) => {
             <Title style={{ marginBottom: 0, lineHeight: 1.5 }}>
                 내 아이 맞춤식품
             </Title>
-            <SubTitle>식재료를 터치해보세요</SubTitle>
+            <SubTitle>식재료를 터치해 보세요</SubTitle>
             <CurationDataWrapper rows={recommend?.data.length / 2}>
                 {recommend?.data.map((item, index) => (
                     <CurationData
@@ -184,7 +184,7 @@ const Slide = ({ date, id, setVisibleIndex, visibleIndex, length }) => {
             <Title style={{ marginTop: 40, marginBottom: 0, lineHeight: 1.5 }}>
                 편리하게 준비해요
             </Title>
-            <SubTitle>식재료를 터치해보세요</SubTitle>
+            <SubTitle>음식명을 터치해 보세요</SubTitle>
             <div
                 style={{
                     marginBottom: 30,
