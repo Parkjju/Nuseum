@@ -148,3 +148,11 @@ export const HashTag = styled.a`
         opacity: 0.6;
     }
 `;
+
+export const SubTitle = styled.p`
+    font-size: 14px;
+    font-weight: 200;
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 20px;
+`;
