@@ -36,6 +36,7 @@ const QuestionDetail = () => {
     const [loading, setLoading] = useState(false);
     const [comment, setComment] = useState('');
     const [isPosted, setIsPosted] = useState(false);
+    const [date, setDate] = useState(null);
     const navigate = useNavigate();
     const param = useParams();
     const token = useSelector((state) => state.auth.token);
@@ -52,6 +53,7 @@ const QuestionDetail = () => {
                 setContent(response.data.question.content);
                 setAnswerData([...response.data.answerList]);
                 setTitle(response.data.question.title);
+                setDate(response.data.question.created_at);
                 setLoading(false);
             })
             .catch(async (err) => {
@@ -213,7 +215,7 @@ const QuestionDetail = () => {
             ) : (
                 <Contents>
                     <DiaryTitle layoutId={'question'}>
-                        <Name>{'Q&A'}</Name>
+                        <Name>{date?.split('T')[0]}</Name>
                     </DiaryTitle>
                     <QuestionBox>
                         <QuestionTitle>

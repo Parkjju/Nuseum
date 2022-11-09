@@ -16,6 +16,7 @@ export const QuestionContent = styled.p`
     line-height: 1.5;
     padding-bottom: 30px;
     border-bottom: 1px solid rgba(127, 140, 141, 0.7);
+    white-space: pre-line;
 `;
 
 export const AnswerBox = styled.div`
