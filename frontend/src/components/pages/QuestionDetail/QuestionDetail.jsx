@@ -56,6 +56,11 @@ const QuestionDetail = () => {
             })
             .catch(async (err) => {
                 console.log(err);
+                if (err.response.status === 404) {
+                    alert('이미 삭제된 게시물입니다.');
+                    navigate('/question');
+                    return;
+                }
                 if (err.response.status === 401) {
                     const { exp, token } = await handleExpired();
                     dispatch(

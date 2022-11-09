@@ -46,7 +46,7 @@ const Question = () => {
                 }
                 setLoading(false);
             });
-    }, []);
+    }, [token]);
 
     return (
         <Container>
