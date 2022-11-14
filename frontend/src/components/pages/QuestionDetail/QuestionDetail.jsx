@@ -40,6 +40,7 @@ const QuestionDetail = () => {
     const navigate = useNavigate();
     const param = useParams();
     const token = useSelector((state) => state.auth.token);
+    const [author, setAuthor] = useState(null);
 
     useEffect(() => {
         setLoading(true);
@@ -50,6 +51,7 @@ const QuestionDetail = () => {
                 },
             })
             .then((response) => {
+                setAuthor(response.data.question.author);
                 setContent(response.data.question.content);
                 setAnswerData([...response.data.answerList]);
                 setTitle(response.data.question.title);
@@ -146,6 +148,7 @@ const QuestionDetail = () => {
             }
         }
     };
+    console.log(author);
 
     const modifyPost = () => {
         if (window.confirm('질문 내용을 수정할까요?')) {
@@ -215,6 +218,7 @@ const QuestionDetail = () => {
             ) : (
                 <Contents>
                     <DiaryTitle layoutId={'question'}>
+                        <Name style={{ marginBottom: 10 }}>{author}</Name>
                         <Name>{date?.split('T')[0]}</Name>
                     </DiaryTitle>
                     <QuestionBox>
