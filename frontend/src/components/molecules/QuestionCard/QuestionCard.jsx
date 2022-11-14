@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Box } from './QuesetionCard.style';
 
-const QuestionCard = ({ data, isAnswered, id }) => {
+const QuestionCard = ({ data, isAnswered, id, author }) => {
     const currentWidth = window.innerWidth;
     return (
         <Box to={`./${id}`}>
@@ -21,6 +21,7 @@ const QuestionCard = ({ data, isAnswered, id }) => {
                         : data}
                 </span>
             </p>
+            <span style={{ fontSize: 14, fontWeight: 100 }}>{author}</span>
 
             {isAnswered ? (
                 <span style={{ fontSize: 14, fontWeight: 100 }}>답변 완료</span>
