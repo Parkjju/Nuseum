@@ -29,6 +29,7 @@ const Question = () => {
             })
             .then((response) => {
                 setQuestions([...response.data.results]);
+                console.log(response.data);
                 setLoading(false);
             })
             .catch(async (err) => {
@@ -74,6 +75,7 @@ const Question = () => {
                             data={item.title}
                             id={item.id}
                             isAnswered={item.is_answered}
+                            author={item.author}
                         />
                     ))}
                     <div style={{ height: '100px' }}></div>
