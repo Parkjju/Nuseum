@@ -10,7 +10,7 @@ import {
     URLName,
 } from './BottomSheet.styled';
 import ModalSheet from './ModalSheet';
-
+// 쿠팡. 이마트몰. 마켓컬리. 오아시스. 한살림. GS프레시몰. 홈플러스. 네이버쇼핑
 const urlList = [
     {
         url: 'https://www.coupang.com/np/search?component=&channel=user&',
@@ -28,11 +28,6 @@ const urlList = [
         name: '마켓컬리',
     },
     {
-        url: 'https://m.gsfresh.com/shop/search/searchSect.gs?&mseq=S-11209-0301&',
-        query: 'tq',
-        name: 'GS 프레시몰',
-    },
-    {
         url: 'https://www.oasis.co.kr/product/search?&page=1&sort=priority&direction=desc&corpId=&couponType=&rows=60&',
         query: 'keyword',
         name: '오아시스',
@@ -41,6 +36,16 @@ const urlList = [
         url: 'https://shop.hansalim.or.kr/shopping/prod/searchList.do?',
         query: 'SRCH_WD',
         name: '한살림',
+    },
+    {
+        url: 'https://m.gsfresh.com/shop/search/searchSect.gs?&mseq=S-11209-0301&',
+        query: 'tq',
+        name: 'GS 프레시몰',
+    },
+    {
+        url: 'https://front.homeplus.co.kr/search?entry=direct&',
+        query: 'keyword',
+        name: '홈플러스',
     },
     {
         url: 'https://search.shopping.naver.com/search/all?&cat_id=&frm=NVSHATC&',

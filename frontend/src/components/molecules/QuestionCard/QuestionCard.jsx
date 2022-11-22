@@ -21,11 +21,26 @@ const QuestionCard = ({ data, isAnswered, id, author }) => {
                         : data}
                 </span>
             </p>
-            <span style={{ fontSize: 14, fontWeight: 100 }}>{author}</span>
-
             {isAnswered ? (
-                <span style={{ fontSize: 14, fontWeight: 100 }}>답변 완료</span>
-            ) : null}
+                <div
+                    style={{
+                        position: 'relative',
+                        right: 0,
+                        width: 130,
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                    }}
+                >
+                    <span style={{ fontSize: 14, fontWeight: 100 }}>
+                        답변 완료
+                    </span>
+                    <span style={{ fontSize: 14, fontWeight: 100 }}>
+                        {author}
+                    </span>
+                </div>
+            ) : (
+                <span style={{ fontSize: 14, fontWeight: 100 }}>{author}</span>
+            )}
         </Box>
     );
 };

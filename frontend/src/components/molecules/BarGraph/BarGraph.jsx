@@ -30,20 +30,20 @@ const BarGraph = ({ count, data }) => {
         plugins: {
             legend: {
                 position: 'bottom',
-                align: 'end',             
+                align: 'end',
                 labels: {
                     font: {
                         family: 'Noto Serif KR,serif',
-                        size: 10
+                        size: 10,
                     },
-                    boxWidth: 25
-                }
+                    boxWidth: 25,
+                },
             },
             title: {
                 display: true,
                 text: '탄수화물 단백질 지방 섭취율    ',
-                align: 'end', 
-                font:{
+                align: 'end',
+                font: {
                     family: 'Noto Serif KR,serif',
                     size: 12,
                     weight: 500,
@@ -53,21 +53,21 @@ const BarGraph = ({ count, data }) => {
         scales: {
             y: {
                 stacked: true,
-                ticks:{
-                    font: {
-                        family: 'Noto Serif KR,serif',
-                        size: 10
-                    }
-                }
-            },
-            x: {
-                stacked: true,
-                ticks:{
+                ticks: {
                     font: {
                         family: 'Noto Serif KR,serif',
                         size: 10,
-                    }
-                }
+                    },
+                },
+            },
+            x: {
+                stacked: true,
+                ticks: {
+                    font: {
+                        family: 'Noto Serif KR,serif',
+                        size: 10,
+                    },
+                },
             },
         },
     };

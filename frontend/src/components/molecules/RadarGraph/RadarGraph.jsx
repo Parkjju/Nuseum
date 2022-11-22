@@ -18,7 +18,7 @@ ChartJS.register(
 );
 ChartJS.defaults.font.size = 8;
 
-const RadarGraph = ({ dateCount, data }) => {
+const RadarGraph = ({ dateCount, data, dataWithoutSupplement }) => {
     let dataForRadar = {
         labels: [
             // 'A',
@@ -46,7 +46,7 @@ const RadarGraph = ({ dateCount, data }) => {
         ],
         datasets: [
             {
-                label: '충분/권장섭취량 대비 실제섭취량(%)',
+                label: '영양제 + 음식(%)',
                 data: [
                     ((+data.dha_epa / (300 * dateCount)) * 100).toFixed(1) > 100
                         ? 100
@@ -107,9 +107,120 @@ const RadarGraph = ({ dateCount, data }) => {
                               1
                           ),
                 ],
-                backgroundColor: '#BEC5C6',
-                borderColor: 'black',
-                borderWidth: 1,
+                fill: true,
+                backgroundColor: 'rgba(190, 197, 198, 0.6)',
+                borderColor: 'rgba(190, 197, 198, 0.6)',
+                pointBackgroundColor: 'rgba(190, 197, 198, 0.6)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgba(190, 197, 198, 0.6)',
+            },
+            {
+                label: '음식만(%)',
+                data: [
+                    (
+                        (+dataWithoutSupplement.dha_epa / (300 * dateCount)) *
+                        100
+                    ).toFixed(1) > 100
+                        ? 100
+                        : (
+                              (+dataWithoutSupplement.dha_epa /
+                                  (300 * dateCount)) *
+                              100
+                          ).toFixed(1),
+                    (
+                        (+dataWithoutSupplement.folic_acid /
+                            (180 * dateCount)) *
+                        100
+                    ).toFixed(1) > 100
+                        ? 100
+                        : (
+                              (+dataWithoutSupplement.folic_acid /
+                                  (180 * dateCount)) *
+                              100
+                          ).toFixed(1),
+                    (
+                        (+dataWithoutSupplement.magnesium / (110 * dateCount)) *
+                        100
+                    ).toFixed(1) > 100
+                        ? 100
+                        : (
+                              (+dataWithoutSupplement.magnesium /
+                                  (110 * dateCount)) *
+                              100
+                          ).toFixed(1),
+                    (
+                        (+dataWithoutSupplement.tryptophan /
+                            (100 * dateCount)) *
+                        100
+                    ).toFixed(1) > 100
+                        ? 100
+                        : (
+                              (+dataWithoutSupplement.tryptophan /
+                                  (100 * dateCount)) *
+                              100
+                          ).toFixed(1),
+                    (
+                        (+dataWithoutSupplement.vitamin_a / (300 * dateCount)) *
+                        100
+                    ).toFixed(1) > 100
+                        ? 100
+                        : (
+                              (+dataWithoutSupplement.vitamin_a /
+                                  (300 * dateCount)) *
+                              100
+                          ).toFixed(1),
+                    (
+                        (+dataWithoutSupplement.dietary_fiber /
+                            (20 * dateCount)) *
+                        100
+                    ).toFixed(1) > 100
+                        ? 100
+                        : (
+                              (+dataWithoutSupplement.dietary_fiber /
+                                  (20 * dateCount)) *
+                              100
+                          ).toFixed(1),
+                    (
+                        (+dataWithoutSupplement.vitamin_b6 /
+                            (0.7 * dateCount)) *
+                        100
+                    ).toFixed(1) > 100
+                        ? 100
+                        : (
+                              (+dataWithoutSupplement.vitamin_b6 /
+                                  (0.7 * dateCount)) *
+                              100
+                          ).toFixed(1),
+                    (
+                        (+dataWithoutSupplement.vitamin_b12 /
+                            (1.1 * dateCount)) *
+                        100
+                    ).toFixed(1) > 100
+                        ? 100
+                        : (
+                              (+dataWithoutSupplement.vitamin_b12 /
+                                  (1.1 * dateCount)) *
+                              100
+                          ).toFixed(1),
+                    (
+                        (+dataWithoutSupplement.vitamin_d / (5 * dateCount)) *
+                        100
+                    ).toFixed(1) > 100
+                        ? 100
+                        : (
+                              (+dataWithoutSupplement.vitamin_d /
+                                  (5 * dateCount)) *
+                              100
+                          ).toFixed(1),
+                ],
+                fill: true,
+                backgroundColor: 'rgba(82, 89, 89, 0.6)',
+                borderColor: 'rgba(82, 89, 89, 0.6)',
+                pointBackgroundColor: 'rgba(82, 89, 89, 0.6)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgba(82, 89, 89, 0.6)',
             },
         ],
     };
