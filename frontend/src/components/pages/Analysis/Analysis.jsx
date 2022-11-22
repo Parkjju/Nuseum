@@ -69,6 +69,7 @@ const Analysis = () => {
     const token = useSelector((state) => state.auth.token);
     const dispatch = useDispatch();
     const [date, setDate] = useState(new Date());
+    const [isSupplementContained, setIsSupplementContained] = useState(true);
     const [isDateSelected, setIsDateSelected] = useState(false);
     const [loading, setLoading] = useState(false);
     const [dateCount, setDateCount] = useState(1);
@@ -105,6 +106,8 @@ const Analysis = () => {
         setNutrientPoint(pointNutrient);
         setMicrobiomePoint(pointMicro);
     }, [eatCategory]);
+
+    useEffect(() => {}, [isSupplementContained]);
 
     // 한주간 데이터 fetch중인지 월간 데이터 fetch중인지 판단을 위한 상태값
     // 탭 컴포넌트의 urlmatch 로직과 동일
@@ -553,6 +556,57 @@ const Analysis = () => {
                                             분석합니다.
                                         </p>
                                     </S.SectionTitle>
+                                    <div
+                                        style={{
+                                            width: '80%',
+                                            boxSizing: 'border-box',
+                                            display: 'flex',
+                                            justifyContent: 'flex-end',
+                                            marginTop: 30,
+                                        }}
+                                    >
+                                        <S.FetchButton
+                                            style={{
+                                                width: 60,
+                                                marginRight: 10,
+                                                backgroundColor: `${
+                                                    isSupplementContained
+                                                        ? '#8d8d8d'
+                                                        : '#f1f1f1'
+                                                }`,
+                                                color: `${
+                                                    isSupplementContained
+                                                        ? 'white'
+                                                        : 'black'
+                                                }`,
+                                            }}
+                                            onClick={() =>
+                                                setIsSupplementContained(true)
+                                            }
+                                        >
+                                            영양제 포함
+                                        </S.FetchButton>
+                                        <S.FetchButton
+                                            style={{
+                                                width: 60,
+                                                backgroundColor: `${
+                                                    isSupplementContained
+                                                        ? '#f1f1f1'
+                                                        : '#8d8d8d'
+                                                }`,
+                                                color: `${
+                                                    isSupplementContained
+                                                        ? 'black'
+                                                        : 'white'
+                                                }`,
+                                            }}
+                                            onClick={() =>
+                                                setIsSupplementContained(false)
+                                            }
+                                        >
+                                            영양제 제외
+                                        </S.FetchButton>
+                                    </div>
                                     <S.NutrientBox>
                                         <S.NutrientList>
                                             <Name
