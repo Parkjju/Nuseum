@@ -107,8 +107,6 @@ const Analysis = () => {
         setMicrobiomePoint(pointMicro);
     }, [eatCategory]);
 
-    useEffect(() => {}, [isSupplementContained]);
-
     // 한주간 데이터 fetch중인지 월간 데이터 fetch중인지 판단을 위한 상태값
     // 탭 컴포넌트의 urlmatch 로직과 동일
     const [isSelected, setIsSelected] = useState([true, false, false]);
@@ -129,6 +127,24 @@ const Analysis = () => {
         dha_epa: 0,
         water_amount: 0,
     });
+    const [nutritionWithoutSupplement, setNutritionWithoutSupplement] =
+        useState({
+            energy: 0,
+            protein: 0,
+            fat: 0,
+            carbohydrate: 0,
+            dietary_fiber: 0,
+            magnesium: 0,
+            vitamin_a: 0,
+            vitamin_d: 0,
+            vitamin_b6: 0,
+            folic_acid: 0,
+            vitamin_b12: 0,
+            tryptophan: 0,
+            dha_epa: 0,
+            water_amount: 0,
+        });
+
     const categoryCheck = (categoryArray) => {
         let copy = {
             1: false,
@@ -149,14 +165,88 @@ const Analysis = () => {
         setEatCategory({ ...copy });
     };
 
+    const fetchNutritionWithoutSupplement = async (d, type) => {
+        try {
+            let response = await axios.get(
+                `/api/v1/consumption/admin/analysis/${type}/?date=${d.getTime()}&nutrient=no`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            let res = { ...response.data };
+
+            for (let i in res) {
+                if (i === 'category' || i === 'day_count') {
+                    continue;
+                }
+                res[i] = Number.isInteger(+res[i]) ? res[i] : res[i].toFixed(1);
+            }
+
+            setNutritionWithoutSupplement(res);
+        } catch (err) {
+            console.log('ERROR:', err);
+            if (err.response.status === 401) {
+                const { exp, token } = await handleExpired();
+                dispatch(
+                    authActions.login({
+                        token: token.data.access,
+                        exp,
+                    })
+                );
+                setLoading(false);
+            } else {
+                console.log(err);
+                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+            }
+            let initializedNutrition = {
+                energy: 0,
+                protein: 0,
+                fat: 0,
+                carbohydrate: 0,
+                dietary_fiber: 0,
+                magnesium: 0,
+                vitamin_a: 0,
+                vitamin_d: 0,
+                vitamin_b6: 0,
+                folic_acid: 0,
+                vitamin_b12: 0,
+                tryptophan: 0,
+                dha_epa: 0,
+                water_amount: 0,
+            };
+
+            setNutrition(initializedNutrition);
+
+            setEatCategory({
+                1: false,
+                2: false,
+                3: false,
+                4: false,
+                5: false,
+                6: false,
+                7: false,
+                8: false,
+                9: false,
+            });
+            setLoading(false);
+            alert('이 날에는 기록하지 않으셨네요!');
+        }
+    };
+    console.log('without supplements: ', nutritionWithoutSupplement);
     const onChange = async (d) => {
         setLoading(true);
+        // ?date=1663772400000&nutrient=yes
         axios
-            .get(`/api/v1/consumption/day/?date=${d.getTime()}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
+            .get(
+                `/api/v1/consumption/admin/analysis/day/?date=${d.getTime()}&nutrient=yes`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
             .then((response) => {
                 let res = response.data;
 
@@ -184,6 +274,7 @@ const Analysis = () => {
                 // {'채소': 1, '과일': 2, '콩/두부': 3, '통곡물': 4, '버섯': 5, '해조류': 6, '견과': 7, '고기/생선/달걀': 8, '유제품': 9}
 
                 setNutrition(res);
+                fetchNutritionWithoutSupplement(d, 'day');
                 setLoading(false);
                 setIsDateSelected(true);
             })
@@ -235,6 +326,7 @@ const Analysis = () => {
                 setLoading(false);
                 alert('이 날에는 기록하지 않으셨네요!');
             });
+
         setDate(d);
         setDateCount(1);
     };
@@ -274,6 +366,7 @@ const Analysis = () => {
                 categoryCheck(response.data.category);
 
                 setNutrition(res);
+                fetchNutritionWithoutSupplement(date, 'day');
                 setLoading(false);
 
                 setDateCount(response.data.day_count);
@@ -331,6 +424,7 @@ const Analysis = () => {
                 categoryCheck(response.data.category);
 
                 setNutrition(res);
+                fetchNutritionWithoutSupplement(date, 'week');
                 setLoading(false);
 
                 setDateCount(response.data.day_count);
@@ -380,7 +474,6 @@ const Analysis = () => {
                     9: false,
                 });
                 setDateCount(1);
-                nu;
 
                 alert('한 주간 입력된 데이터가 없어요 😭');
             });
@@ -418,6 +511,7 @@ const Analysis = () => {
                 categoryCheck(response.data.category);
 
                 setDateCount(response.data.day_count);
+                fetchNutritionWithoutSupplement(date, 'month');
                 setNutrition(res);
                 setLoading(false);
             })
@@ -556,57 +650,7 @@ const Analysis = () => {
                                             분석합니다.
                                         </p>
                                     </S.SectionTitle>
-                                    <div
-                                        style={{
-                                            width: '80%',
-                                            boxSizing: 'border-box',
-                                            display: 'flex',
-                                            justifyContent: 'flex-end',
-                                            marginTop: 30,
-                                        }}
-                                    >
-                                        <S.FetchButton
-                                            style={{
-                                                width: 60,
-                                                marginRight: 10,
-                                                backgroundColor: `${
-                                                    isSupplementContained
-                                                        ? '#8d8d8d'
-                                                        : '#f1f1f1'
-                                                }`,
-                                                color: `${
-                                                    isSupplementContained
-                                                        ? 'white'
-                                                        : 'black'
-                                                }`,
-                                            }}
-                                            onClick={() =>
-                                                setIsSupplementContained(true)
-                                            }
-                                        >
-                                            영양제 포함
-                                        </S.FetchButton>
-                                        <S.FetchButton
-                                            style={{
-                                                width: 60,
-                                                backgroundColor: `${
-                                                    isSupplementContained
-                                                        ? '#f1f1f1'
-                                                        : '#8d8d8d'
-                                                }`,
-                                                color: `${
-                                                    isSupplementContained
-                                                        ? 'black'
-                                                        : 'white'
-                                                }`,
-                                            }}
-                                            onClick={() =>
-                                                setIsSupplementContained(false)
-                                            }
-                                        >
-                                            영양제 제외
-                                        </S.FetchButton>
-                                    </div>
+
                                     <S.NutrientBox>
                                         <S.NutrientList>
                                             <Name
@@ -714,6 +758,9 @@ const Analysis = () => {
                                             <RadarGraph
                                                 dateCount={dateCount}
                                                 data={nutrition}
+                                                dataWithoutSupplement={
+                                                    nutritionWithoutSupplement
+                                                }
                                             />
                                         </div>
                                     </S.NutrientBox>
