@@ -24,12 +24,9 @@ import {
 import { Button } from '../QuestionForm/QuestionForm.style';
 import modify from '../../../assets/modifyImg.png';
 import deleteImg from '../../../assets/deleteImg.png';
-import { useDispatch, useSelector } from 'react-redux';
-import handleExpired from '../../../helpers/handleExpired';
-import { authActions } from '../../../store/auth-slice';
+import { useSelector } from 'react-redux';
 
 const QuestionDetail = () => {
-    const dispatch = useDispatch();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [answerData, setAnswerData] = useState([]);
@@ -65,17 +62,7 @@ const QuestionDetail = () => {
                     navigate('/question');
                     return;
                 }
-                if (err.response.status === 401) {
-                    const { exp, token } = await handleExpired();
-                    dispatch(
-                        authActions.login({
-                            token: token.data.access,
-                            exp,
-                        })
-                    );
-                } else {
-                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-                }
+                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 setLoading(false);
             });
     }, [isPosted]);
@@ -101,17 +88,7 @@ const QuestionDetail = () => {
                         return;
                     }
                     console.log(err);
-                    if (err.response.status === 401) {
-                        const { exp, token } = await handleExpired();
-                        dispatch(
-                            authActions.login({
-                                token: token.data.access,
-                                exp,
-                            })
-                        );
-                    } else {
-                        alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-                    }
+                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                     setLoading(false);
                 });
         }
@@ -131,20 +108,9 @@ const QuestionDetail = () => {
                 navigate('/question');
             } catch (error) {
                 console.log(err);
-                if (err.response.status === 401) {
-                    const { exp, token } = await handleExpired();
-                    dispatch(
-                        authActions.login({
-                            token: token.data.access,
-                            exp,
-                        })
-                    );
-                    setLoading(false);
-                } else {
-                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-                    setLoading(false);
-                    return;
-                }
+
+                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                setLoading(false);
             }
         }
     };
@@ -179,17 +145,6 @@ const QuestionDetail = () => {
                         }
                     );
                 } catch (error) {
-                    if (err.response.status === 401) {
-                        const { exp, token } = await handleExpired();
-                        dispatch(
-                            authActions.login({
-                                token: token.data.access,
-                                exp,
-                            })
-                        );
-                    } else {
-                        alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-                    }
                     alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 }
                 setLoading(false);

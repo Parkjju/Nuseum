@@ -5,8 +5,6 @@ import { Contents } from '../Home/styled';
 import axios from 'axios';
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import handleExpired from '../../../helpers/handleExpired';
-import { authActions } from '../../../store/auth-slice';
 import { useState } from 'react';
 import Slide from './components/Slide';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -31,17 +29,7 @@ const Curation = () => {
             setRecommendList(response.data.reverse());
         } catch (err) {
             console.log(err);
-            if (err.response?.status === 401) {
-                const { exp, token } = await handleExpired();
-                dispatch(
-                    authActions.login({
-                        token: token.data.access,
-                        exp,
-                    })
-                );
-            } else {
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-            }
+            alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
         }
     };
 

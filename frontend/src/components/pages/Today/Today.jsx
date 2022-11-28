@@ -14,8 +14,6 @@ import {
     SummaryTitle,
     VerticalImageBox,
 } from './Today.style';
-import { authActions } from '../../../store/auth-slice';
-import handleExpired from '../../../helpers/handleExpired';
 
 const Today = ({ date }) => {
     const token = useSelector((state) => state.auth.token);
@@ -99,17 +97,8 @@ const Today = ({ date }) => {
             })
             .catch(async (err) => {
                 console.log(err);
-                if (err.response.status === 401) {
-                    const { exp, token } = await handleExpired();
-                    dispatch(
-                        authActions.login({
-                            token: token.data.access,
-                            exp,
-                        })
-                    );
-                } else {
-                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-                }
+
+                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 setLoading(false);
             });
     }, [username, date]);

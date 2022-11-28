@@ -7,10 +7,6 @@ import { useParams } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import useActions from '../../../hooks/useActions';
-import jwt_decode from 'jwt-decode';
-import { authActions } from '../../../store/auth-slice';
-import handleExpired from '../../../helpers/handleExpired';
-import { waterActions } from '../../../store/water-slice';
 
 const Water = () => {
     const params = useParams();
@@ -63,20 +59,11 @@ const Water = () => {
             })
             .catch(async (err) => {
                 console.log(err);
-                if (err.response.status === 401) {
-                    const { exp, token } = await handleExpired();
-                    dispatch(
-                        authActions.login({
-                            token: token.data.access,
-                            exp,
-                        })
-                    );
-                } else {
-                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-                }
+
+                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 setLoading(false);
             });
-    }, [dispatch, token]);
+    }, [dispatch]);
 
     useEffect(() => {
         if (count >= currentAmount) {
@@ -118,17 +105,7 @@ const Water = () => {
             alert('수분 입력이 완료되었습니다!');
             setLoading(false);
         } catch (err) {
-            if (err.response.status === 401) {
-                const { exp, token } = await handleExpired();
-                dispatch(
-                    authActions.login({
-                        token: token.data.access,
-                        exp,
-                    })
-                );
-            } else {
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-            }
+            alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
             setLoading(false);
         }
     };
@@ -179,7 +156,11 @@ const Water = () => {
                 }}
             >
                 <button
-                    style={{ border:'none', borderRadius: '20px', padding: '5px 35px'}}
+                    style={{
+                        border: 'none',
+                        borderRadius: '20px',
+                        padding: '5px 35px',
+                    }}
                     onClick={() => plusWater(250)}
                 >
                     250ml
@@ -198,7 +179,13 @@ const Water = () => {
                 ) : (
                     <button
                         onClick={() => sendWaterRequest()}
-                        style={{ background: '#8A8A8E', border:'none', borderRadius: '20px', padding: '5px 35px', color: 'white' }}
+                        style={{
+                            background: '#8A8A8E',
+                            border: 'none',
+                            borderRadius: '20px',
+                            padding: '5px 35px',
+                            color: 'white',
+                        }}
                     >
                         저장
                     </button>

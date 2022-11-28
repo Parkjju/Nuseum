@@ -20,25 +20,9 @@ import jwt_decode from 'jwt-decode';
 function Login() {
     const dispatch = useDispatch();
 
-    const [token, setToken] = useState(null);
-
     useEffect(() => {
         window.sessionStorage.removeItem('isLoggedIn');
     }, []);
-    // pwa 설치 관련 코드
-    // const [deferredPrompt, setDeferredPrompt] =
-    //     useRecoilState(deferredPromptState);
-
-    // const installApp = async () => {
-    //     // Show the install prompt
-    //     deferredPrompt.prompt();
-    //     // Wait for the user to respond to the prompt
-    //     const { outcome } = await deferredPrompt.userChoice;
-    //     // Optionally, send analytics event with outcome of user choice
-    //     console.log(`User response to the install prompt: ${outcome}`);
-    //     // We've used the prompt, and can't use it again, throw it away
-    //     setDeferredPrompt(null);
-    // };
 
     const {
         register,
@@ -65,7 +49,7 @@ function Login() {
             dispatch(
                 authActions.login({
                     token: response.data.access_token,
-                    expiration_time: decodedData.exp,
+                    exp: decodedData.exp,
                 })
             );
             window.sessionStorage.setItem('isLoggedIn', true);
@@ -99,7 +83,7 @@ function Login() {
                     dispatch(
                         authActions.login({
                             token: response.data.access_token,
-                            expiration_time: decodedData.exp,
+                            exp: decodedData.exp,
                         })
                     );
                     window.sessionStorage.setItem('isLoggedIn', true);
