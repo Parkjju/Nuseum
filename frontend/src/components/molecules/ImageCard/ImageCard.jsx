@@ -69,6 +69,10 @@ const ImageCard = ({ isSaved, index, data, setFetchedSupplement }) => {
                 );
             };
         } catch (error) {
+            if (err.response.status === 401) {
+                setLoading(false);
+                return;
+            }
             console.log(error);
         }
     };
@@ -174,6 +178,10 @@ const ImageCard = ({ isSaved, index, data, setFetchedSupplement }) => {
                             alert('영양제 정보가 삭제되었습니다!');
                         } catch (err) {
                             console.log(err);
+                            if (err.response.status === 401) {
+                                setLoading(false);
+                                return;
+                            }
                             alert(
                                 '오류가 발생했습니다. 담당자에게 문의해주세요!'
                             );

@@ -81,6 +81,10 @@ const My = () => {
                 setUrl(response.data.data);
             })
             .catch(async (err) => {
+                if (err.response.status === 401) {
+                    setLoading(false);
+                    return;
+                }
                 alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
             });
     }, []);

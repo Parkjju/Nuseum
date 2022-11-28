@@ -267,7 +267,12 @@ const Analysis = () => {
             })
             .catch(async (err) => {
                 console.log(err);
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+
+                if (err.response.status === 401) {
+                    setLoading(false);
+                } else {
+                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                }
                 let initializedNutrition = {
                     energy: 0,
                     protein: 0,
@@ -348,7 +353,10 @@ const Analysis = () => {
             })
             .catch(async (err) => {
                 console.log(err);
-
+                if (err.response.status === 401) {
+                    setLoading(false);
+                    return;
+                }
                 alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
 
                 setLoading(false);
@@ -396,8 +404,12 @@ const Analysis = () => {
             })
             .catch(async (err) => {
                 console.log(err);
+                if (err.response.status === 401) {
+                    setLoading(false);
+                } else {
+                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                }
 
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 setLoading(false);
                 let initializedNutrition = {
                     energy: 0,
@@ -473,8 +485,12 @@ const Analysis = () => {
             })
             .catch(async (err) => {
                 console.log(err);
+                if (err.response.status === 401) {
+                    setLoading(false);
+                } else {
+                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                }
 
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 setLoading(false);
 
                 let initializedNutrition = {

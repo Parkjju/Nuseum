@@ -72,6 +72,10 @@ const QuestionForm = () => {
                         );
                     } catch (err) {
                         console.log(err);
+                        if (err.response.status === 401) {
+                            setLoading(false);
+                            return;
+                        }
                         alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                         setLoading(false);
                     }
@@ -84,8 +88,12 @@ const QuestionForm = () => {
                 }
 
                 navigate('/question');
-            } catch (error) {
-                console.log(error);
+            } catch (err) {
+                console.log(err);
+                if (err.response.status === 401) {
+                    setLoading(false);
+                    return;
+                }
                 alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
             }
             setLoading(false);

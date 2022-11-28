@@ -32,6 +32,10 @@ const Question = () => {
             })
             .catch(async (err) => {
                 console.log(err);
+                if (err.response.status === 401) {
+                    setLoading(false);
+                    return;
+                }
                 alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 setLoading(false);
             });

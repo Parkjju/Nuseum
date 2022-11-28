@@ -70,7 +70,10 @@ const Meal = () => {
             })
             .catch(async (err) => {
                 console.log(err);
-
+                if (err.response.status === 401) {
+                    setLoading(false);
+                    return;
+                }
                 alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 setLoading(false);
             });
@@ -189,6 +192,10 @@ const Meal = () => {
                 alert('일지 작성이 완료되었습니다!');
             } catch (err) {
                 console.log(err);
+                if (err.response.status === 401) {
+                    setLoading(false);
+                    return;
+                }
                 alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 setLoading(false);
             }
@@ -220,6 +227,10 @@ const Meal = () => {
                 dispatch(postActions.addPostImage(base64data));
             };
         } catch (error) {
+            if (err.response.status === 401) {
+                setLoading(false);
+                return;
+            }
             console.log(error);
         }
     };
@@ -246,6 +257,10 @@ const Meal = () => {
                 }
             })
             .catch(async (err) => {
+                if (err.response.status === 401) {
+                    setLoading(false);
+                    return;
+                }
                 alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
             });
 
@@ -321,6 +336,10 @@ const Meal = () => {
                                               setLoading(false);
                                           } catch (err) {
                                               console.log(err);
+                                              if (err.response.status === 401) {
+                                                  setLoading(false);
+                                                  return;
+                                              }
 
                                               alert(
                                                   '오류가 발생했습니다. 담당자에게 문의해주세요!'

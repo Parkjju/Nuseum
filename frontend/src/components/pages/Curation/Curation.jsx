@@ -29,6 +29,9 @@ const Curation = () => {
             setRecommendList(response.data.reverse());
         } catch (err) {
             console.log(err);
+            if (err.response.status === 401) {
+                return;
+            }
             alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
         }
     };
