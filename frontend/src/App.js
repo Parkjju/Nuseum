@@ -3,8 +3,13 @@ import { Helmet } from 'react-helmet';
 import ReactDOM from 'react-dom';
 import { createGlobalStyle } from 'styled-components';
 import Footer from './components/atom/Footer';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import SimpleSnackbar from './components/atom/SimpleSnackbar/SimpleSnackbar';
+import { useDispatch, useSelector } from 'react-redux';
+import jwt_decode from 'jwt-decode';
+import handleExpired from './helpers/handleExpired';
+import { authActions } from './store/auth-slice';
+import axios from 'axios';
 
 const GlobalStyle = createGlobalStyle`
 /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -66,7 +71,46 @@ const isUpdateAvailable = window.sessionStorage.getItem('updated');
 
 function App() {
     const pathname = window.location.pathname;
+    const token = useSelector((state) => state.auth.token);
 
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if (!token) {
+            axios
+                .post(
+                    '/api/v1/account/token/refresh/',
+                    {},
+                    {
+                        headers: {
+                            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxLCJpYXQiOjEsImp0aSI6ImFjZTcxMzE5YmVkMDQwYzFhMWMxODgyNGYzOWUzNTVlIiwidXNlcl9pZCI6MH0.P1e_v6fDHgG4qaODzLDvKTFgGBBNK7pmH_9M--MpfwA`,
+                        },
+                    }
+                )
+                .then((response) => {
+                    const { exp } = jwt_decode(response.data.access);
+                    dispatch(
+                        authActions.login({
+                            token: response.data.access,
+                            exp,
+                        })
+                    );
+                });
+
+            return;
+        }
+        const { exp } = jwt_decode(token);
+        setTimeout(async () => {
+            const { exp, token } = await handleExpired();
+
+            dispatch(
+                authActions.login({
+                    token: token.data.access,
+                    exp,
+                })
+            );
+            console.log('token refreshed!');
+        }, exp * 1000 - Date.now() - 5000);
+    }, [token]);
     useEffect(() => {
         if (pathname === '/login') {
             return;
