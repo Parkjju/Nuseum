@@ -12,7 +12,7 @@ const authSlice = createSlice({
         login(state, action) {
             state.isLoggedIn = true;
             state.token = action.payload.token;
-            state.expiration_time = action.payload.expiration_time;
+            state.expiration_time = action.payload.exp;
         },
         logout(state) {
             state.isLoggedIn = false;

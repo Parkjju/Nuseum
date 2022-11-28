@@ -4,8 +4,6 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import handleExpired from '../../../helpers/handleExpired';
-import { authActions } from '../../../store/auth-slice';
 import Button from '../../atom/Button';
 import { Name } from '../../atom/Card/styled';
 import Container from '../../atom/Container';
@@ -34,20 +32,10 @@ const Question = () => {
             })
             .catch(async (err) => {
                 console.log(err);
-                if (err.response.status === 401) {
-                    const { exp, token } = await handleExpired();
-                    dispatch(
-                        authActions.login({
-                            token: token.data.access,
-                            exp,
-                        })
-                    );
-                } else {
-                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-                }
+                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 setLoading(false);
             });
-    }, [token]);
+    }, []);
 
     return (
         <Container>

@@ -2,12 +2,9 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
-import { authActions } from '../../../store/auth-slice';
 import { CircularProgress } from '@mui/material';
 import { supplementActions } from '../../../store/supplement-slice';
 import ImageCard from '../../molecules/ImageCard';
-import handleExpired from '../../../helpers/handleExpired';
 
 let initial = true;
 const Supplement = () => {
@@ -65,17 +62,8 @@ const Supplement = () => {
             setLoading(false);
         } catch (err) {
             console.log(err);
-            if (err.response.status === 401) {
-                const { exp, token } = await handleExpired();
-                dispatch(
-                    authActions.login({
-                        token: token.data.access,
-                        exp,
-                    })
-                );
-            } else {
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-            }
+
+            alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
             setIsRequestSent(false);
             setLoading(false);
         }
@@ -108,17 +96,7 @@ const Supplement = () => {
             })
             .catch(async (err) => {
                 console.log(err);
-                if (err.response.status === 401) {
-                    const { exp, token } = await handleExpired();
-                    dispatch(
-                        authActions.login({
-                            token: token.data.access,
-                            exp,
-                        })
-                    );
-                } else {
-                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-                }
+                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 setLoading(false);
             });
     }, [isRequestSent, dispatch]);
@@ -127,7 +105,15 @@ const Supplement = () => {
         <CircularProgress />
     ) : (
         <>
-            <button onClick={addSupplement} style={{ marginBottom: 20 , border: 'none', borderRadius: '20px', padding: '5px 35px'}}>
+            <button
+                onClick={addSupplement}
+                style={{
+                    marginBottom: 20,
+                    border: 'none',
+                    borderRadius: '20px',
+                    padding: '5px 35px',
+                }}
+            >
                 추가하기
             </button>
 
@@ -163,7 +149,14 @@ const Supplement = () => {
                 <button
                     // 영양제 저장하는 버튼이었음
                     onClick={() => saveSupplement()}
-                    style={{ marginBottom: '30px', background: '#8A8A8E', border:'none', borderRadius: '20px', padding: '5px 35px', color: 'white'  }}
+                    style={{
+                        marginBottom: '30px',
+                        background: '#8A8A8E',
+                        border: 'none',
+                        borderRadius: '20px',
+                        padding: '5px 35px',
+                        color: 'white',
+                    }}
                 >
                     저장
                 </button>

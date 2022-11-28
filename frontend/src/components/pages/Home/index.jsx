@@ -13,11 +13,6 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import { authActions } from '../../../store/auth-slice';
-import handleExpired from '../../../helpers/handleExpired';
-
-let init = true;
-
 function Home() {
     const isLoggedIn = window.sessionStorage.getItem('isLoggedIn');
 
@@ -28,17 +23,8 @@ function Home() {
             navigate('/login');
             return;
         }
-        fetchTokenInHome();
     }, [dispatch]);
-    const fetchTokenInHome = async () => {
-        const { exp, token } = await handleExpired();
-        dispatch(
-            authActions.login({
-                token: token.data.access,
-                exp,
-            })
-        );
-    };
+
     const menu = [
         [diary, '식단일기', 'diary'],
         [analysis, '식이분석', 'analysis'],

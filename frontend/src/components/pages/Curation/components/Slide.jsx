@@ -9,8 +9,6 @@ import CurationData from '../CurationData';
 import React, { useEffect, useState } from 'react';
 import Warn from './Warn';
 import { useDispatch, useSelector } from 'react-redux';
-import { authActions } from '../../../../store/auth-slice';
-import handleExpired from '../../../../helpers/handleExpired';
 import axios from 'axios';
 import BottomSheet from '../../../molecules/BottomSheet';
 import HashTag from './HashTag';
@@ -118,17 +116,8 @@ const Slide = ({ date, id, setVisibleIndex, visibleIndex, length }) => {
         } catch (err) {
             console.log(err);
             if (!id) return;
-            if (err.response.status === 401) {
-                const { exp, token } = await handleExpired();
-                dispatch(
-                    authActions.login({
-                        token: token.data.access,
-                        exp,
-                    })
-                );
-            } else {
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-            }
+
+            alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
         }
     };
     useEffect(() => {

@@ -48,8 +48,6 @@ import {
 import RadarGraph from '../../molecules/RadarGraph';
 import BarGraph from '../../molecules/BarGraph';
 import { useDispatch, useSelector } from 'react-redux';
-import handleExpired from '../../../helpers/handleExpired';
-import { authActions } from '../../../store/auth-slice';
 import { useEffect } from 'react';
 
 ChartJS.register(
@@ -187,19 +185,8 @@ const Analysis = () => {
             setNutritionWithoutSupplement(res);
         } catch (err) {
             console.log('ERROR:', err);
-            if (err.response.status === 401) {
-                const { exp, token } = await handleExpired();
-                dispatch(
-                    authActions.login({
-                        token: token.data.access,
-                        exp,
-                    })
-                );
-                setLoading(false);
-            } else {
-                console.log(err);
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-            }
+
+            alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
             let initializedNutrition = {
                 energy: 0,
                 protein: 0,
@@ -280,19 +267,7 @@ const Analysis = () => {
             })
             .catch(async (err) => {
                 console.log(err);
-                if (err.response.status === 401) {
-                    const { exp, token } = await handleExpired();
-                    dispatch(
-                        authActions.login({
-                            token: token.data.access,
-                            exp,
-                        })
-                    );
-                    setLoading(false);
-                } else {
-                    console.log(err);
-                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-                }
+                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 let initializedNutrition = {
                     energy: 0,
                     protein: 0,
@@ -373,18 +348,8 @@ const Analysis = () => {
             })
             .catch(async (err) => {
                 console.log(err);
-                if (err.response.status === 401) {
-                    const { exp, token } = await handleExpired();
-                    dispatch(
-                        authActions.login({
-                            token: token.data.access,
-                            exp,
-                        })
-                    );
-                } else {
-                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-                }
-                nu;
+
+                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
 
                 setLoading(false);
             });
@@ -431,17 +396,8 @@ const Analysis = () => {
             })
             .catch(async (err) => {
                 console.log(err);
-                if (err.response.status === 401) {
-                    const { exp, token } = await handleExpired();
-                    dispatch(
-                        authActions.login({
-                            token: token.data.access,
-                            exp,
-                        })
-                    );
-                } else {
-                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-                }
+
+                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 setLoading(false);
                 let initializedNutrition = {
                     energy: 0,
@@ -517,17 +473,8 @@ const Analysis = () => {
             })
             .catch(async (err) => {
                 console.log(err);
-                if (err.response.status === 401) {
-                    const { exp, token } = await handleExpired();
-                    dispatch(
-                        authActions.login({
-                            token: token.data.access,
-                            exp,
-                        })
-                    );
-                } else {
-                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-                }
+
+                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 setLoading(false);
 
                 let initializedNutrition = {

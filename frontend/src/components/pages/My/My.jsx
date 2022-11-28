@@ -9,10 +9,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 import prev from '../../../assets/prev.png';
 import next from '../../../assets/next.png';
 import { Page, Document } from 'react-pdf';
-
 import { useDispatch, useSelector } from 'react-redux';
-import handleExpired from '../../../helpers/handleExpired';
-import { authActions } from '../../../store/auth-slice';
 import Container from '../../atom/Container';
 import { Title } from '../Curation/Curation.styled';
 
@@ -84,19 +81,9 @@ const My = () => {
                 setUrl(response.data.data);
             })
             .catch(async (err) => {
-                if (err.response.status === 401) {
-                    const { exp, token } = await handleExpired();
-                    dispatch(
-                        authActions.login({
-                            token: token.data.access,
-                            exp,
-                        })
-                    );
-                } else {
-                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-                }
+                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
             });
-    }, [token]);
+    }, []);
 
     useEffect(() => {
         setPageNum(pdfRef?._pdfInfo.numPages);

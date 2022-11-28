@@ -15,7 +15,6 @@ import {
     TagBox,
 } from '../Record/styled';
 import { VerticalImageBox } from '../Today/Today.style';
-import { handleExpired } from '../../../helpers/handleExpired';
 import useActions from '../../../hooks/useActions';
 import { useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
@@ -72,20 +71,7 @@ const Meal = () => {
             .catch(async (err) => {
                 console.log(err);
 
-                // 액세스토큰이 만료되면
-                // 리프레시토큰을 가지고 새로 발급받는다.
-                if (err.response.status === 401) {
-                    const { exp, token } = await handleExpired();
-
-                    dispatch(
-                        authActions.login({
-                            token: token.data.access,
-                            exp,
-                        })
-                    );
-                } else {
-                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-                }
+                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
                 setLoading(false);
             });
     };
@@ -103,7 +89,7 @@ const Meal = () => {
         setLoading(true);
 
         fetchData();
-    }, [dispatch, token]);
+    }, [dispatch]);
     // 액션 훅 호출
     const action = useActions(param.when);
 
@@ -152,9 +138,11 @@ const Meal = () => {
             setPage((prev) => prev + 1);
             setHasNextPage(response.data.next ? true : false);
             setIsFetching(false);
-        } catch (error) {
-            // handleExpired 로직 추가 필요
-            console.log(error);
+        } catch (err) {
+            console.log(err);
+
+            alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+            setLoading(false);
         }
     }, [page, searchParam]);
 
@@ -256,17 +244,7 @@ const Meal = () => {
                 }
             })
             .catch(async (err) => {
-                if (err.response.status === 401) {
-                    const { exp, token } = await handleExpired();
-                    dispatch(
-                        authActions.login({
-                            token: token.data.access,
-                            exp,
-                        })
-                    );
-                } else {
-                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-                }
+                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
             });
 
         setSearchParam(foodName);
@@ -341,21 +319,10 @@ const Meal = () => {
                                               setLoading(false);
                                           } catch (err) {
                                               console.log(err);
-                                              if (err.response.status === 401) {
-                                                  const { exp, token } =
-                                                      handleExpired();
 
-                                                  dispatch(
-                                                      authActions.login({
-                                                          token,
-                                                          exp,
-                                                      })
-                                                  );
-                                              } else {
-                                                  alert(
-                                                      '오류가 발생했습니다. 담당자에게 문의해주세요!'
-                                                  );
-                                              }
+                                              alert(
+                                                  '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                                              );
                                               setIsLoading(false);
                                           }
                                       }
@@ -419,7 +386,14 @@ const Meal = () => {
                 // 음식데이터 저장버튼
                 <button
                     onClick={() => savePost()}
-                    style={{ marginBottom: '30px', background: '#8A8A8E', border:'none', borderRadius: '20px', padding: '5px 35px', color: 'white' }}
+                    style={{
+                        marginBottom: '30px',
+                        background: '#8A8A8E',
+                        border: 'none',
+                        borderRadius: '20px',
+                        padding: '5px 35px',
+                        color: 'white',
+                    }}
                 >
                     저장
                 </button>

@@ -7,8 +7,6 @@ import { useParams } from 'react-router-dom';
 import useActions from '../../../hooks/useActions';
 import axios from 'axios';
 import { postActions } from '../../../store/meal-slice/post-slice';
-import handleExpired from '../../../helpers/handleExpired';
-import { authActions } from '../../../store/auth-slice';
 
 const FoodImg = ({ data, index, isPost, setLoading }) => {
     const dispatch = useDispatch();
@@ -47,20 +45,9 @@ const FoodImg = ({ data, index, isPost, setLoading }) => {
                                     setLoading(false);
                                     alert('이미지가 삭제되었습니다!');
                                 } catch (err) {
-                                    if (err.response.status === 401) {
-                                        const { exp, token } =
-                                            await handleExpired();
-                                        dispatch(
-                                            authActions.login({
-                                                token: token.data.access,
-                                                exp,
-                                            })
-                                        );
-                                    } else {
-                                        alert(
-                                            '오류가 발생했습니다. 담당자에게 문의해주세요!'
-                                        );
-                                    }
+                                    alert(
+                                        '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                                    );
                                     setLoading(false);
                                 }
                             } else {

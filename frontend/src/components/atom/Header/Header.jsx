@@ -3,22 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { HeaderBox, Icon } from './Header.style';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { authActions } from '../../../store/auth-slice';
-// import New from '../New';
-import handleExpired from '../../../helpers/handleExpired';
-// import Mail from '../New/Mail';
 
 const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const loc = useLocation();
     const locationArray = loc.pathname.split('/');
-    const token = useSelector((state) => state.auth.token);
-    const [isRead, setIsRead] = useState(false);
-    const [list, setList] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [isInitial, setIsInitial] = useState(true);
 
     const [backActive, setBackActive] = useState(true);
     const [homeActive, setHomeActive] = useState(true);
@@ -26,13 +18,6 @@ const Header = () => {
         window.sessionStorage.getItem('isLoggedIn')
     );
     const [isOpen, setIsOpen] = useState(false);
-
-    const checkIsRead = (noticeList) => {
-        for (let obj of noticeList) {
-            if (!obj.isRead) return false;
-        }
-        return true;
-    };
 
     // 세션스토리지 isLoggedIn 관리
     useEffect(() => {
@@ -46,34 +31,6 @@ const Header = () => {
             location.reload();
         }
     }, [loc.pathname]);
-
-    // 헤더 공지사항 GET 로직
-    // useEffect(() => {
-    //     axios
-    //         .get('https://www.nuseum.site/api/v1/notice/', {
-    //             headers: {
-    //                 Authorization: `Bearer ${token}`,
-    //             },
-    //         })
-    //         .then((response) => {
-    //             setList(response.data);
-    //         })
-    //         .catch(async (err) => {
-    //             console.log(err);
-    //             if (err.response.status === 401) {
-    //                 const { exp, token } = await handleExpired();
-    //                 dispatch(
-    //                     authActions.login({
-    //                         token: token.data.access,
-    //                         exp,
-    //                     })
-    //                 );
-    //             } else {
-    //                 alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
-    //             }
-    //             setLoading(false);
-    //         });
-    // }, [token]);
 
     return (
         <HeaderBox>

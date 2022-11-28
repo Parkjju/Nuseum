@@ -14,7 +14,6 @@ import useActions from '../../../hooks/useActions';
 import { supplementActions } from '../../../store/supplement-slice';
 import axios from 'axios';
 import { CircularProgress } from '@mui/material';
-import handleExpired from '../../../helpers/handleExpired';
 
 const ImageCard = ({ isSaved, index, data, setFetchedSupplement }) => {
     // index에 접근하여 해당 데이터 수정
@@ -175,19 +174,9 @@ const ImageCard = ({ isSaved, index, data, setFetchedSupplement }) => {
                             alert('영양제 정보가 삭제되었습니다!');
                         } catch (err) {
                             console.log(err);
-                            if (err.response?.status === 401) {
-                                const { exp, token } = await handleExpired();
-                                dispatch(
-                                    authActions.login({
-                                        token: token.data.access,
-                                        exp,
-                                    })
-                                );
-                            } else {
-                                alert(
-                                    '오류가 발생했습니다. 담당자에게 문의해주세요!'
-                                );
-                            }
+                            alert(
+                                '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                            );
                             setLoading(false);
                         }
                     }

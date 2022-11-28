@@ -1,6 +1,6 @@
 import Container from '../../atom/Container';
 import { Contents } from '../Home/styled';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import morning from '../../../assets/morning.png';
 import mid from '../../../assets/lunch.png';
@@ -9,23 +9,14 @@ import cake from '../../../assets/cake.png';
 import drug from '../../../assets/drug.png';
 import water from '../../../assets/water.png';
 import today from '../../../assets/today.png';
-import jwt_decode from 'jwt-decode';
 
 import { DiaryTitle } from './styled';
 import { Icon, Name } from '../../atom/Card/styled';
-import { useCallback, useEffect, useState } from 'react';
-import axios from 'axios';
 import React from 'react';
-import imageCompression from 'browser-image-compression';
 import Water from '../Water';
 import Today from '../Today';
-import { useDispatch, useSelector } from 'react-redux';
-import useActions from '../../../hooks/useActions';
-import { postActions } from '../../../store/meal-slice/post-slice';
-import { authActions } from '../../../store/auth-slice';
 import Supplement from '../Supplement';
 import Meal from '../Meal';
-import { handleExpired } from '../../../helpers/handleExpired';
 
 function Record() {
     const param = useParams();
