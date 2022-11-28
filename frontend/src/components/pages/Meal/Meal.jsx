@@ -140,8 +140,10 @@ const Meal = () => {
             setIsFetching(false);
         } catch (err) {
             console.log(err);
-
-            alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+            if (err.response.status === 404) {
+                setIsFetching(false);
+                return;
+            }
             setLoading(false);
         }
     }, [page, searchParam]);
@@ -237,7 +239,7 @@ const Meal = () => {
             })
             .then(async (response) => {
                 if (response.data.results.length === 0) {
-                    alert('검색 결과가 없어요!');
+                    alert('검색 결과가 없습니다!');
                 } else {
                     setResult(response.data.results);
                     console.log(response.data);
