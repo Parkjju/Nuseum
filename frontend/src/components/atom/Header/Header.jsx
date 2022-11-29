@@ -134,7 +134,7 @@ const Header = () => {
                                     if (homeActive) {
                                         try {
                                             await axios.post(
-                                                'https://www.nuseum.site/api/v1/account/logout/'
+                                                '/api/v1/account/logout/'
                                             );
 
                                             dispatch(authActions.logout());
