@@ -5,6 +5,7 @@ import { SearchTitle } from '../../atom/Modal/styled';
 import FoodImg from '../../molecules/FoodImg/FoodImg';
 import imageCompression from 'browser-image-compression';
 import { authActions } from '../../../store/auth-slice';
+import * as S from '../Analysis/Analysis.style';
 import { postActions } from '../../../store/meal-slice/post-slice';
 import {
     DiaryBody,
@@ -19,6 +20,8 @@ import useActions from '../../../hooks/useActions';
 import { useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
+import { Name } from '../../atom/Card/styled';
+import RadarGraph from '../../molecules/RadarGraph';
 
 const Meal = () => {
     const param = useParams();
@@ -26,6 +29,7 @@ const Meal = () => {
     const forPostImage = useSelector((state) => state.post.image);
     const forPostData = useSelector((state) => state.post.data);
     const token = useSelector((state) => state.auth.token);
+    const nutrition = useSelector((state) => state[param.when].nutrition);
 
     const [page, setPage] = useState(2);
     const [hasNextPage, setHasNextPage] = useState(true);
@@ -269,6 +273,24 @@ const Meal = () => {
         setIsLoading(false);
     };
 
+    // 그래프 데이터 초기화를 위한 useEffect
+    useEffect(() => {
+        axios
+            .get(`/api/v1/consumption/day/?date=${param.date}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((response) => {
+                dispatch(action.initializeNutrition());
+                dispatch(
+                    action.setNutrition({
+                        ...response.data,
+                    })
+                );
+            });
+    }, []);
+
     return (
         <DiaryBody
             initial={{ y: 300 }}
@@ -419,6 +441,69 @@ const Meal = () => {
                     저장
                 </button>
             )}
+            <S.NutrientBox>
+                <S.NutrientList>
+                    <Name
+                        style={{
+                            fontWeight: 400,
+                        }}
+                    >
+                        DHA+EPA {((nutrition.dha_epa / 300) * 100).toFixed(1)}%
+                    </Name>
+                    <Name style={{ fontWeight: 400 }}>
+                        엽산 {((nutrition.folic_acid / 180) * 100).toFixed(1)}%
+                    </Name>
+
+                    <Name
+                        style={{
+                            fontWeight: 400,
+                        }}
+                    >
+                        마그네슘{' '}
+                        {((nutrition.magnesium / 110) * 100).toFixed(1)}%
+                    </Name>
+                    <S.Divider />
+
+                    <Name style={{ fontWeight: 400 }}>
+                        트립토판{' '}
+                        {((nutrition.tryptophan / 100) * 100).toFixed(1)}%
+                    </Name>
+                    <Name style={{ fontWeight: 400 }}>
+                        비타민 A{' '}
+                        {((nutrition.vitamin_a / 300) * 100).toFixed(1)}%
+                    </Name>
+                    <Name style={{ fontWeight: 400 }}>
+                        식이섬유{' '}
+                        {((nutrition.dietary_fiber / 20) * 100).toFixed(1)}%
+                    </Name>
+                    <S.Divider />
+                    <Name style={{ fontWeight: 400 }}>
+                        비타민 B6{' '}
+                        {((nutrition.vitamin_b6 / 0.7) * 100).toFixed(1)}%
+                    </Name>
+
+                    <Name style={{ fontWeight: 400 }}>
+                        비타민 B12{' '}
+                        {((nutrition.vitamin_b12 / 1.1) * 100).toFixed(1)}%
+                    </Name>
+                    <Name style={{ fontWeight: 400 }}>
+                        비타민 D {((nutrition.vitamin_d / 5) * 100).toFixed(1)}%
+                    </Name>
+                </S.NutrientList>
+
+                <div
+                    style={{
+                        width: '70%',
+                        boxSizing: 'border-box',
+                    }}
+                >
+                    <RadarGraph
+                        dateCount={1}
+                        data={nutrition}
+                        dataWithoutSupplement={null}
+                    />
+                </div>
+            </S.NutrientBox>
 
             {isLoading ? (
                 <CircularProgress sx={{ marginBottom: 5 }} />
