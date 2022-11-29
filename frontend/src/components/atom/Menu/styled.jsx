@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useParams } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import { periodState } from '../../../recoil/period/period';
 import { useDispatch, useSelector } from 'react-redux';
 import { postActions } from '../../../store/meal-slice/post-slice';
+import useActions from '../../../hooks/useActions';
+import { useParams } from 'react-router-dom';
 
 export const ResultBox = styled(motion.div)`
     width: 100%;
@@ -57,10 +56,9 @@ const Adornment = styled.span`
 `;
 
 const NutritionList = ({ item }) => {
-    const param = useParams();
     const dispatch = useDispatch();
-
-    const [period, setPeriod] = useRecoilState(periodState);
+    const param = useParams();
+    const action = useActions(param.when);
     const [amount, setAmount] = useState(0);
 
     const onChange = (e) => {
@@ -78,6 +76,11 @@ const NutritionList = ({ item }) => {
                     name: e.target.name,
                     food: Number(e.target.getAttribute('data-itemID')),
                     amount: Number(amount),
+                })
+            );
+            dispatch(
+                action.setNutrition({
+                    ...item,
                 })
             );
 
