@@ -4,6 +4,21 @@ const initialState = {
     isChanged: false,
     data: [],
     image: [],
+    nutrition: {
+        energy: 0,
+        protein: 0,
+        fat: 0,
+        carbohydrate: 0,
+        dietary_fiber: 0,
+        magnesium: 0,
+        vitamin_a: 0,
+        vitamin_d: 0,
+        vitamin_b6: 0,
+        folic_acid: 0,
+        vitamin_b12: 0,
+        tryptophan: 0,
+        dha_epa: 0,
+    },
 };
 
 const dinnerSlice = createSlice({
@@ -48,6 +63,28 @@ const dinnerSlice = createSlice({
         removeAll(state) {
             state.data = [];
             state.image = [];
+        },
+        setNutrition(state, action) {
+            for (let key in state.nutrition) {
+                state.nutrition[key] += action.payload[key];
+            }
+        },
+        initializeNutrition(state) {
+            state.nutrition = {
+                energy: 0,
+                protein: 0,
+                fat: 0,
+                carbohydrate: 0,
+                dietary_fiber: 0,
+                magnesium: 0,
+                vitamin_a: 0,
+                vitamin_d: 0,
+                vitamin_b6: 0,
+                folic_acid: 0,
+                vitamin_b12: 0,
+                tryptophan: 0,
+                dha_epa: 0,
+            };
         },
     },
 });
