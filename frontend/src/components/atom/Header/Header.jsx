@@ -3,14 +3,17 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { HeaderBox, Icon } from './Header.style';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../../store/auth-slice';
+import { FormControlLabel, Switch } from '@mui/material';
+import { languageActions } from '../../../store/language-slice';
 
 const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const loc = useLocation();
     const locationArray = loc.pathname.split('/');
+    const lang = useSelector((state) => state.language.isKorean);
 
     const [backActive, setBackActive] = useState(true);
     const [homeActive, setHomeActive] = useState(true);
@@ -31,9 +34,22 @@ const Header = () => {
             location.reload();
         }
     }, [loc.pathname]);
-
+    console.log(lang);
     return (
         <HeaderBox>
+            <FormControlLabel
+                control={
+                    <Switch
+                        onChange={() =>
+                            dispatch(languageActions.changeLanguage())
+                        }
+                        checked={lang}
+                        name='ENGLISH'
+                    />
+                }
+                label='ENGLISH'
+            />
+
             <Helmet>
                 <link
                     rel='stylesheet'

@@ -11,10 +11,11 @@ import { DiaryTitle } from '../Record/styled';
 import { Name } from '../../atom/Card/styled';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Home() {
     const isLoggedIn = window.sessionStorage.getItem('isLoggedIn');
+    const lang = useSelector((state) => state.language.isKorean);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -45,7 +46,9 @@ function Home() {
                             fontWeight: 'bold',
                         }}
                     >
-                        맞춤형 영양관리 및 정보제공 연구
+                        {lang
+                            ? 'A Study on Customized Nutrition Management and Information Provision'
+                            : '맞춤형 영양관리 및 정보제공 연구'}
                     </Name>
                 </DiaryTitle>
                 <Card menu={menu} current='home' />

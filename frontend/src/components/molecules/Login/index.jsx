@@ -11,7 +11,7 @@ import ErrorModal from '../../atom/Modal';
 import { useEffect, useState } from 'react';
 import SNU from '../../../assets/SNU.png';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../../store/auth-slice';
 import jwt_decode from 'jwt-decode';
 
@@ -19,6 +19,7 @@ import jwt_decode from 'jwt-decode';
 
 function Login() {
     const dispatch = useDispatch();
+    const lang = useSelector((state) => state.language.isKorean);
 
     useEffect(() => {
         window.sessionStorage.removeItem('isLoggedIn');
@@ -103,7 +104,13 @@ function Login() {
                 <Logo src={SNU} />
             </LogoBox>
 
-            <Title text='맞춤형 영양관리 및 정보제공 연구' />
+            <Title
+                text={
+                    lang
+                        ? 'A Study on Customized Nutrition Management and Information Provision'
+                        : '맞춤형 영양관리 및 정보제공 연구'
+                }
+            />
 
             <FormBox onSubmit={handleSubmit(onValid)}>
                 <Form
