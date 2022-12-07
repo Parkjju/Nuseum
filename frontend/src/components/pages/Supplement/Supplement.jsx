@@ -61,7 +61,11 @@ const Supplement = () => {
                     },
                 }
             );
-            alert('일기 저장이 완료되었습니다!');
+            alert(
+                lang
+                    ? 'Your diary has been saved!'
+                    : '일기 저장이 완료되었습니다!'
+            );
             dispatch(supplementActions.checkDataSaved());
             setIsRequestSent(true);
             setLoading(false);
