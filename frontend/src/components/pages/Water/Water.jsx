@@ -10,6 +10,7 @@ import useActions from '../../../hooks/useActions';
 
 const Water = () => {
     const params = useParams();
+    const lang = useSelector((state) => state.language.isKorean);
     const token = useSelector((state) => state.auth.token);
 
     // water amount & object id
@@ -105,7 +106,9 @@ const Water = () => {
                     }
                 );
             }
-            alert('수분 입력이 완료되었습니다!');
+            alert(
+                lang ? 'Water input completed!' : '수분 입력이 완료되었습니다!'
+            );
             setLoading(false);
         } catch (err) {
             if (err.response.status === 401) {
@@ -143,10 +146,32 @@ const Water = () => {
                     marginBottom: 30,
                 }}
             >
-                <span>마신 양 : {water}ml</span>
-                <span>
-                    남은 양 :{' '}
-                    {1500 - water > 0 ? 1500 - water : `+ ${water - 1500}`}ml
+                <span
+                    style={{
+                        whiteSpace: 'pre-line',
+                        width: '40%',
+                        display: 'block',
+                    }}
+                >
+                    {lang
+                        ? `Amount of drink water : ${water}ml`
+                        : `마신 양 : ${water}ml`}
+                </span>
+                <span
+                    style={{
+                        whiteSpace: 'pre-line',
+                        width: '40%',
+                        display: 'block',
+                    }}
+                >
+                    {lang
+                        ? `Remaining amount : ${
+                              1500 - water > 0
+                                  ? 1500 - water
+                                  : `+ ${water - 1500}`
+                          }ml`
+                        : `남은 양 :
+                    ${1500 - water > 0 ? 1500 - water : `+ ${water - 1500}`}ml`}
                 </span>
             </div>
 
@@ -194,7 +219,7 @@ const Water = () => {
                             color: 'white',
                         }}
                     >
-                        저장
+                        {lang ? 'Save' : '저장'}
                     </button>
                 )}
             </div>

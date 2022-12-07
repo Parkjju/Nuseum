@@ -16,6 +16,7 @@ const Question = () => {
     const [loading, setLoading] = useState(false);
     const [questions, setQuestions] = useState([]);
     const token = useSelector((state) => state.auth.token);
+    const lang = useSelector((state) => state.language.isKorean);
     //
     useEffect(() => {
         setLoading(true);
@@ -76,7 +77,7 @@ const Question = () => {
                         style={{ textDecoration: 'none' }}
                         to='/question/post'
                     >
-                        <Button text='문의하기' />
+                        <Button text={lang ? 'Contact us' : '문의하기'} />
                     </Link>
                 </Contents>
             )}

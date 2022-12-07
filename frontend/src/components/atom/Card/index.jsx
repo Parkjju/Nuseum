@@ -1,9 +1,11 @@
 import { Box, Icon, IconBox, IconName, Tab } from './styled';
 import { Link, useParams } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import { useSelector } from 'react-redux';
 
 function Card({ menu, current }) {
     const params = useParams();
+    const lang = useSelector((state) => state.language.isKorean);
 
     return (
         <Box>
@@ -43,7 +45,9 @@ function Card({ menu, current }) {
                                 velocity: 10,
                             }}
                         >
-                            {item[1] === '저녁' ? (
+                            {item[1] === lang ? (
+                                'dinner'
+                            ) : '저녁' ? (
                                 <>
                                     <Link
                                         key={index}

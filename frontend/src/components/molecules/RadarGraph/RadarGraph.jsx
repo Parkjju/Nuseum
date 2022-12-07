@@ -8,6 +8,7 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
+import { useSelector } from 'react-redux';
 ChartJS.register(
     RadialLinearScale,
     PointElement,
@@ -19,6 +20,7 @@ ChartJS.register(
 ChartJS.defaults.font.size = 8;
 
 const RadarGraph = ({ dateCount, data, dataWithoutSupplement }) => {
+    const lang = useSelector((state) => state.language.isKorean);
     let dataForRadar = {
         labels: [
             // 'A',
@@ -35,19 +37,21 @@ const RadarGraph = ({ dateCount, data, dataWithoutSupplement }) => {
             // 'L',
 
             'DHA+EPA',
-            '엽산',
-            '마그네슘',
-            '트립토판',
-            '비타민 A',
-            '식이섬유',
-            '비타민 B6',
-            '비타민 B12',
-            '비타민 D',
+            lang ? 'Folic acid' : '엽산',
+            lang ? 'Magnesium' : '마그네슘',
+            lang ? 'Tryptophan' : '트립토판',
+            lang ? 'Vitamin A' : '비타민 A',
+            lang ? 'Dietary fiber' : '식이섬유',
+            lang ? 'Vitamin B6' : '비타민 B6',
+            lang ? 'Vitamin B12' : '비타민 B12',
+            lang ? 'Vitamin D' : '비타민 D',
         ],
         datasets: dataWithoutSupplement
             ? [
                   {
-                      label: '영양제 + 음식(%)',
+                      label: lang
+                          ? 'Supplements + Meal(%)'
+                          : '영양제 + 음식(%)',
                       data: [
                           ((+data.dha_epa / (300 * dateCount)) * 100).toFixed(
                               1
@@ -136,7 +140,7 @@ const RadarGraph = ({ dateCount, data, dataWithoutSupplement }) => {
                       pointHoverBorderColor: 'rgba(190, 197, 198, 0.6)',
                   },
                   {
-                      label: '음식만(%)',
+                      label: lang ? 'Just Meal(%)' : '음식만(%)',
                       data: [
                           (
                               (+dataWithoutSupplement.dha_epa /
@@ -249,7 +253,9 @@ const RadarGraph = ({ dateCount, data, dataWithoutSupplement }) => {
               ]
             : [
                   {
-                      label: '영양제 + 음식(%)',
+                      label: lang
+                          ? 'Supplements + Meal(%)'
+                          : '영양제 + 음식(%)',
                       data: [
                           ((+data.dha_epa / (300 * dateCount)) * 100).toFixed(
                               1

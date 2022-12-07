@@ -8,6 +8,7 @@ import ImageCard from '../../molecules/ImageCard';
 
 let initial = true;
 const Supplement = () => {
+    const lang = useSelector((state) => state.language.isKorean);
     const [isRequestSent, setIsRequestSent] = useState(false);
     const [loading, setLoading] = useState(false);
     const [fetchedSupplement, setFetchedSupplement] = useState([]);
@@ -38,7 +39,11 @@ const Supplement = () => {
     };
     const saveSupplement = async () => {
         if (isEmptyFieldExistsInSupplement()) {
-            alert('제조사와 영양제 이름, 이미지는 필수 입력입니다!');
+            alert(
+                lang
+                    ? 'Manufacturer, nutritional name and image are required!'
+                    : '제조사와 영양제 이름, 이미지는 필수 입력입니다!'
+            );
             return;
         }
         try {
@@ -123,7 +128,7 @@ const Supplement = () => {
                     padding: '5px 35px',
                 }}
             >
-                추가하기
+                {lang ? 'Add' : '추가하기'}
             </button>
 
             {fetchedSupplement.length === 0
@@ -167,7 +172,7 @@ const Supplement = () => {
                         color: 'white',
                     }}
                 >
-                    저장
+                    {lang ? 'Save' : '저장'}
                 </button>
             )}
         </>

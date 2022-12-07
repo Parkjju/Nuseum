@@ -27,11 +27,11 @@ function Home() {
     }, [dispatch]);
 
     const menu = [
-        [diary, '식단일기', 'diary'],
-        [analysis, '식이분석', 'analysis'],
-        [food, '맞춤식품', 'food'],
-        [record, '내 아이', 'record'],
-        [question, 'Q&A', 'question'],
+        [diary, lang ? 'Diary' : '식단일기', 'diary'],
+        [analysis, lang ? 'Analysis' : '식이분석', 'analysis'],
+        [food, lang ? 'Food' : '맞춤식품', 'food'],
+        [record, lang ? 'Record' : '내 아이', 'record'],
+        [question, lang ? 'Question' : 'Q&A', 'question'],
     ];
 
     return (

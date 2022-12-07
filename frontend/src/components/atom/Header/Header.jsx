@@ -34,22 +34,9 @@ const Header = () => {
             location.reload();
         }
     }, [loc.pathname]);
-    console.log(lang);
+
     return (
         <HeaderBox>
-            <FormControlLabel
-                control={
-                    <Switch
-                        onChange={() =>
-                            dispatch(languageActions.changeLanguage())
-                        }
-                        checked={lang}
-                        name='ENGLISH'
-                    />
-                }
-                label='ENGLISH'
-            />
-
             <Helmet>
                 <link
                     rel='stylesheet'
@@ -110,6 +97,20 @@ const Header = () => {
                                 </Icon>
                             </>
                         )}
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    onChange={() =>
+                                        dispatch(
+                                            languageActions.changeLanguage()
+                                        )
+                                    }
+                                    checked={lang}
+                                    name={lang ? 'ENGLISH' : '한국어'}
+                                />
+                            }
+                            label={lang ? 'ENGLISH' : '한국어'}
+                        />
                     </div>
 
                     <div
@@ -146,7 +147,13 @@ const Header = () => {
 
                         <Icon
                             onClick={async () => {
-                                if (window.confirm('로그아웃 하시겠습니까?')) {
+                                if (
+                                    window.confirm(
+                                        lang
+                                            ? 'Should I log out?'
+                                            : '로그아웃 하시겠습니까?'
+                                    )
+                                ) {
                                     if (homeActive) {
                                         try {
                                             await axios.post(
@@ -157,7 +164,11 @@ const Header = () => {
                                             window.sessionStorage.removeItem(
                                                 'isLoggedIn'
                                             );
-                                            alert('로그아웃 되었습니다!');
+                                            alert(
+                                                lang
+                                                    ? 'You are logged out!'
+                                                    : '로그아웃 되었습니다!'
+                                            );
                                             navigate('/login');
                                         } catch (error) {
                                             console.log(error);

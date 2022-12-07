@@ -22,8 +22,9 @@ function DiaryCalendar() {
     // 뒤로가기로 돌아왔을때 오늘 선택된 날짜를 알아야 함
     const param = useParams();
     const location = useLocation();
-
     const dispatch = useDispatch();
+
+    const lang = useSelector((state) => state.language.isKorean);
 
     // onChange date를 위한 상태값
     const date = useSelector((state) => state.date.date);
@@ -44,19 +45,19 @@ function DiaryCalendar() {
 
     switch (location.pathname.split('/')[1]) {
         case 'diary':
-            menu.push([diary, '식단일기', 'notepad']);
+            menu.push([diary, lang ? 'Diary' : '식단일기', 'notepad']);
             break;
         case 'analysis':
-            menu.push([analysis, '식이분석', 'analysis']);
+            menu.push([analysis, lang ? 'Analysis' : '식이분석', 'analysis']);
             break;
         case 'food':
-            menu.push([food, '맞춤식품', 'food']);
+            menu.push([food, lang ? 'Food' : '맞춤식품', 'food']);
             break;
         case 'record':
-            menu.push([record, '내 아이', 'record']);
+            menu.push([record, lang ? 'Record' : '내 아이', 'record']);
             break;
         case 'question':
-            menu.push([question, 'Q&A', 'question']);
+            menu.push([question, lang ? 'Question' : 'Q&A', 'question']);
             break;
         default:
             break;
@@ -94,13 +95,12 @@ function DiaryCalendar() {
                             textAlign: 'justify',
                             color: '#7E8C8D',
                             fontWeight: '400',
-                            fontSize: '13px'
+                            fontSize: '13px',
                         }}
                     >
-                        본 식단일기는 내아이의 영양상태와 식행동을 분석하기 위해
-                        사용됩니다. 아이가 가정에서는 물론 어린이집/유치원이나
-                        외식에서 먹는 것도 모두 포함해서 사진과
-                        섭취내용(섭취량)을 기록해주세요.
+                        {lang
+                            ? "This diet diary is used to analyze my child's nutritional status and eating behavior. Please record your child's intake and photos, including what he or she eats at home as well as at daycare centers/kindergartens or outings."
+                            : '본 식단일기는 내아이의 영양상태와 식행동을 분석하기 위해 사용됩니다. 아이가 가정에서는 물론 어린이집/유치원이나 외식에서 먹는 것도 모두 포함해서 사진과 섭취내용(섭취량)을 기록해주세요.'}
                     </Name>
                 )}
             </Contents>

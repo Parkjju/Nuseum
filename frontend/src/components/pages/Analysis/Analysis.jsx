@@ -85,6 +85,7 @@ const Analysis = () => {
         8: false,
         9: false,
     });
+    const lang = useSelector((state) => state.language.isKorean);
 
     useEffect(() => {
         let pointNutrient = 0;
@@ -538,7 +539,9 @@ const Analysis = () => {
                         height: 'auto',
                     }}
                 >
-                    <Name style={{ fontSize: '16px' }}>식이분석</Name>
+                    <Name style={{ fontSize: '16px' }}>
+                        {lang ? 'Analysis' : '식이분석'}
+                    </Name>
                 </DiaryTitle>
                 <Calendar locale='en-US' onChange={onChange} value={date} />
 
@@ -555,7 +558,9 @@ const Analysis = () => {
                             fontSize: '13px',
                         }}
                     >
-                        식이분석내용을 확인하고 싶은 날짜를 클릭해주세요 :)
+                        {lang
+                            ? 'Please click on the date you want to check the analysis :)'
+                            : '식이분석내용을 확인하고 싶은 날짜를 클릭해주세요 :)'}
                     </Name>
                 )}
 
@@ -569,8 +574,12 @@ const Analysis = () => {
                             }}
                             isClicked={isSelected[0]}
                         >
-                            <span>이 날의 섭취 영양소</span>
-                            <span>확인하기</span>
+                            <span>
+                                {lang
+                                    ? 'Daily Nutrients'
+                                    : '이 날의 섭취 영양소'}
+                            </span>
+                            <span>{lang ? '' : '확인하기'}</span>
                         </S.FetchButton>
                         <S.FetchButton
                             onClick={() => {
@@ -578,8 +587,12 @@ const Analysis = () => {
                             }}
                             isClicked={isSelected[1]}
                         >
-                            <span>한 주간 섭취 영양소</span>
-                            <span>확인하기</span>
+                            <span>
+                                {lang
+                                    ? 'Weekly Nutrients'
+                                    : '한 주간 섭취 영양소'}
+                            </span>
+                            <span>{lang ? '' : '확인하기'}</span>
                         </S.FetchButton>
                         <S.FetchButton
                             onClick={() => {
@@ -587,8 +600,12 @@ const Analysis = () => {
                             }}
                             isClicked={isSelected[2]}
                         >
-                            <span>한 달간 섭취 영양소</span>
-                            <span>확인하기</span>
+                            <span>
+                                {lang
+                                    ? 'Monthly Nutrients'
+                                    : '한 달간 섭취 영양소'}
+                            </span>
+                            <span>{lang ? '' : '확인하기'}</span>
                         </S.FetchButton>
                     </S.ButtonBox>
                 ) : null}
@@ -606,11 +623,9 @@ const Analysis = () => {
                                                 fontWeight: 500,
                                             }}
                                         >
-                                            아래의 영양성분들은 신경행동발달에
-                                            영향을 미치는 영양성분들에 대해 총
-                                            1,787개의 논문들을 리뷰하여
-                                            선별되었으며 이들에 대한 섭취내용을
-                                            분석합니다.
+                                            {lang
+                                                ? 'The nutrients below were selected by reviewing a total of 1,787 papers on the nutrients that affect the development of neural behavior and analyzing their intake.'
+                                                : '아래의 영양성분들은 신경행동발달에 영향을 미치는 영양성분들에 대해 총 1,787개의 논문들을 리뷰하여 선별되었으며 이들에 대한 섭취내용을 분석합니다.'}
                                         </p>
                                     </S.SectionTitle>
 
@@ -630,7 +645,7 @@ const Analysis = () => {
                                                 %
                                             </Name>
                                             <Name style={{ fontWeight: 400 }}>
-                                                엽산{' '}
+                                                {lang ? 'Folic acid' : '엽산'}{' '}
                                                 {(
                                                     (nutrition.folic_acid /
                                                         (180 * dateCount)) *
@@ -644,7 +659,9 @@ const Analysis = () => {
                                                     fontWeight: 400,
                                                 }}
                                             >
-                                                마그네슘{' '}
+                                                {lang
+                                                    ? 'Magnesium'
+                                                    : '마그네슘'}{' '}
                                                 {(
                                                     (nutrition.magnesium /
                                                         (110 * dateCount)) *
@@ -655,7 +672,9 @@ const Analysis = () => {
                                             <S.Divider />
 
                                             <Name style={{ fontWeight: 400 }}>
-                                                트립토판{' '}
+                                                {lang
+                                                    ? 'Tryptophan'
+                                                    : '트립토판'}{' '}
                                                 {(
                                                     (nutrition.tryptophan /
                                                         (100 * dateCount)) *
@@ -664,7 +683,9 @@ const Analysis = () => {
                                                 %
                                             </Name>
                                             <Name style={{ fontWeight: 400 }}>
-                                                비타민 A{' '}
+                                                {lang
+                                                    ? 'Vitamin A'
+                                                    : '비타민 A'}{' '}
                                                 {(
                                                     (nutrition.vitamin_a /
                                                         (300 * dateCount)) *
@@ -673,7 +694,9 @@ const Analysis = () => {
                                                 %
                                             </Name>
                                             <Name style={{ fontWeight: 400 }}>
-                                                식이섬유{' '}
+                                                {lang
+                                                    ? 'Dietary fiber'
+                                                    : '식이섬유'}{' '}
                                                 {(
                                                     (nutrition.dietary_fiber /
                                                         (20 * dateCount)) *
@@ -683,7 +706,9 @@ const Analysis = () => {
                                             </Name>
                                             <S.Divider />
                                             <Name style={{ fontWeight: 400 }}>
-                                                비타민 B6{' '}
+                                                {lang
+                                                    ? 'Vitamin B6'
+                                                    : '비타민 B6'}{' '}
                                                 {(
                                                     (nutrition.vitamin_b6 /
                                                         (0.7 * dateCount)) *
@@ -693,7 +718,9 @@ const Analysis = () => {
                                             </Name>
 
                                             <Name style={{ fontWeight: 400 }}>
-                                                비타민 B12{' '}
+                                                {lang
+                                                    ? 'Vitamin B12'
+                                                    : '비타민 B12'}{' '}
                                                 {(
                                                     (nutrition.vitamin_b12 /
                                                         (1.1 * dateCount)) *
@@ -702,7 +729,9 @@ const Analysis = () => {
                                                 %
                                             </Name>
                                             <Name style={{ fontWeight: 400 }}>
-                                                비타민 D{' '}
+                                                {lang
+                                                    ? 'Vitamin D'
+                                                    : '비타민 D'}{' '}
                                                 {(
                                                     (nutrition.vitamin_d /
                                                         (5 * dateCount)) *
@@ -745,13 +774,9 @@ const Analysis = () => {
                                                 fontWeight: 500,
                                             }}
                                         >
-                                            다양한 식품군의 섭취는 다양한
-                                            영양성분과 생리활성물질을 섭취하게
-                                            하고, 이는 장내 다양한 미생물을
-                                            서식하게 하여, 건강한 뇌발달에
-                                            영향을 미칩니다. 섭취한 식품군과
-                                            섭취가 필요해 보이는 식품군을
-                                            분석합니다.
+                                            {lang
+                                                ? 'The intake of various food groups causes them to consume various nutrients and physiologically active substances, which allows them to inhabit various microorganisms in the intestine, affecting healthy brain development. Analyze the food group consumed and the food group that seems to need to be consumed.'
+                                                : '다양한 식품군의 섭취는 다양한 영양성분과 생리활성물질을 섭취하게 하고, 이는 장내 다양한 미생물을 서식하게 하여, 건강한 뇌발달에 영향을 미칩니다. 섭취한 식품군과 섭취가 필요해 보이는 식품군을 분석합니다.'}
                                         </p>
                                     </S.SectionTitle>
                                     <S.Box>
@@ -771,7 +796,9 @@ const Analysis = () => {
                                                     fontWeight: '500',
                                                 }}
                                             >
-                                                골고루 지수
+                                                {lang
+                                                    ? 'Food diversity figures'
+                                                    : '골고루 지수'}
                                             </Name>
                                             <S.IconWrapper>
                                                 <S.Point>
@@ -784,7 +811,7 @@ const Analysis = () => {
                                                             fontSize: '17px',
                                                         }}
                                                     >
-                                                        점
+                                                        {lang ? 'p' : '점'}
                                                     </span>
                                                 </S.Point>
                                             </S.IconWrapper>
@@ -813,7 +840,8 @@ const Analysis = () => {
                                                     marginBottom: 5,
                                                 }}
                                             >
-                                                {/* 탄수화물 */}채소
+                                                {/* 탄수화물 */}
+                                                {lang ? 'Vagetable' : '채소'}
                                             </Name>
                                         </S.IconBox>
                                         <S.IconBox isEat={eatCategory[2]}>
@@ -829,7 +857,8 @@ const Analysis = () => {
                                                     marginBottom: 5,
                                                 }}
                                             >
-                                                {/* DHA+EPA */}과일
+                                                {/* DHA+EPA */}
+                                                {lang ? 'Fruit' : '과일'}
                                             </Name>
                                         </S.IconBox>
                                         <S.IconBox isEat={eatCategory[3]}>
@@ -845,7 +874,8 @@ const Analysis = () => {
                                                     marginBottom: 5,
                                                 }}
                                             >
-                                                {/* 지방 */}콩/두부
+                                                {/* 지방 */}
+                                                {lang ? 'Bean/Tofu' : '콩/두부'}
                                             </Name>
                                         </S.IconBox>
                                         <S.IconBox isEat={eatCategory[4]}>
@@ -859,9 +889,13 @@ const Analysis = () => {
                                                 style={{
                                                     fontSize: '12px',
                                                     marginBottom: 5,
+                                                    textAlign: 'center',
                                                 }}
                                             >
-                                                {/* 엽산 */}통곡물
+                                                {/* 엽산 */}
+                                                {lang
+                                                    ? 'Whole grains'
+                                                    : '통곡물'}
                                             </Name>
                                         </S.IconBox>
                                         <S.IconBox isEat={eatCategory[5]}>
@@ -877,7 +911,8 @@ const Analysis = () => {
                                                     marginBottom: 5,
                                                 }}
                                             >
-                                                {/* 마그네슘 */}버섯
+                                                {/* 마그네슘 */}
+                                                {lang ? 'Mushroom' : '버섯'}
                                             </Name>
                                         </S.IconBox>
                                         <S.IconBox isEat={eatCategory[6]}>
@@ -894,7 +929,8 @@ const Analysis = () => {
                                                     marginBottom: 5,
                                                 }}
                                             >
-                                                {/* 단백질 */}해조류
+                                                {/* 단백질 */}
+                                                {lang ? 'Seaweed' : '해조류'}
                                             </Name>
                                         </S.IconBox>
                                         <S.IconBox isEat={eatCategory[7]}>
@@ -911,7 +947,8 @@ const Analysis = () => {
                                                     marginBottom: 5,
                                                 }}
                                             >
-                                                {/* 트립토판 */}견과
+                                                {/* 트립토판 */}
+                                                {lang ? 'Nuts' : '견과'}
                                             </Name>
                                         </S.IconBox>
                                         <S.IconBox isEat={eatCategory[8]}>
@@ -927,7 +964,10 @@ const Analysis = () => {
                                                     marginBottom: 5,
                                                 }}
                                             >
-                                                {/* 비타민 A */}고기/생선/달걀
+                                                {/* 비타민 A */}
+                                                {lang
+                                                    ? 'Meat/Fish/Eggs'
+                                                    : '고기/생선/달걀'}
                                             </Name>
                                         </S.IconBox>
                                         <S.IconBox isEat={eatCategory[9]}>
@@ -941,9 +981,13 @@ const Analysis = () => {
                                                 style={{
                                                     fontSize: '12px',
                                                     marginBottom: 5,
+                                                    textAlign: 'center',
                                                 }}
                                             >
-                                                {/* 비타민 B6 */}유제품
+                                                {/* 비타민 B6 */}
+                                                {lang
+                                                    ? 'Milk products'
+                                                    : '유제품'}
                                             </Name>
                                         </S.IconBox>
                                     </S.Box>

@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import avoid from '../../../../assets/curation/avoid.png';
 import {
     CurationTypeImage,
@@ -9,9 +10,10 @@ import {
     WarningTitle,
 } from '../Curation.styled';
 const Warn = ({ recommendData }) => {
+    const lang = useSelector((state) => state.language.isKorean);
     return (
         <>
-            <Title>피해야 할 식품</Title>
+            <Title>{lang ? 'Food to avoid' : '피해야 할 식품'}</Title>
             <WarningBox>
                 <WarningTitle>
                     <CurationTypeImage src={avoid} alt='피해야할 음식' />

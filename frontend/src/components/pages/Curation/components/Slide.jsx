@@ -18,6 +18,7 @@ import { Link } from 'react-router-dom';
 import Btn from '../../../atom/Button/styled';
 
 const Slide = ({ date, id, setVisibleIndex, visibleIndex, length }) => {
+    const lang = useSelector((state) => state.language.isKorean);
     const token = useSelector((state) => state.auth.token);
     const dispatch = useDispatch();
     const [isOpen, setIsOpen] = useState(false);
@@ -154,9 +155,11 @@ const Slide = ({ date, id, setVisibleIndex, visibleIndex, length }) => {
             <Warn recommendData={recommend} />
 
             <Title style={{ marginBottom: 0, lineHeight: 1.5 }}>
-                내 아이 맞춤식품
+                {lang ? 'Food for my child' : '내 아이 맞춤식품'}
             </Title>
-            <SubTitle>식재료를 터치해 보세요</SubTitle>
+            <SubTitle>
+                {lang ? 'Click on the ingredients' : '식재료를 터치해 보세요'}
+            </SubTitle>
             <CurationDataWrapper rows={recommend?.data.length / 2}>
                 {recommend?.data.map((item, index) => (
                     <CurationData
@@ -171,9 +174,13 @@ const Slide = ({ date, id, setVisibleIndex, visibleIndex, length }) => {
             <CommentBox>{recommend?.comment}</CommentBox>
 
             <Title style={{ marginTop: 40, marginBottom: 0, lineHeight: 1.5 }}>
-                편리하게 준비해요
+                {lang ? 'Make it convenient' : '편리하게 준비해요'}
             </Title>
-            <SubTitle>음식명을 터치해 보세요</SubTitle>
+            <SubTitle>
+                {lang
+                    ? 'Click on the name of the food'
+                    : '음식명을 터치해 보세요'}
+            </SubTitle>
             <div
                 style={{
                     marginBottom: 30,
@@ -215,8 +222,9 @@ const Slide = ({ date, id, setVisibleIndex, visibleIndex, length }) => {
                         marginBottom: 10,
                     }}
                 >
-                    궁금한 점이 있으시다면 Q&A에 남겨주세요. {'\n'}저희 연구진이
-                    돕겠습니다:)
+                    {lang
+                        ? 'If you have any questions, please leave them on Q&A.\n Our researchers will help you :)'
+                        : `궁금한 점이 있으시다면 Q&A에 남겨주세요. ${'\n'}저희 연구진이 돕겠습니다:)`}
                 </p>
 
                 <Btn

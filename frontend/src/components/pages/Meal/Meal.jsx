@@ -30,6 +30,7 @@ const Meal = () => {
     const forPostData = useSelector((state) => state.post.data);
     const token = useSelector((state) => state.auth.token);
     const nutrition = useSelector((state) => state[param.when].nutrition);
+    const lang = useSelector((state) => state.language.isKorean);
 
     const [page, setPage] = useState(2);
     const [hasNextPage, setHasNextPage] = useState(true);
@@ -193,7 +194,11 @@ const Meal = () => {
                 dispatch(action.getData(forPostData));
                 dispatch(action.getImage(forPostImage));
                 dispatch(postActions.removeAll());
-                alert('일지 작성이 완료되었습니다!');
+                alert(
+                    lang
+                        ? 'Your diary has been completed!'
+                        : '일지 작성이 완료되었습니다!'
+                );
             } catch (err) {
                 console.log(err);
                 if (err.response.status === 401) {
@@ -254,7 +259,11 @@ const Meal = () => {
             })
             .then(async (response) => {
                 if (response.data.results.length === 0) {
-                    alert('검색 결과가 없습니다!');
+                    alert(
+                        lang
+                            ? 'No search results found.'
+                            : '검색 결과가 없습니다!'
+                    );
                 } else {
                     setResult(response.data.results);
                     console.log(response.data);
@@ -336,7 +345,9 @@ const Meal = () => {
                                   onClick={async () => {
                                       if (
                                           window.confirm(
-                                              '입력하신 데이터를 지우시겠어요?'
+                                              lang
+                                                  ? 'Do you want to delete the data?'
+                                                  : '입력하신 데이터를 지우시겠어요?'
                                           )
                                       ) {
                                           // axios delete 호출
@@ -385,7 +396,9 @@ const Meal = () => {
                                   onClick={() => {
                                       if (
                                           window.confirm(
-                                              '입력하신 데이터를 지우시겠어요?'
+                                              lang
+                                                  ? 'Do you want to delete the data?'
+                                                  : '입력하신 데이터를 지우시겠어요?'
                                           )
                                       ) {
                                           dispatch(
@@ -414,9 +427,9 @@ const Meal = () => {
             />
 
             <SearchTitle>
-                찾고싶은 음식을 작성한 후 엔터해주세요. 섭취량을 작성한 후
-                엔터해주세요. 찾고 싶은 음식이 없다면 가장 유사한 것으로
-                선택해주세요. 관련된 내용을 Q&A에 적어주세요.
+                {lang
+                    ? 'Please enter the food you want to find. Please fill in the intake and enter. If there is no food you want to find, please choose the most similar one. Please write down the relevant information in the Q&A.'
+                    : '찾고싶은 음식을 작성한 후 엔터해주세요. 섭취량을 작성한 후 엔터해주세요. 찾고 싶은 음식이 없다면 가장 유사한 것으로 선택해주세요. 관련된 내용을 Q&A에 적어주세요.'}
             </SearchTitle>
             <ModalSearch as='form' onSubmit={onSubmit}>
                 <span className='material-symbols-outlined'>search</span>
@@ -438,7 +451,7 @@ const Meal = () => {
                         color: 'white',
                     }}
                 >
-                    저장
+                    {lang ? 'Save' : '저장'}
                 </button>
             )}
             <S.NutrientBox>
@@ -451,7 +464,8 @@ const Meal = () => {
                         DHA+EPA {((nutrition.dha_epa / 300) * 100).toFixed(1)}%
                     </Name>
                     <Name style={{ fontWeight: 400 }}>
-                        엽산 {((nutrition.folic_acid / 180) * 100).toFixed(1)}%
+                        {lang ? 'Folic acid' : '엽산'}{' '}
+                        {((nutrition.folic_acid / 180) * 100).toFixed(1)}%
                     </Name>
 
                     <Name
@@ -459,35 +473,36 @@ const Meal = () => {
                             fontWeight: 400,
                         }}
                     >
-                        마그네슘{' '}
+                        {lang ? 'Magnesium' : '마그네슘'}{' '}
                         {((nutrition.magnesium / 110) * 100).toFixed(1)}%
                     </Name>
                     <S.Divider />
 
                     <Name style={{ fontWeight: 400 }}>
-                        트립토판{' '}
+                        {lang ? 'Tryptophan' : '트립토판'}{' '}
                         {((nutrition.tryptophan / 100) * 100).toFixed(1)}%
                     </Name>
                     <Name style={{ fontWeight: 400 }}>
-                        비타민 A{' '}
+                        {lang ? 'Vitamin A' : '비타민 A'}{' '}
                         {((nutrition.vitamin_a / 300) * 100).toFixed(1)}%
                     </Name>
                     <Name style={{ fontWeight: 400 }}>
-                        식이섬유{' '}
+                        {lang ? 'Dietary fiber' : '식이섬유'}{' '}
                         {((nutrition.dietary_fiber / 20) * 100).toFixed(1)}%
                     </Name>
                     <S.Divider />
                     <Name style={{ fontWeight: 400 }}>
-                        비타민 B6{' '}
+                        {lang ? 'Vitamin B6' : '비타민 B6'}{' '}
                         {((nutrition.vitamin_b6 / 0.7) * 100).toFixed(1)}%
                     </Name>
 
                     <Name style={{ fontWeight: 400 }}>
-                        비타민 B12{' '}
+                        {lang ? 'Vitamin B12' : '비타민 B12'}{' '}
                         {((nutrition.vitamin_b12 / 1.1) * 100).toFixed(1)}%
                     </Name>
                     <Name style={{ fontWeight: 400 }}>
-                        비타민 D {((nutrition.vitamin_d / 5) * 100).toFixed(1)}%
+                        {lang ? 'Vitamin D' : '비타민 D'}{' '}
+                        {((nutrition.vitamin_d / 5) * 100).toFixed(1)}%
                     </Name>
                 </S.NutrientList>
 

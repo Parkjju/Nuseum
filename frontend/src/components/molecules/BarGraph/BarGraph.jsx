@@ -9,6 +9,7 @@ import {
     Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import { useSelector } from 'react-redux';
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -18,7 +19,11 @@ ChartJS.register(
     Legend
 );
 const BarGraph = ({ count, data }) => {
-    const labelsForBar = ['실제 섭취율', '권장 섭취율'];
+    const lang = useSelector((state) => state.language.isKorean);
+    const labelsForBar = [
+        lang ? 'Actual intake rate' : '실제 섭취율',
+        lang ? 'Recommended intake rate' : '권장 섭취율',
+    ];
     const optionsForBar = {
         indexAxis: 'y',
         elements: {
@@ -41,7 +46,9 @@ const BarGraph = ({ count, data }) => {
             },
             title: {
                 display: true,
-                text: '탄수화물 단백질 지방 섭취율    ',
+                text: lang
+                    ? 'carbohydrate protein fat ratio'
+                    : '탄수화물 단백질 지방 섭취율    ',
                 align: 'end',
                 font: {
                     family: 'Noto Serif KR,serif',
@@ -101,7 +108,7 @@ const BarGraph = ({ count, data }) => {
         labels: labelsForBar,
         datasets: [
             {
-                label: '탄수화물',
+                label: lang ? 'Carbohydrate' : '탄수화물',
                 data: [
                     [0, datasetForBar[0]],
                     [0, 55],
@@ -109,7 +116,7 @@ const BarGraph = ({ count, data }) => {
                 backgroundColor: '#BEC5C6',
             },
             {
-                label: '단백질',
+                label: lang ? 'Protein' : '단백질',
                 data: [
                     [0, datasetForBar[1]],
                     [0, 25],
@@ -117,7 +124,7 @@ const BarGraph = ({ count, data }) => {
                 backgroundColor: '#7f8c8d',
             },
             {
-                label: '지방',
+                label: lang ? 'Fat' : '지방',
                 data: [
                     [0, datasetForBar[2]],
                     [0, 20],

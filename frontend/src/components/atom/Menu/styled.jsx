@@ -56,6 +56,7 @@ const Adornment = styled.span`
 `;
 
 const NutritionList = ({ item }) => {
+    const lang = useSelector((state) => state.language.isKorean);
     const dispatch = useDispatch();
     const param = useParams();
     const action = useActions(param.when);
@@ -106,31 +107,31 @@ const NutritionList = ({ item }) => {
     const renderNutrition = (param) => {
         switch (param) {
             case 'carbohydrate':
-                return ['탄수화물', 'g'];
+                return [lang ? 'Carbohydrate' : '탄수화물', 'g'];
             case 'dha_epa':
                 return ['DHA+EPA', '㎎'];
             case 'dietary_fiber':
-                return ['식이섬유', 'g'];
+                return [lang ? 'Dietary fiber' : '식이섬유', 'g'];
             case 'energy':
-                return ['에너지', '㎉'];
+                return [lang ? 'Energy' : '에너지', '㎉'];
             case 'fat':
-                return ['지방', 'g'];
+                return [lang ? 'Fat' : '지방', 'g'];
             case 'folic_acid':
-                return ['엽산', '㎍'];
+                return [lang ? 'Folic acid' : '엽산', '㎍'];
             case 'magnesium':
-                return ['마그네슘', '㎎'];
+                return [lang ? 'Magnesium' : '마그네슘', '㎎'];
             case 'protein':
-                return ['단백질', 'g'];
+                return [lang ? 'Protein' : '단백질', 'g'];
             case 'tryptophan':
-                return ['트립토판', '㎎'];
+                return [lang ? 'Tryptophan' : '트립토판', '㎎'];
             case 'vitamin_a':
-                return ['비타민 A', '㎍'];
+                return [lang ? 'Vitamin A' : '비타민 A', '㎍'];
             case 'vitamin_b6':
-                return ['비타민 B6', '㎎'];
+                return [lang ? 'Vitamin B6' : '비타민 B6', '㎎'];
             case 'vitamin_b12':
-                return ['비타민 B12', '㎍'];
+                return [lang ? 'Vitamin B12' : '비타민 B12', '㎍'];
             case 'vitamin_d':
-                return ['비타민 D', '㎍'];
+                return [lang ? 'Vitamin D' : '비타민 D', '㎍'];
             default:
                 return null;
         }

@@ -115,9 +115,11 @@ function Login() {
             <FormBox onSubmit={handleSubmit(onValid)}>
                 <Form
                     {...register('loginId', {
-                        required: '😭 코드를 입력해주세요!',
+                        required: lang
+                            ? '😭 Please enter the code!'
+                            : '😭 코드를 입력해주세요!',
                     })}
-                    placeholder='발급 코드'
+                    placeholder={lang ? 'Code' : '발급 코드'}
                     type='text'
                     error={errors.loginId}
                 />
@@ -126,13 +128,17 @@ function Login() {
                 ) : null}
                 <Form
                     {...register('loginPassword', {
-                        required: '😭 비밀번호를 입력해주세요!',
+                        required: lang
+                            ? '😭 Please enter the password!'
+                            : '😭 비밀번호를 입력해주세요!',
                         minLength: {
                             value: 8,
-                            message: '😭 비밀번호를 8자 이상 입력해주세요!',
+                            message: lang
+                                ? '😭 Password must be at least 8 characters long!'
+                                : '😭 비밀번호를 8자 이상 입력해주세요!',
                         },
                     })}
-                    placeholder='비밀번호 입력'
+                    placeholder={lang ? 'Password' : '비밀번호 입력'}
                     type='password'
                     error={errors.loginPassword}
                 />
@@ -157,12 +163,12 @@ function Login() {
                             openModal={
                                 errors.nonExists ? () => setDisplay(true) : null
                             }
-                            text='로그인'
+                            text={lang ? 'Sign In' : '로그인'}
                         />
                     )}
 
                     <Link style={{ textDecoration: 'none' }} to='/register'>
-                        <Button text='회원가입' />
+                        <Button text={lang ? 'Sign Up' : '회원가입'} />
                     </Link>
                 </BtnBox>
             </FormBox>

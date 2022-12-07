@@ -20,6 +20,7 @@ import strawberry from '../../../assets/curation/strawberry.png';
 import supplement from '../../../assets/curation/supplement.png';
 import vegetable from '../../../assets/curation/vegetable.png';
 import avoid from '../../../assets/curation/avoid.png';
+import { useSelector } from 'react-redux';
 
 const images = {
     '콩/두부': bean,
@@ -36,6 +37,7 @@ const images = {
     주의: avoid,
 };
 const CurationData = ({ setIsOpen, setClickedTag, data }) => {
+    const lang = useSelector((state) => state.language.isKorean);
     return data.type === '주의' ? null : (
         <CurationBox>
             <CurationType>
@@ -47,7 +49,9 @@ const CurationData = ({ setIsOpen, setClickedTag, data }) => {
                 ) : null}
                 <CurationTypeName>
                     {data.type === '주의'
-                        ? '피해야할 식품'
+                        ? lang
+                            ? 'Food to avoid'
+                            : '피해야할 식품'
                         : data.type === '영양제'
                         ? '보충제'
                         : data.type}

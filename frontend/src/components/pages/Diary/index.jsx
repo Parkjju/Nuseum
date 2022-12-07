@@ -11,18 +11,20 @@ import Card from '../../atom/Card';
 import { Contents } from '../Home/styled';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 function Diary() {
     const navigate = useNavigate();
+    const lang = useSelector((state) => state.language.isKorean);
 
     const menu = [
-        [morning, '아침', 'breakfast'],
-        [lunch, '점심', 'lunch'],
-        [dinner, '저녁', 'dinner'],
-        [cake, '간식', 'snack'],
-        [supplement, '영양제', 'supplement'],
-        [water, '물', 'water'],
-        [today, '오늘', 'today'],
+        [morning, lang ? 'morning' : '아침', 'breakfast'],
+        [lunch, lang ? 'lunch' : '점심', 'lunch'],
+        [dinner, lang ? 'dinner' : '저녁', 'dinner'],
+        [cake, lang ? 'snack' : '간식', 'snack'],
+        [supplement, lang ? 'supplement' : '영양제', 'supplement'],
+        [water, lang ? 'water' : '물', 'water'],
+        [today, lang ? 'today' : '오늘', 'today'],
     ];
 
     return (
