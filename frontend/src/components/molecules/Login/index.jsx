@@ -64,7 +64,9 @@ function Login() {
                 '주어진 자격 증명으로 로그인이 불가능합니다.'
             ) {
                 setError('nonExists', {
-                    message: '아이디 또는 비밀번호가 잘못되었습니다.',
+                    message: lang
+                        ? 'Invalid ID or password.'
+                        : '아이디 또는 비밀번호가 잘못되었습니다.',
                 });
                 setIsLoading(false);
                 setDisplay(true);

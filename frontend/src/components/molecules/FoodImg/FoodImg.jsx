@@ -30,7 +30,13 @@ const FoodImg = ({ data, index, isPost, setLoading }) => {
             {data === '' ? null : (
                 <Remove
                     onClick={async () => {
-                        if (window.confirm('등록한 사진을 삭제하시겠어요?')) {
+                        if (
+                            window.confirm(
+                                lang
+                                    ? 'Do you want to delete the registered photo?'
+                                    : '등록한 사진을 삭제하시겠어요?'
+                            )
+                        ) {
                             if (!isPost) {
                                 try {
                                     setLoading(true);
@@ -44,7 +50,11 @@ const FoodImg = ({ data, index, isPost, setLoading }) => {
                                         }
                                     );
                                     setLoading(false);
-                                    alert('이미지가 삭제되었습니다!');
+                                    alert(
+                                        lang
+                                            ? 'Your image has been deleted!'
+                                            : '이미지가 삭제되었습니다!'
+                                    );
                                 } catch (err) {
                                     if (err.response.status === 401) {
                                         setLoading(false);

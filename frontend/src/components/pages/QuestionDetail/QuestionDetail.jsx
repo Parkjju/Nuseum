@@ -143,7 +143,11 @@ const QuestionDetail = () => {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                alert('질문이 삭제되었습니다!');
+                alert(
+                    lang
+                        ? 'Your question has been deleted!'
+                        : '질문이 삭제되었습니다!'
+                );
                 navigate('/question');
             } catch (error) {
                 console.log(err);
@@ -323,7 +327,9 @@ const QuestionDetail = () => {
                         </UtilGroup>
                     </div>
                     <Link to='/question' style={{ textDecoration: 'none' }}>
-                        <Button style={{ marginTop: 30 }}>목록</Button>
+                        <Button style={{ marginTop: 30 }}>
+                            {lang ? 'List' : '목록'}
+                        </Button>
                     </Link>
                 </Contents>
             )}

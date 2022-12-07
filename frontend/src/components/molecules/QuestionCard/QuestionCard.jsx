@@ -1,8 +1,10 @@
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Box } from './QuesetionCard.style';
 
 const QuestionCard = ({ data, isAnswered, id, author }) => {
     const currentWidth = window.innerWidth;
+    const lang = useSelector((state) => state.language.isKorean);
     return (
         <Box to={`./${id}`}>
             <p>
@@ -32,7 +34,7 @@ const QuestionCard = ({ data, isAnswered, id, author }) => {
                     }}
                 >
                     <span style={{ fontSize: 14, fontWeight: 100 }}>
-                        답변 완료
+                        {lang ? 'Answered' : '답변 완료'}
                     </span>
                     <span style={{ fontSize: 14, fontWeight: 100 }}>
                         {author}
