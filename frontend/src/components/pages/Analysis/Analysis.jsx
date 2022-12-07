@@ -187,7 +187,11 @@ const Analysis = () => {
         } catch (err) {
             console.log('ERROR:', err);
 
-            alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+            alert(
+                lang
+                    ? 'An error has occurred. Please contact the developer!'
+                    : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+            );
             let initializedNutrition = {
                 energy: 0,
                 protein: 0,
@@ -272,7 +276,11 @@ const Analysis = () => {
                 if (err.response.status === 401) {
                     setLoading(false);
                 } else {
-                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                    alert(
+                        lang
+                            ? 'An error has occurred. Please contact the developer!'
+                            : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                    );
                 }
                 let initializedNutrition = {
                     energy: 0,
@@ -358,7 +366,11 @@ const Analysis = () => {
                     setLoading(false);
                     return;
                 }
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                alert(
+                    lang
+                        ? 'An error has occurred. Please contact the developer!'
+                        : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                );
 
                 setLoading(false);
             });
@@ -408,7 +420,11 @@ const Analysis = () => {
                 if (err.response.status === 401) {
                     setLoading(false);
                 } else {
-                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                    alert(
+                        lang
+                            ? 'An error has occurred. Please contact the developer!'
+                            : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                    );
                 }
 
                 setLoading(false);
@@ -489,7 +505,11 @@ const Analysis = () => {
                 if (err.response.status === 401) {
                     setLoading(false);
                 } else {
-                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                    alert(
+                        lang
+                            ? 'An error has occurred. Please contact the developer!'
+                            : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                    );
                 }
 
                 setLoading(false);

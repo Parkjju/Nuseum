@@ -79,7 +79,11 @@ const Meal = () => {
                     setLoading(false);
                     return;
                 }
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                alert(
+                    lang
+                        ? 'An error has occurred. Please contact the developer!'
+                        : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                );
                 setLoading(false);
             });
     };
@@ -205,7 +209,11 @@ const Meal = () => {
                     setLoading(false);
                     return;
                 }
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                alert(
+                    lang
+                        ? 'An error has occurred. Please contact the developer!'
+                        : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                );
                 setLoading(false);
             }
         } else if (forPostData.length === 0 && forPostImage.length === 0) {
@@ -215,7 +223,11 @@ const Meal = () => {
                 dispatch(postActions.removeAll());
 
                 setLoading(false);
-                alert('일기 수정이 완료되었습니다!');
+                alert(
+                    lang
+                        ? 'Modifying your diary has been completed!'
+                        : '일기 수정이 완료되었습니다!'
+                );
             }, 1000);
         }
     };
@@ -274,7 +286,11 @@ const Meal = () => {
                     setLoading(false);
                     return;
                 }
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                alert(
+                    lang
+                        ? 'An error has occurred. Please contact the developer!'
+                        : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                );
             });
 
         setSearchParam(foodName);
@@ -375,7 +391,9 @@ const Meal = () => {
                                               }
 
                                               alert(
-                                                  '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                                                  lang
+                                                      ? 'An error has occurred. Please contact the developer!'
+                                                      : '오류가 발생했습니다. 담당자에게 문의해주세요!'
                                               );
                                               setIsLoading(false);
                                           }

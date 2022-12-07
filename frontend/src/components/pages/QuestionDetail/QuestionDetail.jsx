@@ -71,7 +71,11 @@ const QuestionDetail = () => {
                     setLoading(false);
                     return;
                 }
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                alert(
+                    lang
+                        ? 'An error has occurred. Please contact the developer!'
+                        : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                );
                 setLoading(false);
             });
     }, [isPosted]);
@@ -113,7 +117,11 @@ const QuestionDetail = () => {
                         setLoading(false);
                         return;
                     }
-                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                    alert(
+                        lang
+                            ? 'An error has occurred. Please contact the developer!'
+                            : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                    );
                     setLoading(false);
                 });
         }
@@ -144,7 +152,11 @@ const QuestionDetail = () => {
                     setLoading(false);
                     return;
                 }
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                alert(
+                    lang
+                        ? 'An error has occurred. Please contact the developer!'
+                        : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                );
                 setLoading(false);
             }
         }
@@ -196,7 +208,11 @@ const QuestionDetail = () => {
                         setLoading(false);
                         return;
                     }
-                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                    alert(
+                        lang
+                            ? 'An error has occurred. Please contact the developer!'
+                            : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                    );
                 }
                 setLoading(false);
                 setComment('');

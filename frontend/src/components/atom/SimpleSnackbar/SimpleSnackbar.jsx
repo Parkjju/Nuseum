@@ -3,10 +3,12 @@ import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 const isUpdateAvailable = JSON.parse(window.sessionStorage.getItem('updated'));
 
 export default function SimpleSnackbar() {
+    const lang = useSelector((state) => state.language.isKorean);
     const [open, setOpen] = React.useState(false);
 
     useEffect(() => {
@@ -54,7 +56,11 @@ export default function SimpleSnackbar() {
                 open={open}
                 autoHideDuration={6000}
                 onClose={handleClose}
-                message='버전이 업데이트 되었습니다. 탭을 닫은 뒤 다시 접속해주세요!'
+                message={
+                    lang
+                        ? 'The version has been updated. Please close the tab and reconnect!'
+                        : '버전이 업데이트 되었습니다. 탭을 닫은 뒤 다시 접속해주세요!'
+                }
                 action={action}
             />
         </div>

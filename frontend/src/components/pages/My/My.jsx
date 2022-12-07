@@ -23,6 +23,7 @@ const My = () => {
     const [pageNum, setPageNum] = useState(1);
     const [currentPage, setCurrentPage] = useState(1);
     const [pageNumArray, setPageNumArray] = useState([]);
+    const lang = useSelector((state) => state.language.isKorean);
 
     const width = window.innerWidth > 800 ? 800 : window.innerWidth;
     const dispatch = useDispatch();
@@ -85,7 +86,11 @@ const My = () => {
                     setLoading(false);
                     return;
                 }
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                alert(
+                    lang
+                        ? 'An error has occurred. Please contact the developer!'
+                        : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                );
             });
     }, []);
 

@@ -11,6 +11,7 @@ import { postActions } from '../../../store/meal-slice/post-slice';
 const FoodImg = ({ data, index, isPost, setLoading }) => {
     const dispatch = useDispatch();
     const token = useSelector((state) => state.auth.token);
+    const lang = useSelector((state) => state.language.isKorean);
 
     const params = useParams();
     const action = useActions(params.when);
@@ -50,7 +51,9 @@ const FoodImg = ({ data, index, isPost, setLoading }) => {
                                         return;
                                     }
                                     alert(
-                                        '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                                        lang
+                                            ? 'An error has occurred. Please contact the developer!'
+                                            : '오류가 발생했습니다. 담당자에게 문의해주세요!'
                                     );
                                     setLoading(false);
                                 }

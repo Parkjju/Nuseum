@@ -11,6 +11,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 const Curation = () => {
     const dispatch = useDispatch();
+    const lang = useSelector((state) => state.language.isKorean);
 
     const token = useSelector((state) => state.auth.token);
 
@@ -32,7 +33,11 @@ const Curation = () => {
             if (err.response.status === 401) {
                 return;
             }
-            alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+            alert(
+                lang
+                    ? 'An error has occurred. Please contact the developer!'
+                    : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+            );
         }
     };
 

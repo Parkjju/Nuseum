@@ -10,6 +10,7 @@ import ErrorModal from '../../atom/Modal';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useSelector } from 'react-redux';
 
 function Register() {
     const {
@@ -22,6 +23,7 @@ function Register() {
     const [display, setDisplay] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+    const lang = useSelector((state) => state.language.isKorean);
     const onValid = ({ code, password1, password2 }) => {
         if (password1 !== password2) {
             setError(
@@ -44,14 +46,20 @@ function Register() {
                 password2: password2,
             })
             .then(() => {
-                alert('회원 가입이 완료되었습니다!');
+                alert(
+                    lang
+                        ? 'Your registration has been completed!'
+                        : '회원 가입이 완료되었습니다!'
+                );
                 setIsLoading(false);
                 navigate('/login');
             })
             .catch((err) => {
                 if (err.response.data.username) {
                     setError('AlreadyExists', {
-                        message: '이미 가입된 계정입니다.',
+                        message: lang
+                            ? 'This account has already been signed up.'
+                            : '이미 가입된 계정입니다.',
                         type: 'custom',
                     });
                     setIsLoading(false);
@@ -59,7 +67,9 @@ function Register() {
                     return;
                 } else if (err.response.data.password1) {
                     setError('AlreadyExists', {
-                        message: '보안에 취약한 비밀번호입니다.',
+                        message: lang
+                            ? 'Your password is vulnerable to security.'
+                            : '보안에 취약한 비밀번호입니다.',
                         type: 'custom',
                     });
                     setIsLoading(false);
@@ -67,34 +77,54 @@ function Register() {
                     return;
                 }
 
-                alert('알 수 없는 오류가 발생했습니다. Q&A에 문의해주세요.');
+                alert(
+                    lang
+                        ? 'An error has occurred. Please contact the developer!'
+                        : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                );
             });
     };
 
     return (
         <Container>
-            <Title text='SNU 영양생리약리연구실' />
+            <Title
+                text={
+                    lang
+                        ? 'SNU Nutrition Physiology and Pharmacology Laboratory'
+                        : 'SNU 영양생리약리연구실'
+                }
+            />
             <FormBox onSubmit={handleSubmit(onValid)}>
                 <Form
                     name='code'
-                    placeholder='발급된 코드를 입력해주세요.'
+                    placeholder={
+                        lang
+                            ? 'Please enter the code'
+                            : '발급된 코드를 입력해주세요.'
+                    }
                     type='text'
                     {...register('code', {
-                        required: '😭 발급된 코드를 입력해주세요!',
+                        required: lang
+                            ? '😭 Please enter the code provided only'
+                            : '😭 발급된 코드를 입력해주세요!',
                     })}
                     error={errors.code}
                 />
                 {errors.code ? <Error>{errors.code.message}</Error> : null}
 
                 <Form
-                    placeholder='패스워드 입력'
+                    placeholder={lang ? 'Password' : '패스워드 입력'}
                     name='password1'
                     type='password'
                     {...register('password1', {
-                        required: '😭 비밀번호를 입력해주세요!',
+                        required: lang
+                            ? '😭 Please enter the password!'
+                            : '😭 비밀번호를 입력해주세요!',
                         minLength: {
                             value: 8,
-                            message: '😭 비밀번호를 8자 이상 입력해주세요!',
+                            message: lang
+                                ? '😭 Password must be at least 8 characters long!'
+                                : '😭 비밀번호를 8자 이상 입력해주세요!',
                         },
                     })}
                     error={errors.password1}
@@ -104,7 +134,7 @@ function Register() {
                 ) : null}
 
                 <Form
-                    placeholder='패스워드 확인'
+                    placeholder={lang ? 'Password check' : '패스워드 확인'}
                     name='password2'
                     type='password'
                     {...register('password2', {
@@ -128,7 +158,7 @@ function Register() {
                         <CircularProgress sx={{ marginBottom: 5 }} />
                     ) : (
                         <Button
-                            text='가입하기'
+                            text={lang ? 'Register' : '가입하기'}
                             openModal={
                                 errors.AlreadyExists
                                     ? () => setDisplay(true)
@@ -137,7 +167,13 @@ function Register() {
                         />
                     )}
                     <Link style={{ textDecoration: 'none' }} to='/login'>
-                        <Button text='이미 계정이 있으신가요?' />
+                        <Button
+                            text={
+                                lang
+                                    ? 'Already have an account?'
+                                    : '이미 계정이 있으신가요?'
+                            }
+                        />
                     </Link>
                 </BtnBox>
             </FormBox>
