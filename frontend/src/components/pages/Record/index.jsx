@@ -30,16 +30,16 @@ function Record() {
             menu.push([morning, lang ? 'morning' : '아침', 'breakfast']);
             break;
         case 'lunch':
-            menu.push([mid, lang ? 'mid' : '점심', 'lunch']);
+            menu.push([mid, lang ? 'lunch' : '점심', 'lunch']);
             break;
         case 'dinner':
-            menu.push([night, lang ? 'night' : '저녁', 'dinner']);
+            menu.push([night, lang ? 'dinner' : '저녁', 'dinner']);
             break;
         case 'snack':
-            menu.push([cake, lang ? 'cake' : '간식', 'snack']);
+            menu.push([cake, lang ? 'snack' : '간식', 'snack']);
             break;
         case 'supplement':
-            menu.push([drug, lang ? 'drug' : '영양제', 'supplement']);
+            menu.push([drug, lang ? 'supplement' : '영양제', 'supplement']);
             break;
         case 'water':
             menu.push([water, lang ? 'water' : '물', 'water']);
