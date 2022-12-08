@@ -579,7 +579,7 @@ const Analysis = () => {
                         }}
                     >
                         {lang
-                            ? 'Please click on the date you want to check the analysis :)'
+                            ? ''
                             : '식이분석내용을 확인하고 싶은 날짜를 클릭해주세요 :)'}
                     </Name>
                 )}
