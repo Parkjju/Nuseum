@@ -35,6 +35,17 @@ const images = {
     영양제: supplement,
     채소: vegetable,
     주의: avoid,
+    'Bean/tofu': bean,
+    'Meat/Fish/Eggs': meat,
+    'Milk product': milk,
+    Mushroom: mushroom,
+    Nuts: nut,
+    'Processed food': processed,
+    'Whole grain': rice,
+    Seaweed: seeweed,
+    Fruit: strawberry,
+    Supplement: supplement,
+    Vegetable: vegetable,
 };
 const CurationData = ({ setIsOpen, setClickedTag, data }) => {
     const lang = useSelector((state) => state.language.isKorean);

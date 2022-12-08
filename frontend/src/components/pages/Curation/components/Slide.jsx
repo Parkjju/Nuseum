@@ -28,67 +28,67 @@ const Slide = ({ date, id, setVisibleIndex, visibleIndex, length }) => {
     const [recommend, setRecommend] = useState({
         data: [
             {
-                type: '과일',
+                type: lang ? 'Fruit' : '과일',
                 main: ' ',
                 list: [],
                 order: 0,
             },
             {
-                type: '채소',
+                type: lang ? 'Vegetable' : '채소',
                 main: ' ',
                 list: [],
                 order: 1,
             },
             {
-                type: '콩/두부',
+                type: lang ? 'Bean/tofu' : '콩/두부',
                 main: ' ',
                 list: [],
                 order: 2,
             },
             {
-                type: '통곡물',
+                type: lang ? 'Whole grains' : '통곡물',
                 main: ' ',
                 list: [],
                 order: 3,
             },
             {
-                type: '버섯',
+                type: lang ? 'Mushroom' : '버섯',
                 main: ' ',
                 list: [],
                 order: 4,
             },
             {
-                type: '해조류',
+                type: lang ? 'Seaweed' : '해조류',
                 main: ' ',
                 list: [],
                 order: 5,
             },
             {
-                type: '견과',
+                type: lang ? 'Nuts' : '견과',
                 main: ' ',
                 list: [],
                 order: 6,
             },
             {
-                type: '고기/생선/달걀',
+                type: lang ? 'Meat/Fish/Eggs' : '고기/생선/달걀',
                 main: ' ',
                 list: [],
                 order: 7,
             },
             {
-                type: '유제품',
+                type: lang ? 'Milk products' : '유제품',
                 main: ' ',
                 list: [],
                 order: 8,
             },
             {
-                type: '가공 식품',
+                type: lang ? 'Processed food' : '가공 식품',
                 main: ' ',
                 list: [],
                 order: 9,
             },
             {
-                type: '영양제',
+                type: lang ? 'Supplement' : '영양제',
                 main: ' ',
                 list: [],
                 order: 10,
@@ -103,6 +103,223 @@ const Slide = ({ date, id, setVisibleIndex, visibleIndex, length }) => {
         comment: '',
     });
 
+    useEffect(() => {
+        console.log('recommend : ', recommend);
+        if (lang) {
+            for (let index in recommend.data) {
+                switch (recommend.data[index].type) {
+                    case '견과':
+                        setRecommend((prev) => {
+                            prev.data[index].type = 'Nuts';
+                            return {
+                                ...prev,
+                                [prev.data]: [...prev.data],
+                            };
+                        });
+                        break;
+                    case '채소':
+                        setRecommend((prev) => {
+                            prev.data[index].type = 'Vegetable';
+                            return {
+                                ...prev,
+                                [prev.data]: [...prev.data],
+                            };
+                        });
+                        break;
+                    case '과일':
+                        setRecommend((prev) => {
+                            prev.data[index].type = 'Fruit';
+                            return {
+                                ...prev,
+                                [prev.data]: [...prev.data],
+                            };
+                        });
+                        break;
+                    case '버섯':
+                        setRecommend((prev) => {
+                            prev.data[index].type = 'Mushroom';
+                            return {
+                                ...prev,
+                                [prev.data]: [...prev.data],
+                            };
+                        });
+                        break;
+                    case '해조류':
+                        setRecommend((prev) => {
+                            prev.data[index].type = 'Seaweed';
+                            return {
+                                ...prev,
+                                [prev.data]: [...prev.data],
+                            };
+                        });
+                        break;
+                    case '통곡물':
+                        setRecommend((prev) => {
+                            prev.data[index].type = 'Whole grain';
+                            return {
+                                ...prev,
+                                [prev.data]: [...prev.data],
+                            };
+                        });
+                        break;
+                    case '콩/두부':
+                        setRecommend((prev) => {
+                            prev.data[index].type = 'Bean/tofu';
+                            return {
+                                ...prev,
+                                [prev.data]: [...prev.data],
+                            };
+                        });
+                        break;
+                    case '고기/생선/달걀':
+                        setRecommend((prev) => {
+                            prev.data[index].type = 'Meat/Fish/Eggs';
+                            return {
+                                ...prev,
+                                [prev.data]: [...prev.data],
+                            };
+                        });
+                        break;
+                    case '유제품':
+                        setRecommend((prev) => {
+                            prev.data[index].type = 'Milk product';
+                            return {
+                                ...prev,
+                                [prev.data]: [...prev.data],
+                            };
+                        });
+                        break;
+                    case '영양제':
+                        setRecommend((prev) => {
+                            prev.data[index].type = 'Supplement';
+                            return {
+                                ...prev,
+                                [prev.data]: [...prev.data],
+                            };
+                        });
+                        break;
+                    case '가공 식품':
+                        setRecommend((prev) => {
+                            prev.data[index].type = 'Processed food';
+                            return {
+                                ...prev,
+                                [prev.data]: [...prev.data],
+                            };
+                        });
+                        break;
+                    default:
+                        break;
+                }
+            }
+        } else {
+            for (let index in recommend.data) {
+                switch (recommend.data[index].type) {
+                    case 'Nuts':
+                        setRecommend((prev) => {
+                            prev.data[index].type = '견과';
+                            return {
+                                ...prev,
+                                [prev.data]: [...prev.data],
+                            };
+                        });
+                        break;
+                    case 'Vegetable':
+                        setRecommend((prev) => {
+                            prev.data[index].type = '채소';
+                            return {
+                                ...prev,
+                                [prev.data]: [...prev.data],
+                            };
+                        });
+                        break;
+                    case 'Fruit':
+                        setRecommend((prev) => {
+                            prev.data[index].type = '과일';
+                            return {
+                                ...prev,
+                                [prev.data]: [...prev.data],
+                            };
+                        });
+                        break;
+                    case 'Mushroom':
+                        setRecommend((prev) => {
+                            prev.data[index].type = '버섯';
+                            return {
+                                ...prev,
+                                [prev.data]: [...prev.data],
+                            };
+                        });
+                        break;
+                    case 'Seaweed':
+                        setRecommend((prev) => {
+                            prev.data[index].type = '해조류';
+                            return {
+                                ...prev,
+                                [prev.data]: [...prev.data],
+                            };
+                        });
+                        break;
+                    case 'Whole grain':
+                        setRecommend((prev) => {
+                            prev.data[index].type = '통곡물';
+                            return {
+                                ...prev,
+                                [prev.data]: [...prev.data],
+                            };
+                        });
+                        break;
+                    case 'Bean/tofu':
+                        setRecommend((prev) => {
+                            prev.data[index].type = '콩/두부';
+                            return {
+                                ...prev,
+                                [prev.data]: [...prev.data],
+                            };
+                        });
+                        break;
+                    case 'Meat/Fish/Eggs':
+                        setRecommend((prev) => {
+                            prev.data[index].type = '고기/생선/달걀';
+                            return {
+                                ...prev,
+                                [prev.data]: [...prev.data],
+                            };
+                        });
+                        break;
+                    case 'Milk product':
+                        setRecommend((prev) => {
+                            prev.data[index].type = '유제품';
+                            return {
+                                ...prev,
+                                [prev.data]: [...prev.data],
+                            };
+                        });
+                        break;
+                    case 'Supplement':
+                        setRecommend((prev) => {
+                            prev.data[index].type = '영양제';
+                            return {
+                                ...prev,
+                                [prev.data]: [...prev.data],
+                            };
+                        });
+                        break;
+                    case 'Processed food':
+                        setRecommend((prev) => {
+                            prev.data[index].type = '가공 식품';
+                            return {
+                                ...prev,
+                                [prev.data]: [...prev.data],
+                            };
+                        });
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }, [lang, recommend]);
+
     const fetchRecommend = async () => {
         try {
             const response = await axios.get(
@@ -113,6 +330,7 @@ const Slide = ({ date, id, setVisibleIndex, visibleIndex, length }) => {
                     },
                 }
             );
+
             setRecommend(response.data);
         } catch (err) {
             console.log(err);
@@ -125,6 +343,7 @@ const Slide = ({ date, id, setVisibleIndex, visibleIndex, length }) => {
             );
         }
     };
+
     useEffect(() => {
         fetchRecommend();
     }, [id]);
