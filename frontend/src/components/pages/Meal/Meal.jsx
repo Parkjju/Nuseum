@@ -260,6 +260,7 @@ const Meal = () => {
             actionImgCompress(e.target.files[0]);
         }
     };
+
     const onSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
@@ -353,6 +354,7 @@ const Meal = () => {
             </VerticalImageBox>
 
             {/* GET해온 데이터와 POST전용 데이터를 분리한다. */}
+
             <TagBox>
                 {data
                     ? data.map((item, index) =>

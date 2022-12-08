@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { postActions } from '../../../store/meal-slice/post-slice';
 import useActions from '../../../hooks/useActions';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 export const ResultBox = styled(motion.div)`
     width: 100%;
@@ -72,20 +73,40 @@ const NutritionList = ({ item }) => {
 
     const saveNutrition = (e) => {
         if (e.which === 13) {
-            dispatch(
-                postActions.addPostData({
-                    name: e.target.name,
-                    food: Number(e.target.getAttribute('data-itemID')),
-                    amount: Number(amount),
-                })
-            );
-            dispatch(
-                action.setNutrition({
-                    ...item,
-                })
-            );
+            axios
+                .get(
+                    `https://www.nuseum.site/api/v1/food/?search=${e.target.name}`
+                )
+                .then((response) => {
+                    let result = response.data.results[0];
+                    let calculatedNutrition = {};
 
-            setAmount(0);
+                    for (let i in result) {
+                        if (
+                            i === 'category' ||
+                            i === 'classifier' ||
+                            i === 'name'
+                        ) {
+                            continue;
+                        }
+                        calculatedNutrition[i] = (result[i] * amount) / 100;
+                    }
+
+                    dispatch(
+                        postActions.addPostData({
+                            name: e.target.name,
+                            food: Number(e.target.getAttribute('data-itemID')),
+                            amount: Number(amount),
+                            ...calculatedNutrition,
+                        })
+                    );
+                    dispatch(
+                        action.setNutrition({
+                            ...item,
+                        })
+                    );
+                    setAmount(0);
+                });
         }
     };
 
