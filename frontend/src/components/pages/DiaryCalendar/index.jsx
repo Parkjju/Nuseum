@@ -98,9 +98,9 @@ function DiaryCalendar() {
                             fontSize: '13px',
                         }}
                     >
-                        {lang
+                        {/* {lang
                             ? "This diet diary is used to analyze my child's nutritional status and eating behavior. Please record your child's intake and photos, including what he or she eats at home as well as at daycare centers/kindergartens or outings."
-                            : '본 식단일기는 내아이의 영양상태와 식행동을 분석하기 위해 사용됩니다. 아이가 가정에서는 물론 어린이집/유치원이나 외식에서 먹는 것도 모두 포함해서 사진과 섭취내용(섭취량)을 기록해주세요.'}
+                            : '본 식단일기는 내아이의 영양상태와 식행동을 분석하기 위해 사용됩니다. 아이가 가정에서는 물론 어린이집/유치원이나 외식에서 먹는 것도 모두 포함해서 사진과 섭취내용(섭취량)을 기록해주세요.'} */}
                     </Name>
                 )}
             </Contents>

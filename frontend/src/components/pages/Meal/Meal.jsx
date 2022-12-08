@@ -437,6 +437,7 @@ const Meal = () => {
                       )
                     : null}
             </TagBox>
+            {console.log('forpostdata: ', forPostData)}
 
             <input
                 onChange={onChange}
@@ -448,7 +449,7 @@ const Meal = () => {
 
             <SearchTitle>
                 {lang
-                    ? 'Please enter the food you want to find. Please fill in the intake and enter. If there is no food you want to find, please choose the most similar one. Please write down the relevant information in the Q&A.'
+                    ? ''
                     : '찾고싶은 음식을 작성한 후 엔터해주세요. 섭취량을 작성한 후 엔터해주세요. 찾고 싶은 음식이 없다면 가장 유사한 것으로 선택해주세요. 관련된 내용을 Q&A에 적어주세요.'}
             </SearchTitle>
             <ModalSearch as='form' onSubmit={onSubmit}>
@@ -536,6 +537,7 @@ const Meal = () => {
                         dateCount={1}
                         data={nutrition}
                         dataWithoutSupplement={null}
+                        title='Daily intake'
                     />
                 </div>
             </S.NutrientBox>
