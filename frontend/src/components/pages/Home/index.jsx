@@ -30,7 +30,7 @@ function Home() {
         [diary, lang ? 'Diary' : '식단일기', 'diary'],
         [analysis, lang ? 'Analysis' : '식이분석', 'analysis'],
         [food, lang ? 'Food' : '맞춤식품', 'food'],
-        [record, lang ? 'Record' : '내 아이', 'record'],
+        [record, lang ? 'Health Record' : '내 아이', 'record'],
         [question, lang ? 'Question' : 'Q&A', 'question'],
     ];
 
@@ -46,9 +46,9 @@ function Home() {
                             fontWeight: 'bold',
                         }}
                     >
-                        {lang
+                        {/* {lang
                             ? 'A Study on Customized Nutrition Management and Information Provision'
-                            : '맞춤형 영양관리 및 정보제공 연구'}
+                            : '맞춤형 영양관리 및 정보제공 연구'} */}
                     </Name>
                 </DiaryTitle>
                 <Card menu={menu} current='home' />

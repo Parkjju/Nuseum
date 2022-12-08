@@ -1,5 +1,5 @@
 // 식단일기 메뉴
-import morning from '../../../assets/morning.png';
+import breakfast from '../../../assets/morning.png';
 import lunch from '../../../assets/lunch.png';
 import dinner from '../../../assets/dinner.png';
 import cake from '../../../assets/cake.png';
@@ -18,7 +18,7 @@ function Diary() {
     const lang = useSelector((state) => state.language.isKorean);
 
     const menu = [
-        [morning, lang ? 'morning' : '아침', 'breakfast'],
+        [breakfast, lang ? 'breakfast' : '아침', 'breakfast'],
         [lunch, lang ? 'lunch' : '점심', 'lunch'],
         [dinner, lang ? 'dinner' : '저녁', 'dinner'],
         [cake, lang ? 'snack' : '간식', 'snack'],

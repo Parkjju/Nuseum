@@ -27,7 +27,7 @@ function Record() {
 
     switch (param.when) {
         case 'breakfast':
-            menu.push([morning, lang ? 'morning' : '아침', 'breakfast']);
+            menu.push([morning, lang ? 'breakfast' : '아침', 'breakfast']);
             break;
         case 'lunch':
             menu.push([mid, lang ? 'lunch' : '점심', 'lunch']);
@@ -76,18 +76,18 @@ function Record() {
                 >
                     {param.when === 'supplement'
                         ? lang
-                            ? 'Please record the nutritional supplements you took today :) Photos of the names of the nutritional supplements and the nutritional table are also helpful.'
+                            ? ''
                             : '오늘 섭취한 영양제를 기록해주세요 :) 영양제의 이름과 영양성분표의 사진도 도움이 됩니다.'
                         : param.when === 'water'
                         ? lang
-                            ? 'Please record the water you drank today :)'
+                            ? ''
                             : '오늘 섭취한 물을 기록해주세요 :)'
                         : param.when === 'today'
                         ? lang
-                            ? 'Summarize the food information you ate today.'
+                            ? ''
                             : '오늘 섭취한 음식정보를 요약합니다.'
                         : lang
-                        ? 'Upload the food image and enter the dietary information :) Before and after the meal, the name and nutritional table of the food, the receipt of the ingredient purchase or the receipt of the dining out are also helpful.'
+                        ? ''
                         : `음식 이미지를 업로드하고 식이정보를 입력하세요 :) 식사의 전후, 식품의 이름과 영양성분표, 식재료구매 영수증이나 외식 영수증의 사진도 도움이 됩니다.`}
                 </Name>
                 <Name style={{ marginBottom: '50px' }}>
