@@ -38,6 +38,7 @@ const QuestionDetail = () => {
     const param = useParams();
     const token = useSelector((state) => state.auth.token);
     const [author, setAuthor] = useState(null);
+    const lang = useSelector((state) => state.language.isKorean);
 
     useEffect(() => {
         setLoading(true);
@@ -58,7 +59,11 @@ const QuestionDetail = () => {
             .catch(async (err) => {
                 console.log(err);
                 if (err.response.status === 404) {
-                    alert('이미 삭제된 게시물입니다.');
+                    alert(
+                        lang
+                            ? 'This post has already been deleted.'
+                            : '이미 삭제된 게시물입니다.'
+                    );
                     navigate('/question');
                     return;
                 }
@@ -66,13 +71,21 @@ const QuestionDetail = () => {
                     setLoading(false);
                     return;
                 }
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                alert(
+                    lang
+                        ? 'An error has occurred. Please contact the developer!'
+                        : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                );
                 setLoading(false);
             });
     }, [isPosted]);
 
     const deleteComment = (id) => {
-        if (window.confirm('댓글을 지우시겠어요?')) {
+        if (
+            window.confirm(
+                lang ? 'Should I register a comment?' : '댓글을 지우시겠어요?'
+            )
+        ) {
             setLoading(true);
             axios
                 .delete(`/api/v1/qna/answer/${id}/`, {
@@ -81,13 +94,21 @@ const QuestionDetail = () => {
                     },
                 })
                 .then(() => {
-                    alert('해당 댓글을 삭제하였습니다!');
+                    alert(
+                        lang
+                            ? 'Your comment deletion has been completed!'
+                            : '해당 댓글을 삭제하였습니다!'
+                    );
                     setLoading(false);
                     setIsPosted((prev) => !prev);
                 })
                 .catch(async (err) => {
                     if (err.response.data.validation_err) {
-                        alert('작성자 본인만 삭제할 수 있습니다.');
+                        alert(
+                            lang
+                                ? 'Only the author himself can delete the comment.'
+                                : '작성자 본인만 삭제할 수 있습니다.'
+                        );
                         setLoading(false);
                         return;
                     }
@@ -96,7 +117,11 @@ const QuestionDetail = () => {
                         setLoading(false);
                         return;
                     }
-                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                    alert(
+                        lang
+                            ? 'An error has occurred. Please contact the developer!'
+                            : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                    );
                     setLoading(false);
                 });
         }
@@ -105,14 +130,24 @@ const QuestionDetail = () => {
         setComment(e.target.value);
     };
     const deletePost = async () => {
-        if (window.confirm('작성한 질문을 삭제하시겠어요?')) {
+        if (
+            window.confirm(
+                lang
+                    ? 'Should I register a question?'
+                    : '작성한 질문을 삭제하시겠어요?'
+            )
+        ) {
             try {
                 await axios.delete(`/api/v1/qna/${param.id}/delete/`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                alert('질문이 삭제되었습니다!');
+                alert(
+                    lang
+                        ? 'Your question has been deleted!'
+                        : '질문이 삭제되었습니다!'
+                );
                 navigate('/question');
             } catch (error) {
                 console.log(err);
@@ -121,7 +156,11 @@ const QuestionDetail = () => {
                     setLoading(false);
                     return;
                 }
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                alert(
+                    lang
+                        ? 'An error has occurred. Please contact the developer!'
+                        : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                );
                 setLoading(false);
             }
         }
@@ -129,7 +168,13 @@ const QuestionDetail = () => {
     console.log(author);
 
     const modifyPost = () => {
-        if (window.confirm('질문 내용을 수정할까요?')) {
+        if (
+            window.confirm(
+                lang
+                    ? 'Should I correct the question?'
+                    : '질문 내용을 수정할까요?'
+            )
+        ) {
             navigate(`/question/post/`, {
                 state: { title, content, id: param.id },
             });
@@ -141,7 +186,13 @@ const QuestionDetail = () => {
             if (e.target.value === '') {
                 return;
             }
-            if (window.confirm('댓글을 입력하시겠어요?')) {
+            if (
+                window.confirm(
+                    lang
+                        ? 'Should I register the comment?'
+                        : '댓글을 입력하시겠어요?'
+                )
+            ) {
                 setLoading(true);
 
                 try {
@@ -161,7 +212,11 @@ const QuestionDetail = () => {
                         setLoading(false);
                         return;
                     }
-                    alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                    alert(
+                        lang
+                            ? 'An error has occurred. Please contact the developer!'
+                            : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                    );
                 }
                 setLoading(false);
                 setComment('');
@@ -215,7 +270,7 @@ const QuestionDetail = () => {
                                         }}
                                         onClick={() => deleteComment(answer.id)}
                                     >
-                                        지우기
+                                        {lang ? 'Delete' : '지우기'}
                                     </span>
                                 </Username>
                                 <AnswerContent>{answer.content}</AnswerContent>
@@ -225,7 +280,11 @@ const QuestionDetail = () => {
                     <>
                         <InputComment
                             onKeyDown={postComment}
-                            placeholder='댓글을 입력하세요...'
+                            placeholder={
+                                lang
+                                    ? 'Enter the comments..'
+                                    : '댓글을 입력하세요...'
+                            }
                             value={comment}
                             onChange={onChangeComment}
                         />
@@ -257,18 +316,20 @@ const QuestionDetail = () => {
                     >
                         <UtilGroup onClick={modifyPost}>
                             <UtilImg src={modify} alt='modify' />
-                            <UtilBtn>수정</UtilBtn>
+                            <UtilBtn>{lang ? 'Modfiy' : '수정'}</UtilBtn>
                         </UtilGroup>
                         <UtilGroup
                             style={{ display: 'flex', alignItems: 'center' }}
                             onClick={deletePost}
                         >
                             <UtilImg src={deleteImg} alt='delete' />
-                            <UtilBtn>삭제</UtilBtn>
+                            <UtilBtn>{lang ? 'Delete' : '삭제'}</UtilBtn>
                         </UtilGroup>
                     </div>
                     <Link to='/question' style={{ textDecoration: 'none' }}>
-                        <Button style={{ marginTop: 30 }}>목록</Button>
+                        <Button style={{ marginTop: 30 }}>
+                            {lang ? 'List' : '목록'}
+                        </Button>
                     </Link>
                 </Contents>
             )}

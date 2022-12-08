@@ -8,6 +8,7 @@ import ImageCard from '../../molecules/ImageCard';
 
 let initial = true;
 const Supplement = () => {
+    const lang = useSelector((state) => state.language.isKorean);
     const [isRequestSent, setIsRequestSent] = useState(false);
     const [loading, setLoading] = useState(false);
     const [fetchedSupplement, setFetchedSupplement] = useState([]);
@@ -38,7 +39,11 @@ const Supplement = () => {
     };
     const saveSupplement = async () => {
         if (isEmptyFieldExistsInSupplement()) {
-            alert('제조사와 영양제 이름, 이미지는 필수 입력입니다!');
+            alert(
+                lang
+                    ? 'Manufacturer, nutritional name and image are required!'
+                    : '제조사와 영양제 이름, 이미지는 필수 입력입니다!'
+            );
             return;
         }
         try {
@@ -56,7 +61,11 @@ const Supplement = () => {
                     },
                 }
             );
-            alert('일기 저장이 완료되었습니다!');
+            alert(
+                lang
+                    ? 'Your diary has been saved!'
+                    : '일기 저장이 완료되었습니다!'
+            );
             dispatch(supplementActions.checkDataSaved());
             setIsRequestSent(true);
             setLoading(false);
@@ -68,7 +77,11 @@ const Supplement = () => {
                 return;
             }
 
-            alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+            alert(
+                lang
+                    ? 'An error has occurred. Please contact the developer!'
+                    : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+            );
             setIsRequestSent(false);
             setLoading(false);
         }
@@ -105,7 +118,11 @@ const Supplement = () => {
                     setLoading(false);
                     return;
                 }
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                alert(
+                    lang
+                        ? 'An error has occurred. Please contact the developer!'
+                        : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                );
                 setLoading(false);
             });
     }, [isRequestSent, dispatch]);
@@ -123,7 +140,7 @@ const Supplement = () => {
                     padding: '5px 35px',
                 }}
             >
-                추가하기
+                {lang ? 'Add' : '추가하기'}
             </button>
 
             {fetchedSupplement.length === 0
@@ -167,7 +184,7 @@ const Supplement = () => {
                         color: 'white',
                     }}
                 >
-                    저장
+                    {lang ? 'Save' : '저장'}
                 </button>
             )}
         </>

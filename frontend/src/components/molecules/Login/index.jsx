@@ -11,7 +11,7 @@ import ErrorModal from '../../atom/Modal';
 import { useEffect, useState } from 'react';
 import SNU from '../../../assets/SNU.png';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../../store/auth-slice';
 import jwt_decode from 'jwt-decode';
 
@@ -19,6 +19,7 @@ import jwt_decode from 'jwt-decode';
 
 function Login() {
     const dispatch = useDispatch();
+    const lang = useSelector((state) => state.language.isKorean);
 
     useEffect(() => {
         window.sessionStorage.removeItem('isLoggedIn');
@@ -63,7 +64,9 @@ function Login() {
                 '주어진 자격 증명으로 로그인이 불가능합니다.'
             ) {
                 setError('nonExists', {
-                    message: '아이디 또는 비밀번호가 잘못되었습니다.',
+                    message: lang
+                        ? 'Invalid ID or password.'
+                        : '아이디 또는 비밀번호가 잘못되었습니다.',
                 });
                 setIsLoading(false);
                 setDisplay(true);
@@ -91,7 +94,11 @@ function Login() {
                 }
             } catch (error) {
                 console.log(error);
-                alert('서버 오류가 발생했습니다. 담당자에게 문의해주세요!');
+                alert(
+                    lang
+                        ? 'An error has occurred. Please contact the developer!'
+                        : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                );
                 setIsLoading(false);
             }
         }
@@ -103,14 +110,22 @@ function Login() {
                 <Logo src={SNU} />
             </LogoBox>
 
-            <Title text='맞춤형 영양관리 및 정보제공 연구' />
+            <Title
+                text={
+                    lang
+                        ? 'Personalized Nutrition Healthcare for Neurobehavioral Development'
+                        : '맞춤형 영양관리 및 정보제공 연구'
+                }
+            />
 
             <FormBox onSubmit={handleSubmit(onValid)}>
                 <Form
                     {...register('loginId', {
-                        required: '😭 코드를 입력해주세요!',
+                        required: lang
+                            ? '😭 Please enter the code!'
+                            : '😭 코드를 입력해주세요!',
                     })}
-                    placeholder='발급 코드'
+                    placeholder={lang ? 'Code' : '발급 코드'}
                     type='text'
                     error={errors.loginId}
                 />
@@ -119,13 +134,17 @@ function Login() {
                 ) : null}
                 <Form
                     {...register('loginPassword', {
-                        required: '😭 비밀번호를 입력해주세요!',
+                        required: lang
+                            ? '😭 Please enter the password!'
+                            : '😭 비밀번호를 입력해주세요!',
                         minLength: {
                             value: 8,
-                            message: '😭 비밀번호를 8자 이상 입력해주세요!',
+                            message: lang
+                                ? '😭 Password must be at least 8 characters long!'
+                                : '😭 비밀번호를 8자 이상 입력해주세요!',
                         },
                     })}
-                    placeholder='비밀번호 입력'
+                    placeholder={lang ? 'Password' : '비밀번호 입력'}
                     type='password'
                     error={errors.loginPassword}
                 />
@@ -150,12 +169,12 @@ function Login() {
                             openModal={
                                 errors.nonExists ? () => setDisplay(true) : null
                             }
-                            text='로그인'
+                            text={lang ? 'Sign In' : '로그인'}
                         />
                     )}
 
                     <Link style={{ textDecoration: 'none' }} to='/register'>
-                        <Button text='회원가입' />
+                        <Button text={lang ? 'Sign Up' : '회원가입'} />
                     </Link>
                 </BtnBox>
             </FormBox>

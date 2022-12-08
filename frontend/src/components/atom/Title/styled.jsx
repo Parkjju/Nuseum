@@ -10,6 +10,8 @@ const Text = styled.h1`
     justify-content: center;
     color: black;
     margin-bottom: 90px;
+    text-align: center;
+    line-height: 1.5;
 `;
 
 export const TextBox = styled.div`

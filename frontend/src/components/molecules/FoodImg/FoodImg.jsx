@@ -11,6 +11,7 @@ import { postActions } from '../../../store/meal-slice/post-slice';
 const FoodImg = ({ data, index, isPost, setLoading }) => {
     const dispatch = useDispatch();
     const token = useSelector((state) => state.auth.token);
+    const lang = useSelector((state) => state.language.isKorean);
 
     const params = useParams();
     const action = useActions(params.when);
@@ -29,7 +30,13 @@ const FoodImg = ({ data, index, isPost, setLoading }) => {
             {data === '' ? null : (
                 <Remove
                     onClick={async () => {
-                        if (window.confirm('등록한 사진을 삭제하시겠어요?')) {
+                        if (
+                            window.confirm(
+                                lang
+                                    ? 'Do you want to delete the registered photo?'
+                                    : '등록한 사진을 삭제하시겠어요?'
+                            )
+                        ) {
                             if (!isPost) {
                                 try {
                                     setLoading(true);
@@ -43,14 +50,20 @@ const FoodImg = ({ data, index, isPost, setLoading }) => {
                                         }
                                     );
                                     setLoading(false);
-                                    alert('이미지가 삭제되었습니다!');
+                                    alert(
+                                        lang
+                                            ? 'Your image has been deleted!'
+                                            : '이미지가 삭제되었습니다!'
+                                    );
                                 } catch (err) {
                                     if (err.response.status === 401) {
                                         setLoading(false);
                                         return;
                                     }
                                     alert(
-                                        '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                                        lang
+                                            ? 'An error has occurred. Please contact the developer!'
+                                            : '오류가 발생했습니다. 담당자에게 문의해주세요!'
                                     );
                                     setLoading(false);
                                 }

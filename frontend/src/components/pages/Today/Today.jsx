@@ -17,6 +17,7 @@ import {
 
 const Today = ({ date }) => {
     const token = useSelector((state) => state.auth.token);
+    const lang = useSelector((state) => state.language.isKorean);
 
     const username = localStorage.getItem('username');
     const dispatch = useDispatch();
@@ -102,7 +103,11 @@ const Today = ({ date }) => {
                     return;
                 }
 
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                alert(
+                    lang
+                        ? 'An error has occurred. Please contact the developer!'
+                        : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                );
                 setLoading(false);
             });
     }, [username, date]);
@@ -126,7 +131,9 @@ const Today = ({ date }) => {
                 ))}
             </VerticalImageBox>
             <Summary>
-                <SummaryTitle>오늘 먹은 음식</SummaryTitle>
+                <SummaryTitle>
+                    {lang ? 'The food I ate today' : '오늘 먹은 음식'}
+                </SummaryTitle>
                 <TagBox
                     style={{ width: '80%', padding: '0px 30px', marginTop: 30 }}
                 >
@@ -136,7 +143,9 @@ const Today = ({ date }) => {
                         >{`${item.name} ${item.amount}g 또는 ml`}</Tag>
                     ))}
                 </TagBox>
-                <SummaryTitle>영양제</SummaryTitle>
+                <SummaryTitle>
+                    {lang ? 'Nutritional supplements' : '영양제'}
+                </SummaryTitle>
                 <TagBox style={{ padding: '0px 30px', marginTop: 30 }}>
                     {supplementInformation.map((item, index) => (
                         <Tag
@@ -144,7 +153,11 @@ const Today = ({ date }) => {
                         >{`${item.manufacturer} ${item.name}`}</Tag>
                     ))}
                 </TagBox>
-                <SummaryTitle>오늘 섭취한 물의 양</SummaryTitle>
+                <SummaryTitle>
+                    {lang
+                        ? 'The amount of water I drank today'
+                        : '오늘 섭취한 물의 양'}
+                </SummaryTitle>
                 <div
                     style={{
                         display: 'flex',
@@ -154,13 +167,24 @@ const Today = ({ date }) => {
                         fontSize: 14,
                     }}
                 >
-                    <span>마신 양 : {waterAmount}ml</span>
                     <span>
-                        남은 양 :{' '}
-                        {1500 - waterAmount > 0
+                        {lang
+                            ? `Amount of drink water : ${waterAmount}ml`
+                            : `마신 양 : ${waterAmount}ml`}
+                    </span>
+                    <span>
+                        {lang
+                            ? `Remaining amount : ${
+                                  1500 - waterAmount > 0
+                                      ? 1500 - waterAmount
+                                      : `+ ${waterAmount - 1500}`
+                              }ml`
+                            : `남은 양 :
+                    ${
+                        1500 - waterAmount > 0
                             ? 1500 - waterAmount
-                            : `+ ${waterAmount - 1500}`}
-                        ml
+                            : `+ ${waterAmount - 1500}`
+                    }ml`}
                     </span>
                 </div>
                 <Box

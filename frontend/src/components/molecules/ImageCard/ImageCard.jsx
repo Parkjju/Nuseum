@@ -17,6 +17,7 @@ import { CircularProgress } from '@mui/material';
 
 const ImageCard = ({ isSaved, index, data, setFetchedSupplement }) => {
     // index에 접근하여 해당 데이터 수정
+    const lang = useSelector((state) => state.language.isKorean);
 
     const token = useSelector((state) => state.auth.token);
     const params = useParams();
@@ -132,12 +133,16 @@ const ImageCard = ({ isSaved, index, data, setFetchedSupplement }) => {
                 <DescriptionInput
                     value={manufacturer}
                     onChange={onChangeManufacture}
-                    placeholder='제조사'
+                    placeholder={lang ? 'Manufacturer' : '제조사'}
                     disabled={(isUsableData && !isNew) || isSaved}
                 />
                 <DescriptionInput
                     value={supplementName}
-                    placeholder='영양제 이름'
+                    placeholder={
+                        lang
+                            ? 'Name of the nutritional supplement'
+                            : '영양제 이름'
+                    }
                     onChange={onChangeSupplementName}
                     disabled={(isUsableData && !isNew) || isSaved}
                 />
@@ -146,7 +151,13 @@ const ImageCard = ({ isSaved, index, data, setFetchedSupplement }) => {
                 style={{ cursor: 'pointer' }}
                 className='material-symbols-outlined'
                 onClick={async () => {
-                    if (window.confirm('입력한 영양제 정보를 삭제할까요?')) {
+                    if (
+                        window.confirm(
+                            lang
+                                ? 'Do you want to delete the nutritional information you entered?'
+                                : '입력한 영양제 정보를 삭제할까요?'
+                        )
+                    ) {
                         setLoading(true);
                         try {
                             if (data.id) {
@@ -175,7 +186,11 @@ const ImageCard = ({ isSaved, index, data, setFetchedSupplement }) => {
                                 dispatch(action.removeData(index));
                             }
                             setLoading(false);
-                            alert('영양제 정보가 삭제되었습니다!');
+                            alert(
+                                lang
+                                    ? 'Deleted successfully!'
+                                    : '영양제 정보가 삭제되었습니다!'
+                            );
                         } catch (err) {
                             console.log(err);
                             if (err.response.status === 401) {
@@ -183,7 +198,9 @@ const ImageCard = ({ isSaved, index, data, setFetchedSupplement }) => {
                                 return;
                             }
                             alert(
-                                '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                                lang
+                                    ? 'An error has occurred. Please contact the developer!'
+                                    : '오류가 발생했습니다. 담당자에게 문의해주세요!'
                             );
                             setLoading(false);
                         }

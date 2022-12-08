@@ -3,14 +3,17 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { HeaderBox, Icon } from './Header.style';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../../store/auth-slice';
+import { FormControlLabel, Switch } from '@mui/material';
+import { languageActions } from '../../../store/language-slice';
 
 const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const loc = useLocation();
     const locationArray = loc.pathname.split('/');
+    const lang = useSelector((state) => state.language.isKorean);
 
     const [backActive, setBackActive] = useState(true);
     const [homeActive, setHomeActive] = useState(true);
@@ -94,6 +97,20 @@ const Header = () => {
                                 </Icon>
                             </>
                         )}
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    onChange={() =>
+                                        dispatch(
+                                            languageActions.changeLanguage()
+                                        )
+                                    }
+                                    checked={lang}
+                                    name={lang ? 'ENGLISH' : '한국어'}
+                                />
+                            }
+                            label={lang ? 'ENGLISH' : '한국어'}
+                        />
                     </div>
 
                     <div
@@ -130,18 +147,28 @@ const Header = () => {
 
                         <Icon
                             onClick={async () => {
-                                if (window.confirm('로그아웃 하시겠습니까?')) {
+                                if (
+                                    window.confirm(
+                                        lang
+                                            ? 'Should I log out?'
+                                            : '로그아웃 하시겠습니까?'
+                                    )
+                                ) {
                                     if (homeActive) {
                                         try {
                                             await axios.post(
-                                                'https://www.nuseum.site/api/v1/account/logout/'
+                                                '/api/v1/account/logout/'
                                             );
 
                                             dispatch(authActions.logout());
                                             window.sessionStorage.removeItem(
                                                 'isLoggedIn'
                                             );
-                                            alert('로그아웃 되었습니다!');
+                                            alert(
+                                                lang
+                                                    ? 'You are logged out!'
+                                                    : '로그아웃 되었습니다!'
+                                            );
                                             navigate('/login');
                                         } catch (error) {
                                             console.log(error);

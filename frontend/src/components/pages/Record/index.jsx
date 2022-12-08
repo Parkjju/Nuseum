@@ -17,33 +17,35 @@ import Water from '../Water';
 import Today from '../Today';
 import Supplement from '../Supplement';
 import Meal from '../Meal';
+import { useSelector } from 'react-redux';
 
 function Record() {
     const param = useParams();
+    const lang = useSelector((state) => state.language.isKorean);
 
     let menu = [];
 
     switch (param.when) {
         case 'breakfast':
-            menu.push([morning, '아침', 'breakfast']);
+            menu.push([morning, lang ? 'breakfast' : '아침', 'breakfast']);
             break;
         case 'lunch':
-            menu.push([mid, '점심', 'lunch']);
+            menu.push([mid, lang ? 'lunch' : '점심', 'lunch']);
             break;
         case 'dinner':
-            menu.push([night, '저녁', 'dinner']);
+            menu.push([night, lang ? 'dinner' : '저녁', 'dinner']);
             break;
         case 'snack':
-            menu.push([cake, '간식', 'snack']);
+            menu.push([cake, lang ? 'snack' : '간식', 'snack']);
             break;
         case 'supplement':
-            menu.push([drug, '영양제', 'supplement']);
+            menu.push([drug, lang ? 'supplement' : '영양제', 'supplement']);
             break;
         case 'water':
-            menu.push([water, '물', 'water']);
+            menu.push([water, lang ? 'water' : '물', 'water']);
             break;
         case 'today':
-            menu.push([today, '오늘', 'today']);
+            menu.push([today, lang ? 'today' : '오늘', 'today']);
             break;
         default:
             break;
@@ -73,11 +75,19 @@ function Record() {
                     }}
                 >
                     {param.when === 'supplement'
-                        ? '오늘 섭취한 영양제를 기록해주세요 :) 영양제의 이름과 영양성분표의 사진도 도움이 됩니다.'
+                        ? lang
+                            ? ''
+                            : '오늘 섭취한 영양제를 기록해주세요 :) 영양제의 이름과 영양성분표의 사진도 도움이 됩니다.'
                         : param.when === 'water'
-                        ? '오늘 섭취한 물을 기록해주세요 :)'
+                        ? lang
+                            ? ''
+                            : '오늘 섭취한 물을 기록해주세요 :)'
                         : param.when === 'today'
-                        ? '오늘 섭취한 음식정보를 요약합니다.'
+                        ? lang
+                            ? ''
+                            : '오늘 섭취한 음식정보를 요약합니다.'
+                        : lang
+                        ? ''
                         : `음식 이미지를 업로드하고 식이정보를 입력하세요 :) 식사의 전후, 식품의 이름과 영양성분표, 식재료구매 영수증이나 외식 영수증의 사진도 도움이 됩니다.`}
                 </Name>
                 <Name style={{ marginBottom: '50px' }}>

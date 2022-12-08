@@ -11,10 +11,11 @@ import { DiaryTitle } from '../Record/styled';
 import { Name } from '../../atom/Card/styled';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Home() {
     const isLoggedIn = window.sessionStorage.getItem('isLoggedIn');
+    const lang = useSelector((state) => state.language.isKorean);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -26,11 +27,11 @@ function Home() {
     }, [dispatch]);
 
     const menu = [
-        [diary, '식단일기', 'diary'],
-        [analysis, '식이분석', 'analysis'],
-        [food, '맞춤식품', 'food'],
-        [record, '내 아이', 'record'],
-        [question, 'Q&A', 'question'],
+        [diary, lang ? 'Diary' : '식단일기', 'diary'],
+        [analysis, lang ? 'Analysis' : '식이분석', 'analysis'],
+        [food, lang ? 'Food' : '맞춤식품', 'food'],
+        [record, lang ? 'Health Record' : '내 아이', 'record'],
+        [question, lang ? 'Question' : 'Q&A', 'question'],
     ];
 
     return (
@@ -45,7 +46,9 @@ function Home() {
                             fontWeight: 'bold',
                         }}
                     >
-                        맞춤형 영양관리 및 정보제공 연구
+                        {/* {lang
+                            ? 'A Study on Customized Nutrition Management and Information Provision'
+                            : '맞춤형 영양관리 및 정보제공 연구'} */}
                     </Name>
                 </DiaryTitle>
                 <Card menu={menu} current='home' />

@@ -20,6 +20,7 @@ import strawberry from '../../../assets/curation/strawberry.png';
 import supplement from '../../../assets/curation/supplement.png';
 import vegetable from '../../../assets/curation/vegetable.png';
 import avoid from '../../../assets/curation/avoid.png';
+import { useSelector } from 'react-redux';
 
 const images = {
     '콩/두부': bean,
@@ -34,8 +35,20 @@ const images = {
     영양제: supplement,
     채소: vegetable,
     주의: avoid,
+    'Bean/tofu': bean,
+    'Meat/Fish/Eggs': meat,
+    'Milk product': milk,
+    Mushroom: mushroom,
+    Nuts: nut,
+    'Processed food': processed,
+    'Whole grain': rice,
+    Seaweed: seeweed,
+    Fruit: strawberry,
+    Supplement: supplement,
+    Vegetable: vegetable,
 };
 const CurationData = ({ setIsOpen, setClickedTag, data }) => {
+    const lang = useSelector((state) => state.language.isKorean);
     return data.type === '주의' ? null : (
         <CurationBox>
             <CurationType>
@@ -47,7 +60,9 @@ const CurationData = ({ setIsOpen, setClickedTag, data }) => {
                 ) : null}
                 <CurationTypeName>
                     {data.type === '주의'
-                        ? '피해야할 식품'
+                        ? lang
+                            ? 'Food to avoid'
+                            : '피해야할 식품'
                         : data.type === '영양제'
                         ? '보충제'
                         : data.type}

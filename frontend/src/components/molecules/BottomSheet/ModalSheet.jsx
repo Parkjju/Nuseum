@@ -1,5 +1,6 @@
 import { useIsPresent } from 'framer-motion';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import {
     CloseButton,
     Modal,
@@ -11,6 +12,7 @@ import {
 
 const ModalSheet = ({ clickedTag, urlList, setIsOpen, setIsOpenModal }) => {
     const isPresent = useIsPresent();
+    const lang = useSelector((state) => state.language.isKorean);
 
     useEffect(() => {
         if (!isPresent) {
@@ -40,12 +42,12 @@ const ModalSheet = ({ clickedTag, urlList, setIsOpen, setIsOpenModal }) => {
                         target='_blank'
                         href={`${item.url}${item.query}=${clickedTag.slice(1)}`}
                     >
-                        바로가기
+                        {lang ? 'Go to' : '바로가기'}
                     </URL>
                 </URLBox>
             ))}
             <CloseButton onClick={() => setIsOpenModal(false)}>
-                닫기
+                {lang ? 'Close' : '닫기'}
             </CloseButton>
         </Modal>
     );

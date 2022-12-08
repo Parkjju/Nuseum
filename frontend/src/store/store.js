@@ -11,6 +11,7 @@ import snackSlice from './meal-slice/snack-slice';
 import supplementSlice from './supplement-slice';
 import waterSlice from './water-slice';
 import todaySlice from './today-slice';
+import languageSlice from './language-slice';
 const store = configureStore({
     reducer: {
         today: todaySlice,
@@ -23,6 +24,7 @@ const store = configureStore({
         post: postSlice,
         water: waterSlice,
         date: dateSlice,
+        language: languageSlice,
     },
 });
 

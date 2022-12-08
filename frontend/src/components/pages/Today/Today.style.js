@@ -34,7 +34,7 @@ export const DataBox = styled.div`
 export const Summary = styled.div`
     width: 80%;
     height: auto;
-    background-color: #F7F7F7;
+    background-color: #f7f7f7;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     padding-top: 20px;

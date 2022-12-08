@@ -5,6 +5,7 @@ import { SearchTitle } from '../../atom/Modal/styled';
 import FoodImg from '../../molecules/FoodImg/FoodImg';
 import imageCompression from 'browser-image-compression';
 import { authActions } from '../../../store/auth-slice';
+import * as S from '../Analysis/Analysis.style';
 import { postActions } from '../../../store/meal-slice/post-slice';
 import {
     DiaryBody,
@@ -19,6 +20,8 @@ import useActions from '../../../hooks/useActions';
 import { useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
+import { Name } from '../../atom/Card/styled';
+import RadarGraph from '../../molecules/RadarGraph';
 
 const Meal = () => {
     const param = useParams();
@@ -26,6 +29,8 @@ const Meal = () => {
     const forPostImage = useSelector((state) => state.post.image);
     const forPostData = useSelector((state) => state.post.data);
     const token = useSelector((state) => state.auth.token);
+    const nutrition = useSelector((state) => state[param.when].nutrition);
+    const lang = useSelector((state) => state.language.isKorean);
 
     const [page, setPage] = useState(2);
     const [hasNextPage, setHasNextPage] = useState(true);
@@ -74,7 +79,11 @@ const Meal = () => {
                     setLoading(false);
                     return;
                 }
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                alert(
+                    lang
+                        ? 'An error has occurred. Please contact the developer!'
+                        : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                );
                 setLoading(false);
             });
     };
@@ -189,14 +198,22 @@ const Meal = () => {
                 dispatch(action.getData(forPostData));
                 dispatch(action.getImage(forPostImage));
                 dispatch(postActions.removeAll());
-                alert('일지 작성이 완료되었습니다!');
+                alert(
+                    lang
+                        ? 'Your diary has been completed!'
+                        : '일지 작성이 완료되었습니다!'
+                );
             } catch (err) {
                 console.log(err);
                 if (err.response.status === 401) {
                     setLoading(false);
                     return;
                 }
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                alert(
+                    lang
+                        ? 'An error has occurred. Please contact the developer!'
+                        : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                );
                 setLoading(false);
             }
         } else if (forPostData.length === 0 && forPostImage.length === 0) {
@@ -206,7 +223,11 @@ const Meal = () => {
                 dispatch(postActions.removeAll());
 
                 setLoading(false);
-                alert('일기 수정이 완료되었습니다!');
+                alert(
+                    lang
+                        ? 'Modifying your diary has been completed!'
+                        : '일기 수정이 완료되었습니다!'
+                );
             }, 1000);
         }
     };
@@ -239,6 +260,7 @@ const Meal = () => {
             actionImgCompress(e.target.files[0]);
         }
     };
+
     const onSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
@@ -250,7 +272,11 @@ const Meal = () => {
             })
             .then(async (response) => {
                 if (response.data.results.length === 0) {
-                    alert('검색 결과가 없습니다!');
+                    alert(
+                        lang
+                            ? 'No search results found.'
+                            : '검색 결과가 없습니다!'
+                    );
                 } else {
                     setResult(response.data.results);
                     console.log(response.data);
@@ -261,13 +287,35 @@ const Meal = () => {
                     setLoading(false);
                     return;
                 }
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                alert(
+                    lang
+                        ? 'An error has occurred. Please contact the developer!'
+                        : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                );
             });
 
         setSearchParam(foodName);
         setFoodName('');
         setIsLoading(false);
     };
+
+    // 그래프 데이터 초기화를 위한 useEffect
+    useEffect(() => {
+        axios
+            .get(`/api/v1/consumption/day/?date=${param.date}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((response) => {
+                dispatch(action.initializeNutrition());
+                dispatch(
+                    action.setNutrition({
+                        ...response.data,
+                    })
+                );
+            });
+    }, []);
 
     return (
         <DiaryBody
@@ -306,6 +354,7 @@ const Meal = () => {
             </VerticalImageBox>
 
             {/* GET해온 데이터와 POST전용 데이터를 분리한다. */}
+
             <TagBox>
                 {data
                     ? data.map((item, index) =>
@@ -314,7 +363,9 @@ const Meal = () => {
                                   onClick={async () => {
                                       if (
                                           window.confirm(
-                                              '입력하신 데이터를 지우시겠어요?'
+                                              lang
+                                                  ? 'Do you want to delete the data?'
+                                                  : '입력하신 데이터를 지우시겠어요?'
                                           )
                                       ) {
                                           // axios delete 호출
@@ -342,7 +393,9 @@ const Meal = () => {
                                               }
 
                                               alert(
-                                                  '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                                                  lang
+                                                      ? 'An error has occurred. Please contact the developer!'
+                                                      : '오류가 발생했습니다. 담당자에게 문의해주세요!'
                                               );
                                               setIsLoading(false);
                                           }
@@ -363,7 +416,9 @@ const Meal = () => {
                                   onClick={() => {
                                       if (
                                           window.confirm(
-                                              '입력하신 데이터를 지우시겠어요?'
+                                              lang
+                                                  ? 'Do you want to delete the data?'
+                                                  : '입력하신 데이터를 지우시겠어요?'
                                           )
                                       ) {
                                           dispatch(
@@ -382,6 +437,7 @@ const Meal = () => {
                       )
                     : null}
             </TagBox>
+            {console.log('forpostdata: ', forPostData)}
 
             <input
                 onChange={onChange}
@@ -392,9 +448,9 @@ const Meal = () => {
             />
 
             <SearchTitle>
-                찾고싶은 음식을 작성한 후 엔터해주세요. 섭취량을 작성한 후
-                엔터해주세요. 찾고 싶은 음식이 없다면 가장 유사한 것으로
-                선택해주세요. 관련된 내용을 Q&A에 적어주세요.
+                {lang
+                    ? ''
+                    : '찾고싶은 음식을 작성한 후 엔터해주세요. 섭취량을 작성한 후 엔터해주세요. 찾고 싶은 음식이 없다면 가장 유사한 것으로 선택해주세요. 관련된 내용을 Q&A에 적어주세요.'}
             </SearchTitle>
             <ModalSearch as='form' onSubmit={onSubmit}>
                 <span className='material-symbols-outlined'>search</span>
@@ -416,9 +472,75 @@ const Meal = () => {
                         color: 'white',
                     }}
                 >
-                    저장
+                    {lang ? 'Save' : '저장'}
                 </button>
             )}
+            <S.NutrientBox>
+                <S.NutrientList>
+                    <Name
+                        style={{
+                            fontWeight: 400,
+                        }}
+                    >
+                        DHA+EPA {((nutrition.dha_epa / 300) * 100).toFixed(1)}%
+                    </Name>
+                    <Name style={{ fontWeight: 400 }}>
+                        {lang ? 'Folic acid' : '엽산'}{' '}
+                        {((nutrition.folic_acid / 180) * 100).toFixed(1)}%
+                    </Name>
+
+                    <Name
+                        style={{
+                            fontWeight: 400,
+                        }}
+                    >
+                        {lang ? 'Magnesium' : '마그네슘'}{' '}
+                        {((nutrition.magnesium / 110) * 100).toFixed(1)}%
+                    </Name>
+                    <S.Divider />
+
+                    <Name style={{ fontWeight: 400 }}>
+                        {lang ? 'Tryptophan' : '트립토판'}{' '}
+                        {((nutrition.tryptophan / 100) * 100).toFixed(1)}%
+                    </Name>
+                    <Name style={{ fontWeight: 400 }}>
+                        {lang ? 'Vitamin A' : '비타민 A'}{' '}
+                        {((nutrition.vitamin_a / 300) * 100).toFixed(1)}%
+                    </Name>
+                    <Name style={{ fontWeight: 400 }}>
+                        {lang ? 'Dietary fiber' : '식이섬유'}{' '}
+                        {((nutrition.dietary_fiber / 20) * 100).toFixed(1)}%
+                    </Name>
+                    <S.Divider />
+                    <Name style={{ fontWeight: 400 }}>
+                        {lang ? 'Vitamin B6' : '비타민 B6'}{' '}
+                        {((nutrition.vitamin_b6 / 0.7) * 100).toFixed(1)}%
+                    </Name>
+
+                    <Name style={{ fontWeight: 400 }}>
+                        {lang ? 'Vitamin B12' : '비타민 B12'}{' '}
+                        {((nutrition.vitamin_b12 / 1.1) * 100).toFixed(1)}%
+                    </Name>
+                    <Name style={{ fontWeight: 400 }}>
+                        {lang ? 'Vitamin D' : '비타민 D'}{' '}
+                        {((nutrition.vitamin_d / 5) * 100).toFixed(1)}%
+                    </Name>
+                </S.NutrientList>
+
+                <div
+                    style={{
+                        width: '70%',
+                        boxSizing: 'border-box',
+                    }}
+                >
+                    <RadarGraph
+                        dateCount={1}
+                        data={nutrition}
+                        dataWithoutSupplement={null}
+                        title='Daily intake'
+                    />
+                </div>
+            </S.NutrientBox>
 
             {isLoading ? (
                 <CircularProgress sx={{ marginBottom: 5 }} />

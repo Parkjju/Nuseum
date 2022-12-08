@@ -11,6 +11,7 @@ import { DiaryTitle } from '../Record/styled';
 import { Box, Button, Description, Input, Label } from './QuestionForm.style';
 
 const QuestionForm = () => {
+    const lang = useSelector((state) => state.language.isKorean);
     const token = useSelector((state) => state.auth.token);
     const dispatch = useDispatch();
     const location = useLocation();
@@ -33,13 +34,25 @@ const QuestionForm = () => {
     }, []);
     const onClick = async () => {
         if (title === '' || description === '') {
-            alert('제목과 내용은 필수 입력입니다.');
+            alert(
+                lang
+                    ? 'Title and content are required.'
+                    : '제목과 내용은 필수 입력입니다.'
+            );
             return;
         }
         if (
             location?.state?.id
-                ? window.confirm('질문을 수정할까요?')
-                : window.confirm('질문을 등록할까요?')
+                ? window.confirm(
+                      lang
+                          ? 'Should I modify a question?'
+                          : '질문을 수정할까요?'
+                  )
+                : window.confirm(
+                      lang
+                          ? 'Should I register a question?'
+                          : '질문을 등록할까요?'
+                  )
         ) {
             setLoading(true);
             try {
@@ -76,15 +89,27 @@ const QuestionForm = () => {
                             setLoading(false);
                             return;
                         }
-                        alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                        alert(
+                            lang
+                                ? 'An error has occurred. Please contact the developer!'
+                                : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                        );
                         setLoading(false);
                     }
                 }
 
                 if (location?.state?.id) {
-                    alert('질문 수정이 완료되었습니다!');
+                    alert(
+                        lang
+                            ? 'Your question correction has been completed!'
+                            : '질문 수정이 완료되었습니다!'
+                    );
                 } else {
-                    alert('질문 등록이 완료되었습니다!');
+                    alert(
+                        lang
+                            ? 'Your question registration has been completed!'
+                            : '질문 등록이 완료되었습니다!'
+                    );
                 }
 
                 navigate('/question');
@@ -94,7 +119,11 @@ const QuestionForm = () => {
                     setLoading(false);
                     return;
                 }
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                alert(
+                    lang
+                        ? 'An error has occurred. Please contact the developer!'
+                        : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                );
             }
             setLoading(false);
         }
@@ -111,24 +140,34 @@ const QuestionForm = () => {
                 ) : (
                     <>
                         <Box>
-                            <Label>제목</Label>
+                            <Label>{lang ? 'Title' : '제목'}</Label>
                             <Input
                                 value={title}
                                 onChange={onChangeTitle}
                                 required
-                                placeholder='제목을 입력해주세요.'
+                                placeholder={
+                                    lang
+                                        ? 'Please enter a title.'
+                                        : '제목을 입력해주세요.'
+                                }
                             />
                         </Box>
                         <Box>
-                            <Label>문의 내용</Label>
+                            <Label>{lang ? 'Content' : '문의 내용'}</Label>
                             <Description
                                 value={description}
                                 onChange={onChangeDescription}
                                 required
-                                placeholder='내용을 작성해주세요.'
+                                placeholder={
+                                    lang
+                                        ? 'Please enter a content.'
+                                        : '내용을 작성해주세요.'
+                                }
                             />
                         </Box>
-                        <Button onClick={onClick}>작성 완료</Button>
+                        <Button onClick={onClick}>
+                            {lang ? 'Save' : '작성 완료'}
+                        </Button>
                     </>
                 )}
             </Contents>

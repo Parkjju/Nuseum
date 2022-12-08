@@ -7,11 +7,13 @@ import { Name } from '../../atom/Card/styled';
 import { Contents } from '../Home/styled';
 import { useNavigate } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 const Admin = () => {
     const [userList, setUserList] = useState([]);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const lang = useSelector((state) => state.language.isKorean);
 
     useEffect(() => {
         const isSuperUser = sessionStorage.getItem('is_superuser');
@@ -36,7 +38,11 @@ const Admin = () => {
                 setLoading(false);
             })
             .catch((err) => {
-                alert('오류가 발생했습니다. 담당자에게 문의해주세요!');
+                alert(
+                    lang
+                        ? 'An error has occurred. Please contact the developer!'
+                        : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                );
                 if (err.response.status === 401) {
                     setLoading(false);
                     return;
