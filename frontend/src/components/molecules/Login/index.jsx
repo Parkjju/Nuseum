@@ -113,7 +113,7 @@ function Login() {
             <Title
                 text={
                     lang
-                        ? 'A Study on Customized Nutrition Management and Information Provision'
+                        ? 'Personalized Nutrition Healthcare for Neurobehavioral Development'
                         : '맞춤형 영양관리 및 정보제공 연구'
                 }
             />
