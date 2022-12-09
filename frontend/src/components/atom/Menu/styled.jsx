@@ -97,12 +97,14 @@ const NutritionList = ({ item }) => {
                             name: e.target.name,
                             food: Number(e.target.getAttribute('data-itemID')),
                             amount: Number(amount),
+                            category: item.category,
                             ...calculatedNutrition,
                         })
                     );
+
                     dispatch(
                         action.setNutrition({
-                            ...item,
+                            ...calculatedNutrition,
                         })
                     );
                     setAmount(0);
