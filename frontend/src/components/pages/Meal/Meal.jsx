@@ -46,6 +46,7 @@ const Meal = () => {
     const actionRemovingNutrition = useSelector((state) =>
         param.when !== 'water' ? state[param.when].removingData : null
     );
+
     const [nutritionAboutSupplement, setNutritionAboutSupplement] = useState({
         energy: 0,
         protein: 0,
@@ -76,7 +77,7 @@ const Meal = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [nutrientPoint, setNutrientPoint] = useState(0);
     const [microbiomePoint, setMicrobiomePoint] = useState(0);
-    console.log(forPostData);
+
     useEffect(() => {
         let pointNutrient = 0;
         let pointMicro = 0;
@@ -200,6 +201,44 @@ const Meal = () => {
             return { ...copy };
         });
     }, [removingNutrition]);
+
+    // forPostData / data 길이가 바뀌면 카테고리 표기 수정
+    useEffect(() => {
+        let copy = {
+            1: false,
+            2: false,
+            3: false,
+            4: false,
+            5: false,
+            6: false,
+            7: false,
+            8: false,
+            9: false,
+        };
+        let category = {
+            채소: 1,
+            과일: 2,
+            '콩/두부': 3,
+            통곡물: 4,
+            버섯: 5,
+            해조류: 6,
+            견과: 7,
+            '고기/생선/달걀': 8,
+            유제품: 9,
+            버섯류: 5,
+            채소류: 1,
+        };
+
+        for (let obj of forPostData) {
+            // obj.category -> forPostData 순회 객체마다 갖고있는 카테고리 체크
+            // category[obj.category] -> 1~9까지 숫자 반환
+            // copy에서 다시 체크하고 dailyCategory에 반영하는 작업
+            // copy[category[obj.category]] = true;
+            copy[category[obj.category]] = true;
+        }
+
+        setDailyCategory({ ...copy });
+    }, [forPostData.length, data.length]);
 
     // useEffect가 두번 실행됨
     const fetchData = () => {
@@ -618,34 +657,6 @@ const Meal = () => {
                 accept='image/*'
             />
 
-            <SearchTitle>
-                {lang
-                    ? ''
-                    : '찾고싶은 음식을 작성한 후 엔터해주세요. 섭취량을 작성한 후 엔터해주세요. 찾고 싶은 음식이 없다면 가장 유사한 것으로 선택해주세요. 관련된 내용을 Q&A에 적어주세요.'}
-            </SearchTitle>
-            <ModalSearch as='form' onSubmit={onSubmit}>
-                <span className='material-symbols-outlined'>search</span>
-                <ModalInput value={foodName} onChange={onChangeName} />
-            </ModalSearch>
-
-            {loading ? (
-                <CircularProgress sx={{ marginBottom: 5 }} />
-            ) : (
-                // 음식데이터 저장버튼
-                <button
-                    onClick={() => savePost()}
-                    style={{
-                        marginBottom: '30px',
-                        background: '#8A8A8E',
-                        border: 'none',
-                        borderRadius: '20px',
-                        padding: '5px 35px',
-                        color: 'white',
-                    }}
-                >
-                    {lang ? 'Save' : '저장'}
-                </button>
-            )}
             <S.NutrientBox>
                 <S.NutrientList>
                     <Name
@@ -912,6 +923,35 @@ const Meal = () => {
                     </Name>
                 </S.IconBox>
             </S.Box>
+
+            <SearchTitle>
+                {lang
+                    ? ''
+                    : '찾고싶은 음식을 작성한 후 엔터해주세요. 섭취량을 작성한 후 엔터해주세요. 찾고 싶은 음식이 없다면 가장 유사한 것으로 선택해주세요. 관련된 내용을 Q&A에 적어주세요.'}
+            </SearchTitle>
+            <ModalSearch as='form' onSubmit={onSubmit}>
+                <span className='material-symbols-outlined'>search</span>
+                <ModalInput value={foodName} onChange={onChangeName} />
+            </ModalSearch>
+
+            {loading ? (
+                <CircularProgress sx={{ marginBottom: 5 }} />
+            ) : (
+                // 음식데이터 저장버튼
+                <button
+                    onClick={() => savePost()}
+                    style={{
+                        marginBottom: '30px',
+                        background: '#8A8A8E',
+                        border: 'none',
+                        borderRadius: '20px',
+                        padding: '5px 35px',
+                        color: 'white',
+                    }}
+                >
+                    {lang ? 'Save' : '저장'}
+                </button>
+            )}
 
             {isLoading ? (
                 <CircularProgress sx={{ marginBottom: 5 }} />
