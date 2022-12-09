@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     data: [],
     image: [],
+    removingData: null,
 };
 const postSlice = createSlice({
     name: 'mealPost',
@@ -16,8 +17,10 @@ const postSlice = createSlice({
         },
         removePostData(state, action) {
             let count = 0;
+
             for (let obj of state.data) {
                 if (obj.id === action.payload) {
+                    state.removingData = { ...obj };
                     break;
                 }
                 count += 1;
