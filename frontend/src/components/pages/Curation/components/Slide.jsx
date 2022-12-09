@@ -378,7 +378,7 @@ const Slide = ({ date, id, setVisibleIndex, visibleIndex, length }) => {
             <Warn recommendData={recommend} />
 
             <Title style={{ marginBottom: 0, lineHeight: 1.5 }}>
-                {lang ? 'Food for my child' : '내 아이 맞춤식품'}
+                {lang ? 'Food to seek' : '내 아이 맞춤식품'}
             </Title>
             <SubTitle>
                 {lang ? 'Click on the ingredients' : '식재료를 터치해 보세요'}
