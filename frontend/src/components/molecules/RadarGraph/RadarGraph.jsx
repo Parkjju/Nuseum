@@ -19,7 +19,7 @@ ChartJS.register(
 );
 ChartJS.defaults.font.size = 8;
 
-const RadarGraph = ({ dateCount, data, dataWithoutSupplement, title }) => {
+const RadarGraph = ({ dateCount, data, dataWithoutSupplement }) => {
     const lang = useSelector((state) => state.language.isKorean);
     let dataForRadar = {
         labels: [
@@ -49,9 +49,7 @@ const RadarGraph = ({ dateCount, data, dataWithoutSupplement, title }) => {
         datasets: dataWithoutSupplement
             ? [
                   {
-                      label: title
-                          ? title
-                          : lang
+                      label: lang
                           ? 'Supplements + Meal(%)'
                           : '영양제 + 음식(%)',
                       data: [
@@ -142,11 +140,7 @@ const RadarGraph = ({ dateCount, data, dataWithoutSupplement, title }) => {
                       pointHoverBorderColor: 'rgba(190, 197, 198, 0.6)',
                   },
                   {
-                      label: title
-                          ? title
-                          : lang
-                          ? 'Just Meal(%)'
-                          : '음식만(%)',
+                      label: lang ? 'Just Meal(%)' : '음식만(%)',
                       data: [
                           (
                               (+dataWithoutSupplement.dha_epa /
@@ -259,9 +253,7 @@ const RadarGraph = ({ dateCount, data, dataWithoutSupplement, title }) => {
               ]
             : [
                   {
-                      label: title
-                          ? title
-                          : lang
+                      label: lang
                           ? 'Supplements + Meal(%)'
                           : '영양제 + 음식(%)',
                       data: [

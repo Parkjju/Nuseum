@@ -4,6 +4,7 @@ const initialState = {
     isChanged: false,
     data: [],
     image: [],
+    removingData: null,
     nutrition: {
         energy: 0,
         protein: 0,
@@ -29,6 +30,22 @@ const dinnerSlice = createSlice({
             state.isChanged = true;
         },
         getData(state, action) {
+            for (let obj of action.payload) {
+                // amount / food / id / name / post
+                for (let key in obj) {
+                    if (
+                        key === 'amount' ||
+                        key === 'name' ||
+                        key === 'food' ||
+                        key === 'id' ||
+                        key === 'post'
+                    )
+                        continue;
+                    // amount 비율에 따라 영양성분 재계산 로직
+                    // 100 : amount = 100g기준 nutrition : amount g 기준 nutrition
+                    obj[key] = (obj[key] * obj.amount) / 100;
+                }
+            }
             state.data = [...state.data, ...action.payload];
         },
         getImage(state, action) {
@@ -38,6 +55,7 @@ const dinnerSlice = createSlice({
             let count = 0;
             for (let obj of state.data) {
                 if (obj.id === action.payload) {
+                    state.removingData = { ...obj };
                     break;
                 }
                 count += 1;
@@ -67,6 +85,15 @@ const dinnerSlice = createSlice({
         setNutrition(state, action) {
             for (let key in state.nutrition) {
                 state.nutrition[key] += action.payload[key];
+            }
+        },
+        subtractNutrition(state, action) {
+            for (let key in state.nutrition) {
+                // 바로 리턴해도 되는지 추후 로직 검토 필요
+                if (state.nutrition[key] < action.payload[key]) {
+                    return;
+                }
+                state.nutrition[key] -= action.payload[key];
             }
         },
         initializeNutrition(state) {
