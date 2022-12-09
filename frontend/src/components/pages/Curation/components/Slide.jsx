@@ -394,7 +394,7 @@ const Slide = ({ date, id, setVisibleIndex, visibleIndex, length }) => {
                 ))}
             </CurationDataWrapper>
 
-            <CommentBox>{recommend?.comment}</CommentBox>
+            {lang ? null : <CommentBox>{recommend?.comment}</CommentBox>}
 
             <Title style={{ marginTop: 40, marginBottom: 0, lineHeight: 1.5 }}>
                 {lang ? 'Make it convenient' : '편리하게 준비해요'}
