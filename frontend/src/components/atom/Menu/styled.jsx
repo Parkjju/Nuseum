@@ -181,6 +181,7 @@ const NutritionList = ({ item }) => {
                     elem[0] === 'id' ||
                     elem[0] === 'category' ||
                     elem[0] === 'name' ||
+                    elem[0] === 'lang' ||
                     elem[0] === 'classifier' ? null : (
                         <p key={index}>
                             {renderNutrition(elem[0])[0]} :{' '}
