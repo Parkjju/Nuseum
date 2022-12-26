@@ -19,7 +19,7 @@ export const DiaryTitle = styled.div`
 `;
 
 export const DiaryBody = styled.div`
-    width: 80%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
