@@ -825,10 +825,11 @@ const Analysis = () => {
                                                     marginBottom: 5,
                                                     color: 'white',
                                                     fontWeight: '500',
+                                                    textAlign: 'center',
                                                 }}
                                             >
                                                 {lang
-                                                    ? 'Food diversity figures'
+                                                    ? 'Diversity figures'
                                                     : '골고루 지수'}
                                             </Name>
                                             <S.IconWrapper>
