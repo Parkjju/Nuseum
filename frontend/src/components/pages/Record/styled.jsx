@@ -109,7 +109,7 @@ export const Img = styled.img`
 `;
 
 export const TagBox = styled.div`
-    width: 100%;
+    width: 90%;
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 30px;
