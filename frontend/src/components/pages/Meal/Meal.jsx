@@ -542,7 +542,7 @@ const Meal = () => {
                 +
             </Label>
 
-            <VerticalImageBox style={{ width: '100%' }}>
+            <VerticalImageBox style={{ width: '90%' }}>
                 {image.length > 0 &&
                     image.map((item, index) => (
                         <FoodImg
