@@ -14,6 +14,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../../store/auth-slice';
 import jwt_decode from 'jwt-decode';
+import { FormControlLabel, Switch } from '@mui/material';
+import { languageActions } from '../../../store/language-slice';
 
 // import { deferredPromptState } from '../../../recoil/deferredPrompt/deferredPrompt';
 
@@ -106,6 +108,18 @@ function Login() {
 
     return (
         <Container style={{ backgroundColor: 'white' }}>
+            <FormControlLabel
+                control={
+                    <Switch
+                        onChange={() =>
+                            dispatch(languageActions.changeLanguage())
+                        }
+                        checked={lang}
+                        name={lang ? 'ENGLISH' : '한국어'}
+                    />
+                }
+                label={lang ? 'ENGLISH' : '한국어'}
+            />
             <LogoBox>
                 <Logo src={SNU} />
             </LogoBox>
