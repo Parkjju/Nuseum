@@ -636,23 +636,24 @@ const Analysis = () => {
                                 <CircularProgress />
                             ) : (
                                 <>
-                                    {lang ? null : (
-                                        <S.SectionTitle>
-                                            <p
-                                                style={{
-                                                    lineHeight: 1.5,
-                                                    fontWeight: 500,
-                                                }}
-                                            >
-                                                '아래의 영양성분들은
-                                                신경행동발달에 영향을 미치는
-                                                영양성분들에 대해 총 1,787개의
-                                                논문들을 리뷰하여 선별되었으며
-                                                이들에 대한 섭취내용을
-                                                분석합니다.'
-                                            </p>
-                                        </S.SectionTitle>
-                                    )}
+                                    {
+                                        lang ? null : null
+                                        // <S.SectionTitle>
+                                        //     <p
+                                        //         style={{
+                                        //             lineHeight: 1.5,
+                                        //             fontWeight: 500,
+                                        //         }}
+                                        //     >
+                                        //         '아래의 영양성분들은
+                                        //         신경행동발달에 영향을 미치는
+                                        //         영양성분들에 대해 총 1,787개의
+                                        //         논문들을 리뷰하여 선별되었으며
+                                        //         이들에 대한 섭취내용을
+                                        //         분석합니다.'
+                                        //     </p>
+                                        // </S.SectionTitle>
+                                    }
 
                                     <S.NutrientBox>
                                         <S.NutrientList>
@@ -792,24 +793,26 @@ const Analysis = () => {
                                             data={nutrition}
                                         />
                                     </div>
-                                    {lang ? null : (
-                                        <S.SectionTitle>
-                                            <p
-                                                style={{
-                                                    lineHeight: 1.5,
-                                                    fontWeight: 500,
-                                                }}
-                                            >
-                                                다양한 식품군의 섭취는 다양한
-                                                영양성분과 생리활성물질을
-                                                섭취하게 하고, 이는 장내 다양한
-                                                미생물을 서식하게 하여, 건강한
-                                                뇌발달에 영향을 미칩니다. 섭취한
-                                                식품군과 섭취가 필요해 보이는
-                                                식품군을 분석합니다.
-                                            </p>
-                                        </S.SectionTitle>
-                                    )}
+                                    {lang
+                                        ? null
+                                        : null
+                                          // <S.SectionTitle>
+                                          //     <p
+                                          //         style={{
+                                          //             lineHeight: 1.5,
+                                          //             fontWeight: 500,
+                                          //         }}
+                                          //     >
+                                          //         다양한 식품군의 섭취는 다양한
+                                          //         영양성분과 생리활성물질을
+                                          //         섭취하게 하고, 이는 장내 다양한
+                                          //         미생물을 서식하게 하여, 건강한
+                                          //         뇌발달에 영향을 미칩니다. 섭취한
+                                          //         식품군과 섭취가 필요해 보이는
+                                          //         식품군을 분석합니다.
+                                          //     </p>
+                                          // </S.SectionTitle>
+                                    }
                                     <S.Box>
                                         <S.IconBox
                                             isPoint={true}

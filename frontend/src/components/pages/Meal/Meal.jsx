@@ -924,11 +924,7 @@ const Meal = () => {
                 </S.IconBox>
             </S.Box>
 
-            <SearchTitle>
-                {lang
-                    ? ''
-                    : '찾고싶은 음식을 작성한 후 엔터해주세요. 섭취량을 작성한 후 엔터해주세요. 찾고 싶은 음식이 없다면 가장 유사한 것으로 선택해주세요. 관련된 내용을 Q&A에 적어주세요.'}
-            </SearchTitle>
+            <SearchTitle>{lang ? '' : ''}</SearchTitle>
             <ModalSearch as='form' onSubmit={onSubmit}>
                 <span className='material-symbols-outlined'>search</span>
                 <ModalInput value={foodName} onChange={onChangeName} />
