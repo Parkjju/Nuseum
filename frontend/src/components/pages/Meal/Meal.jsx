@@ -363,7 +363,7 @@ const Meal = () => {
 
     // 검색결과 배열
     const [result, setResult] = useState([]);
-    // 테스트 주석
+    // 음식 저장로직
     const savePost = async () => {
         if (forPostData.length > 0 || forPostImage.length > 0) {
             try {
@@ -425,6 +425,7 @@ const Meal = () => {
             }, 1000);
         }
     };
+    // 이미지 컴프레싱 로직
     const actionImgCompress = async (fileSrc) => {
         const options = {
             maxSizeMB: 3,
@@ -455,6 +456,7 @@ const Meal = () => {
         }
     };
 
+    // 서브밋 로직
     const onSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
@@ -495,38 +497,37 @@ const Meal = () => {
 
     // 그래프 데이터 초기화를 위한 useEffect
     useEffect(() => {
-        axios
-            .get(`/api/v1/consumption/day/?date=${param.date}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+        let copy = {
+            1: false,
+            2: false,
+            3: false,
+            4: false,
+            5: false,
+            6: false,
+            7: false,
+            8: false,
+            9: false,
+        };
+
+        setDailyCategory({ ...copy });
+        dispatch(action.initializeNutrition());
+        dispatch(
+            action.setNutrition({
+                energy: 0,
+                protein: 0,
+                fat: 0,
+                carbohydrate: 0,
+                dietary_fiber: 0,
+                magnesium: 0,
+                vitamin_a: 0,
+                vitamin_d: 0,
+                vitamin_b6: 0,
+                folic_acid: 0,
+                vitamin_b12: 0,
+                tryptophan: 0,
+                dha_epa: 0,
             })
-            .then((response) => {
-                // category!!
-                let copy = {
-                    1: false,
-                    2: false,
-                    3: false,
-                    4: false,
-                    5: false,
-                    6: false,
-                    7: false,
-                    8: false,
-                    9: false,
-                };
-
-                for (let i of response.data.category) {
-                    copy[i] = true;
-                }
-
-                setDailyCategory({ ...copy });
-                dispatch(action.initializeNutrition());
-                dispatch(
-                    action.setNutrition({
-                        ...response.data,
-                    })
-                );
-            });
+        );
     }, []);
 
     return (
