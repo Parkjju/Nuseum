@@ -43,6 +43,7 @@ const breakfastSlice = createSlice({
                     obj[key] = (obj[key] * obj.amount) / 100;
                 }
             }
+
             state.data = [...state.data, ...action.payload];
         },
         getImage(state, action) {

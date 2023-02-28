@@ -260,6 +260,44 @@ const Meal = () => {
                     if (response.data?.data.length > 0) {
                         dispatch(action.getData(response.data.data));
                     }
+                    for (let obj of response.data.data) {
+                        dispatch(action.setNutrition(obj));
+
+                        let copy = {
+                            1: false,
+                            2: false,
+                            3: false,
+                            4: false,
+                            5: false,
+                            6: false,
+                            7: false,
+                            8: false,
+                            9: false,
+                        };
+                        let category = {
+                            채소: 1,
+                            과일: 2,
+                            '콩/두부': 3,
+                            통곡물: 4,
+                            버섯: 5,
+                            해조류: 6,
+                            견과: 7,
+                            '고기/생선/달걀': 8,
+                            유제품: 9,
+                            버섯류: 5,
+                            채소류: 1,
+                        };
+
+                        for (let data of forPostData) {
+                            // obj.category -> forPostData 순회 객체마다 갖고있는 카테고리 체크
+                            // category[obj.category] -> 1~9까지 숫자 반환
+                            // copy에서 다시 체크하고 dailyCategory에 반영하는 작업
+                            // copy[category[obj.category]] = true;
+                            copy[category[data.category]] = true;
+                        }
+
+                        setDailyCategory({ ...copy });
+                    }
 
                     if (response.data?.images.length > 0) {
                         dispatch(action.getImage(response.data.images));
