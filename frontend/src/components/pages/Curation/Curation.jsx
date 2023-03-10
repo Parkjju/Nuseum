@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import Slide from './components/Slide';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useQuery } from 'react-query';
+import { fetchCurationList } from '../../../api';
 
 const Curation = () => {
     const dispatch = useDispatch();
@@ -19,16 +21,12 @@ const Curation = () => {
     const [visibleIndex, setVisibleIndex] = useState(0);
     const [isNegative, setIsNegative] = useState(true);
 
-    const fetchId = async () => {
-        try {
-            const response = await axios.get('/api/v1/recommendation/user/', {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-
+    const _ = useQuery(['curationList', token], fetchCurationList, {
+        refetchOnWindowFocus: false,
+        onSuccess: (response) => {
             setRecommendList(response.data.reverse());
-        } catch (err) {
+        },
+        onError: (err) => {
             console.log(err);
             if (err.response.status === 401) {
                 return;
@@ -38,12 +36,8 @@ const Curation = () => {
                     ? 'An error has occurred. Please contact the developer!'
                     : '오류가 발생했습니다. 담당자에게 문의해주세요!'
             );
-        }
-    };
-
-    useEffect(() => {
-        fetchId();
-    }, []);
+        },
+    });
 
     const onClick = useCallback(
         (type) => {
