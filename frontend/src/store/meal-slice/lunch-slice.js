@@ -30,9 +30,13 @@ const lunchSlice = createSlice({
             state.isChanged = true;
         },
         getData(state, action) {
-            for (let obj of action.payload) {
+            let copy = [...action.payload];
+
+            for (let index in copy) {
                 // amount / food / id / name / post
-                for (let key in obj) {
+                let copyObj = { ...copy[index] };
+
+                for (let key in copy[index]) {
                     if (
                         key === 'amount' ||
                         key === 'name' ||
@@ -43,10 +47,13 @@ const lunchSlice = createSlice({
                         continue;
                     // amount 비율에 따라 영양성분 재계산 로직
                     // 100 : amount = 100g기준 nutrition : amount g 기준 nutrition
-                    obj[key] = (obj[key] * obj.amount) / 100;
+                    copyObj[key] = (copyObj[key] * copyObj.amount) / 100;
+                    // obj[key] = (obj[key] * obj.amount) / 100;
                 }
+                copy[index] = { ...copyObj };
             }
-            state.data = [...state.data, ...action.payload];
+
+            state.data = [...state.data, ...copy];
         },
         getImage(state, action) {
             state.image = [...state.image, ...action.payload];
