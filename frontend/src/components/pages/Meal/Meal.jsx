@@ -31,22 +31,34 @@ import f from '../../../assets/category/6.png';
 import g from '../../../assets/category/7.png';
 import h from '../../../assets/category/8.png';
 import i from '../../../assets/category/9.png';
+import { useQuery } from 'react-query';
+import { fetchDailyFood } from '../../../api';
 
 const Meal = () => {
     const param = useParams();
     const dispatch = useDispatch();
+
+    // POST요청 전 임시 데이터 저장을 위한 변수
     const forPostImage = useSelector((state) => state.post.image);
     const forPostData = useSelector((state) => state.post.data);
+
+    // 액세스토큰
     const token = useSelector((state) => state.auth.token);
+
+    // 끼니별 영양성분 / 골고루지수
     const nutrition = useSelector((state) => state[param.when].nutrition);
-    const lang = useSelector((state) => state.language.isKorean);
     const [dailyCategory, setDailyCategory] = useState([]);
 
+    // 한-영 상태
+    const lang = useSelector((state) => state.language.isKorean);
+
+    // 영양성분 삭제 후 그래프에 반영하기 위함
     const removingNutrition = useSelector((state) => state.post.removingData);
     const actionRemovingNutrition = useSelector((state) =>
         param.when !== 'water' ? state[param.when].removingData : null
     );
 
+    // 건강기능식품 영양성분
     const [nutritionAboutSupplement, setNutritionAboutSupplement] = useState({
         energy: 0,
         protein: 0,
@@ -62,25 +74,108 @@ const Meal = () => {
         tryptophan: 0,
         dha_epa: 0,
     });
+
+    // 건강기능식품을 제외한 영양성분 섭취현황 데이터
     const [nutritionWithoutSupplement, setNutritionWithoutSupplement] =
         useState(null);
 
+    // react-query - 끼니별 데이터 GET
+    // refetch 안하기
+    const queryResult = useQuery(
+        ['food', param.date, param.when, token],
+        fetchDailyFood,
+        {
+            onSuccess: (response) => {
+                if (response.data && response.data.length === 0) {
+                    setLoading(false);
+                }
+
+                if (response.data && response.data?.length !== 0) {
+                    if (response.data?.data.length > 0) {
+                        dispatch(action.getData(response.data.data));
+                    }
+                    for (let obj of response.data.data) {
+                        dispatch(action.setNutrition(obj));
+
+                        let copy = {
+                            1: false,
+                            2: false,
+                            3: false,
+                            4: false,
+                            5: false,
+                            6: false,
+                            7: false,
+                            8: false,
+                            9: false,
+                        };
+                        let category = {
+                            채소: 1,
+                            과일: 2,
+                            '콩/두부': 3,
+                            통곡물: 4,
+                            버섯: 5,
+                            해조류: 6,
+                            견과: 7,
+                            '고기/생선/달걀': 8,
+                            유제품: 9,
+                            버섯류: 5,
+                            채소류: 1,
+                        };
+
+                        for (let data of forPostData) {
+                            // obj.category -> forPostData 순회 객체마다 갖고있는 카테고리 체크
+                            // category[obj.category] -> 1~9까지 숫자 반환
+                            // copy에서 다시 체크하고 dailyCategory에 반영하는 작업
+                            // copy[category[obj.category]] = true;
+                            copy[category[data.category]] = true;
+                        }
+
+                        setDailyCategory({ ...copy });
+                    }
+
+                    if (response.data?.images.length > 0) {
+                        dispatch(action.getImage(response.data.images));
+                    }
+                    setLoading(false);
+                }
+            },
+            onError: (error) => {
+                console.log(error);
+                if (error.response.status === 401) {
+                    setLoading(false);
+                    return;
+                }
+                alert(
+                    lang
+                        ? 'An error has occurred. Please contact the developer!'
+                        : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                );
+                setLoading(false);
+            },
+            refetchOnWindowFocus: false,
+        }
+    );
+
+    // 무한스크롤 도구들
     const [page, setPage] = useState(2);
     const [hasNextPage, setHasNextPage] = useState(true);
     const [isFetching, setIsFetching] = useState(false);
     const [searchParam, setSearchParam] = useState('');
 
+    // 이미지
     const image = useSelector((state) =>
         param.when !== 'water' ? state[param.when].image : null
     );
+
+    // 로딩상태 - loading이랑 isLoading 통합시키기
     const [loading, setLoading] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+
+    // 골고루지수
     const [nutrientPoint, setNutrientPoint] = useState(0);
-    const [microbiomePoint, setMicrobiomePoint] = useState(0);
 
     useEffect(() => {
         let pointNutrient = 0;
-        let pointMicro = 0;
 
         for (let i in dailyCategory) {
             if (dailyCategory[i]) {
@@ -89,12 +184,10 @@ const Meal = () => {
                 if (i === 8 || i === 9) {
                     continue;
                 }
-                pointMicro += 1;
             }
         }
 
         setNutrientPoint(pointNutrient);
-        setMicrobiomePoint(pointMicro);
     }, [dailyCategory]);
 
     const data = useSelector((state) =>
@@ -240,85 +333,6 @@ const Meal = () => {
         setDailyCategory({ ...copy });
     }, [forPostData.length, data.length]);
 
-    // useEffect가 두번 실행됨
-    const fetchData = () => {
-        axios
-            .get(
-                `/api/v1/consumption/food/?date=${param.date}&type=${param.when}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            )
-            .then((response) => {
-                if (response.data && response.data.length === 0) {
-                    setLoading(false);
-                }
-
-                if (response.data && response.data?.length !== 0) {
-                    if (response.data?.data.length > 0) {
-                        dispatch(action.getData(response.data.data));
-                    }
-                    for (let obj of response.data.data) {
-                        dispatch(action.setNutrition(obj));
-
-                        let copy = {
-                            1: false,
-                            2: false,
-                            3: false,
-                            4: false,
-                            5: false,
-                            6: false,
-                            7: false,
-                            8: false,
-                            9: false,
-                        };
-                        let category = {
-                            채소: 1,
-                            과일: 2,
-                            '콩/두부': 3,
-                            통곡물: 4,
-                            버섯: 5,
-                            해조류: 6,
-                            견과: 7,
-                            '고기/생선/달걀': 8,
-                            유제품: 9,
-                            버섯류: 5,
-                            채소류: 1,
-                        };
-
-                        for (let data of forPostData) {
-                            // obj.category -> forPostData 순회 객체마다 갖고있는 카테고리 체크
-                            // category[obj.category] -> 1~9까지 숫자 반환
-                            // copy에서 다시 체크하고 dailyCategory에 반영하는 작업
-                            // copy[category[obj.category]] = true;
-                            copy[category[data.category]] = true;
-                        }
-
-                        setDailyCategory({ ...copy });
-                    }
-
-                    if (response.data?.images.length > 0) {
-                        dispatch(action.getImage(response.data.images));
-                    }
-                    setLoading(false);
-                }
-            })
-            .catch(async (err) => {
-                console.log(err);
-                if (err.response.status === 401) {
-                    setLoading(false);
-                    return;
-                }
-                alert(
-                    lang
-                        ? 'An error has occurred. Please contact the developer!'
-                        : '오류가 발생했습니다. 담당자에게 문의해주세요!'
-                );
-                setLoading(false);
-            });
-    };
     useEffect(() => {
         // if (initRecordComponent) {
         //     initRecordComponent = false;
@@ -331,8 +345,6 @@ const Meal = () => {
         dispatch(action.removeAll());
         dispatch(postActions.removeAll());
         setLoading(true);
-
-        fetchData();
     }, [dispatch]);
     // 액션 훅 호출
     const action = useActions(param.when);

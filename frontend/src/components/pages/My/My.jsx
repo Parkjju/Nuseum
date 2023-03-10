@@ -12,6 +12,8 @@ import { Page, Document } from 'react-pdf';
 import { useDispatch, useSelector } from 'react-redux';
 import Container from '../../atom/Container';
 import { Title } from '../Curation/Curation.styled';
+import { useQuery } from 'react-query';
+import { fetchPdf } from '../../../api';
 
 const My = () => {
     const token = useSelector((state) => state.auth.token);
@@ -51,6 +53,25 @@ const My = () => {
         [pdfRef]
     );
 
+    const _ = useQuery(['pdf', token], fetchPdf, {
+        refetchOnWindowFocus: false,
+        onSuccess: (response) => {
+            setLoading(true);
+            setUrl(response.data.data);
+        },
+        onError: (err) => {
+            if (err.response.status === 401) {
+                setLoading(false);
+                return;
+            }
+            alert(
+                lang
+                    ? 'An error has occurred. Please contact the developer!'
+                    : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+            );
+        },
+    });
+
     useEffect(() => {
         if (!url) {
             return;
@@ -69,30 +90,6 @@ const My = () => {
             }
         );
     }, [url, pdfjs]);
-
-    useEffect(() => {
-        axios
-            .get('/api/v1/result/examination/', {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            .then((response) => {
-                setLoading(true);
-                setUrl(response.data.data);
-            })
-            .catch(async (err) => {
-                if (err.response.status === 401) {
-                    setLoading(false);
-                    return;
-                }
-                alert(
-                    lang
-                        ? 'An error has occurred. Please contact the developer!'
-                        : '오류가 발생했습니다. 담당자에게 문의해주세요!'
-                );
-            });
-    }, []);
 
     useEffect(() => {
         setPageNum(pdfRef?._pdfInfo.numPages);

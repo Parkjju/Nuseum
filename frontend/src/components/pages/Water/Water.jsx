@@ -7,6 +7,8 @@ import { useParams } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import useActions from '../../../hooks/useActions';
+import { useQuery } from 'react-query';
+import { fetchWaterAmount } from '../../../api';
 
 const Water = () => {
     const params = useParams();
@@ -28,23 +30,12 @@ const Water = () => {
         window.innerWidth > 800 ? 800 * 0.8 : window.innerWidth * 0.8
     );
 
-    const [loading, setLoading] = useState(false);
-
-    window.onresize = () => {
-        setBoxWidth(boxRef.current.clientWidth);
-    };
-
-    window.onload = () => {
-        setBoxWidth(boxRef.current.clientWidth);
-    };
-
-    useEffect(() => {
-        setLoading(true);
-        axios
-            .get(`/api/v1/consumption/water/?date=${params.date}`, {
-                headers: { Authorization: `Bearer ${token}` },
-            })
-            .then((response) => {
+    const queryResult = useQuery(
+        ['water', params.date, token],
+        fetchWaterAmount,
+        {
+            refetchOnWindowFocus: false,
+            onSuccess: (response) => {
                 console.log(response.data);
 
                 if (response.data.length === 0) {
@@ -57,8 +48,8 @@ const Water = () => {
                 dispatch(action.initializeAmount(response.data[0].amount));
                 dispatch(action.getId(response.data[0].id));
                 setLoading(false);
-            })
-            .catch(async (err) => {
+            },
+            onError: (err) => {
                 console.log(err);
                 if (err.response.status === 401) {
                     setLoading(false);
@@ -70,8 +61,19 @@ const Water = () => {
                         : '오류가 발생했습니다. 담당자에게 문의해주세요!'
                 );
                 setLoading(false);
-            });
-    }, [dispatch]);
+            },
+        }
+    );
+
+    const [loading, setLoading] = useState(false);
+
+    window.onresize = () => {
+        setBoxWidth(boxRef.current.clientWidth);
+    };
+
+    window.onload = () => {
+        setBoxWidth(boxRef.current.clientWidth);
+    };
 
     useEffect(() => {
         if (count >= currentAmount) {

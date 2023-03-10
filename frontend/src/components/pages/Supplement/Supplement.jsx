@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
 import { supplementActions } from '../../../store/supplement-slice';
 import ImageCard from '../../molecules/ImageCard';
+import { useQuery } from 'react-query';
+import { fetchSupplement } from '../../../api';
 
 let initial = true;
 const Supplement = () => {
@@ -14,6 +16,7 @@ const Supplement = () => {
     const [fetchedSupplement, setFetchedSupplement] = useState([]);
     const supplementData = useSelector((state) => state.supplement.data);
     const token = useSelector((state) => state.auth.token);
+
     const addSupplement = () => {
         dispatch(
             supplementActions.getData([
@@ -88,20 +91,13 @@ const Supplement = () => {
     };
     const param = useParams();
     const dispatch = useDispatch();
-    useEffect(() => {
-        // if (initial) {
-        //     initial = false;
-        //     return;
-        // } else {
-        // }
-        setLoading(true);
-        axios
-            .get(`/api/v1/consumption/supplement/?date=${param.date}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            .then((response) => {
+
+    const queryResult = useQuery(
+        ['supplement', param.date, token],
+        fetchSupplement,
+        {
+            refetchOnWindowFocus: false,
+            onSuccess: (response) => {
                 if (response.data.length === 0) {
                     setLoading(false);
                     return;
@@ -111,10 +107,10 @@ const Supplement = () => {
                 }
                 dispatch(supplementActions.removeAll());
                 setLoading(false);
-            })
-            .catch(async (err) => {
-                console.log(err);
-                if (err.response.status === 401) {
+            },
+            onError: (error) => {
+                console.log(error);
+                if (error.response.status === 401) {
                     setLoading(false);
                     return;
                 }
@@ -124,8 +120,9 @@ const Supplement = () => {
                         : '오류가 발생했습니다. 담당자에게 문의해주세요!'
                 );
                 setLoading(false);
-            });
-    }, [isRequestSent, dispatch]);
+            },
+        }
+    );
 
     return loading ? (
         <CircularProgress />

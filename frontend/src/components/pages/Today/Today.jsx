@@ -2,8 +2,10 @@ import { CircularProgress } from '@mui/material';
 import axios from 'axios';
 import { useRef, useState } from 'react';
 import { useEffect } from 'react';
+import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { fetchTodayData } from '../../../api';
 import { Contents } from '../Home/styled';
 import { Tag, TagBox } from '../Record/styled';
 import { Box, Gauge } from '../Water/Water.style';
@@ -48,15 +50,12 @@ const Today = ({ date }) => {
 
     const [supplementImages, setSupplementImages] = useState([]);
 
-    useEffect(() => {
-        setLoading(true);
-        axios
-            .get(`/api/v1/consumption/today/?date=${date}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            .then((response) => {
+    const queryResult = useQuery(
+        ['today', params.date, token],
+        fetchTodayData,
+        {
+            refetchOnWindowFocus: false,
+            onSuccess: (response) => {
                 setMealImages(() => {
                     return {
                         breakfast: [...response.data.breakfast.image],
@@ -95,8 +94,8 @@ const Today = ({ date }) => {
                     return copy;
                 });
                 setLoading(false);
-            })
-            .catch(async (err) => {
+            },
+            onError: (err) => {
                 console.log(err);
                 if (err.response.status === 401) {
                     setLoading(false);
@@ -109,8 +108,9 @@ const Today = ({ date }) => {
                         : '오류가 발생했습니다. 담당자에게 문의해주세요!'
                 );
                 setLoading(false);
-            });
-    }, [username, date]);
+            },
+        }
+    );
 
     return loading ? (
         <CircularProgress />
