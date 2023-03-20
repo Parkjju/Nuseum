@@ -10,6 +10,7 @@ import Slide from './components/Slide';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useQuery } from 'react-query';
 import { fetchCurationList } from '../../../api';
+import Table from '../../molecules/Table';
 
 const Curation = () => {
     const dispatch = useDispatch();
@@ -61,7 +62,8 @@ const Curation = () => {
 
     return (
         <Container>
-            <Contents>
+            <Table></Table>
+            {/* <Contents>
                 <AnimatePresence>
                     {recommendList.map((recommendData) =>
                         recommendList.indexOf(recommendData) ===
@@ -91,7 +93,7 @@ const Curation = () => {
                         ) : null
                     )}
                 </AnimatePresence>
-            </Contents>
+            </Contents> */}
         </Container>
     );
 };
