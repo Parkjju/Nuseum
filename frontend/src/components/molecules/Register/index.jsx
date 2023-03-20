@@ -11,6 +11,17 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useSelector } from 'react-redux';
+import {
+    Checkbox,
+    FormControl,
+    FormControlLabel,
+    FormGroup,
+    FormLabel,
+    InputLabel,
+    NativeSelect,
+    Radio,
+    RadioGroup,
+} from '@mui/material';
 
 function Register() {
     const {
@@ -24,6 +35,8 @@ function Register() {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const lang = useSelector((state) => state.language.isKorean);
+    const [gender, setGender] = useState('M');
+    const [age, setAge] = useState(3);
     const onValid = ({ code, password1, password2 }) => {
         if (password1 !== password2) {
             setError(
@@ -44,6 +57,8 @@ function Register() {
                 username: code,
                 password1: password1,
                 password2: password2,
+                gender,
+                age,
             })
             .then(() => {
                 alert(
@@ -95,6 +110,49 @@ function Register() {
                 }
             />
             <FormBox onSubmit={handleSubmit(onValid)}>
+                <FormControl sx={{ width: 300 }}>
+                    <FormLabel id='demo-radio-buttons-group-label'>
+                        성별
+                    </FormLabel>
+                    <RadioGroup
+                        row
+                        aria-labelledby='demo-radio-buttons-group-label'
+                        defaultValue='M'
+                        name='radio-buttons-group'
+                        onChange={(e) => setGender(e.target.value)}
+                    >
+                        <FormControlLabel
+                            value='M'
+                            control={<Radio />}
+                            label='남'
+                        />
+                        <FormControlLabel
+                            value='F'
+                            control={<Radio />}
+                            label='여'
+                        />
+                    </RadioGroup>
+                </FormControl>
+                <FormControl sx={{ width: 300, marginY: 1.5 }}>
+                    <InputLabel
+                        variant='standard'
+                        htmlFor='uncontrolled-native'
+                    >
+                        나이
+                    </InputLabel>
+                    <NativeSelect
+                        defaultValue={3}
+                        inputProps={{
+                            name: '나이',
+                            id: 'uncontrolled-native',
+                        }}
+                        onChange={(e) => setAge(e.target.value)}
+                    >
+                        <option value={3}>3세</option>
+                        <option value={4}>4세</option>
+                        <option value={5}>5세</option>
+                    </NativeSelect>
+                </FormControl>
                 <Form
                     name='code'
                     placeholder={
