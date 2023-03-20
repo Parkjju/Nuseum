@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// 끼니별 영양성분 섭취현황 - 영양제와 구분 없음
 export const fetchDailyFood = ({ queryKey }) => {
     const [_, date, type, token] = queryKey;
     return axios.get(
@@ -64,4 +65,16 @@ export const fetchPdf = ({ queryKey }) => {
             Authorization: `Bearer ${token}`,
         },
     });
+};
+
+export const fetchDailyNutritionAndCategory = ({ queryKey }) => {
+    const [_, author, date, token] = queryKey;
+    return axios.get(
+        `https://www.nuseum.site/api/v1/consumption/admin/analysis/day/?author=${author}&date=${date}&nutrient=yes`,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+    );
 };
