@@ -9,8 +9,8 @@ function Footer() {
                 <Text></Text>
                 <Text>
                     {lang
-                        ? '© 2022 Nuseum. All rights reserved.'
-                        : '© 2022 Nuseum. All rights reserved.'}
+                        ? '© 2023 Nuseum. All rights reserved.'
+                        : '© 2023 Nuseum. All rights reserved.'}
                 </Text>
             </Content>
         </Box>
