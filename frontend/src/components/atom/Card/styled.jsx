@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
 export const Box = styled.div`
-    margin-bottom: 25px;
+    margin: 25px 0;
     width: 300px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-items: space-between;
-    padding: 10px;
+    justify-content: center;
     align-items: center;
     a {
         text-decoration: none;

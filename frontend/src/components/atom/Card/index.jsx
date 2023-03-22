@@ -44,6 +44,7 @@ function Card({ menu, current }) {
                             transition={{
                                 velocity: 10,
                             }}
+                            style={{width: 'calc(100%/3.8)'}}
                         >
                             {item[1] === lang ? (
                                 'dinner'
