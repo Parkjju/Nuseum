@@ -23,7 +23,7 @@ export const Box = styled.div`
 export const IconBox = styled.div`
     height: 88px;
     width: 80px;
-    margin: 0 2.5px 20px;
+    margin: 0 2.5px 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -41,7 +41,7 @@ export const IconBox = styled.div`
             ? 'none'
             : null};
     border-radius: 20px;
-    padding: 10px;
+    padding: 6px;
 `;
 
 export const Icon = styled.img`
@@ -55,7 +55,7 @@ export const IconWrapper = styled.div`
     align-items: center;
     justify-content: center;
     border-radius: 2rem;
-    margin-bottom: 10px;
+    margin-bottom: 4px;
 `;
 export const ButtonBox = styled.div`
     display: flex;
