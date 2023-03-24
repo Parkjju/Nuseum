@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import useCalculate from '../../../hooks/useCalculate';
+import { CurationMeal, CurationMealWrapper } from './Table.styled';
 
 const Table = ({
     curationData,
@@ -194,131 +195,25 @@ const Table = ({
                             <tr>
                                 <th key={index}>
                                     {getTitleHeader(diversityCoordinate)}
-                                    {Object.values(
-                                        curationList[diversityCoordinate]
-                                    ).map((cellData) => (
-                                        <td>
-                                            {cellData
-                                                ? Object.keys(cellData).map(
-                                                      (meal) => (
-                                                          <span>{meal}</span>
-                                                      )
-                                                  )
-                                                : null}
-                                        </td>
-                                    ))}
                                 </th>
+                                {Object.values(
+                                    curationList[diversityCoordinate]
+                                ).map((cellData) => (
+                                    <td>
+                                        {cellData
+                                            ? Object.keys(cellData).map(
+                                                  (meal) => (
+                                                      <CurationMeal>
+                                                          {meal}
+                                                      </CurationMeal>
+                                                  )
+                                              )
+                                            : null}
+                                    </td>
+                                ))}
                             </tr>
                         )
                     )}
-                    <tr>
-                        <th>채소</th>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                    </tr>
-                    <tr>
-                        <th>과일</th>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                    </tr>
-                    <tr>
-                        <th>콩/두부</th>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                    </tr>
-                    <tr>
-                        <th>통곡물</th>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                    </tr>
-                    <tr>
-                        <th>버섯</th>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                    </tr>
-                    <tr>
-                        <th>해조류</th>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                    </tr>
-                    <tr>
-                        <th>견과</th>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                    </tr>
-                    <tr>
-                        <th>고기/어패류/달걀</th>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                    </tr>
-                    <tr>
-                        <th>유제품</th>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                        <td>Cell Data</td>
-                    </tr>
                 </tbody>
             </table>
         </div>
