@@ -34,6 +34,9 @@ const useCalculate = (gender, age) => {
         range.folic_acid = 180;
         range.tryptophan = 100;
         range.dha_epa = null;
+        range.carbohydrate = 65;
+        range.protein = 20;
+        range.fat = 30;
     } else if (gender === 'M') {
         if (age >= 6 && age <= 8) {
             range.dietary_fiber = 25;
