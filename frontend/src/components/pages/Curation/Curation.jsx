@@ -11,11 +11,196 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useQuery } from 'react-query';
 import {
     fetchCurationList,
+    fetchDailyNutrient,
     fetchDailyNutritionAndCategory,
 } from '../../../api';
 import Table from '../../molecules/Table';
 
 const Curation = () => {
+    let curationData = {
+        '4.0': {
+            건미역: 0,
+            김: 0,
+        },
+        '6.0': {
+            고등어: 0,
+            꽁치: 0,
+            임연수어: 0,
+            참다랑어: 0,
+            오징어: 0,
+        },
+        0.1: {
+            들깻잎: 0,
+            시금치: 0,
+            당근: 0,
+            상추: 0,
+            부추: 0,
+            수박: 0,
+            무청: 0,
+            고구마: 0,
+            토마토: 0,
+        },
+        4.1: {
+            건미역: 0,
+            김: 0,
+        },
+        6.1: {
+            장어: 0,
+            달걀: 0,
+            닭고기: 0,
+            돼지고기: 0,
+        },
+        0.2: {
+            들깻잎: 0,
+            시금치: 0,
+            감자: 0,
+            고구마: 0,
+            콩나물: 0,
+        },
+        1.2: {
+            바나나: 0,
+        },
+        2.2: {
+            두부: 0,
+            대두: 0,
+        },
+        3.2: {
+            현미: 0,
+            보리: 0,
+        },
+        4.2: {
+            건미역: 0,
+        },
+        6.2: {
+            멸치: 0,
+            닭고기: 0,
+            돼지고기: 0,
+            소고기: 0,
+            달걀: 0,
+        },
+        7.2: {
+            우유: 0,
+        },
+        2.3: {
+            대두: 0,
+        },
+        3.3: {
+            보리: 0,
+        },
+        6.3: {
+            새우: 0,
+            고등어: 0,
+            닭고기: 0,
+            달걀: 0,
+            돼지고기: 0,
+            소고기: 0,
+            오징어: 0,
+            멸치: 0,
+        },
+        0.4: {
+            아보카도: 0,
+        },
+        1.4: {
+            리치: 0,
+            무화과: 0,
+            코코넛: 0,
+        },
+        5.4: {
+            해바라기씨: 0,
+            아마씨: 0,
+            캐슈넛: 0,
+        },
+        6.4: {
+            꽁치: 0,
+            연어: 0,
+            임연수어: 0,
+            새우: 0,
+            문어: 0,
+            미꾸라지: 0,
+        },
+        4.5: {
+            매생이: 0,
+            김: 0,
+        },
+        6.5: {
+            바지락: 0,
+            꼬막: 0,
+            굴: 0,
+            가리비: 0,
+            꽁치: 0,
+            고등어: 0,
+            연어: 0,
+            미꾸라지: 0,
+            멸치: 0,
+            오징어: 0,
+            게: 0,
+            조기: 0,
+            오리고기: 0,
+            새우: 0,
+            소고기: 0,
+            달걀: 0,
+            돼지고기: 0,
+            닭고기: 0,
+        },
+        7.5: {
+            우유: 0,
+            요거트: 0,
+        },
+        1.6: {
+            딸기: 0,
+            감: 0,
+        },
+        2.6: {
+            대두: 0,
+            두부: 0,
+        },
+        3.6: {
+            현미: 0,
+        },
+        4.6: {
+            김: 0,
+        },
+        6.6: {
+            달걀: 0,
+        },
+        6.7: {
+            연어: 0,
+            달걀: 0,
+            꽁치: 0,
+            전갱이: 0,
+            조기: 0,
+            오징어: 0,
+            미꾸라지: 0,
+        },
+        7.7: {
+            두유: 0,
+        },
+        0.8: {
+            토마토: 0,
+            상추: 0,
+            감자: 0,
+            당근: 0,
+            양배추: 0,
+        },
+        1.8: {
+            감: 0,
+            복숭아: 0,
+            귤: 0,
+            사과: 0,
+        },
+        2.8: {
+            대두: 0,
+            두부: 0,
+        },
+        3.8: {
+            보리: 0,
+            현미: 0,
+        },
+        4.8: {
+            건미역: 0,
+        },
+    };
+
     const dispatch = useDispatch();
     const lang = useSelector((state) => state.language.isKorean);
 
@@ -52,16 +237,6 @@ const Curation = () => {
         dha_epa: null, // DHA+EPA
     };
     let category = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-    range.dietary_fiber = 20;
-    range.magnesium = 110;
-    range.vitamin_a = 300;
-    range.vitamin_d = 5;
-    range.vitamin_b6 = 0.7;
-    range.vitamin_b12 = 1.1;
-    range.folic_acid = 180;
-    range.tryptophan = 0.1;
-    range.dha_epa = 300;
 
     // const _ = useQuery(['curationList', token], fetchCurationList, {
     //     refetchOnWindowFocus: false,
@@ -100,6 +275,20 @@ const Curation = () => {
     //     },
     //     [visibleIndex]
     // );
+    const [nutritionData, setNutritionData] = useState({
+        protein: 0,
+        fat: 0,
+        carbohydrate: 0,
+        dietary_fiber: 0,
+        magnesium: 0,
+        vitamin_a: 0,
+        vitamin_d: 0,
+        vitamin_b6: 0,
+        folic_acid: 0,
+        vitamin_b12: 0,
+        tryptophan: 0,
+        dha_epa: 0,
+    });
 
     const _ = useQuery(
         ['dailyNutritionAndCategory', username, midnight.getTime(), token],
@@ -107,13 +296,12 @@ const Curation = () => {
         {
             refetchOnWindowFocus: false,
             onSuccess: (response) => {
-                console.log(response.data);
                 for (let key in range) {
                     if (response.data[key] < range[key]) {
                         setInSufficientNutrition((prev) => [...prev, key]);
                     }
                 }
-                console.log(response.data.category.includes(8));
+
                 for (let value of category) {
                     if (response.data.category.includes(value)) {
                         continue;
@@ -135,9 +323,28 @@ const Curation = () => {
         }
     );
 
+    const __ = useQuery(
+        ['dailyNutrient', midnight.getTime(), token],
+        fetchDailyNutrient,
+        {
+            refetchOnWindowFocus: false,
+            onSuccess: (response) => {
+                for (let key in nutritionData) {
+                    setNutritionData((prev) => {
+                        prev[key] = response.data[key];
+                        return { ...prev };
+                    });
+                }
+            },
+        }
+    );
+
     return (
         <Container>
-            <Table></Table>
+            <Table
+                nutritionData={nutritionData}
+                curationData={curationData}
+            ></Table>
             {/* <Contents>
                 <AnimatePresence>
                     {recommendList.map((recommendData) =>
