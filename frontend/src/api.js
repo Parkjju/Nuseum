@@ -78,3 +78,16 @@ export const fetchDailyNutritionAndCategory = ({ queryKey }) => {
         }
     );
 };
+
+// 타입 추가 예정
+export const fetchDailyNutrient = ({ queryKey }) => {
+    const [_, date, token] = queryKey;
+    return axios.get(
+        `https://www.nuseum.site/api/v1/consumption/day/?date=${date}`,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+    );
+};
