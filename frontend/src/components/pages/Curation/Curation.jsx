@@ -15,8 +15,10 @@ import {
     fetchDailyNutritionAndCategory,
 } from '../../../api';
 import Table from '../../molecules/Table';
+import useCalculate from '../../../hooks/useCalculate';
 
 const Curation = () => {
+    const range = useCalculate('M', 3);
     let curationData = {
         '4.0': {
             건미역: 0,
@@ -216,79 +218,10 @@ const Curation = () => {
         0 // 시, 분, 초는 모두 0으로 설정합니다.
     );
 
-    const [recommendList, setRecommendList] = useState([]);
-    const [visibleIndex, setVisibleIndex] = useState(0);
-    const [isNegative, setIsNegative] = useState(true);
-
     // 배열형태의 키값을 만들어줄 예정
     // N x N 형태의 좌표 조합이 만들어짐. 크로스되는 지점의 음식들을 추천하게 됨
     const [inSufficientNutrition, setInSufficientNutrition] = useState([]);
     const [inSufficientDiversity, setInSufficientDiversity] = useState([]);
-
-    let range = {
-        dietary_fiber: null, // 식이섬유
-        magnesium: null, // 마그네슘
-        vitamin_a: null, // 비타민 A
-        vitamin_d: null, // 비타민 D
-        vitamin_b6: null, // 비타민 B6
-        folic_acid: null, // 엽산
-        vitamin_b12: null, // 비타민 B12
-        tryptophan: null, // 트립토판
-        dha_epa: null, // DHA+EPA
-    };
-    let category = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-    // const _ = useQuery(['curationList', token], fetchCurationList, {
-    //     refetchOnWindowFocus: false,
-    //     onSuccess: (response) => {
-    //         setRecommendList(response.data.reverse());
-    //     },
-    //     onError: (err) => {
-    //         console.log(err);
-    //         if (err.response.status === 401) {
-    //             return;
-    //         }
-    //         alert(
-    //             lang
-    //                 ? 'An error has occurred. Please contact the developer!'
-    //                 : '오류가 발생했습니다. 담당자에게 문의해주세요!'
-    //         );
-    //     },
-    // });
-
-    // const onClick = useCallback(
-    //     (type) => {
-    //         switch (type) {
-    //             case 'prev':
-    //                 if (visibleIndex === 0) {
-    //                     return;
-    //                 }
-    //                 setVisibleIndex((prev) => prev - 1);
-    //                 return;
-    //             case 'next':
-    //                 if (visibleIndex === recommendList.length - 1) {
-    //                     return;
-    //                 }
-    //                 setVisibleIndex((prev) => prev + 1);
-    //                 return;
-    //         }
-    //     },
-    //     [visibleIndex]
-    // );
-    const [nutritionData, setNutritionData] = useState({
-        protein: 0,
-        fat: 0,
-        carbohydrate: 0,
-        dietary_fiber: 0,
-        magnesium: 0,
-        vitamin_a: 0,
-        vitamin_d: 0,
-        vitamin_b6: 0,
-        folic_acid: 0,
-        vitamin_b12: 0,
-        tryptophan: 0,
-        dha_epa: 0,
-    });
 
     const _ = useQuery(
         ['dailyNutritionAndCategory', username, midnight.getTime(), token],
@@ -297,8 +230,17 @@ const Curation = () => {
             refetchOnWindowFocus: false,
             onSuccess: (response) => {
                 for (let key in range) {
+                    if (
+                        key === 'carbohydrate' ||
+                        key === 'fat' ||
+                        key === 'protein'
+                    )
+                        continue;
                     if (response.data[key] < range[key]) {
-                        setInSufficientNutrition((prev) => [...prev, key]);
+                        setInSufficientNutrition((prev) => [
+                            ...prev,
+                            mappingNutritionNameToCoordinate(key),
+                        ]);
                     }
                 }
 
@@ -306,7 +248,10 @@ const Curation = () => {
                     if (response.data.category.includes(value)) {
                         continue;
                     } else {
-                        setInSufficientDiversity((prev) => [...prev, value]);
+                        setInSufficientDiversity((prev) => [
+                            ...prev,
+                            value - 1,
+                        ]);
                     }
                 }
             },
@@ -322,6 +267,48 @@ const Curation = () => {
             },
         }
     );
+
+    const mappingNutritionNameToCoordinate = (name) => {
+        switch (name) {
+            case 'dha_epa':
+                return 0;
+            case 'vitamin_a':
+                return 1;
+            case 'magnesium':
+                return 2;
+            case 'tryptophan':
+                return 3;
+            case 'vitamin_b6':
+                return 4;
+            case 'vitamin_b12':
+                return 5;
+            case 'folic_acid':
+                return 6;
+            case 'vitamin_d':
+                return 7;
+            case 'dietary_fiber':
+                return 8;
+            default:
+                return null;
+        }
+    };
+
+    let category = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+    const [nutritionData, setNutritionData] = useState({
+        protein: 0,
+        fat: 0,
+        carbohydrate: 0,
+        dietary_fiber: 0,
+        magnesium: 0,
+        vitamin_a: 0,
+        vitamin_d: 0,
+        vitamin_b6: 0,
+        folic_acid: 0,
+        vitamin_b12: 0,
+        tryptophan: 0,
+        dha_epa: 0,
+    });
 
     const __ = useQuery(
         ['dailyNutrient', midnight.getTime(), token],
@@ -342,8 +329,9 @@ const Curation = () => {
     return (
         <Container>
             <Table
-                nutritionData={nutritionData}
                 curationData={curationData}
+                inSufficientDiversity={inSufficientDiversity}
+                inSufficientNutrition={inSufficientNutrition}
             ></Table>
             {/* <Contents>
                 <AnimatePresence>
