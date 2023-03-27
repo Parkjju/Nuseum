@@ -67,18 +67,6 @@ export const fetchPdf = ({ queryKey }) => {
     });
 };
 
-export const fetchDailyNutritionAndCategory = ({ queryKey }) => {
-    const [_, author, date, token] = queryKey;
-    return axios.get(
-        `https://www.nuseum.site/api/v1/consumption/admin/analysis/day/?author=${author}&date=${date}&nutrient=yes`,
-        {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        }
-    );
-};
-
 // 타입 추가 예정
 export const fetchDailyNutrient = ({ queryKey }) => {
     const [_, date, token] = queryKey;
