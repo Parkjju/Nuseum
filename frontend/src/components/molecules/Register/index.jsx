@@ -156,15 +156,13 @@ function Register() {
                 <Form
                     name='code'
                     placeholder={
-                        lang
-                            ? 'Please enter the code'
-                            : '발급된 코드를 입력해주세요.'
+                        lang ? 'Please enter the ID' : '아이디를 입력해주세요.'
                     }
                     type='text'
                     {...register('code', {
                         required: lang
-                            ? '😭 Please enter the code provided only'
-                            : '😭 발급된 코드를 입력해주세요!',
+                            ? '😭 Please enter the ID'
+                            : '😭 아이디를 입력해주세요!',
                     })}
                     error={errors.code}
                 />
