@@ -223,51 +223,6 @@ const Curation = () => {
     const [inSufficientNutrition, setInSufficientNutrition] = useState([]);
     const [inSufficientDiversity, setInSufficientDiversity] = useState([]);
 
-    const _ = useQuery(
-        ['dailyNutritionAndCategory', username, midnight.getTime(), token],
-        fetchDailyNutritionAndCategory,
-        {
-            refetchOnWindowFocus: false,
-            onSuccess: (response) => {
-                for (let key in range) {
-                    if (
-                        key === 'carbohydrate' ||
-                        key === 'fat' ||
-                        key === 'protein'
-                    )
-                        continue;
-                    if (response.data[key] < range[key]) {
-                        setInSufficientNutrition((prev) => [
-                            ...prev,
-                            mappingNutritionNameToCoordinate(key),
-                        ]);
-                    }
-                }
-
-                for (let value of category) {
-                    if (response.data.category.includes(value)) {
-                        continue;
-                    } else {
-                        setInSufficientDiversity((prev) => [
-                            ...prev,
-                            value - 1,
-                        ]);
-                    }
-                }
-            },
-            onError: (err) => {
-                if (err.response.status === 401) {
-                    return;
-                }
-                alert(
-                    lang
-                        ? 'An error has occurred. Please contact the developer!'
-                        : '오류가 발생했습니다. 담당자에게 문의해주세요!'
-                );
-            },
-        }
-    );
-
     const mappingNutritionNameToCoordinate = (name) => {
         switch (name) {
             case 'dha_epa':
@@ -310,7 +265,7 @@ const Curation = () => {
         dha_epa: 0,
     });
 
-    const __ = useQuery(
+    const _ = useQuery(
         ['dailyNutrient', midnight.getTime(), token],
         fetchDailyNutrient,
         {
@@ -322,6 +277,42 @@ const Curation = () => {
                         return { ...prev };
                     });
                 }
+
+                for (let key in range) {
+                    if (
+                        key === 'carbohydrate' ||
+                        key === 'fat' ||
+                        key === 'protein'
+                    )
+                        continue;
+                    if (response.data[key] < range[key]) {
+                        setInSufficientNutrition((prev) => [
+                            ...prev,
+                            mappingNutritionNameToCoordinate(key),
+                        ]);
+                    }
+                }
+
+                for (let value of category) {
+                    if (response.data.category.includes(value)) {
+                        continue;
+                    } else {
+                        setInSufficientDiversity((prev) => [
+                            ...prev,
+                            value - 1,
+                        ]);
+                    }
+                }
+            },
+            onError: (err) => {
+                if (err.response.status === 401) {
+                    return;
+                }
+                alert(
+                    lang
+                        ? 'An error has occurred. Please contact the developer!'
+                        : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+                );
             },
         }
     );
