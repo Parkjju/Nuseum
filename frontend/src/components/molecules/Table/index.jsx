@@ -110,6 +110,110 @@ const Table = ({
             8.8: null,
         },
     });
+
+    // 영양성분 및 골고루지수가 충분하여 추천에서 빠진 리스트
+    const [notCuratedList, setNotCuratedList] = useState({
+        0: {
+            '0.0': null,
+            0.1: null,
+            0.2: null,
+            0.3: null,
+            0.4: null,
+            0.5: null,
+            0.6: null,
+            0.7: null,
+            0.8: null,
+        },
+        1: {
+            '1.0': null,
+            1.1: null,
+            1.2: null,
+            1.3: null,
+            1.4: null,
+            1.5: null,
+            1.6: null,
+            1.7: null,
+            1.8: null,
+        },
+        2: {
+            '2.0': null,
+            2.1: null,
+            2.2: null,
+            2.3: null,
+            2.4: null,
+            2.5: null,
+            2.6: null,
+            2.7: null,
+            2.8: null,
+        },
+        3: {
+            '3.0': null,
+            3.1: null,
+            3.2: null,
+            3.3: null,
+            3.4: null,
+            3.5: null,
+            3.6: null,
+            3.7: null,
+            3.8: null,
+        },
+        4: {
+            '4.0': null,
+            4.1: null,
+            4.2: null,
+            4.3: null,
+            4.4: null,
+            4.5: null,
+            4.6: null,
+            4.7: null,
+            4.8: null,
+        },
+        5: {
+            '5.0': null,
+            5.1: null,
+            5.2: null,
+            5.3: null,
+            5.4: null,
+            5.5: null,
+            5.6: null,
+            5.7: null,
+            5.8: null,
+        },
+        6: {
+            '6.0': null,
+            6.1: null,
+            6.2: null,
+            6.3: null,
+            6.4: null,
+            6.5: null,
+            6.6: null,
+            6.7: null,
+            6.8: null,
+        },
+        7: {
+            '7.0': null,
+            7.1: null,
+            7.2: null,
+            7.3: null,
+            7.4: null,
+            7.5: null,
+            7.6: null,
+            7.7: null,
+            7.8: null,
+        },
+        8: {
+            '8.0': null,
+            8.1: null,
+            8.2: null,
+            8.3: null,
+            8.4: null,
+            8.5: null,
+            8.6: null,
+            8.7: null,
+            8.8: null,
+        },
+    });
+
     // 좌표관리 상태값
     const [coordinates, setCoordinates] = useState([]);
 
@@ -119,6 +223,7 @@ const Table = ({
     // =====
 
     // 좌표정렬
+    // 만들어진 좌표 기준으로 curationData 키값 조회
     useEffect(() => {
         for (let nutrition of inSufficientNutrition) {
             for (let diversity of inSufficientDiversity) {
@@ -141,6 +246,21 @@ const Table = ({
         });
     }, [curationData, coordinates]);
 
+    // 추천리스트 정렬 후 추천대상에서 제외된 리스트 추가 - 섀도우 부여를 위함
+    // curationData에는 존재하는데 curationList에는 누락된 대상을 찾아야함.
+    // curationData는 추천되기 이전, 전체 추천대상 리스트이고
+    // curationList는 추천 이후의 최종 리스트이다.
+    useEffect(() => {
+        for (let dictKey of Object.keys(curationList)) {
+            for (let key of Object.keys(curationList[dictKey])) {
+                if (!curationList[dictKey][key] && curationData[key]) {
+                    console.log(curationData[key]);
+                }
+            }
+        }
+    }, [curationList, coordinates]);
+
+    console.log(notCuratedList);
     // 테이블 th 성분값 얻어내는 함수
     const getTitleHeader = (key) => {
         switch (key) {
