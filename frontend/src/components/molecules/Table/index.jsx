@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import useCalculate from '../../../hooks/useCalculate';
-import { CurationMeal, CurationMealWrapper } from './Table.styled';
+import { CurationMeal, CurationMealWrapper, CurationTd } from './Table.styled';
 
 const Table = ({
     curationData,
@@ -253,14 +253,25 @@ const Table = ({
     useEffect(() => {
         for (let dictKey of Object.keys(curationList)) {
             for (let key of Object.keys(curationList[dictKey])) {
+                // 큐레이션되지 않았으면서 기존 추천대상에는 있는 경우
+                // -> 해당 데이터들을 쉐도우 처리한다.
                 if (!curationList[dictKey][key] && curationData[key]) {
-                    console.log(curationData[key]);
+                    setNotCuratedList((prev) => {
+                        let copy = { ...prev };
+                        return {
+                            ...copy,
+                            [dictKey]: {
+                                ...prev[dictKey],
+                                [key]: curationData[key],
+                            },
+                        };
+                    });
                 }
             }
         }
     }, [curationList, coordinates]);
-
     console.log(notCuratedList);
+
     // 테이블 th 성분값 얻어내는 함수
     const getTitleHeader = (key) => {
         switch (key) {
@@ -316,18 +327,30 @@ const Table = ({
                                 <th key={index}>
                                     {getTitleHeader(diversityCoordinate)}
                                 </th>
-                                {Object.values(
-                                    curationList[diversityCoordinate]
+                                {Object.entries(
+                                    notCuratedList[diversityCoordinate]
                                 ).map((cellData) => (
                                     <td>
-                                        {cellData
-                                            ? Object.keys(cellData).map(
+                                        {cellData[1]
+                                            ? Object.keys(cellData[1]).map(
                                                   (meal) => (
                                                       <CurationMeal>
                                                           {meal}
                                                       </CurationMeal>
                                                   )
                                               )
+                                            : curationList[diversityCoordinate][
+                                                  cellData[0]
+                                              ]
+                                            ? Object.keys(
+                                                  curationList[
+                                                      diversityCoordinate
+                                                  ][cellData[0]]
+                                              ).map((meal) => (
+                                                  <CurationMeal>
+                                                      {meal}
+                                                  </CurationMeal>
+                                              ))
                                             : null}
                                     </td>
                                 ))}
