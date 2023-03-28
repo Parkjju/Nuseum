@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const HeaderBox = styled.div`
-    height: 50px;
     max-width: 800px;
     width: 100%;
     margin: auto;

@@ -48,6 +48,7 @@ const Header = () => {
                 <>
                     <div
                         style={{
+                            height: '50px',
                             paddingLeft: 20,
                             display: 'flex',
                             justifyContent: 'space-between',

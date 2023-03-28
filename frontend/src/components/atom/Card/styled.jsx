@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Box = styled.div`
-    margin: 25px 0;
+    margin: 30px 0;
     width: 300px;
     display: flex;
     flex-direction: row;
