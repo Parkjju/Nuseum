@@ -21,7 +21,7 @@ export const Box = styled.div`
 `;
 
 export const IconBox = styled.div`
-    height: 88px;
+    height: 86px;
     width: 88px;
     margin: 0 2.5px 10px;
     display: flex;
@@ -50,7 +50,7 @@ export const Icon = styled.img`
 export const IconWrapper = styled.div`
     background-color: ${(props) => (props.isEat ? '#dfdfdf' : null)};
     width: 4rem;
-    height: 4rem;
+    height: 3.6rem;
     display: flex;
     align-items: center;
     justify-content: center;
