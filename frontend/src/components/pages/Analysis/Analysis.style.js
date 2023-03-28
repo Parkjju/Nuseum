@@ -22,7 +22,7 @@ export const Box = styled.div`
 
 export const IconBox = styled.div`
     height: 88px;
-    width: 80px;
+    width: 88px;
     margin: 0 2.5px 10px;
     display: flex;
     flex-direction: column;
@@ -76,24 +76,15 @@ export const FetchButton = styled.button`
     align-items: center;
     justify-content: center;
     background-color: ${(props) => (props.isClicked ? '#8D8D8D' : '#f1f1f1')};
-    border-radius: 80px;
+    border-radius: 50px;
     color: ${(props) => (props.isClicked ? 'white' : 'black')};
     width: 33.3%;
     padding: 10px 3px;
-    font-size: 8px;
+    font-size: 12px;
     border: none;
     cursor: pointer;
     box-shadow: ${(props) =>
         props.isClicked ? '0px 3px 3px rgba(0, 0, 0, 0.2)' : 'none'};
-    span {
-        font-size: 12px;
-        @media all and (max-width: 480px) {
-            font-size: 11px;
-        }
-        @media all and (max-width: 389px) {
-            font-size: 10px;
-        }
-    }
 `;
 
 export const SectionTitle = styled.div`
@@ -113,28 +104,23 @@ export const NutrientBox = styled.div`
     width: 90%;
     height: auto;
     display: flex;
+    flex-direction: column-reverse;
     justify-content: space-between;
     align-items: center;
     max-width: 560px;
 `;
 export const NutrientList = styled.div`
     box-sizing: border-box;
-    width: 29%;
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: space-around;
     align-items: flex-start;
     span {
-        padding: 8px 0;
-        @media all and (max-width: 390px) {
-            font-size: 11px;
-            padding: 6px 0;
-        }
-        @media all and (max-width: 320px) {
-            font-size: 10px;
-            padding: 4px 0;
-        }
+        padding: 8px;
+        
     }
+    margin-bottom: 50px;
 `;
 
 export const Divider = styled.div`

@@ -596,9 +596,9 @@ const Analysis = () => {
                             <span>
                                 {lang
                                     ? 'Daily Nutrients'
-                                    : '이 날의 섭취 영양소'}
+                                    : '이 날의'}
                             </span>
-                            <span>{lang ? '' : '확인하기'}</span>
+                            <span>{lang ? '' : '섭취 영양소'}</span>
                         </S.FetchButton>
                         <S.FetchButton
                             onClick={() => {
@@ -609,9 +609,9 @@ const Analysis = () => {
                             <span>
                                 {lang
                                     ? 'Weekly Nutrients'
-                                    : '한 주간 섭취 영양소'}
+                                    : '한 주'}
                             </span>
-                            <span>{lang ? '' : '확인하기'}</span>
+                            <span>{lang ? '' : '섭취 영양소'}</span>
                         </S.FetchButton>
                         <S.FetchButton
                             onClick={() => {
@@ -622,9 +622,9 @@ const Analysis = () => {
                             <span>
                                 {lang
                                     ? 'Monthly Nutrients'
-                                    : '한 달간 섭취 영양소'}
+                                    : '한 달'}
                             </span>
-                            <span>{lang ? '' : '확인하기'}</span>
+                            <span>{lang ? '' : '섭취 영양소'}</span>
                         </S.FetchButton>
                     </S.ButtonBox>
                 ) : null}
@@ -768,7 +768,7 @@ const Analysis = () => {
 
                                         <div
                                             style={{
-                                                width: '70%',
+                                                width: '95%',
                                                 boxSizing: 'border-box',
                                             }}
                                         >

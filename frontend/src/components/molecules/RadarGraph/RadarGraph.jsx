@@ -17,7 +17,7 @@ ChartJS.register(
     Tooltip,
     Legend
 );
-ChartJS.defaults.font.size = 8;
+ChartJS.defaults.font.size = 11;
 
 const RadarGraph = ({ dateCount, data, dataWithoutSupplement }) => {
     const lang = useSelector((state) => state.language.isKorean);
@@ -40,11 +40,11 @@ const RadarGraph = ({ dateCount, data, dataWithoutSupplement }) => {
             lang ? 'Folic acid' : '엽산',
             lang ? 'Magnesium' : '마그네슘',
             lang ? 'Tryptophan' : '트립토판',
-            lang ? 'Vitamin A' : '비타민 A',
+            lang ? 'Vitamin A' : '비타민A',
             lang ? 'Dietary fiber' : '식이섬유',
-            lang ? 'Vitamin B6' : '비타민 B6',
-            lang ? 'Vitamin B12' : '비타민 B12',
-            lang ? 'Vitamin D' : '비타민 D',
+            lang ? 'Vitamin B6' : '비타민B6',
+            lang ? 'Vitamin B12' : '비타민B12',
+            lang ? 'Vitamin D' : '비타민D',
         ],
         datasets: dataWithoutSupplement
             ? [
@@ -135,9 +135,9 @@ const RadarGraph = ({ dateCount, data, dataWithoutSupplement }) => {
                       backgroundColor: 'rgba(190, 197, 198, 0.6)',
                       borderColor: 'rgba(190, 197, 198, 0.6)',
                       pointBackgroundColor: 'rgba(190, 197, 198, 0.6)',
-                      pointBorderColor: '#fff',
+                      pointBorderColor: '#525959',
                       pointHoverBackgroundColor: '#fff',
-                      pointHoverBorderColor: 'rgba(190, 197, 198, 0.6)',
+                      pointHoverBorderColor: '#525959',
                   },
                   {
                       label: lang ? 'Just Meal(%)' : '음식만(%)',
@@ -353,7 +353,7 @@ const RadarGraph = ({ dateCount, data, dataWithoutSupplement }) => {
             <Radar
                 style={{
                     marginTop: 30,
-                    marginBottom: 30,
+                    marginBottom: 15,
                     width: '100%',
                 }}
                 data={dataForRadar}
@@ -367,7 +367,7 @@ const RadarGraph = ({ dateCount, data, dataWithoutSupplement }) => {
                                 // This more specific font property overrides the global property
                                 font: {
                                     family: 'Noto Serif KR,serif',
-                                    size: 11,
+                                    size: 12,
                                 },
                                 boxWidth: 20,
                             },
@@ -378,7 +378,7 @@ const RadarGraph = ({ dateCount, data, dataWithoutSupplement }) => {
                             pointLabels: {
                                 font: {
                                     family: 'Noto Serif KR,serif',
-                                    size: 10,
+                                    size: 11,
                                 },
                             },
                             max: 100,
