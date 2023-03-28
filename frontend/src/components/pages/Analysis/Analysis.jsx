@@ -768,7 +768,7 @@ const Analysis = () => {
 
                                         <div
                                             style={{
-                                                width: '95%',
+                                                width: '90%',
                                                 boxSizing: 'border-box',
                                             }}
                                         >
