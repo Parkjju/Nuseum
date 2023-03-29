@@ -246,26 +246,50 @@ const Table = ({
         // curationList는 insufficient한 피처들을 좌표화 하여 만들어낸 최종 추천리스트
         setCurationList((prev) => {
             for (let coordinate of coordinates) {
+                // 가중치 부여
+                if (curationData[coordinate]) {
+                    for (let meal of Object.keys(curationData[coordinate])) {
+                        setWeight((prev) => {
+                            return {
+                                ...prev,
+                                [meal]: (prev[meal] += 1),
+                            };
+                        });
+                    }
+                }
+
                 prev[coordinate.split('.')[0]][coordinate] =
                     curationData[coordinate];
             }
             return { ...prev };
         });
+
+        setWeight((prev) => {
+            let copy = { ...prev };
+            for (let obj of Object.values(curationData)) {
+                for (let meal of Object.keys(obj)) {
+                    if (!copy[meal]) {
+                        copy[meal] = 0;
+                    }
+                }
+            }
+
+            return {
+                ...copy,
+            };
+        });
     }, [curationData, coordinates]);
 
     // 추천리스트 정렬 후 추천대상에서 제외된 리스트 추가 - 섀도우 부여를 위함
-    console.log(curationData);
-    console.log(curationList);
-    console.log('notCuratedList: ', notCuratedList);
     useEffect(() => {
         for (let dictKey of Object.keys(curationList)) {
             for (let key of Object.keys(curationList[dictKey])) {
                 // 큐레이션되지 않았으면서 기존 추천대상에는 있는 경우
                 // -> 해당 데이터들을 쉐도우 처리한다.
                 if (!curationList[dictKey][key] && curationData[key]) {
-                    console.log(curationData[key]);
                     setNotCuratedList((prev) => {
                         let copy = { ...prev };
+
                         return {
                             ...copy,
                             [dictKey]: {
@@ -341,7 +365,11 @@ const Table = ({
                                         {cellData[1]
                                             ? Object.keys(cellData[1]).map(
                                                   (meal) => (
-                                                      <CurationMeal>
+                                                      <CurationMeal
+                                                          numberOfCurated={
+                                                              weight[meal]
+                                                          }
+                                                      >
                                                           {meal}
                                                       </CurationMeal>
                                                   )
