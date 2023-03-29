@@ -317,6 +317,7 @@ const Curation = () => {
         }
     );
 
+    console.log(inSufficientDiversity);
     return (
         <Container>
             <Table

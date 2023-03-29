@@ -9,6 +9,7 @@ const Table = ({
     inSufficientNutrition,
     style,
 }) => {
+    // curationData와 데이터 내부는 동일하지만 0: {}, 1: {} 형태로 변경해주기 위한 상태값임.
     const [curationList, setCurationList] = useState({
         0: {
             '0.0': null,
@@ -224,6 +225,7 @@ const Table = ({
 
     // 좌표정렬
     // 만들어진 좌표 기준으로 curationData 키값 조회
+
     useEffect(() => {
         for (let nutrition of inSufficientNutrition) {
             for (let diversity of inSufficientDiversity) {
@@ -237,6 +239,11 @@ const Table = ({
 
     // 좌표정렬 후 큐레이션 대상 딕셔너리 정의
     useEffect(() => {
+        // (insufficientCategory, insufficientNutrition) 좌표 전체 리스트를 순회하면서
+        // 해당 좌표에 해당하는 데이터들은 추천 대상이므로 큐레이션 리스트에 집어넣어야 함
+        // 그 외의 것들은 집어넣지 않음
+        // curationData는 추천을 위한 전체 음식리스트임
+        // curationList는 insufficient한 피처들을 좌표화 하여 만들어낸 최종 추천리스트
         setCurationList((prev) => {
             for (let coordinate of coordinates) {
                 prev[coordinate.split('.')[0]][coordinate] =
@@ -247,15 +254,16 @@ const Table = ({
     }, [curationData, coordinates]);
 
     // 추천리스트 정렬 후 추천대상에서 제외된 리스트 추가 - 섀도우 부여를 위함
-    // curationData에는 존재하는데 curationList에는 누락된 대상을 찾아야함.
-    // curationData는 추천되기 이전, 전체 추천대상 리스트이고
-    // curationList는 추천 이후의 최종 리스트이다.
+    console.log(curationData);
+    console.log(curationList);
+    console.log('notCuratedList: ', notCuratedList);
     useEffect(() => {
         for (let dictKey of Object.keys(curationList)) {
             for (let key of Object.keys(curationList[dictKey])) {
                 // 큐레이션되지 않았으면서 기존 추천대상에는 있는 경우
                 // -> 해당 데이터들을 쉐도우 처리한다.
                 if (!curationList[dictKey][key] && curationData[key]) {
+                    console.log(curationData[key]);
                     setNotCuratedList((prev) => {
                         let copy = { ...prev };
                         return {
@@ -270,7 +278,6 @@ const Table = ({
             }
         }
     }, [curationList, coordinates]);
-    console.log(notCuratedList);
 
     // 테이블 th 성분값 얻어내는 함수
     const getTitleHeader = (key) => {
@@ -328,7 +335,7 @@ const Table = ({
                                     {getTitleHeader(diversityCoordinate)}
                                 </th>
                                 {Object.entries(
-                                    notCuratedList[diversityCoordinate]
+                                    curationList[diversityCoordinate]
                                 ).map((cellData) => (
                                     <td>
                                         {cellData[1]
@@ -339,15 +346,17 @@ const Table = ({
                                                       </CurationMeal>
                                                   )
                                               )
-                                            : curationList[diversityCoordinate][
-                                                  cellData[0]
-                                              ]
+                                            : notCuratedList[
+                                                  diversityCoordinate
+                                              ][cellData[0]]
                                             ? Object.keys(
-                                                  curationList[
+                                                  notCuratedList[
                                                       diversityCoordinate
                                                   ][cellData[0]]
                                               ).map((meal) => (
-                                                  <CurationMeal>
+                                                  <CurationMeal
+                                                      notCurated={true}
+                                                  >
                                                       {meal}
                                                   </CurationMeal>
                                               ))
