@@ -336,8 +336,8 @@ const Table = ({
                                 </th>
                                 {Object.entries(
                                     curationList[diversityCoordinate]
-                                ).map((cellData) => (
-                                    <td>
+                                ).map((cellData, index) => (
+                                    <CurationTd key={index}>
                                         {cellData[1]
                                             ? Object.keys(cellData[1]).map(
                                                   (meal) => (
@@ -361,7 +361,7 @@ const Table = ({
                                                   </CurationMeal>
                                               ))
                                             : null}
-                                    </td>
+                                    </CurationTd>
                                 ))}
                             </tr>
                         )
