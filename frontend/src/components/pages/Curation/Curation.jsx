@@ -1,19 +1,8 @@
 import Container from '../../atom/Container';
-
-import { Contents } from '../Home/styled';
-
-import axios from 'axios';
-import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import Slide from './components/Slide';
-import { AnimatePresence, motion } from 'framer-motion';
 import { useQuery } from 'react-query';
-import {
-    fetchCurationList,
-    fetchDailyNutrient,
-    fetchDailyNutritionAndCategory,
-} from '../../../api';
+import { fetchDailyNutrient } from '../../../api';
 import Table from '../../molecules/Table';
 import useCalculate from '../../../hooks/useCalculate';
 
@@ -203,11 +192,8 @@ const Curation = () => {
         },
     };
 
-    const dispatch = useDispatch();
     const lang = useSelector((state) => state.language.isKorean);
-
     const token = useSelector((state) => state.auth.token);
-    const username = localStorage.getItem('username');
     const now = new Date();
     const midnight = new Date(
         now.getFullYear(),
@@ -317,7 +303,6 @@ const Curation = () => {
         }
     );
 
-    console.log(inSufficientDiversity);
     return (
         <Container>
             <Table

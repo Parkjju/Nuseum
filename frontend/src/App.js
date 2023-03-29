@@ -99,7 +99,7 @@ body{
     border-bottom: 0;
   }
   thead {
-    z-index: 1000;
+    z-index: 500;
     position: relative;
   }
   th,
@@ -117,7 +117,7 @@ body{
   }
   thead th.pin {
     left: 0;
-    z-index: 1001;
+    z-index: 501;
     border-left: 0;
   }
   tbody th {

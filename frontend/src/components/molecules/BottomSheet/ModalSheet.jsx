@@ -40,7 +40,7 @@ const ModalSheet = ({ clickedTag, urlList, setIsOpen, setIsOpenModal }) => {
                     <URLName>{item.name}</URLName>
                     <URL
                         target='_blank'
-                        href={`${item.url}${item.query}=${clickedTag.slice(1)}`}
+                        href={`${item.url}${item.query}=${clickedTag}`}
                     >
                         {lang ? 'Go to' : '바로가기'}
                     </URL>

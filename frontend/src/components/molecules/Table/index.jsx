@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import useCalculate from '../../../hooks/useCalculate';
+import BottomSheet from '../BottomSheet/BottomSheet';
 import { CurationMeal, CurationMealWrapper, CurationTd } from './Table.styled';
 
 const Table = ({
@@ -9,6 +10,9 @@ const Table = ({
     inSufficientNutrition,
     style,
 }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [clickedTag, setClickedTag] = useState('');
+
     // curationData와 데이터 내부는 동일하지만 0: {}, 1: {} 형태로 변경해주기 위한 상태값임.
     const [curationList, setCurationList] = useState({
         0: {
@@ -369,6 +373,13 @@ const Table = ({
                                                           numberOfCurated={
                                                               weight[meal]
                                                           }
+                                                          onClick={(e) => {
+                                                              setIsOpen(true);
+                                                              setClickedTag(
+                                                                  e.target
+                                                                      .innerText
+                                                              );
+                                                          }}
                                                       >
                                                           {meal}
                                                       </CurationMeal>
@@ -384,6 +395,12 @@ const Table = ({
                                               ).map((meal) => (
                                                   <CurationMeal
                                                       notCurated={true}
+                                                      onClick={(e) => {
+                                                          setIsOpen(true);
+                                                          setClickedTag(
+                                                              e.target.innerText
+                                                          );
+                                                      }}
                                                   >
                                                       {meal}
                                                   </CurationMeal>
@@ -396,6 +413,10 @@ const Table = ({
                     )}
                 </tbody>
             </table>
+            {console.log(clickedTag)}
+            {isOpen ? (
+                <BottomSheet setIsOpen={setIsOpen} clickedTag={clickedTag} />
+            ) : null}
         </div>
     );
 };

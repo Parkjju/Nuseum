@@ -81,6 +81,7 @@ const BottomSheet = ({ setIsOpen, clickedTag }) => {
         // 태그명 연동
         // 쿼리값 연동
         <Background
+            style={{ zIndex: 1000 }}
             onClick={() => {
                 setIsOpenModal(false);
             }}
