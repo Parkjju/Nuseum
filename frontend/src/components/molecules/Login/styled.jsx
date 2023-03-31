@@ -16,7 +16,7 @@ export const LogoBox = styled.div`
 
 export const Logo = styled.img`
     width: 140px;
-    margin-bottom: 60px;
+    margin-bottom: 30px;
     margin-top: 50px;
 `;
 

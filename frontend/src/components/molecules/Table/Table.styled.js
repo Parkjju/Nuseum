@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const CurationMeal = styled.p`
     width: 100%;
     text-align: center;
-    margin-bottom: 5px;
+    padding: 8px 0;
     font-size: ${(props) => `${16 + (props.numberOfCurated - 1) * 2}px`};
     color: ${(props) => (props.notCurated ? '#BABABA' : 'black')};
     &:hover {

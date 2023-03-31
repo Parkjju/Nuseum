@@ -9,7 +9,7 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import ErrorModal from '../../atom/Modal';
 import { useEffect, useState } from 'react';
-import SNU from '../../../assets/SNU.png';
+import NUSEUM from '../../../assets/NUSEUM_newiconlogo.png';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../../store/auth-slice';
@@ -121,14 +121,14 @@ function Login() {
                 label={lang ? 'ENGLISH' : '한국어'}
             />
             <LogoBox>
-                <Logo src={SNU} />
+                <Logo src={NUSEUM} />
             </LogoBox>
 
             <Title
                 text={
                     lang
-                        ? 'Personalized Nutrition for Neurobehavioral Development'
-                        : '맞춤형 영양관리 및 정보제공 연구'
+                        ? 'NUSEUM'
+                        : 'NUSEUM'
                 }
             />
 
