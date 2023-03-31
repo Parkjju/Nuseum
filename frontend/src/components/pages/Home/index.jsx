@@ -30,7 +30,7 @@ function Home() {
         [diary, lang ? 'DIARY' : '식단일기', 'diary'],
         [analysis, lang ? 'ANALYSIS' : '식이분석', 'analysis'],
         [food, lang ? 'FOOD' : '맞춤식품', 'food'],
-        [record, lang ? 'HEALTH RECORD' : '내 아이', 'record'],
+        // [record, lang ? 'HEALTH RECORD' : '내 아이', 'record'],
         [question, lang ? 'QUESTION' : 'Q&A', 'question'],
     ];
 
