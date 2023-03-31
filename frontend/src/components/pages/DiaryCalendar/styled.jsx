@@ -13,6 +13,6 @@ export const DiaryTitle = styled(motion.div)`
         transition: 0.2s linear;
     } */
     span{
-        font-size:16px;
+        font-size:20px;
     }
 `;

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Box = styled.div`
     margin: 30px 0;
-    width: 300px;
+    max-width: 330px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -37,14 +37,14 @@ export const IconBox = styled.div`
 `;
 
 export const Name = styled.span`
-    font-size: 12px;
-    color: rgba(0, 0, 0, 0.8);
+    font-size: 14px;
+    color: #222222;
     font-weight: bold;
 `;
 
 export const IconName = styled(Name)`
-    font-size: 12px;
-    color: rgba(0, 0, 0, 0.8);
+    font-size: 14px;
+    color: #222222;
     font-weight: bold;
     width: 100%;
     text-align: center;
