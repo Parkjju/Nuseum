@@ -70,6 +70,7 @@ body{
     overflow: auto;
     scroll-snap-type: both mandatory;
     height: 80vh;
+    position: relative;
   }
   @media (min-width: 40em) {
     main {
@@ -90,7 +91,7 @@ body{
   }
   th,
   td {
-    border: 1px solid #aaa;
+    border: 1px solid #aaaaaa63;
     background-clip: padding-box;
     scroll-snap-align: start;
   }
@@ -100,17 +101,16 @@ body{
   }
   thead {
     z-index: 500;
-    position: relative;
   }
   th,
   td {
-    padding: 0.6rem;
-    min-width: 6rem;
+    padding: 0.5rem;
+    min-width: 4rem;
     text-align: left;
     margin: 0;
   }
   thead th {
-    /* position: sticky; */
+    position: sticky; 
     top: 0;
     border-top: 0;
     background-clip: padding-box;
@@ -126,7 +126,6 @@ body{
   }
   tbody {
     z-index: 10;
-    position: relative;
   }
   tbody th {
     /* position: sticky; */

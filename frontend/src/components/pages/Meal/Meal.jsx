@@ -722,7 +722,7 @@ const Meal = () => {
                     onClick={() => savePost()}
                     style={{
                         marginBottom: '30px',
-                        background: '#8A8A8E',
+                        background: '#586162',
                         border: 'none',
                         borderRadius: '20px',
                         padding: '5px 35px',
