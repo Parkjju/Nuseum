@@ -413,7 +413,7 @@ const Table = ({
                     )}
                 </tbody>
             </table>
-            {console.log(clickedTag)}
+
             {isOpen ? (
                 <BottomSheet setIsOpen={setIsOpen} clickedTag={clickedTag} />
             ) : null}

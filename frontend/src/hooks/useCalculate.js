@@ -33,7 +33,7 @@ const useCalculate = (gender, age) => {
         range.vitamin_b12 = 1.1;
         range.folic_acid = 180;
         range.tryptophan = 100;
-        range.dha_epa = null;
+        range.dha_epa = 100; // 3-5세 아이들에 대해서는 무조건 추천
         range.carbohydrate = 65;
         range.protein = 20;
         range.fat = 30;
