@@ -11,7 +11,8 @@ const Btn = styled.button`
     color: white;
     /* background-color: #7f8c8d;*/
              
-    background-image: linear-gradient(to right,rgb(19 106 112) 0%,#4a9999 51%,#155f6d 100%);
+    /*background-image: linear-gradient(to right,rgb(19 106 112) 0%,#76afad 51%,#155f6d 100%);*/
+    background:linear-gradient(to right,#586162 0%,#8d9798 51%,#7f8c8d 100%); 
     margin: 10px;
     padding: 15px 45px;
     text-align: center;
