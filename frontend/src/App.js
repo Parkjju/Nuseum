@@ -110,7 +110,7 @@ body{
     margin: 0;
   }
   thead th {
-    position: sticky;
+    /* position: sticky; */
     top: 0;
     border-top: 0;
     background-clip: padding-box;
@@ -129,7 +129,7 @@ body{
     position: relative;
   }
   tbody th {
-    position: sticky;
+    /* position: sticky; */
     left: 0;
   }
   thead th,
