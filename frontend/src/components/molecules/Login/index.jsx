@@ -132,10 +132,10 @@ function Login() {
                 }
             />
             <div
-            style={{marginBottom: '90px', width:'100%', textAlign:'center', 
+            style={{marginTop: '16px',marginBottom: '100px', width:'100%', textAlign:'center', 
             fontWeight: 'bold', whiteSpace:'pre-wrap', lineHeight:'1.5rem'}}
             >
-                Your Museum of {'\n'} Nutrient Physiology & Pharmacology
+                {lang?'Your Museum of \n Nutrient Physiology & Pharmacology' :'당신의 영양생리약리 박물관'}
             </div>
             <FormBox onSubmit={handleSubmit(onValid)}>
                 <Form
