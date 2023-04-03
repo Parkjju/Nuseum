@@ -5,6 +5,9 @@ import useCalculate from '../../../hooks/useCalculate';
 import BottomSheet from '../BottomSheet/BottomSheet';
 import { CurationMeal, CurationMealWrapper, CurationTd } from './Table.styled';
 
+import { TooltipDescription } from '../../pages/Analysis/Analysis.style';
+import { Tooltip } from '@mui/material';
+
 const Table = ({
     curationData,
     inSufficientDiversity,
@@ -345,15 +348,133 @@ const Table = ({
                     <thead>
                         <tr>
                             <th class='pin'></th>
-                            <th>DHA+EPA</th>
-                            <th>비타민 A</th>
-                            <th>마그네슘</th>
-                            <th>트립토판</th>
-                            <th>비타민 B6</th>
-                            <th>비타민 B12</th>
-                            <th>엽산</th>
-                            <th>비타민 D</th>
-                            <th>식이섬유</th>
+                            <Tooltip
+                                title={
+                                    <div>
+                                        <TooltipDescription>
+                                            혈중 중성지질, 혈행개선에 도움을 줄
+                                            수 있음, 기억력 개선에 도움을 줄 수
+                                            있음, 건조한 눈을 개선하여 눈 건강에
+                                            도움을 줄 수 있음
+                                        </TooltipDescription>
+                                    </div>
+                                }
+                            >
+                                <th>DHA+EPA</th>
+                            </Tooltip>
+                            <Tooltip
+                                title={
+                                    <div>
+                                        <TooltipDescription>
+                                            1. 어두운 곳에서 시각 적응을 위해
+                                            필요
+                                        </TooltipDescription>
+                                        <TooltipDescription>
+                                            2. 피부와 점막을 형성하고 기능을
+                                            유지하는데 필요
+                                        </TooltipDescription>
+                                        <TooltipDescription>
+                                            3. 상피세포의 성장과 발달에 필요
+                                        </TooltipDescription>
+                                    </div>
+                                }
+                            >
+                                <th>비타민 A</th>
+                            </Tooltip>
+                            <Tooltip
+                                title={
+                                    <div>
+                                        <TooltipDescription>
+                                            1. 에너지 이용에 필요
+                                        </TooltipDescription>
+                                        <TooltipDescription>
+                                            2. 신경과 근육 기능 유지에 필요
+                                        </TooltipDescription>
+                                    </div>
+                                }
+                            >
+                                <th>마그네슘</th>
+                            </Tooltip>
+                            <Tooltip
+                                title={
+                                    <div>
+                                        <TooltipDescription>
+                                            신경전달물질인 세로토닌, 멜라토닌의
+                                            전구체로 이용되는 필수 아미노산
+                                        </TooltipDescription>
+                                    </div>
+                                }
+                            >
+                                <th>트립토판</th>
+                            </Tooltip>
+                            <Tooltip
+                                title={
+                                    <div>
+                                        <TooltipDescription>
+                                            1. 단백질 및 아미노산 이용에 필요
+                                        </TooltipDescription>
+                                        <TooltipDescription>
+                                            2. 혈액의 호모시스테인 수준을
+                                            정상으로 유지하는데 필요
+                                        </TooltipDescription>
+                                    </div>
+                                }
+                            >
+                                <th>비타민 B6</th>
+                            </Tooltip>
+                            <Tooltip
+                                title={
+                                    <div>
+                                        <TooltipDescription>
+                                            정상적인 엽산 대사에 필요
+                                        </TooltipDescription>
+                                    </div>
+                                }
+                            >
+                                <th>비타민 B12</th>
+                            </Tooltip>
+                            <Tooltip
+                                title={
+                                    <div>
+                                        <TooltipDescription>
+                                            1. 세포와 혈액 생성에 필요
+                                        </TooltipDescription>
+                                        <TooltipDescription>
+                                            2. 태아 신경관의 정상 발달에 필요
+                                        </TooltipDescription>
+                                        <TooltipDescription>
+                                            3. 혈액의 호모시스테인 수준을
+                                            정상으로 유지하는데 필요
+                                        </TooltipDescription>
+                                    </div>
+                                }
+                            >
+                                <th>엽산</th>
+                            </Tooltip>
+                            <Tooltip
+                                title={
+                                    <div>
+                                        <TooltipDescription>
+                                            칼슘과 인이 흡수되고 이용되는데
+                                            필요, 뼈의 형성과 유지에 위험 감소에
+                                            도움을 필요, 골다공증 발생 줌
+                                        </TooltipDescription>
+                                    </div>
+                                }
+                            >
+                                <th>비타민 D</th>
+                            </Tooltip>
+                            <Tooltip
+                                title={
+                                    <div>
+                                        <TooltipDescription>
+                                            배변활동 원활에 도움을 줄 수 있음
+                                        </TooltipDescription>
+                                    </div>
+                                }
+                            >
+                                <th>식이섬유</th>
+                            </Tooltip>
                         </tr>
                     </thead>
 
