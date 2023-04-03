@@ -17,7 +17,7 @@ export const Box = styled.div`
     grid-template-rows: repeat(3, 1fr);
     justify-items: center;
     align-items: center;
-    padding-bottom: 50px;
+    padding-bottom: 30px;
 `;
 
 export const IconBox = styled.div`
