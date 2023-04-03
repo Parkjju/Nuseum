@@ -308,21 +308,26 @@ const Curation = () => {
     return (
         <Container>
             <Table
+                // isSelected={isSelected[0]}
                 curationData={curationData}
                 inSufficientDiversity={inSufficientDiversity}
                 inSufficientNutrition={inSufficientNutrition}
             ></Table>
-            <ButtonBox style={{ margin: '0 auto', justifyContent: 'center' }}>
+            {/* <ButtonBox style={{ margin: '0 auto', justifyContent: 'center' }}>
                 <FetchButton
                     onClick={() => {
-                        setIsSelected([true, false]);
+                        if (isSelected[0]) {
+                            return;
+                        } else {
+                            setIsSelected([true, false]);
+                        }
                     }}
                     isClicked={isSelected[0]}
                 >
                     <span>{lang ? 'Weekly Nutrients' : '한 주 데이터로'}</span>
                     <span>{lang ? '' : '추천받기'}</span>
                 </FetchButton>
-                {/* <FetchButton
+                <FetchButton
                     onClick={() => {
                         setIsSelected([false, true]);
                     }}
@@ -330,8 +335,8 @@ const Curation = () => {
                 >
                     <span>{lang ? 'Monthly Nutrients' : '한 달'}</span>
                     <span>{lang ? '' : '섭취 영양소'}</span>
-                </FetchButton> */}
-            </ButtonBox>
+                </FetchButton>
+            </ButtonBox> */}
         </Container>
     );
 };
