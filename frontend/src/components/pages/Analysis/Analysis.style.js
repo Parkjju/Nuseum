@@ -119,7 +119,6 @@ export const NutrientList = styled.div`
     align-items: center;
     span {
         padding: 10px 0px;
-        
     }
     margin-bottom: 50px;
 `;
@@ -136,4 +135,9 @@ export const Point = styled.p`
     display: flex;
     align-items: baseline;
     justify-content: center;
+`;
+
+export const TooltipDescription = styled.p`
+    line-height: 1.5;
+    font-family: 'Noto Serif KR', serif;
 `;
