@@ -254,11 +254,10 @@ const Table = ({
                 // 가중치 부여
                 if (curationData[coordinate]) {
                     for (let meal of Object.keys(curationData[coordinate])) {
-                        // 가중치 반영하지 않기 위해 0을 더해줌
                         setWeight((prev) => {
                             return {
                                 ...prev,
-                                [meal]: (prev[meal] += 0),
+                                [meal]: (prev[meal] += 1),
                             };
                         });
                     }
@@ -365,48 +364,54 @@ const Table = ({
                                     <th key={index}>
                                         {getTitleHeader(diversityCoordinate)}
                                     </th>
+
                                     {Object.entries(
                                         curationList[diversityCoordinate]
                                     ).map((cellData, index) => (
                                         <CurationTd key={index}>
                                             {cellData[1]
                                                 ? Object.keys(cellData[1]).map(
-                                                    (meal) => (
-                                                        <CurationMeal
-                                                            // 가중치 없이 1로 임시통일
-                                                            numberOfCurated={1}
-                                                            onClick={(e) => {
-                                                                setIsOpen(true);
-                                                                setClickedTag(
-                                                                    e.target
-                                                                        .innerText
-                                                                );
-                                                            }}
-                                                        >
-                                                            {meal}
-                                                        </CurationMeal>
-                                                    )
-                                                )
+                                                      (meal) => (
+                                                          <CurationMeal
+                                                              // 가중치 없이 1로 임시통일
+                                                              numberOfCurated={
+                                                                  weight[meal]
+                                                              }
+                                                              onClick={(e) => {
+                                                                  setIsOpen(
+                                                                      true
+                                                                  );
+                                                                  setClickedTag(
+                                                                      e.target
+                                                                          .innerText
+                                                                  );
+                                                              }}
+                                                          >
+                                                              {meal}
+                                                          </CurationMeal>
+                                                      )
+                                                  )
                                                 : notCuratedList[
-                                                    diversityCoordinate
-                                                ][cellData[0]]
+                                                      diversityCoordinate
+                                                  ][cellData[0]]
                                                 ? Object.keys(
-                                                    notCuratedList[
-                                                        diversityCoordinate
-                                                    ][cellData[0]]
-                                                ).map((meal) => (
-                                                    <CurationMeal
-                                                        notCurated={true}
-                                                        onClick={(e) => {
-                                                            setIsOpen(true);
-                                                            setClickedTag(
-                                                                e.target.innerText
-                                                            );
-                                                        }}
-                                                    >
-                                                        {meal}
-                                                    </CurationMeal>
-                                                ))
+                                                      notCuratedList[
+                                                          diversityCoordinate
+                                                      ][cellData[0]]
+                                                  ).map((meal) => (
+                                                      <CurationMeal
+                                                          notCurated={true}
+                                                          onClick={(e) => {
+                                                              setIsOpen(true);
+                                                              setClickedTag(
+                                                                  e.target
+                                                                      .innerText
+                                                              );
+                                                          }}
+                                                      >
+                                                          {meal}
+                                                      </CurationMeal>
+                                                  ))
                                                 : null}
                                         </CurationTd>
                                     ))}
@@ -417,7 +422,10 @@ const Table = ({
                 </table>
 
                 {isOpen ? (
-                    <BottomSheet setIsOpen={setIsOpen} clickedTag={clickedTag} />
+                    <BottomSheet
+                        setIsOpen={setIsOpen}
+                        clickedTag={clickedTag}
+                    />
                 ) : null}
             </div>
         </Container>
