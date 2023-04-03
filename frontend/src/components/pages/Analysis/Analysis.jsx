@@ -866,7 +866,21 @@ const Analysis = () => {
 
                                     <S.NutrientBox>
                                         <S.NutrientList>
-                                            <Tooltip title='혈중 중성지질, 혈행개선에 도움을 줄 수 있음, 기억력 개선에 도움을 줄 수 있음, 건조한 눈을 개선하여 눈 건강에 도움을 줄 수 있음'>
+                                            <Tooltip
+                                                title={
+                                                    <div>
+                                                        <S.TooltipDescription>
+                                                            혈중 중성지질,
+                                                            혈행개선에 도움을 줄
+                                                            수 있음, 기억력
+                                                            개선에 도움을 줄 수
+                                                            있음, 건조한 눈을
+                                                            개선하여 눈 건강에
+                                                            도움을 줄 수 있음
+                                                        </S.TooltipDescription>
+                                                    </div>
+                                                }
+                                            >
                                                 <Name
                                                     style={{
                                                         fontWeight: 400,
@@ -884,20 +898,20 @@ const Analysis = () => {
                                             <Tooltip
                                                 title={
                                                     <div>
-                                                        <p>
+                                                        <S.TooltipDescription>
                                                             1. 세포와 혈액
                                                             생성에 필요
-                                                        </p>
-                                                        <p>
+                                                        </S.TooltipDescription>
+                                                        <S.TooltipDescription>
                                                             2. 태아 신경관의
                                                             정상 발달에 필요
-                                                        </p>
-                                                        <p>
+                                                        </S.TooltipDescription>
+                                                        <S.TooltipDescription>
                                                             3. 혈액의
                                                             호모시스테인 수준을
                                                             정상으로 유지하는데
                                                             필요
-                                                        </p>
+                                                        </S.TooltipDescription>
                                                     </div>
                                                 }
                                             >
@@ -919,14 +933,14 @@ const Analysis = () => {
                                             <Tooltip
                                                 title={
                                                     <div>
-                                                        <p>
+                                                        <S.TooltipDescription>
                                                             1. 에너지 이용에
                                                             필요
-                                                        </p>
-                                                        <p>
+                                                        </S.TooltipDescription>
+                                                        <S.TooltipDescription>
                                                             2. 신경과 근육 기능
                                                             유지에 필요
-                                                        </p>
+                                                        </S.TooltipDescription>
                                                     </div>
                                                 }
                                             >
@@ -948,7 +962,18 @@ const Analysis = () => {
                                             </Tooltip>
                                             <S.Divider />
 
-                                            <Tooltip title='신경전달물질인 세로토닌, 멜라토닌의 전구체로 이용되는 필수 아미노산'>
+                                            <Tooltip
+                                                title={
+                                                    <div>
+                                                        <S.TooltipDescription>
+                                                            신경전달물질인
+                                                            세로토닌, 멜라토닌의
+                                                            전구체로 이용되는
+                                                            필수 아미노산
+                                                        </S.TooltipDescription>
+                                                    </div>
+                                                }
+                                            >
                                                 <Name
                                                     style={{ fontWeight: 400 }}
                                                 >
@@ -966,20 +991,20 @@ const Analysis = () => {
                                             <Tooltip
                                                 title={
                                                     <div>
-                                                        <p>
+                                                        <S.TooltipDescription>
                                                             1. 어두운 곳에서
                                                             시각 적응을 위해
                                                             필요
-                                                        </p>
-                                                        <p>
+                                                        </S.TooltipDescription>
+                                                        <S.TooltipDescription>
                                                             2. 피부와 점막을
                                                             형성하고 기능을
                                                             유지하는데 필요
-                                                        </p>
-                                                        <p>
+                                                        </S.TooltipDescription>
+                                                        <S.TooltipDescription>
                                                             3. 상피세포의 성장과
                                                             발달에 필요
-                                                        </p>
+                                                        </S.TooltipDescription>
                                                     </div>
                                                 }
                                             >
@@ -997,7 +1022,16 @@ const Analysis = () => {
                                                     %
                                                 </Name>
                                             </Tooltip>
-                                            <Tooltip title='배변활동 원활에 도움을 줄 수 있음'>
+                                            <Tooltip
+                                                title={
+                                                    <div>
+                                                        <S.TooltipDescription>
+                                                            배변활동 원활에
+                                                            도움을 줄 수 있음
+                                                        </S.TooltipDescription>
+                                                    </div>
+                                                }
+                                            >
                                                 <Name
                                                     style={{ fontWeight: 400 }}
                                                 >
@@ -1016,16 +1050,16 @@ const Analysis = () => {
                                             <Tooltip
                                                 title={
                                                     <div>
-                                                        <p>
+                                                        <S.TooltipDescription>
                                                             1. 단백질 및
                                                             아미노산 이용에 필요
-                                                        </p>
-                                                        <p>
+                                                        </S.TooltipDescription>
+                                                        <S.TooltipDescription>
                                                             2. 혈액의
                                                             호모시스테인 수준을
                                                             정상으로 유지하는데
                                                             필요
-                                                        </p>
+                                                        </S.TooltipDescription>
                                                     </div>
                                                 }
                                             >
@@ -1044,7 +1078,16 @@ const Analysis = () => {
                                                 </Name>
                                             </Tooltip>
 
-                                            <Tooltip title='정상적인 엽산 대사에 필요'>
+                                            <Tooltip
+                                                title={
+                                                    <div>
+                                                        <S.TooltipDescription>
+                                                            정상적인 엽산 대사에
+                                                            필요
+                                                        </S.TooltipDescription>
+                                                    </div>
+                                                }
+                                            >
                                                 <Name
                                                     style={{ fontWeight: 400 }}
                                                 >
@@ -1061,8 +1104,18 @@ const Analysis = () => {
                                             </Tooltip>
 
                                             <Tooltip
-                                                title='칼슘과 인이 흡수되고 이용되는데 필요, 뼈의 형성과 유지에 필요, 골다공증 발생 위험 감소에 도움을 줌
-'
+                                                title={
+                                                    <div>
+                                                        <S.TooltipDescription>
+                                                            칼슘과 인이 흡수되고
+                                                            이용되는데 필요,
+                                                            뼈의 형성과 유지에
+                                                            필요, 골다공증 발생
+                                                            위험 감소에 도움을
+                                                            줌
+                                                        </S.TooltipDescription>
+                                                    </div>
+                                                }
                                             >
                                                 <Name
                                                     style={{ fontWeight: 400 }}
