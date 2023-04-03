@@ -9,7 +9,7 @@ import { ButtonBox, FetchButton } from '../Analysis/Analysis.style';
 
 const Curation = () => {
     const range = useCalculate('M', 3);
-    const [isSelected, setIsSelected] = useState([true, false]);
+    const [isSelected, setIsSelected] = useState([false, false]);
     let curationData = {
         '5.0': {
             건미역: 0,
@@ -254,7 +254,7 @@ const Curation = () => {
     });
 
     const _ = useQuery(
-        ['dailyNutrient', midnight.getTime(), token],
+        ['dailyNutrient', midnight.getTime(), 'week', token],
         fetchDailyNutrient,
         {
             refetchOnWindowFocus: false,
@@ -312,17 +312,17 @@ const Curation = () => {
                 inSufficientDiversity={inSufficientDiversity}
                 inSufficientNutrition={inSufficientNutrition}
             ></Table>
-            <ButtonBox>
+            <ButtonBox style={{ margin: '0 auto', justifyContent: 'center' }}>
                 <FetchButton
                     onClick={() => {
                         setIsSelected([true, false]);
                     }}
                     isClicked={isSelected[0]}
                 >
-                    <span>{lang ? 'Weekly Nutrients' : '한 주'}</span>
-                    <span>{lang ? '' : '섭취 영양소'}</span>
+                    <span>{lang ? 'Weekly Nutrients' : '한 주 데이터로'}</span>
+                    <span>{lang ? '' : '추천받기'}</span>
                 </FetchButton>
-                <FetchButton
+                {/* <FetchButton
                     onClick={() => {
                         setIsSelected([false, true]);
                     }}
@@ -330,7 +330,7 @@ const Curation = () => {
                 >
                     <span>{lang ? 'Monthly Nutrients' : '한 달'}</span>
                     <span>{lang ? '' : '섭취 영양소'}</span>
-                </FetchButton>
+                </FetchButton> */}
             </ButtonBox>
         </Container>
     );
