@@ -227,7 +227,6 @@ const Analysis = () => {
             alert('이 날에는 기록하지 않으셨네요!');
         }
     };
-    console.log('without supplements: ', nutritionWithoutSupplement);
     const onChange = async (d) => {
         setLoading(true);
         // ?date=1663772400000&nutrient=yes
