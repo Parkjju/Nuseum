@@ -12,6 +12,8 @@ export const ResultBox = styled(motion.div)`
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-height: 50vh;
+    overflow-y: scroll;
 `;
 
 export const Result = styled(motion.p)`
