@@ -6,6 +6,7 @@ export const FormBox = styled.form`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 40px;
 `;
 
 export const LogoBox = styled.div`
@@ -16,8 +17,8 @@ export const LogoBox = styled.div`
 
 export const Logo = styled.img`
     width: 140px;
-    margin-bottom: 30px;
-    margin-top: 50px;
+    margin-bottom: 20px;
+    margin-top: 40px;
 `;
 
 export const BtnBox = styled(FormBox)``;
