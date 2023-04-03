@@ -36,7 +36,7 @@ function Home() {
 
     return (
         <Container>
-            <Contents style={{}}>
+            <Contents>
                 <DiaryTitle layoutId={menu[0][2]}>
                     <Name
                         style={{
