@@ -1,3 +1,4 @@
+import { Container } from '@mui/system';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import useCalculate from '../../../hooks/useCalculate';
@@ -333,91 +334,93 @@ const Table = ({
     };
 
     return (
-        <div
-            style={{ ...style }}
-            role='region'
-            aria-label='data table'
-            tabindex='0'
-            class='primary'
-        >
-            <table>
-                <thead>
-                    <tr>
-                        <th class='pin'></th>
-                        <th>DHA+EPA</th>
-                        <th>비타민 A</th>
-                        <th>마그네슘</th>
-                        <th>트립토판</th>
-                        <th>비타민 B6</th>
-                        <th>비타민 B12</th>
-                        <th>엽산</th>
-                        <th>비타민 D</th>
-                        <th>식이섬유</th>
-                    </tr>
-                </thead>
+        <Container>
+            <div
+                style={{ ...style }}
+                role='region'
+                aria-label='data table'
+                tabindex='0'
+                class='primary'
+            >
+                <table>
+                    <thead>
+                        <tr>
+                            <th class='pin'></th>
+                            <th>DHA+EPA</th>
+                            <th>비타민 A</th>
+                            <th>마그네슘</th>
+                            <th>트립토판</th>
+                            <th>비타민 B6</th>
+                            <th>비타민 B12</th>
+                            <th>엽산</th>
+                            <th>비타민 D</th>
+                            <th>식이섬유</th>
+                        </tr>
+                    </thead>
 
-                <tbody>
-                    {Object.keys(curationList).map(
-                        (diversityCoordinate, index) => (
-                            <tr>
-                                <th key={index}>
-                                    {getTitleHeader(diversityCoordinate)}
-                                </th>
-                                {Object.entries(
-                                    curationList[diversityCoordinate]
-                                ).map((cellData, index) => (
-                                    <CurationTd key={index}>
-                                        {cellData[1]
-                                            ? Object.keys(cellData[1]).map(
-                                                  (meal) => (
-                                                      <CurationMeal
-                                                          // 가중치 없이 1로 임시통일
-                                                          numberOfCurated={1}
-                                                          onClick={(e) => {
-                                                              setIsOpen(true);
-                                                              setClickedTag(
-                                                                  e.target
-                                                                      .innerText
-                                                              );
-                                                          }}
-                                                      >
-                                                          {meal}
-                                                      </CurationMeal>
-                                                  )
-                                              )
-                                            : notCuratedList[
-                                                  diversityCoordinate
-                                              ][cellData[0]]
-                                            ? Object.keys(
-                                                  notCuratedList[
-                                                      diversityCoordinate
-                                                  ][cellData[0]]
-                                              ).map((meal) => (
-                                                  <CurationMeal
-                                                      notCurated={true}
-                                                      onClick={(e) => {
-                                                          setIsOpen(true);
-                                                          setClickedTag(
-                                                              e.target.innerText
-                                                          );
-                                                      }}
-                                                  >
-                                                      {meal}
-                                                  </CurationMeal>
-                                              ))
-                                            : null}
-                                    </CurationTd>
-                                ))}
-                            </tr>
-                        )
-                    )}
-                </tbody>
-            </table>
+                    <tbody>
+                        {Object.keys(curationList).map(
+                            (diversityCoordinate, index) => (
+                                <tr>
+                                    <th key={index}>
+                                        {getTitleHeader(diversityCoordinate)}
+                                    </th>
+                                    {Object.entries(
+                                        curationList[diversityCoordinate]
+                                    ).map((cellData, index) => (
+                                        <CurationTd key={index}>
+                                            {cellData[1]
+                                                ? Object.keys(cellData[1]).map(
+                                                    (meal) => (
+                                                        <CurationMeal
+                                                            // 가중치 없이 1로 임시통일
+                                                            numberOfCurated={1}
+                                                            onClick={(e) => {
+                                                                setIsOpen(true);
+                                                                setClickedTag(
+                                                                    e.target
+                                                                        .innerText
+                                                                );
+                                                            }}
+                                                        >
+                                                            {meal}
+                                                        </CurationMeal>
+                                                    )
+                                                )
+                                                : notCuratedList[
+                                                    diversityCoordinate
+                                                ][cellData[0]]
+                                                ? Object.keys(
+                                                    notCuratedList[
+                                                        diversityCoordinate
+                                                    ][cellData[0]]
+                                                ).map((meal) => (
+                                                    <CurationMeal
+                                                        notCurated={true}
+                                                        onClick={(e) => {
+                                                            setIsOpen(true);
+                                                            setClickedTag(
+                                                                e.target.innerText
+                                                            );
+                                                        }}
+                                                    >
+                                                        {meal}
+                                                    </CurationMeal>
+                                                ))
+                                                : null}
+                                        </CurationTd>
+                                    ))}
+                                </tr>
+                            )
+                        )}
+                    </tbody>
+                </table>
 
-            {isOpen ? (
-                <BottomSheet setIsOpen={setIsOpen} clickedTag={clickedTag} />
-            ) : null}
-        </div>
+                {isOpen ? (
+                    <BottomSheet setIsOpen={setIsOpen} clickedTag={clickedTag} />
+                ) : null}
+            </div>
+        </Container>
     );
 };
 

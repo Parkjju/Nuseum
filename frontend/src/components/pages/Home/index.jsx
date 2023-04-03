@@ -31,7 +31,7 @@ function Home() {
         [analysis, lang ? 'ANALYSIS' : '식이분석', 'analysis'],
         [food, lang ? 'FOOD' : '맞춤식품', 'food'],
         // [record, lang ? 'HEALTH RECORD' : '내 아이', 'record'],
-        [lang ? 'QUESTION' : 'Q&A', 'Q&A'],
+        [question, lang ? 'QUESTION' : 'Q&A', 'Q&A'],
     ];
 
     return (

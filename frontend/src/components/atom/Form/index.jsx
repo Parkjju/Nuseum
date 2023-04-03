@@ -7,7 +7,7 @@ const Input = styled.input`
     border: 1px solid #7f8c8d;
     font-size: 16px;
     padding-left: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     &:focus {
         outline: ${(props) => (props.error ? '1px solid red' : null)};
     }
