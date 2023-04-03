@@ -82,7 +82,7 @@ export const ModalBackground = styled.div`
 export const ModalSearch = styled.div`
     width: 90%;
     padding-right: 10px;
-    height: 30px;
+    height: 40px;
     padding-left: 10px;
     border: 1px solid black;
     border-radius: 10px;

@@ -76,6 +76,7 @@ function DiaryCalendar() {
                     transition={{
                         velocity: 1,
                     }}
+                    style={{display:'flex', justifyContent: 'center'}}
                 >
                     {location.pathname.split('/')[1] === 'diary' ? (
                         <Calendar

@@ -131,7 +131,12 @@ function Login() {
                         : 'NUSEUM'
                 }
             />
-
+            <div
+            style={{marginBottom: '90px', width:'100%', textAlign:'center', 
+            fontWeight: 'bold', whiteSpace:'pre-wrap', lineHeight:'1.5rem'}}
+            >
+                Your Museum of {'\n'} Nutrient Physiology & Pharmacology
+            </div>
             <FormBox onSubmit={handleSubmit(onValid)}>
                 <Form
                     {...register('loginId', {
