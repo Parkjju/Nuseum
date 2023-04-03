@@ -5,9 +5,11 @@ import { useQuery } from 'react-query';
 import { fetchDailyNutrient } from '../../../api';
 import Table from '../../molecules/Table';
 import useCalculate from '../../../hooks/useCalculate';
+import { ButtonBox, FetchButton } from '../Analysis/Analysis.style';
 
 const Curation = () => {
     const range = useCalculate('M', 3);
+    const [isSelected, setIsSelected] = useState([true, false]);
     let curationData = {
         '5.0': {
             건미역: 0,
@@ -310,37 +312,26 @@ const Curation = () => {
                 inSufficientDiversity={inSufficientDiversity}
                 inSufficientNutrition={inSufficientNutrition}
             ></Table>
-            {/* <Contents>
-                <AnimatePresence>
-                    {recommendList.map((recommendData) =>
-                        recommendList.indexOf(recommendData) ===
-                        visibleIndex ? (
-                            <motion.div
-                                style={{
-                                    width: '100%',
-                                    height: 'auto',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                }}
-                                key={recommendData.id}
-                                dragSnapToOrigin
-                                initial={{ x: isNegative ? -300 : 300 }}
-                                animate={{ x: 0 }}
-                                transition='none'
-                            >
-                                <Slide
-                                    date={recommendData.created_at}
-                                    id={recommendData.id}
-                                    setVisibleIndex={onClick}
-                                    visibleIndex={visibleIndex}
-                                    length={recommendList.length}
-                                />
-                            </motion.div>
-                        ) : null
-                    )}
-                </AnimatePresence>
-            </Contents> */}
+            <ButtonBox>
+                <FetchButton
+                    onClick={() => {
+                        setIsSelected([true, false]);
+                    }}
+                    isClicked={isSelected[0]}
+                >
+                    <span>{lang ? 'Weekly Nutrients' : '한 주'}</span>
+                    <span>{lang ? '' : '섭취 영양소'}</span>
+                </FetchButton>
+                <FetchButton
+                    onClick={() => {
+                        setIsSelected([false, true]);
+                    }}
+                    isClicked={isSelected[1]}
+                >
+                    <span>{lang ? 'Monthly Nutrients' : '한 달'}</span>
+                    <span>{lang ? '' : '섭취 영양소'}</span>
+                </FetchButton>
+            </ButtonBox>
         </Container>
     );
 };
