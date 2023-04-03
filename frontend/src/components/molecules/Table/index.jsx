@@ -253,10 +253,11 @@ const Table = ({
                 // 가중치 부여
                 if (curationData[coordinate]) {
                     for (let meal of Object.keys(curationData[coordinate])) {
+                        // 가중치 반영하지 않기 위해 0을 더해줌
                         setWeight((prev) => {
                             return {
                                 ...prev,
-                                [meal]: (prev[meal] += 1),
+                                [meal]: (prev[meal] += 0),
                             };
                         });
                     }
@@ -370,9 +371,8 @@ const Table = ({
                                             ? Object.keys(cellData[1]).map(
                                                   (meal) => (
                                                       <CurationMeal
-                                                          numberOfCurated={
-                                                              weight[meal]
-                                                          }
+                                                          // 가중치 없이 1로 임시통일
+                                                          numberOfCurated={1}
                                                           onClick={(e) => {
                                                               setIsOpen(true);
                                                               setClickedTag(
