@@ -565,7 +565,7 @@ const Analysis = () => {
                         height: 'auto',
                     }}
                 >
-                    <Name style={{ fontSize: '16px' }}>
+                    <Name style={{ fontSize: '20px' }}>
                         {lang ? 'Analysis' : '식이분석'}
                     </Name>
                 </DiaryTitle>
@@ -629,6 +629,7 @@ const Analysis = () => {
                             {loading ? (
                                 <CircularProgress />
                             ) : (
+                                
                                 <>
                                     {
                                         lang ? null : null
@@ -645,164 +646,6 @@ const Analysis = () => {
                                         //         논문들을 리뷰하여 선별되었으며
                                         //         이들에 대한 섭취내용을
                                         //         분석합니다.'
-                                        //     </p>
-                                        // </S.SectionTitle>
-                                    }
-
-                                    <S.NutrientBox>
-                                        <S.NutrientList>
-                                            <Name
-                                                style={{
-                                                    fontWeight: 400,
-                                                }}
-                                            >
-                                                DHA+EPA{' '}
-                                                {(
-                                                    (nutrition.dha_epa /
-                                                        (300 * dateCount)) *
-                                                    100
-                                                ).toFixed(1)}
-                                                %
-                                            </Name>
-                                            <Name style={{ fontWeight: 400 }}>
-                                                {lang ? 'Folic acid' : '엽산'}{' '}
-                                                {(
-                                                    (nutrition.folic_acid /
-                                                        (180 * dateCount)) *
-                                                    100
-                                                ).toFixed(1)}
-                                                %
-                                            </Name>
-
-                                            <Name
-                                                style={{
-                                                    fontWeight: 400,
-                                                }}
-                                            >
-                                                {lang
-                                                    ? 'Magnesium'
-                                                    : '마그네슘'}{' '}
-                                                {(
-                                                    (nutrition.magnesium /
-                                                        (110 * dateCount)) *
-                                                    100
-                                                ).toFixed(1)}
-                                                %
-                                            </Name>
-                                            <S.Divider />
-
-                                            <Name style={{ fontWeight: 400 }}>
-                                                {lang
-                                                    ? 'Tryptophan'
-                                                    : '트립토판'}{' '}
-                                                {(
-                                                    (nutrition.tryptophan /
-                                                        (100 * dateCount)) *
-                                                    100
-                                                ).toFixed(1)}
-                                                %
-                                            </Name>
-                                            <Name style={{ fontWeight: 400 }}>
-                                                {lang
-                                                    ? 'Vitamin A'
-                                                    : '비타민 A'}{' '}
-                                                {(
-                                                    (nutrition.vitamin_a /
-                                                        (300 * dateCount)) *
-                                                    100
-                                                ).toFixed(1)}
-                                                %
-                                            </Name>
-                                            <Name style={{ fontWeight: 400 }}>
-                                                {lang
-                                                    ? 'Dietary fiber'
-                                                    : '식이섬유'}{' '}
-                                                {(
-                                                    (nutrition.dietary_fiber /
-                                                        (20 * dateCount)) *
-                                                    100
-                                                ).toFixed(1)}
-                                                %
-                                            </Name>
-                                            <S.Divider />
-                                            <Name style={{ fontWeight: 400 }}>
-                                                {lang
-                                                    ? 'Vitamin B6'
-                                                    : '비타민 B6'}{' '}
-                                                {(
-                                                    (nutrition.vitamin_b6 /
-                                                        (0.7 * dateCount)) *
-                                                    100
-                                                ).toFixed(1)}
-                                                %
-                                            </Name>
-
-                                            <Name style={{ fontWeight: 400 }}>
-                                                {lang
-                                                    ? 'Vitamin B12'
-                                                    : '비타민 B12'}{' '}
-                                                {(
-                                                    (nutrition.vitamin_b12 /
-                                                        (1.1 * dateCount)) *
-                                                    100
-                                                ).toFixed(1)}
-                                                %
-                                            </Name>
-                                            <Name style={{ fontWeight: 400 }}>
-                                                {lang
-                                                    ? 'Vitamin D'
-                                                    : '비타민 D'}{' '}
-                                                {(
-                                                    (nutrition.vitamin_d /
-                                                        (5 * dateCount)) *
-                                                    100
-                                                ).toFixed(1)}
-                                                %
-                                            </Name>
-                                        </S.NutrientList>
-
-                                        <div
-                                            style={{
-                                                width: '90%',
-                                                boxSizing: 'border-box',
-                                            }}
-                                        >
-                                            <RadarGraph
-                                                dateCount={dateCount}
-                                                data={nutrition}
-                                                dataWithoutSupplement={
-                                                    nutritionWithoutSupplement
-                                                }
-                                            />
-                                        </div>
-                                    </S.NutrientBox>
-                                    <div
-                                        style={{
-                                            width: '90%',
-                                            marginBottom: '30px',
-                                        }}
-                                    >
-                                        <BarGraph
-                                            count={dateCount}
-                                            data={nutrition}
-                                        />
-                                    </div>
-                                    {
-                                        lang ? null : null
-                                        // <S.SectionTitle>
-                                        //     <p
-                                        //         style={{
-                                        //             lineHeight: 1.5,
-                                        //             fontWeight: 500,
-                                        //         }}
-                                        //     >
-                                        //         다양한 식품군의 섭취는 다양한
-                                        //         영양성분과 생리활성물질을
-                                        //         섭취하게 하고, 이는 장내 다양한
-                                        //         미생물을 서식하게 하여, 건강한
-                                        //         뇌발달에 영향을 미칩니다. 섭취한
-                                        //         식품군과 섭취가 필요해 보이는
-                                        //         식품군을 분석합니다.
                                         //     </p>
                                         // </S.SectionTitle>
                                     }
@@ -1019,6 +862,164 @@ const Analysis = () => {
                                             </Name>
                                         </S.IconBox>
                                     </S.Box>
+
+                                    <S.NutrientBox>
+                                        <S.NutrientList>
+                                            <Name
+                                                style={{
+                                                    fontWeight: 400,
+                                                }}
+                                            >
+                                                DHA+EPA{' '}
+                                                {(
+                                                    (nutrition.dha_epa /
+                                                        (300 * dateCount)) *
+                                                    100
+                                                ).toFixed(1)}
+                                                %
+                                            </Name>
+                                            <Name style={{ fontWeight: 400 }}>
+                                                {lang ? 'Folic acid' : '엽산'}{' '}
+                                                {(
+                                                    (nutrition.folic_acid /
+                                                        (180 * dateCount)) *
+                                                    100
+                                                ).toFixed(1)}
+                                                %
+                                            </Name>
+
+                                            <Name
+                                                style={{
+                                                    fontWeight: 400,
+                                                }}
+                                            >
+                                                {lang
+                                                    ? 'Magnesium'
+                                                    : '마그네슘'}{' '}
+                                                {(
+                                                    (nutrition.magnesium /
+                                                        (110 * dateCount)) *
+                                                    100
+                                                ).toFixed(1)}
+                                                %
+                                            </Name>
+                                            <S.Divider />
+
+                                            <Name style={{ fontWeight: 400 }}>
+                                                {lang
+                                                    ? 'Tryptophan'
+                                                    : '트립토판'}{' '}
+                                                {(
+                                                    (nutrition.tryptophan /
+                                                        (100 * dateCount)) *
+                                                    100
+                                                ).toFixed(1)}
+                                                %
+                                            </Name>
+                                            <Name style={{ fontWeight: 400 }}>
+                                                {lang
+                                                    ? 'Vitamin A'
+                                                    : '비타민 A'}{' '}
+                                                {(
+                                                    (nutrition.vitamin_a /
+                                                        (300 * dateCount)) *
+                                                    100
+                                                ).toFixed(1)}
+                                                %
+                                            </Name>
+                                            <Name style={{ fontWeight: 400 }}>
+                                                {lang
+                                                    ? 'Dietary fiber'
+                                                    : '식이섬유'}{' '}
+                                                {(
+                                                    (nutrition.dietary_fiber /
+                                                        (20 * dateCount)) *
+                                                    100
+                                                ).toFixed(1)}
+                                                %
+                                            </Name>
+                                            <S.Divider />
+                                            <Name style={{ fontWeight: 400 }}>
+                                                {lang
+                                                    ? 'Vitamin B6'
+                                                    : '비타민 B6'}{' '}
+                                                {(
+                                                    (nutrition.vitamin_b6 /
+                                                        (0.7 * dateCount)) *
+                                                    100
+                                                ).toFixed(1)}
+                                                %
+                                            </Name>
+
+                                            <Name style={{ fontWeight: 400 }}>
+                                                {lang
+                                                    ? 'Vitamin B12'
+                                                    : '비타민 B12'}{' '}
+                                                {(
+                                                    (nutrition.vitamin_b12 /
+                                                        (1.1 * dateCount)) *
+                                                    100
+                                                ).toFixed(1)}
+                                                %
+                                            </Name>
+                                            <Name style={{ fontWeight: 400 }}>
+                                                {lang
+                                                    ? 'Vitamin D'
+                                                    : '비타민 D'}{' '}
+                                                {(
+                                                    (nutrition.vitamin_d /
+                                                        (5 * dateCount)) *
+                                                    100
+                                                ).toFixed(1)}
+                                                %
+                                            </Name>
+                                        </S.NutrientList>
+
+                                        <div
+                                            style={{
+                                                width: '90%',
+                                                boxSizing: 'border-box',
+                                            }}
+                                        >
+                                            <RadarGraph
+                                                dateCount={dateCount}
+                                                data={nutrition}
+                                                dataWithoutSupplement={
+                                                    nutritionWithoutSupplement
+                                                }
+                                            />
+                                        </div>
+                                    </S.NutrientBox>
+                                    <div
+                                        style={{
+                                            width: '90%',
+                                            marginBottom: '50px',
+                                        }}
+                                    >
+                                        <BarGraph
+                                            count={dateCount}
+                                            data={nutrition}
+                                        />
+                                    </div>
+                                    {
+                                        lang ? null : null
+                                        // <S.SectionTitle>
+                                        //     <p
+                                        //         style={{
+                                        //             lineHeight: 1.5,
+                                        //             fontWeight: 500,
+                                        //         }}
+                                        //     >
+                                        //         다양한 식품군의 섭취는 다양한
+                                        //         영양성분과 생리활성물질을
+                                        //         섭취하게 하고, 이는 장내 다양한
+                                        //         미생물을 서식하게 하여, 건강한
+                                        //         뇌발달에 영향을 미칩니다. 섭취한
+                                        //         식품군과 섭취가 필요해 보이는
+                                        //         식품군을 분석합니다.
+                                        //     </p>
+                                        // </S.SectionTitle>
+                                    }
                                 </>
                             )}
                         </>

@@ -17,7 +17,7 @@ export const Box = styled.div`
     grid-template-rows: repeat(3, 1fr);
     justify-items: center;
     align-items: center;
-    padding-bottom: 100px;
+    padding-bottom: 50px;
 `;
 
 export const IconBox = styled.div`
@@ -111,13 +111,14 @@ export const NutrientBox = styled.div`
 `;
 export const NutrientList = styled.div`
     box-sizing: border-box;
-    width: 100%;
+    width: 75%;
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: space-around;
-    align-items: flex-start;
+    align-items: center;
     span {
-        padding: 8px;
+        padding: 10px 0px;
         
     }
     margin-bottom: 50px;
