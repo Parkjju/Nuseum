@@ -32,7 +32,7 @@ function Card({ menu, current }) {
                                     }}
                                 >
                                     <IconBox>
-                                        <Icon src={item[0]} />
+                                        <Icon src={item[0]} alt='' />
                                         <IconName>{item[1]}</IconName>
                                     </IconBox>
                                 </Link>
@@ -69,6 +69,7 @@ function Card({ menu, current }) {
                                                     position: 'relative',
                                                 }}
                                                 src={item[0]}
+                                                alt=''
                                             />
                                             <IconName>{item[1]}</IconName>
                                         </IconBox>
@@ -89,7 +90,7 @@ function Card({ menu, current }) {
                                         }}
                                     >
                                         <IconBox>
-                                            <Icon src={item[0]} />
+                                            <Icon src={item[0]} alt=''/>
                                             <IconName>{item[1]}</IconName>
                                         </IconBox>
                                     </Link>
