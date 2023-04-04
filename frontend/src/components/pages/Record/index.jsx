@@ -55,10 +55,10 @@ function Record() {
         <Container>
             <Contents>
                 <DiaryTitle layoutId={menu[0][2]}>
-                    <Icon style={{ width: '40px' }} src={menu[0][0]} />
+                    <Icon style={{ width: '40px', display:'none' }} src={menu[0][0]} />
                     <Name
                         style={{
-                            fontSize: '16px',
+                            fontSize: '18px',
                             fontWeight: 'bold',
                         }}
                     >

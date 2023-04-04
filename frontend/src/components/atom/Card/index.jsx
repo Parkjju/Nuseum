@@ -44,7 +44,8 @@ function Card({ menu, current }) {
                             transition={{
                                 velocity: 10,
                             }}
-                            style={{width: 'calc(100%/3.8)'}}
+                            style={{width: 'calc(100%/8)', height: '33px',margin: '5px',
+                            borderRadius: '8px', boxShadow:'0px 1px 4px rgba(0, 0, 0, 0.3)'}}
                         >
                             {item[1] === lang ? (
                                 'dinner'
@@ -67,6 +68,7 @@ function Card({ menu, current }) {
                                                 style={{
                                                     width: '30px',
                                                     position: 'relative',
+                                                    display: 'none'
                                                 }}
                                                 src={item[0]}
                                                 alt=''

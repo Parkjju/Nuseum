@@ -1,4 +1,6 @@
 import { Container } from '@mui/system';
+import { DiaryTitle } from '../../pages/Record/styled';
+import { Name } from '../../atom/Card/styled';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import useCalculate from '../../../hooks/useCalculate';
@@ -337,6 +339,18 @@ const Table = ({
 
     return (
         <Container>
+            <DiaryTitle
+                    style={{
+                        width: '100%',
+                        textAlign: 'center',
+                        marginBottom: '30px'
+                    }}
+                >
+                    <Name style={{ fontSize: '20px' }}>
+                        맞춤식품
+                    </Name>
+            </DiaryTitle>
+
             <div
                 style={{ ...style }}
                 role='region'
