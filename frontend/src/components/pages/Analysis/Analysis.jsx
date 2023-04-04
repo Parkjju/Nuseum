@@ -564,6 +564,7 @@ const Analysis = () => {
                 <DiaryTitle
                     style={{
                         height: 'auto',
+                        marginBottom: '186px'
                     }}
                 >
                     <Name style={{ fontSize: '20px' }}>

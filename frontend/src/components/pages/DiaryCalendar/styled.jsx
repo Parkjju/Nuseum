@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 export const DiaryTitle = styled(motion.div)`
-    padding: 10px 0;
     width: 90%;
+    margin-bottom:186px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

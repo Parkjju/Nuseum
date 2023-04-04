@@ -2,9 +2,7 @@ import { memo } from 'react';
 import styled from 'styled-components';
 
 export const DiaryTitle = styled.div`
-    padding: 10px 0;
     width: 80%;
-    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
