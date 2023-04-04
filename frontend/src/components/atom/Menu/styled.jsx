@@ -12,7 +12,7 @@ export const ResultBox = styled(motion.div)`
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-height: 50vh;
+    max-height: 70vh;
     overflow-y: scroll;
 `;
 

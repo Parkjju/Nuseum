@@ -68,9 +68,8 @@ body{
 
 .primary {
     overflow: auto;
-    scroll-snap-type: both mandatory;
+    // scroll-snap-type: both mandatory;
     height: 80vh;
-    position: relative;
   }
   @media (min-width: 40em) {
     main {
@@ -93,7 +92,7 @@ body{
   td {
     border: 1px solid #aaaaaa63;
     background-clip: padding-box;
-    scroll-snap-align: start;
+    // scroll-snap-align: start;
   }
   tbody tr:last-child th,
   tbody tr:last-child td {
@@ -110,14 +109,13 @@ body{
     margin: 0;
   }
   thead th {
-    /* position: sticky;  */
+    position: sticky;
     top: 0;
-    border-top: 0;
+    border-top: 0; 
+    background: #d8e4da !important;
     background-clip: padding-box;
   }
   thead th.pin {
-    left: 0;
-    z-index: 501;
     border-left: 0;
   }
   tbody th {
@@ -126,10 +124,6 @@ body{
   }
   tbody {
     z-index: 10;
-  }
-  tbody th {
-    /* position: sticky; */
-    left: 0;
   }
   thead th,
   tbody th {
