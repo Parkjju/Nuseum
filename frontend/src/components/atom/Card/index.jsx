@@ -65,7 +65,7 @@ function Card({ menu, current }) {
                                         <IconBox>
                                             <Icon
                                                 style={{
-                                                    width: '40px',
+                                                    width: '30px',
                                                     position: 'relative',
                                                 }}
                                                 src={item[0]}
