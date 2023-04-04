@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 export const DiaryTitle = styled(motion.div)`
     width: 90%;
-    margin-bottom:186px;
+    margin-bottom: 180px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
