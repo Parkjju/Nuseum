@@ -338,7 +338,8 @@ const Table = ({
     };
 
     return (
-        <Container>
+        <Container
+        style={{padding: '0 4px'}}>
             <DiaryTitle
                     style={{
                         width: '100%',
