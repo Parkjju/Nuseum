@@ -114,6 +114,8 @@ body{
     border-top: 0; 
     background: #d8e4da !important;
     background-clip: padding-box;
+    text-align: center;
+    vertical-align: middle;
   }
   thead th.pin {
     border-left: 0;
@@ -121,6 +123,8 @@ body{
   tbody th {
     background-clip: padding-box;
     border-left: 0;
+    text-align: center;
+    vertical-align: middle;
   }
   tbody {
     z-index: 10;
