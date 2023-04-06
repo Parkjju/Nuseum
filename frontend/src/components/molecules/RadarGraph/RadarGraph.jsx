@@ -36,16 +36,16 @@ const RadarGraph = ({ dateCount, data, dataWithoutSupplement }) => {
             // 'J',
             // 'K',
             // 'L',
-
-            'DHA+EPA',
-            lang ? 'Folic acid' : '엽산',
-            lang ? 'Magnesium' : '마그네슘',
-            lang ? 'Tryptophan' : '트립토판',
-            lang ? 'Vitamin A' : '비타민A',
             lang ? 'Dietary fiber' : '식이섬유',
-            lang ? 'Vitamin B6' : '비타민B6',
-            lang ? 'Vitamin B12' : '비타민B12',
             lang ? 'Vitamin D' : '비타민D',
+            'DHA+EPA',
+            lang ? 'Magnesium' : '마그네슘',
+            lang ? 'Vitamin A' : '비타민A',
+            lang ? 'Tryptophan' : '트립토판',
+            lang ? 'Folic acid' : '엽산',
+            lang ? 'Vitamin B12' : '비타민B12',
+            lang ? 'Vitamin B6' : '비타민B6',
+            ,
         ],
         datasets: dataWithoutSupplement
             ? [
@@ -54,83 +54,53 @@ const RadarGraph = ({ dateCount, data, dataWithoutSupplement }) => {
                           ? 'Supplements + Meal(%)'
                           : '영양제 + 음식(%)',
                       data: [
-                          ((+data.dha_epa / (300 * dateCount)) * 100).toFixed(
-                              1
-                          ) > 100
+                            ((+data.dietary_fiber / (20 * dateCount)) * 100
+                                ).toFixed(1) > 100
+                                ? 100
+                                : ((+data.dietary_fiber / (20 * dateCount)) * 100
+                                    ).toFixed(1),
+                            ((+data.vitamin_d / (5 * dateCount)) * 100
+                                ).toFixed(1) > 100
+                                ? 100
+                                : ((+data.vitamin_d / (5 * dateCount)) * 100
+                                    ).toFixed(1),
+                            ((+data.dha_epa / (300 * dateCount)) * 100
+                                ).toFixed(1) > 100
+                                ? 100
+                                : ((+data.dha_epa / (300 * dateCount)) * 100
+                                    ).toFixed(1),
+
+                            ((+data.magnesium / (110 * dateCount)) * 100
+                                ).toFixed(1) > 100
+                                ? 100
+                                : ((+data.magnesium / (110 * dateCount)) * 100
+                                    ).toFixed(1),
+                            ((+data.vitamin_a / (300 * dateCount)) * 100
+                                ).toFixed(1) > 100
+                                ? 100
+                                : ((+data.vitamin_a / (300 * dateCount)) * 100
+                                    ).toFixed(1),
+                            ((+data.tryptophan / (100 * dateCount)) * 100
+                                ).toFixed(1) > 100
+                                ? 100
+                                : ((+data.tryptophan / (100 * dateCount)) * 100
+                                    ).toFixed(1),
+
+                            ((+data.folic_acid / (180 * dateCount)) * 100
+                                ).toFixed(1) > 100
+                                ? 100
+                                : ((+data.folic_acid / (180 * dateCount)) * 100
+                                    ).toFixed(1),
+                            ((+data.vitamin_b12 / (1.1 * dateCount)) * 100
+                                ).toFixed(1) > 100
                               ? 100
-                              : (
-                                    (+data.dha_epa / (300 * dateCount)) *
-                                    100
-                                ).toFixed(1),
-                          (
-                              (+data.folic_acid / (180 * dateCount)) *
-                              100
-                          ).toFixed(1) > 100
-                              ? 100
-                              : (
-                                    (+data.folic_acid / (180 * dateCount)) *
-                                    100
-                                ).toFixed(1),
-                          ((+data.magnesium / (110 * dateCount)) * 100).toFixed(
-                              1
-                          ) > 100
-                              ? 100
-                              : (
-                                    (+data.magnesium / (110 * dateCount)) *
-                                    100
-                                ).toFixed(1),
-                          (
-                              (+data.tryptophan / (100 * dateCount)) *
-                              100
-                          ).toFixed(1) > 100
-                              ? 100
-                              : (
-                                    (+data.tryptophan / (100 * dateCount)) *
-                                    100
-                                ).toFixed(1),
-                          ((+data.vitamin_a / (300 * dateCount)) * 100).toFixed(
-                              1
-                          ) > 100
-                              ? 100
-                              : (
-                                    (+data.vitamin_a / (300 * dateCount)) *
-                                    100
-                                ).toFixed(1),
-                          (
-                              (+data.dietary_fiber / (20 * dateCount)) *
-                              100
-                          ).toFixed(1) > 100
-                              ? 100
-                              : (
-                                    (+data.dietary_fiber / (20 * dateCount)) *
-                                    100
-                                ).toFixed(1),
-                          (
-                              (+data.vitamin_b6 / (0.7 * dateCount)) *
-                              100
-                          ).toFixed(1) > 100
-                              ? 100
-                              : (
-                                    (+data.vitamin_b6 / (0.7 * dateCount)) *
-                                    100
-                                ).toFixed(1),
-                          (
-                              (+data.vitamin_b12 / (1.1 * dateCount)) *
-                              100
-                          ).toFixed(1) > 100
-                              ? 100
-                              : (
-                                    (+data.vitamin_b12 / (1.1 * dateCount)) *
-                                    100
-                                ).toFixed(1),
-                          ((+data.vitamin_d / (5 * dateCount)) * 100).toFixed(
-                              1
-                          ) > 100
-                              ? 100
-                              : (
-                                    (+data.vitamin_d / (5 * dateCount)) *
-                                    100
-                                ).toFixed(1),
+                              : ((+data.vitamin_b12 / (1.1 * dateCount)) * 100
+                                    ).toFixed(1),
+                            ((+data.vitamin_b6 / (0.7 * dateCount)) * 100
+                                ).toFixed(1) > 100
+                                ? 100
+                                : ((+data.vitamin_b6 / (0.7 * dateCount)) * 100
+                                    ).toFixed(1),
                       ],
                       fill: true,
                       backgroundColor: 'rgba(190, 197, 198, 0.6)',
@@ -143,105 +113,71 @@ const RadarGraph = ({ dateCount, data, dataWithoutSupplement }) => {
                   {
                       label: lang ? 'Just Meal(%)' : '음식만(%)',
                       data: [
-                          (
-                              (+dataWithoutSupplement.dha_epa /
-                                  (300 * dateCount)) *
-                              100
-                          ).toFixed(1) > 100
-                              ? 100
-                              : (
-                                    (+dataWithoutSupplement.dha_epa /
-                                        (300 * dateCount)) *
-                                    100
-                                ).toFixed(1),
-                          (
-                              (+dataWithoutSupplement.folic_acid /
-                                  (180 * dateCount)) *
-                              100
-                          ).toFixed(1) > 100
-                              ? 100
-                              : (
-                                    (+dataWithoutSupplement.folic_acid /
-                                        (180 * dateCount)) *
-                                    100
-                                ).toFixed(1),
-                          (
-                              (+dataWithoutSupplement.magnesium /
-                                  (110 * dateCount)) *
-                              100
-                          ).toFixed(1) > 100
-                              ? 100
-                              : (
-                                    (+dataWithoutSupplement.magnesium /
-                                        (110 * dateCount)) *
-                                    100
-                                ).toFixed(1),
-                          (
-                              (+dataWithoutSupplement.tryptophan /
-                                  (100 * dateCount)) *
-                              100
-                          ).toFixed(1) > 100
-                              ? 100
-                              : (
-                                    (+dataWithoutSupplement.tryptophan /
-                                        (100 * dateCount)) *
-                                    100
-                                ).toFixed(1),
-                          (
-                              (+dataWithoutSupplement.vitamin_a /
-                                  (300 * dateCount)) *
-                              100
-                          ).toFixed(1) > 100
-                              ? 100
-                              : (
-                                    (+dataWithoutSupplement.vitamin_a /
-                                        (300 * dateCount)) *
-                                    100
-                                ).toFixed(1),
-                          (
-                              (+dataWithoutSupplement.dietary_fiber /
-                                  (20 * dateCount)) *
-                              100
-                          ).toFixed(1) > 100
-                              ? 100
-                              : (
-                                    (+dataWithoutSupplement.dietary_fiber /
-                                        (20 * dateCount)) *
-                                    100
-                                ).toFixed(1),
-                          (
-                              (+dataWithoutSupplement.vitamin_b6 /
-                                  (0.7 * dateCount)) *
-                              100
-                          ).toFixed(1) > 100
-                              ? 100
-                              : (
-                                    (+dataWithoutSupplement.vitamin_b6 /
-                                        (0.7 * dateCount)) *
-                                    100
-                                ).toFixed(1),
-                          (
-                              (+dataWithoutSupplement.vitamin_b12 /
-                                  (1.1 * dateCount)) *
-                              100
-                          ).toFixed(1) > 100
-                              ? 100
-                              : (
-                                    (+dataWithoutSupplement.vitamin_b12 /
-                                        (1.1 * dateCount)) *
-                                    100
-                                ).toFixed(1),
-                          (
-                              (+dataWithoutSupplement.vitamin_d /
-                                  (5 * dateCount)) *
-                              100
-                          ).toFixed(1) > 100
-                              ? 100
-                              : (
-                                    (+dataWithoutSupplement.vitamin_d /
-                                        (5 * dateCount)) *
-                                    100
-                                ).toFixed(1),
+                            ((+dataWithoutSupplement.dietary_fiber /
+                                (20 * dateCount)) * 100
+                                ).toFixed(1) > 100
+                                ? 100
+                                : ((+dataWithoutSupplement.dietary_fiber /
+                                    (20 * dateCount)) * 100
+                                    ).toFixed(1),
+                            ((+dataWithoutSupplement.vitamin_d /
+                                (5 * dateCount)) * 100
+                                ).toFixed(1) > 100
+                                ? 100
+                                : ((+dataWithoutSupplement.vitamin_d /
+                                    (5 * dateCount)) * 100
+                                    ).toFixed(1),
+                            ((+dataWithoutSupplement.dha_epa /
+                                (300 * dateCount)) * 100
+                                ).toFixed(1) > 100
+                                ? 100
+                                : ((+dataWithoutSupplement.dha_epa /
+                                    (300 * dateCount)) * 100
+                                    ).toFixed(1),
+
+                            ((+dataWithoutSupplement.magnesium /
+                                (110 * dateCount)) * 100
+                                ).toFixed(1) > 100
+                                ? 100
+                                : ((+dataWithoutSupplement.magnesium /
+                                    (110 * dateCount)) * 100
+                                    ).toFixed(1),
+                            ((+dataWithoutSupplement.vitamin_a /
+                                (300 * dateCount)) * 100
+                                ).toFixed(1) > 100
+                                ? 100
+                                : ((+dataWithoutSupplement.vitamin_a /
+                                    (300 * dateCount)) * 100
+                                    ).toFixed(1),
+                            ((+dataWithoutSupplement.tryptophan /
+                                (100 * dateCount)) * 100
+                                ).toFixed(1) > 100
+                                ? 100
+                                : ((+dataWithoutSupplement.tryptophan /
+                                    (100 * dateCount)) * 100
+                                    ).toFixed(1),
+
+                            ((+dataWithoutSupplement.folic_acid /
+                                (180 * dateCount)) * 100
+                                ).toFixed(1) > 100
+                                ? 100
+                                : ((+dataWithoutSupplement.folic_acid /
+                                    (180 * dateCount)) * 100
+                                    ).toFixed(1),
+                            ((+dataWithoutSupplement.vitamin_b12 /
+                                (1.1 * dateCount)) * 100
+                                ).toFixed(1) > 100
+                                ? 100
+                                : ((+dataWithoutSupplement.vitamin_b12 /
+                                    (1.1 * dateCount)) * 100
+                                    ).toFixed(1),
+                            ((+dataWithoutSupplement.vitamin_b6 /
+                                (0.7 * dateCount)) * 100
+                                ).toFixed(1) > 100
+                                ? 100
+                                : ((+dataWithoutSupplement.vitamin_b6 /
+                                    (0.7 * dateCount)) * 100
+                                    ).toFixed(1),
                       ],
                       fill: true,
                       backgroundColor: 'rgba(82, 89, 89, 0.6)',
@@ -258,83 +194,54 @@ const RadarGraph = ({ dateCount, data, dataWithoutSupplement }) => {
                           ? 'Supplements + Meal(%)'
                           : '영양제 + 음식(%)',
                       data: [
-                          ((+data.dha_epa / (300 * dateCount)) * 100).toFixed(
-                              1
-                          ) > 100
-                              ? 100
-                              : (
-                                    (+data.dha_epa / (300 * dateCount)) *
-                                    100
-                                ).toFixed(1),
-                          (
-                              (+data.folic_acid / (180 * dateCount)) *
-                              100
-                          ).toFixed(1) > 100
-                              ? 100
-                              : (
-                                    (+data.folic_acid / (180 * dateCount)) *
-                                    100
-                                ).toFixed(1),
-                          ((+data.magnesium / (110 * dateCount)) * 100).toFixed(
-                              1
-                          ) > 100
-                              ? 100
-                              : (
-                                    (+data.magnesium / (110 * dateCount)) *
-                                    100
-                                ).toFixed(1),
-                          (
-                              (+data.tryptophan / (100 * dateCount)) *
-                              100
-                          ).toFixed(1) > 100
-                              ? 100
-                              : (
-                                    (+data.tryptophan / (100 * dateCount)) *
-                                    100
-                                ).toFixed(1),
-                          ((+data.vitamin_a / (300 * dateCount)) * 100).toFixed(
-                              1
-                          ) > 100
-                              ? 100
-                              : (
-                                    (+data.vitamin_a / (300 * dateCount)) *
-                                    100
-                                ).toFixed(1),
-                          (
-                              (+data.dietary_fiber / (20 * dateCount)) *
-                              100
-                          ).toFixed(1) > 100
-                              ? 100
-                              : (
-                                    (+data.dietary_fiber / (20 * dateCount)) *
-                                    100
-                                ).toFixed(1),
-                          (
-                              (+data.vitamin_b6 / (0.7 * dateCount)) *
-                              100
-                          ).toFixed(1) > 100
-                              ? 100
-                              : (
-                                    (+data.vitamin_b6 / (0.7 * dateCount)) *
-                                    100
-                                ).toFixed(1),
-                          (
-                              (+data.vitamin_b12 / (1.1 * dateCount)) *
-                              100
-                          ).toFixed(1) > 100
-                              ? 100
-                              : (
-                                    (+data.vitamin_b12 / (1.1 * dateCount)) *
-                                    100
-                                ).toFixed(1),
-                          ((+data.vitamin_d / (5 * dateCount)) * 100).toFixed(
-                              1
-                          ) > 100
-                              ? 100
-                              : (
-                                    (+data.vitamin_d / (5 * dateCount)) *
-                                    100
-                                ).toFixed(1),
+                            ((+data.dietary_fiber / (20 * dateCount)) * 100
+                                ).toFixed(1) > 100
+                                ? 100
+                                : ((+data.dietary_fiber / (20 * dateCount)) * 100
+                                    ).toFixed(1),
+                            ((+data.vitamin_d / (5 * dateCount)) * 100
+                                ).toFixed(1) > 100
+                                ? 100
+                                : ((+data.vitamin_d / (5 * dateCount)) * 100
+                                    ).toFixed(1),
+                            ((+data.dha_epa / (300 * dateCount)) * 100
+                                ).toFixed(1) > 100
+                                ? 100
+                                : ((+data.dha_epa / (300 * dateCount)) * 100
+                                    ).toFixed(1),
+
+                            ((+data.magnesium / (110 * dateCount)) * 100
+                                ).toFixed(1) > 100
+                                ? 100
+                                : ((+data.magnesium / (110 * dateCount)) * 100
+                                    ).toFixed(1),
+                            ((+data.vitamin_a / (300 * dateCount)) * 100
+                                ).toFixed(1) > 100
+                                ? 100
+                                : ((+data.vitamin_a / (300 * dateCount)) * 100
+                                    ).toFixed(1),
+                            ((+data.tryptophan / (100 * dateCount)) * 100
+                                ).toFixed(1) > 100
+                                ? 100
+                                : ((+data.tryptophan / (100 * dateCount)) * 100
+                                    ).toFixed(1),
+
+
+                            ((+data.folic_acid / (180 * dateCount)) * 100
+                                ).toFixed(1) > 100
+                                ? 100
+                                : ((+data.folic_acid / (180 * dateCount)) * 100
+                                    ).toFixed(1),
+                            ((+data.vitamin_b12 / (1.1 * dateCount)) * 100
+                                ).toFixed(1) > 100
+                                ? 100
+                                : ((+data.vitamin_b12 / (1.1 * dateCount)) * 100
+                                    ).toFixed(1),
+                            ((+data.vitamin_b6 / (0.7 * dateCount)) * 100
+                                ).toFixed(1) > 100
+                                ? 100
+                                : ((+data.vitamin_b6 / (0.7 * dateCount)) * 100
+                                    ).toFixed(1),
                       ],
                       fill: true,
                       backgroundColor: 'rgba(190, 197, 198, 0.6)',

@@ -36,7 +36,7 @@ export const IconBox = styled.div`
             : null};
     box-shadow: ${(props) =>
         props.isEat
-            ? '0px 3px 3px rgba(0, 0, 0, 0.1)'
+            ? '4px 4px 5px rgba(70, 70, 70, 0.15)'
             : props.isPoint
             ? 'none'
             : null};
@@ -76,15 +76,15 @@ export const FetchButton = styled.button`
     align-items: center;
     justify-content: center;
     background-color: ${(props) => (props.isClicked ? '#586162' : '#f1f1f1')};
-    border-radius: 50px;
+    border-radius: 15px;
     color: ${(props) => (props.isClicked ? 'white' : 'black')};
     width: 33.3%;
-    padding: 10px 3px;
-    font-size: 12px;
+    padding: 16px 10px;
+    font-size: 16px;
     border: none;
     cursor: pointer;
     box-shadow: ${(props) =>
-        props.isClicked ? '0px 3px 3px rgba(0, 0, 0, 0.2)' : 'none'};
+        props.isClicked ? '1px 2px 3px rgba(0, 0, 0, 0.2)' : 'none'};
 `;
 
 export const SectionTitle = styled.div`
