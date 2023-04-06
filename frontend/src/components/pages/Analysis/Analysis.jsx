@@ -602,8 +602,7 @@ const Analysis = () => {
                             }}
                             isClicked={isSelected[0]}
                         >
-                            <span>{lang ? 'Daily Nutrients' : '이 날의'}</span>
-                            <span>{lang ? '' : '섭취 영양소'}</span>
+                            <span>{lang ? 'Daily Nutrients' : '하루'}</span>
                         </S.FetchButton>
                         <S.FetchButton
                             onClick={() => {
@@ -612,7 +611,6 @@ const Analysis = () => {
                             isClicked={isSelected[1]}
                         >
                             <span>{lang ? 'Weekly Nutrients' : '한 주'}</span>
-                            <span>{lang ? '' : '섭취 영양소'}</span>
                         </S.FetchButton>
                         <S.FetchButton
                             onClick={() => {
@@ -621,7 +619,6 @@ const Analysis = () => {
                             isClicked={isSelected[2]}
                         >
                             <span>{lang ? 'Monthly Nutrients' : '한 달'}</span>
-                            <span>{lang ? '' : '섭취 영양소'}</span>
                         </S.FetchButton>
                     </S.ButtonBox>
                 ) : null}
@@ -870,6 +867,58 @@ const Analysis = () => {
                                                 title={
                                                     <div>
                                                         <S.TooltipDescription>
+                                                            배변활동 원활에
+                                                            도움을 줄 수 있음
+                                                        </S.TooltipDescription>
+                                                    </div>
+                                                }
+                                            >
+                                                    <Name
+                                                        style={{ fontWeight: 400 }}
+                                                    >
+                                                        {lang
+                                                            ? 'Dietary fiber'
+                                                            : '식이섬유'}{' '}
+                                                        {(
+                                                            (nutrition.dietary_fiber /
+                                                                (20 * dateCount)) *
+                                                            100
+                                                        ).toFixed(1)}
+                                                        %
+                                                    </Name>
+                                            </Tooltip>
+                                            <Tooltip
+                                                title={
+                                                    <div>
+                                                        <S.TooltipDescription>
+                                                            칼슘과 인이 흡수되고
+                                                            이용되는데 필요,
+                                                            뼈의 형성과 유지에
+                                                            필요, 골다공증 발생
+                                                            위험 감소에 도움을
+                                                            줌
+                                                        </S.TooltipDescription>
+                                                    </div>
+                                                }
+                                            >
+                                                    <Name
+                                                        style={{ fontWeight: 400 }}
+                                                    >
+                                                        {lang
+                                                            ? 'Vitamin D'
+                                                            : '비타민 D'}{' '}
+                                                        {(
+                                                            (nutrition.vitamin_d /
+                                                                (5 * dateCount)) *
+                                                            100
+                                                        ).toFixed(1)}
+                                                        %
+                                                    </Name>
+                                            </Tooltip>
+                                            <Tooltip
+                                                title={
+                                                    <div>
+                                                        <S.TooltipDescription>
                                                             혈중 중성지질,
                                                             혈행개선에 도움을 줄
                                                             수 있음, 기억력
@@ -881,55 +930,22 @@ const Analysis = () => {
                                                     </div>
                                                 }
                                             >
-                                                <Name
-                                                    style={{
-                                                        fontWeight: 400,
-                                                    }}
-                                                >
-                                                    DHA+EPA{' '}
-                                                    {(
-                                                        (nutrition.dha_epa /
-                                                            (300 * dateCount)) *
-                                                        100
-                                                    ).toFixed(1)}
-                                                    %
-                                                </Name>
+                                                    <Name
+                                                        style={{
+                                                            fontWeight: 400,
+                                                        }}
+                                                    >
+                                                        DHA+EPA{' '}
+                                                        {(
+                                                            (nutrition.dha_epa /
+                                                                (300 * dateCount)) *
+                                                            100
+                                                        ).toFixed(1)}
+                                                        %
+                                                    </Name>
                                             </Tooltip>
-                                            <Tooltip
-                                                title={
-                                                    <div>
-                                                        <S.TooltipDescription>
-                                                            1. 세포와 혈액
-                                                            생성에 필요
-                                                        </S.TooltipDescription>
-                                                        <S.TooltipDescription>
-                                                            2. 태아 신경관의
-                                                            정상 발달에 필요
-                                                        </S.TooltipDescription>
-                                                        <S.TooltipDescription>
-                                                            3. 혈액의
-                                                            호모시스테인 수준을
-                                                            정상으로 유지하는데
-                                                            필요
-                                                        </S.TooltipDescription>
-                                                    </div>
-                                                }
-                                            >
-                                                <Name
-                                                    style={{ fontWeight: 400 }}
-                                                >
-                                                    {lang
-                                                        ? 'Folic acid'
-                                                        : '엽산'}{' '}
-                                                    {(
-                                                        (nutrition.folic_acid /
-                                                            (180 * dateCount)) *
-                                                        100
-                                                    ).toFixed(1)}
-                                                    %
-                                                </Name>
-                                            </Tooltip>
-
+                                            <S.Divider />
+                                        
                                             <Tooltip
                                                 title={
                                                     <div>
@@ -960,34 +976,6 @@ const Analysis = () => {
                                                     %
                                                 </Name>
                                             </Tooltip>
-                                            <S.Divider />
-
-                                            <Tooltip
-                                                title={
-                                                    <div>
-                                                        <S.TooltipDescription>
-                                                            신경전달물질인
-                                                            세로토닌, 멜라토닌의
-                                                            전구체로 이용되는
-                                                            필수 아미노산
-                                                        </S.TooltipDescription>
-                                                    </div>
-                                                }
-                                            >
-                                                <Name
-                                                    style={{ fontWeight: 400 }}
-                                                >
-                                                    {lang
-                                                        ? 'Tryptophan'
-                                                        : '트립토판'}{' '}
-                                                    {(
-                                                        (nutrition.tryptophan /
-                                                            (100 * dateCount)) *
-                                                        100
-                                                    ).toFixed(1)}
-                                                    %
-                                                </Name>
-                                            </Tooltip>
                                             <Tooltip
                                                 title={
                                                     <div>
@@ -1008,45 +996,106 @@ const Analysis = () => {
                                                     </div>
                                                 }
                                             >
-                                                <Name
-                                                    style={{ fontWeight: 400 }}
-                                                >
-                                                    {lang
-                                                        ? 'Vitamin A'
-                                                        : '비타민 A'}{' '}
-                                                    {(
-                                                        (nutrition.vitamin_a /
-                                                            (300 * dateCount)) *
-                                                        100
-                                                    ).toFixed(1)}
-                                                    %
-                                                </Name>
+                                                    <Name
+                                                        style={{ fontWeight: 400 }}
+                                                    >
+                                                        {lang
+                                                            ? 'Vitamin A'
+                                                            : '비타민 A'}{' '}
+                                                        {(
+                                                            (nutrition.vitamin_a /
+                                                                (300 * dateCount)) *
+                                                            100
+                                                        ).toFixed(1)}
+                                                        %
+                                                    </Name>
                                             </Tooltip>
                                             <Tooltip
                                                 title={
                                                     <div>
                                                         <S.TooltipDescription>
-                                                            배변활동 원활에
-                                                            도움을 줄 수 있음
+                                                            신경전달물질인
+                                                            세로토닌, 멜라토닌의
+                                                            전구체로 이용되는
+                                                            필수 아미노산
                                                         </S.TooltipDescription>
                                                     </div>
                                                 }
                                             >
-                                                <Name
-                                                    style={{ fontWeight: 400 }}
-                                                >
-                                                    {lang
-                                                        ? 'Dietary fiber'
-                                                        : '식이섬유'}{' '}
-                                                    {(
-                                                        (nutrition.dietary_fiber /
-                                                            (20 * dateCount)) *
-                                                        100
-                                                    ).toFixed(1)}
-                                                    %
-                                                </Name>
+                                                    <Name
+                                                        style={{ fontWeight: 400 }}
+                                                    >
+                                                        {lang
+                                                            ? 'Tryptophan'
+                                                            : '트립토판'}{' '}
+                                                        {(
+                                                            (nutrition.tryptophan /
+                                                                (100 * dateCount)) *
+                                                            100
+                                                        ).toFixed(1)}
+                                                        %
+                                                    </Name>
                                             </Tooltip>
+
                                             <S.Divider />
+                                            <Tooltip
+                                                title={
+                                                    <div>
+                                                        <S.TooltipDescription>
+                                                            1. 세포와 혈액
+                                                            생성에 필요
+                                                        </S.TooltipDescription>
+                                                        <S.TooltipDescription>
+                                                            2. 태아 신경관의
+                                                            정상 발달에 필요
+                                                        </S.TooltipDescription>
+                                                        <S.TooltipDescription>
+                                                            3. 혈액의
+                                                            호모시스테인 수준을
+                                                            정상으로 유지하는데
+                                                            필요
+                                                        </S.TooltipDescription>
+                                                    </div>
+                                                }
+                                            >
+                                                    <Name
+                                                        style={{ fontWeight: 400 }}
+                                                    >
+                                                        {lang
+                                                            ? 'Folic acid'
+                                                            : '엽산'}{' '}
+                                                        {(
+                                                            (nutrition.folic_acid /
+                                                                (180 * dateCount)) *
+                                                            100
+                                                        ).toFixed(1)}
+                                                        %
+                                                    </Name>
+                                            </Tooltip>
+                                            <Tooltip
+                                                title={
+                                                    <div>
+                                                        <S.TooltipDescription>
+                                                            정상적인 엽산 대사에
+                                                            필요
+                                                        </S.TooltipDescription>
+                                                    </div>
+                                                }
+                                            >
+                                                    <Name
+                                                        style={{ fontWeight: 400 }}
+                                                    >
+                                                        {lang
+                                                            ? 'Vitamin B12'
+                                                            : '비타민 B12'}{' '}
+                                                        {(
+                                                            (nutrition.vitamin_b12 /
+                                                                (1.1 * dateCount)) *
+                                                            100
+                                                        ).toFixed(1)}
+                                                        %
+                                                    </Name>
+                                            </Tooltip>
                                             <Tooltip
                                                 title={
                                                     <div>
@@ -1063,73 +1112,19 @@ const Analysis = () => {
                                                     </div>
                                                 }
                                             >
-                                                <Name
-                                                    style={{ fontWeight: 400 }}
-                                                >
-                                                    {lang
-                                                        ? 'Vitamin B6'
-                                                        : '비타민 B6'}{' '}
-                                                    {(
-                                                        (nutrition.vitamin_b6 /
-                                                            (0.7 * dateCount)) *
-                                                        100
-                                                    ).toFixed(1)}
-                                                    %
-                                                </Name>
-                                            </Tooltip>
-
-                                            <Tooltip
-                                                title={
-                                                    <div>
-                                                        <S.TooltipDescription>
-                                                            정상적인 엽산 대사에
-                                                            필요
-                                                        </S.TooltipDescription>
-                                                    </div>
-                                                }
-                                            >
-                                                <Name
-                                                    style={{ fontWeight: 400 }}
-                                                >
-                                                    {lang
-                                                        ? 'Vitamin B12'
-                                                        : '비타민 B12'}{' '}
-                                                    {(
-                                                        (nutrition.vitamin_b12 /
-                                                            (1.1 * dateCount)) *
-                                                        100
-                                                    ).toFixed(1)}
-                                                    %
-                                                </Name>
-                                            </Tooltip>
-
-                                            <Tooltip
-                                                title={
-                                                    <div>
-                                                        <S.TooltipDescription>
-                                                            칼슘과 인이 흡수되고
-                                                            이용되는데 필요,
-                                                            뼈의 형성과 유지에
-                                                            필요, 골다공증 발생
-                                                            위험 감소에 도움을
-                                                            줌
-                                                        </S.TooltipDescription>
-                                                    </div>
-                                                }
-                                            >
-                                                <Name
-                                                    style={{ fontWeight: 400 }}
-                                                >
-                                                    {lang
-                                                        ? 'Vitamin D'
-                                                        : '비타민 D'}{' '}
-                                                    {(
-                                                        (nutrition.vitamin_d /
-                                                            (5 * dateCount)) *
-                                                        100
-                                                    ).toFixed(1)}
-                                                    %
-                                                </Name>
+                                                    <Name
+                                                        style={{ fontWeight: 400 }}
+                                                    >
+                                                        {lang
+                                                            ? 'Vitamin B6'
+                                                            : '비타민 B6'}{' '}
+                                                        {(
+                                                            (nutrition.vitamin_b6 /
+                                                                (0.7 * dateCount)) *
+                                                            100
+                                                        ).toFixed(1)}
+                                                        %
+                                                    </Name>
                                             </Tooltip>
                                         </S.NutrientList>
 
