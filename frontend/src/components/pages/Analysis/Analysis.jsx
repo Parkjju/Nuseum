@@ -601,6 +601,7 @@ const Analysis = () => {
                                 fetchDailyData();
                             }}
                             isClicked={isSelected[0]}
+                            style={{borderTopRightRadius: 0, borderBottomRightRadius: 0}}
                         >
                             <span>{lang ? 'Daily Nutrients' : '하루'}</span>
                         </S.FetchButton>
@@ -609,6 +610,7 @@ const Analysis = () => {
                                 fetchWeekData();
                             }}
                             isClicked={isSelected[1]}
+                            style={{borderRadius: 0}}
                         >
                             <span>{lang ? 'Weekly Nutrients' : '한 주'}</span>
                         </S.FetchButton>
@@ -617,6 +619,7 @@ const Analysis = () => {
                                 fetchMonthData();
                             }}
                             isClicked={isSelected[2]}
+                            style={{borderTopLeftRadius: 0, borderBottomLeftRadius: 0}}
                         >
                             <span>{lang ? 'Monthly Nutrients' : '한 달'}</span>
                         </S.FetchButton>
