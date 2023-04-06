@@ -59,7 +59,7 @@ export const IconWrapper = styled.div`
 `;
 export const ButtonBox = styled.div`
     display: flex;
-    padding-top: 50px;
+    margin-top: 50px;
     justify-content: space-between;
     width: 85%;
     @media all and (max-width: 480px) {
@@ -76,7 +76,7 @@ export const FetchButton = styled.button`
     align-items: center;
     justify-content: center;
     background-color: ${(props) => (props.isClicked ? '#586162' : '#f1f1f1')};
-    border-radius: 15px;
+    border-radius: 8px;
     color: ${(props) => (props.isClicked ? 'white' : 'black')};
     width: 33.3%;
     padding: 16px 10px;
@@ -84,7 +84,7 @@ export const FetchButton = styled.button`
     border: none;
     cursor: pointer;
     box-shadow: ${(props) =>
-        props.isClicked ? '1px 2px 3px rgba(0, 0, 0, 0.2)' : 'none'};
+        props.isClicked ? '0px 3px 5px rgba(0, 0, 0, 0.2)' : 'none'};
 `;
 
 export const SectionTitle = styled.div`
