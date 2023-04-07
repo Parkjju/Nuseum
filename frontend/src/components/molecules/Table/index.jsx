@@ -321,7 +321,7 @@ const Table = ({
             case '1':
                 return '과일';
             case '2':
-                return '콩•두부';
+                return '콩/두부';
             case '3':
                 return '통곡물';
             case '4':
