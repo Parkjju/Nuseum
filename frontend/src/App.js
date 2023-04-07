@@ -132,8 +132,9 @@ body{
   thead th,
   tbody th {
     background-color: #f8f8f8;
+    white-space: pre-wrap;
+    line-height: 1.2;
   }
-  
 
 `;
 
