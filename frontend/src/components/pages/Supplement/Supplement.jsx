@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
 import { supplementActions } from '../../../store/supplement-slice';
 import ImageCard from '../../molecules/ImageCard';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { fetchSupplement } from '../../../api';
 
 let initial = true;
@@ -16,6 +16,55 @@ const Supplement = () => {
     const [fetchedSupplement, setFetchedSupplement] = useState([]);
     const supplementData = useSelector((state) => state.supplement.data);
     const token = useSelector((state) => state.auth.token);
+    const param = useParams();
+    const dispatch = useDispatch();
+    const queryClient = useQueryClient();
+    const mutation = useMutation({
+        mutationFn: ({ consumptions, created_at, token }) => {
+            return axios.post(
+                '/api/v1/consumption/supplement/',
+                {
+                    type: 'supplement',
+                    created_at,
+                    consumptions,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+        },
+        onSuccess: () => {
+            alert(
+                lang
+                    ? 'Your diary has been saved!'
+                    : '일기 저장이 완료되었습니다!'
+            );
+            dispatch(supplementActions.checkDataSaved());
+            setIsRequestSent(true);
+            setLoading(false);
+            queryClient.invalidateQueries({
+                queryKey: ['supplement', param.date, token],
+            });
+        },
+        onError: (err) => {
+            console.log(err);
+            if (err.response.status === 401) {
+                setLoading(false);
+                setIsRequestSent(false);
+                return;
+            }
+
+            alert(
+                lang
+                    ? 'An error has occurred. Please contact the developer!'
+                    : '오류가 발생했습니다. 담당자에게 문의해주세요!'
+            );
+            setIsRequestSent(false);
+            setLoading(false);
+        },
+    });
 
     const addSupplement = () => {
         dispatch(
@@ -49,48 +98,13 @@ const Supplement = () => {
             );
             return;
         }
-        try {
-            setLoading(true);
-            await axios.post(
-                '/api/v1/consumption/supplement/',
-                {
-                    type: 'supplement',
-                    created_at: param.date,
-                    consumptions: supplementData,
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-            alert(
-                lang
-                    ? 'Your diary has been saved!'
-                    : '일기 저장이 완료되었습니다!'
-            );
-            dispatch(supplementActions.checkDataSaved());
-            setIsRequestSent(true);
-            setLoading(false);
-        } catch (err) {
-            console.log(err);
-            if (err.response.status === 401) {
-                setLoading(false);
-                setIsRequestSent(false);
-                return;
-            }
-
-            alert(
-                lang
-                    ? 'An error has occurred. Please contact the developer!'
-                    : '오류가 발생했습니다. 담당자에게 문의해주세요!'
-            );
-            setIsRequestSent(false);
-            setLoading(false);
-        }
+        mutation.mutate({
+            consumptions: supplementData,
+            created_at: param.date,
+            token,
+        });
+        setLoading(true);
     };
-    const param = useParams();
-    const dispatch = useDispatch();
 
     const queryResult = useQuery(
         ['supplement', param.date, token],

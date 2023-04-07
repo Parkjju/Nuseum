@@ -165,7 +165,7 @@ const NutritionList = ({ item }) => {
     return (
         <motion.div
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 16 * keyCount, opacity: 1 }}
+            animate={{ height: 16 * (keyCount + 1), opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{
                 duration: 0.5,
@@ -177,6 +177,7 @@ const NutritionList = ({ item }) => {
             }}
         >
             <div>
+                <p style={{ marginBottom: '10px' }}>100g당</p>
                 {Object.entries(item).map((elem, index) =>
                     elem[1] === 0 ||
                     elem[0] === 'open' ||
