@@ -133,7 +133,7 @@ const QuestionForm = () => {
         <Container>
             <Contents>
                 <DiaryTitle layoutId={'question'}>
-                    <Name>{'Q&A'}</Name>
+                    <Name style={{fontSize: '20px', marginBottom:'20px'}}>{'Q&A'}</Name>
                 </DiaryTitle>
                 {loading ? (
                     <CircularProgress />

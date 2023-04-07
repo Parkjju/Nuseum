@@ -13,14 +13,14 @@ export const QuestionTitle = styled.p`
 `;
 
 export const QuestionContent = styled.p`
-    padding-left: 20px;
-    font-size: 12px;
+    padding-left: 10px;
+    font-size: 15px;
     line-height: 1.5;
     white-space: pre-line;
 `;
 
 export const AnswerBox = styled.div`
-    width: 84%;
+    width: 90%;
     height: auto;
     min-height: 10vh;
     margin-bottom: 30px;
@@ -34,7 +34,7 @@ export const Answer = styled.div`
 `;
 
 export const Username = styled.p`
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 500;
     margin-bottom: 10px;
     width: 100%;
@@ -42,18 +42,20 @@ export const Username = styled.p`
     justify-content: space-between;
 `;
 export const AnswerContent = styled.p`
-    font-size: 12px;
     font-weight: 100;
+    font-size: 15px;
+    line-height: 1.5;
+    white-space: pre-line;
 `;
 
 export const InputComment = styled.input`
     margin-top: 20px;
     box-sizing: border-box;
-    width: 84%;
+    width: 90%;
     height: 45px;
     background-color: rgba(127, 140, 141, 0.15);
     border-radius: 8px;
-    font-size: 12px;
+    font-size: 13px;
     padding-left: 20px;
     border: none;
     &:focus {

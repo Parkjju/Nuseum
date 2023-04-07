@@ -65,8 +65,8 @@ const Question = () => {
                     <DiaryTitle layoutId={'question'}>
                         <Name style={{marginBottom: '20px', fontSize:'20px'}}>{'Q&A'}</Name>
                     </DiaryTitle>
-                        <div style={{width: '80%', display:'flex', flexDirection: 'column', 
-                        alignItems:'center',marginBottom: '50px', maxHeight: '80vh', overflowY:'scroll'}}>
+                        <div style={{width: '82%', display:'flex', flexDirection: 'column', 
+                        alignItems:'center',marginBottom: '50px', maxHeight: '80vh', overflowY:'scroll', padding:' 0 8px'}}>
                             {questions.map((item) => (
                                 <QuestionCard
                                     key={item.id}
@@ -78,7 +78,7 @@ const Question = () => {
                             ))}
                         </div>
                         <Link
-                            style={{ textDecoration: 'none'}}
+                            style={{ textDecoration: 'none', position:'fixed', bottom:'5vh',zIndex:10}}
                             to='/question/post'
                         >
                             <Button text={lang ? 'Contact us' : '문의하기'} />
