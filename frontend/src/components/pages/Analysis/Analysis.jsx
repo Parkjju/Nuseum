@@ -601,7 +601,6 @@ const Analysis = () => {
                                 fetchDailyData();
                             }}
                             isClicked={isSelected[0]}
-                            style={{borderTopRightRadius: 0, borderBottomRightRadius: 0}}
                         >
                             <span>{lang ? 'Daily Nutrients' : '하루'}</span>
                         </S.FetchButton>
@@ -610,7 +609,6 @@ const Analysis = () => {
                                 fetchWeekData();
                             }}
                             isClicked={isSelected[1]}
-                            style={{borderRadius: 0}}
                         >
                             <span>{lang ? 'Weekly Nutrients' : '한 주'}</span>
                         </S.FetchButton>
@@ -619,7 +617,6 @@ const Analysis = () => {
                                 fetchMonthData();
                             }}
                             isClicked={isSelected[2]}
-                            style={{borderTopLeftRadius: 0, borderBottomLeftRadius: 0}}
                         >
                             <span>{lang ? 'Monthly Nutrients' : '한 달'}</span>
                         </S.FetchButton>
@@ -747,7 +744,7 @@ const Analysis = () => {
                                                 }}
                                             >
                                                 {/* 지방 */}
-                                                {lang ? 'Bean/Tofu' : '콩/두부'}
+                                                {lang ? 'Bean•Tofu' : '콩•두부'}
                                             </Name>
                                         </S.IconBox>
                                         <S.IconBox isEat={eatCategory[4]}>
@@ -838,8 +835,8 @@ const Analysis = () => {
                                             >
                                                 {/* 비타민 A */}
                                                 {lang
-                                                    ? 'Meat/Fish/Eggs'
-                                                    : '고기/생선/달걀'}
+                                                    ? 'Meat•Fish•Eggs'
+                                                    : '고기•생선•달걀'}
                                             </Name>
                                         </S.IconBox>
                                         <S.IconBox isEat={eatCategory[9]}>

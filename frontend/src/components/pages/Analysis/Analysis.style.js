@@ -75,9 +75,9 @@ export const FetchButton = styled.button`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: ${(props) => (props.isClicked ? '#586162' : '#f1f1f1')};
+    background-color: ${(props) => (props.isClicked ? '#fafafa' : 'transparent')};
     border-radius: 8px;
-    color: ${(props) => (props.isClicked ? 'white' : 'black')};
+    color: black;
     width: 33.3%;
     padding: 16px 10px;
     font-size: 16px;
