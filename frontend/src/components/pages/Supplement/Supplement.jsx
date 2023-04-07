@@ -45,7 +45,7 @@ const Supplement = () => {
             alert(
                 lang
                     ? 'Manufacturer, nutritional name and image are required!'
-                    : '제조사와 영양제 이름, 이미지는 필수 입력입니다!'
+                    : '제조사와 보충제 이름, 이미지는 필수 입력입니다!'
             );
             return;
         }

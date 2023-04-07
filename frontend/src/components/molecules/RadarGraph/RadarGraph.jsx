@@ -52,7 +52,7 @@ const RadarGraph = ({ dateCount, data, dataWithoutSupplement }) => {
                   {
                       label: lang
                           ? 'Supplements + Meal(%)'
-                          : '영양제 + 음식(%)',
+                          : '보충제 + 음식(%)',
                       data: [
                             ((+data.dietary_fiber / (20 * dateCount)) * 100
                                 ).toFixed(1) > 100
@@ -192,7 +192,7 @@ const RadarGraph = ({ dateCount, data, dataWithoutSupplement }) => {
                   {
                       label: lang
                           ? 'Supplements + Meal(%)'
-                          : '영양제 + 음식(%)',
+                          : '보충제 + 음식(%)',
                       data: [
                             ((+data.dietary_fiber / (20 * dateCount)) * 100
                                 ).toFixed(1) > 100

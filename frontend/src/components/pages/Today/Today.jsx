@@ -144,7 +144,7 @@ const Today = ({ date }) => {
                     ))}
                 </TagBox>
                 <SummaryTitle>
-                    {lang ? 'Nutritional supplements' : '영양제'}
+                    {lang ? 'Nutritional supplements' : '보충제'}
                 </SummaryTitle>
                 <TagBox style={{ padding: '0px 30px', marginTop: 30 }}>
                     {supplementInformation.map((item, index) => (

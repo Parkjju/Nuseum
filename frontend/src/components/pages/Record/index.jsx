@@ -39,7 +39,7 @@ function Record() {
             menu.push([cake, lang ? 'snack' : '간식', 'snack']);
             break;
         case 'supplement':
-            menu.push([drug, lang ? 'supplement' : '영양제', 'supplement']);
+            menu.push([drug, lang ? 'supplement' : '보충제', 'supplement']);
             break;
         case 'water':
             menu.push([water, lang ? 'water' : '물', 'water']);
