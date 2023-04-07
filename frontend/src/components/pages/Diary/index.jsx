@@ -22,7 +22,7 @@ function Diary() {
         [lunch, lang ? 'lunch' : '점심', 'lunch'],
         [dinner, lang ? 'dinner' : '저녁', 'dinner'],
         [cake, lang ? 'snack' : '간식', 'snack'],
-        [supplement, lang ? 'supplement' : '영양제', 'supplement'],
+        [supplement, lang ? 'supplement' : '보충제', 'supplement'],
         [water, lang ? 'water' : '물', 'water'],
         [today, lang ? 'today' : '오늘', 'today'],
     ];

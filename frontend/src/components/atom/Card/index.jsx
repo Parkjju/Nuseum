@@ -73,7 +73,9 @@ function Card({ menu, current }) {
                                                 src={item[0]}
                                                 alt=''
                                             />
-                                            <IconName>{item[1]}</IconName>
+                                            <IconName
+                                            style={{fontWeight:500}}
+                                            >{item[1]}</IconName>
                                         </IconBox>
                                     </Link>
                                 </>

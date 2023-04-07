@@ -37,15 +37,18 @@ export const IconBox = styled.div`
 `;
 
 export const Name = styled.span`
-    font-size: 14px;
+    font-size: 16px;
     color: #222222;
     font-weight: bold;
+    text-align: center;
+    white-space: pre-wrap;
 `;
 
 export const IconName = styled(Name)`
-    font-size: 14px;
+    font-size: 16px;
     color: #222222;
     font-weight: bold;
     width: 100%;
     text-align: center;
+    white-space: pre-wrap;
 `;
