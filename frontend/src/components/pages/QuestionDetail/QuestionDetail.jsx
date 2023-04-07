@@ -252,7 +252,7 @@ const QuestionDetail = () => {
                             <span style={{ marginRight: 5, fontSize: 16 }}>
                                 Q.
                             </span>
-                            <span style={{ fontSize: 14, fontWeight: 500 }}>
+                            <span style={{ fontSize: 16, fontWeight: 500 }}>
                                 {title}
                             </span>
                         </QuestionTitle>
@@ -271,7 +271,7 @@ const QuestionDetail = () => {
                         />
                         <div
                             style={{
-                                width: '80%',
+                                width: '90%',
                                 display: 'flex',
                                 justifyContent: 'flex-end',
                             }}
@@ -293,7 +293,7 @@ const QuestionDetail = () => {
                         {answerData.map((answer) => (
                             <Answer key={answer.id}>
                                 <Username>
-                                    <span>{answer.author}</span>
+                                    <span style={{fontSize:'13px'}}>{answer.author}</span>
                                     <span
                                         style={{
                                             borderBottom: '1px solid black',
@@ -311,7 +311,7 @@ const QuestionDetail = () => {
 
                     <div
                         style={{
-                            width: '84%',
+                            width: '90%',
                             display: 'flex',
                             justifyContent: 'space-around',
                             marginTop: '20px',

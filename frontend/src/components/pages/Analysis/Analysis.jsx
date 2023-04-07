@@ -744,7 +744,7 @@ const Analysis = () => {
                                                 }}
                                             >
                                                 {/* 지방 */}
-                                                {lang ? 'Bean•Tofu' : '콩•두부'}
+                                                {lang ? 'Bean/Tofu' : '콩/두부'}
                                             </Name>
                                         </S.IconBox>
                                         <S.IconBox isEat={eatCategory[4]}>
@@ -835,8 +835,8 @@ const Analysis = () => {
                                             >
                                                 {/* 비타민 A */}
                                                 {lang
-                                                    ? 'Meat•Fish•Eggs'
-                                                    : '고기•생선\n•달걀'}
+                                                    ? 'Meat/Fish\nEggs'
+                                                    : '고기/생선\n달걀'}
                                             </Name>
                                         </S.IconBox>
                                         <S.IconBox isEat={eatCategory[9]}>
