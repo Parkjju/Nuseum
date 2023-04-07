@@ -244,8 +244,8 @@ const QuestionDetail = () => {
             ) : (
                 <Contents>
                     <DiaryTitle layoutId={'question'}>
-                        <Name style={{ marginBottom: 10 }}>{author}</Name>
-                        <Name>{date?.split('T')[0]}</Name>
+                        <Name style={{ marginBottom: 10, fontSize:'16px'}}>{author}</Name>
+                        <Name style={{marginBottom:'30px'}}>{date?.split('T')[0]}</Name>
                     </DiaryTitle>
                     <QuestionBox>
                         <QuestionTitle>
@@ -258,25 +258,6 @@ const QuestionDetail = () => {
                         </QuestionTitle>
                         <QuestionContent>{content}</QuestionContent>
                     </QuestionBox>
-                    <AnswerBox>
-                        {answerData.map((answer) => (
-                            <Answer key={answer.id}>
-                                <Username>
-                                    <span>{answer.author}</span>
-                                    <span
-                                        style={{
-                                            borderBottom: '1px solid black',
-                                            cursor: 'pointer',
-                                        }}
-                                        onClick={() => deleteComment(answer.id)}
-                                    >
-                                        {lang ? 'Delete' : '지우기'}
-                                    </span>
-                                </Username>
-                                <AnswerContent>{answer.content}</AnswerContent>
-                            </Answer>
-                        ))}
-                    </AnswerBox>
                     <>
                         <InputComment
                             onKeyDown={postComment}
@@ -301,36 +282,62 @@ const QuestionDetail = () => {
                                 style={{
                                     width: 23,
                                     position: 'relative',
-                                    top: -28,
+                                    top: -31,
                                     left: -20,
                                 }}
                             />
                         </div>
                     </>
+
+                    <AnswerBox>
+                        {answerData.map((answer) => (
+                            <Answer key={answer.id}>
+                                <Username>
+                                    <span>{answer.author}</span>
+                                    <span
+                                        style={{
+                                            borderBottom: '1px solid black',
+                                            cursor: 'pointer',
+                                        }}
+                                        onClick={() => deleteComment(answer.id)}
+                                    >
+                                        {lang ? 'Delete' : '지우기'}
+                                    </span>
+                                </Username>
+                                <AnswerContent>{answer.content}</AnswerContent>
+                            </Answer>
+                        ))}
+                    </AnswerBox>
+
                     <div
                         style={{
-                            width: '80%',
+                            width: '84%',
                             display: 'flex',
-                            justifyContent: 'space-between',
+                            justifyContent: 'space-around',
+                            marginTop: '20px',
+                            padding:'10px 0'
                         }}
                     >
                         <UtilGroup onClick={modifyPost}>
                             <UtilImg src={modify} alt='modify' />
-                            <UtilBtn>{lang ? 'Modfiy' : '수정'}</UtilBtn>
+                            {/* <UtilBtn>{lang ? 'Modfiy' : '수정'}</UtilBtn> */}
                         </UtilGroup>
+                        
+                   
+                        <Link to='/question' style={{ textDecoration: 'none' }}>
+                            <Button style={{ marginTop: 20 }}>
+                                {lang ? 'List' : '목록'}
+                            </Button>
+                        </Link>
+
                         <UtilGroup
                             style={{ display: 'flex', alignItems: 'center' }}
                             onClick={deletePost}
                         >
                             <UtilImg src={deleteImg} alt='delete' />
-                            <UtilBtn>{lang ? 'Delete' : '삭제'}</UtilBtn>
+                            {/* <UtilBtn>{lang ? 'Delete' : '삭제'}</UtilBtn> */}
                         </UtilGroup>
-                    </div>
-                    <Link to='/question' style={{ textDecoration: 'none' }}>
-                        <Button style={{ marginTop: 30 }}>
-                            {lang ? 'List' : '목록'}
-                        </Button>
-                    </Link>
+                     </div>    
                 </Contents>
             )}
         </Container>

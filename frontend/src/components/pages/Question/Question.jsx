@@ -61,28 +61,28 @@ const Question = () => {
                     <CircularProgress sx={{ margin: '0px auto' }} />
                 </div>
             ) : (
-                <Contents>
+                <Contents style={{}}>
                     <DiaryTitle layoutId={'question'}>
-                        <Name>{'Q&A'}</Name>
+                        <Name style={{marginBottom: '20px', fontSize:'20px'}}>{'Q&A'}</Name>
                     </DiaryTitle>
-
-                    {questions.map((item) => (
-                        <QuestionCard
-                            key={item.id}
-                            data={item.title}
-                            id={item.id}
-                            isAnswered={item.is_answered}
-                            author={item.author}
-                        />
-                    ))}
-                    <div style={{ height: '100px' }}></div>
-
-                    <Link
-                        style={{ textDecoration: 'none' }}
-                        to='/question/post'
-                    >
-                        <Button text={lang ? 'Contact us' : '문의하기'} />
-                    </Link>
+                        <div style={{width: '80%', display:'flex', flexDirection: 'column', 
+                        alignItems:'center',marginBottom: '50px', maxHeight: '80vh', overflowY:'scroll'}}>
+                            {questions.map((item) => (
+                                <QuestionCard
+                                    key={item.id}
+                                    data={item.title}
+                                    id={item.id}
+                                    isAnswered={item.is_answered}
+                                    author={item.author}
+                                />
+                            ))}
+                        </div>
+                        <Link
+                            style={{ textDecoration: 'none'}}
+                            to='/question/post'
+                        >
+                            <Button text={lang ? 'Contact us' : '문의하기'} />
+                        </Link>
                 </Contents>
             )}
         </Container>

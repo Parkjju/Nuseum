@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Box = styled(Link)`
-    height: 50px;
-    width: 80%;
+    min-height: 50px;
+    width: 100%;
     border-bottom: 1px solid rgba(127, 140, 141, 0.5);
     display: flex;
     align-items: center;
