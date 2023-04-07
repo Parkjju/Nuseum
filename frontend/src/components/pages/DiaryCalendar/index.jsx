@@ -46,10 +46,10 @@ function DiaryCalendar() {
 
     switch (location.pathname.split('/')[1]) {
         case 'diary':
-            menu.push([diary, lang ? 'Diary' : '식단일기', 'notepad']);
+            menu.push([diary, lang ? 'Diary' : '일기', 'notepad']);
             break;
         case 'analysis':
-            menu.push([analysis, lang ? 'Analysis' : '식이분석', 'analysis']);
+            menu.push([analysis, lang ? 'Analysis' : '분석', 'analysis']);
             break;
         case 'food':
             menu.push([food, lang ? 'Food' : '맞춤식품', 'food']);

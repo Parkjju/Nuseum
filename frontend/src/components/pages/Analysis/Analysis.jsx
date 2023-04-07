@@ -568,7 +568,7 @@ const Analysis = () => {
                     }}
                 >
                     <Name style={{ fontSize: '20px' }}>
-                        {lang ? 'Analysis' : '식이분석'}
+                        {lang ? 'Analysis' : '분석'}
                     </Name>
                 </DiaryTitle>
                 <Calendar locale='en-US' onChange={onChange} value={date} />
@@ -583,7 +583,7 @@ const Analysis = () => {
                             textAlign: 'center',
                             color: '#7E8C8D',
                             fontWeight: 500,
-                            fontSize: '13px',
+                            fontSize: '14px',
                         }}
                     >
                         {lang
@@ -657,7 +657,7 @@ const Analysis = () => {
                                         >
                                             <Name
                                                 style={{
-                                                    fontSize: '12px',
+                                                    fontSize: '14px',
                                                     marginTop: 5,
                                                     marginBottom: 5,
                                                     color: 'white',
@@ -686,7 +686,7 @@ const Analysis = () => {
                                             </S.IconWrapper>
                                             <Name
                                                 style={{
-                                                    fontSize: '11px',
+                                                    fontSize: '12px',
                                                     marginBottom: 5,
                                                     color: 'white',
                                                 }}
@@ -705,7 +705,7 @@ const Analysis = () => {
                                             </S.IconWrapper>
                                             <Name
                                                 style={{
-                                                    fontSize: '12px',
+                                                    fontSize: '14px',
                                                     marginBottom: 5,
                                                 }}
                                             >
@@ -722,7 +722,7 @@ const Analysis = () => {
                                             </S.IconWrapper>
                                             <Name
                                                 style={{
-                                                    fontSize: '12px',
+                                                    fontSize: '14px',
                                                     marginBottom: 5,
                                                 }}
                                             >
@@ -739,7 +739,7 @@ const Analysis = () => {
                                             </S.IconWrapper>
                                             <Name
                                                 style={{
-                                                    fontSize: '12px',
+                                                    fontSize: '14px',
                                                     marginBottom: 5,
                                                 }}
                                             >
@@ -756,7 +756,7 @@ const Analysis = () => {
                                             </S.IconWrapper>
                                             <Name
                                                 style={{
-                                                    fontSize: '12px',
+                                                    fontSize: '14px',
                                                     marginBottom: 5,
                                                     textAlign: 'center',
                                                 }}
@@ -776,7 +776,7 @@ const Analysis = () => {
                                             </S.IconWrapper>
                                             <Name
                                                 style={{
-                                                    fontSize: '12px',
+                                                    fontSize: '14px',
                                                     marginBottom: 5,
                                                 }}
                                             >
@@ -794,7 +794,7 @@ const Analysis = () => {
 
                                             <Name
                                                 style={{
-                                                    fontSize: '12px',
+                                                    fontSize: '14px',
                                                     marginBottom: 5,
                                                 }}
                                             >
@@ -812,7 +812,7 @@ const Analysis = () => {
 
                                             <Name
                                                 style={{
-                                                    fontSize: '12px',
+                                                    fontSize: '14px',
                                                     marginBottom: 5,
                                                 }}
                                             >
@@ -829,14 +829,14 @@ const Analysis = () => {
                                             </S.IconWrapper>
                                             <Name
                                                 style={{
-                                                    fontSize: '12px',
+                                                    fontSize: '14px',
                                                     marginBottom: 5,
                                                 }}
                                             >
                                                 {/* 비타민 A */}
                                                 {lang
                                                     ? 'Meat•Fish•Eggs'
-                                                    : '고기•생선•달걀'}
+                                                    : '고기•생선\n•달걀'}
                                             </Name>
                                         </S.IconBox>
                                         <S.IconBox isEat={eatCategory[9]}>
@@ -848,7 +848,7 @@ const Analysis = () => {
                                             </S.IconWrapper>
                                             <Name
                                                 style={{
-                                                    fontSize: '12px',
+                                                    fontSize: '14px',
                                                     marginBottom: 5,
                                                     textAlign: 'center',
                                                 }}
