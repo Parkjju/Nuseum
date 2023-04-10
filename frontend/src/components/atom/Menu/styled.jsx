@@ -74,6 +74,13 @@ const NutritionList = ({ item }) => {
     };
 
     const saveNutrition = (e) => {
+        if (
+            !'1234567890'.includes(e.key) &&
+            e.which !== 13 &&
+            e.key !== 'Backspace'
+        ) {
+            e.preventDefault();
+        }
         if (e.which === 13) {
             axios
                 .get(
