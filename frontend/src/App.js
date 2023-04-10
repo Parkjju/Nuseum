@@ -90,9 +90,14 @@ body{
   }
   th,
   td {
+    font-size: 10px; //전체 font-size 설정
     border: 1px solid #aaaaaa63;
     background-clip: padding-box;
     // scroll-snap-align: start;
+    padding: 0.3rem 0.1rem;
+    min-width: 1.82rem;
+    text-align: left;
+    margin: 0;
   }
   tbody tr:last-child th,
   tbody tr:last-child td {
@@ -100,13 +105,6 @@ body{
   }
   thead {
     z-index: 500;
-  }
-  th,
-  td {
-    padding: 0.5rem;
-    min-width: 4rem;
-    text-align: left;
-    margin: 0;
   }
   thead th {
     position: sticky;
