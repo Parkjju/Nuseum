@@ -321,7 +321,7 @@ const Table = ({
             case '1':
                 return '과일';
             case '2':
-                return '콩/두부';
+                return '콩\n두부';
             case '3':
                 return '통곡물';
             case '4':
@@ -373,7 +373,7 @@ const Table = ({
                                     </div>
                                 }
                             >
-                                <th>식이섬유</th>
+                                <th>식이{'\n'}섬유</th>
                             </Tooltip>
                             <Tooltip
                                 title={
@@ -392,7 +392,7 @@ const Table = ({
                                     </div>
                                 }
                             >
-                                <th>비타민 D</th>
+                                <th>비타민{'\n'}D</th>
                             </Tooltip>
                             <Tooltip
                                 title={
@@ -411,7 +411,7 @@ const Table = ({
                                     </div>
                                 }
                             >
-                                <th>DHA+EPA</th>
+                                <th>DHA+{'\n'}EPA</th>
                             </Tooltip>
                             <Tooltip
                                 title={
@@ -425,7 +425,7 @@ const Table = ({
                                     </div>
                                 }
                             >
-                                <th>마그네슘</th>
+                                <th>마그{'\n'}네슘</th>
                             </Tooltip>
                             <Tooltip
                                 title={
@@ -444,7 +444,7 @@ const Table = ({
                                     </div>
                                 }
                             >
-                                <th>비타민 A</th>
+                                <th>비타민{'\n'}A</th>
                             </Tooltip>
 
                             <Tooltip
@@ -457,7 +457,7 @@ const Table = ({
                                     </div>
                                 }
                             >
-                                <th>트립토판</th>
+                                <th>트립{'\n'}토판</th>
                             </Tooltip>
                             <Tooltip
                                 title={
@@ -486,7 +486,7 @@ const Table = ({
                                     </div>
                                 }
                             >
-                                <th>비타민 B12</th>
+                                <th>비타민{'\n'}B12</th>
                             </Tooltip>
                             <Tooltip
                                 title={
@@ -501,7 +501,7 @@ const Table = ({
                                     </div>
                                 }
                             >
-                                <th>비타민 B6</th>
+                                <th>비타민{'\n'}B6</th>
                             </Tooltip>
                         </tr>
                     </thead>
