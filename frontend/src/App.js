@@ -60,7 +60,6 @@ input::placeholder{
 }
 
 body{
-    
     max-width:800px;
     margin:auto;
 }
@@ -69,7 +68,7 @@ body{
 .primary {
     overflow: auto;
     // scroll-snap-type: both mandatory;
-    height: 80vh;
+    // height: 80vh;
   }
   @media (min-width: 40em) {
     main {
