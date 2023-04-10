@@ -874,7 +874,7 @@ const Analysis = () => {
                                                 }
                                             >
                                                     <Name
-                                                        style={{ fontWeight: 400 }}
+                                                        style={{ fontWeight: 400, fontSize: '14px' }}
                                                     >
                                                         {lang
                                                             ? 'Dietary fiber'
@@ -902,7 +902,7 @@ const Analysis = () => {
                                                 }
                                             >
                                                     <Name
-                                                        style={{ fontWeight: 400 }}
+                                                        style={{ fontWeight: 400, fontSize: '14px'}}
                                                     >
                                                         {lang
                                                             ? 'Vitamin D'
@@ -932,8 +932,7 @@ const Analysis = () => {
                                             >
                                                     <Name
                                                         style={{
-                                                            fontWeight: 400,
-                                                        }}
+                                                            fontWeight: 400, fontSize: '14px'}}
                                                     >
                                                         DHA+EPA{' '}
                                                         {(
@@ -962,8 +961,7 @@ const Analysis = () => {
                                             >
                                                 <Name
                                                     style={{
-                                                        fontWeight: 400,
-                                                    }}
+                                                        fontWeight: 400, fontSize: '14px'}}
                                                 >
                                                     {lang
                                                         ? 'Magnesium'
@@ -997,7 +995,7 @@ const Analysis = () => {
                                                 }
                                             >
                                                     <Name
-                                                        style={{ fontWeight: 400 }}
+                                                        style={{ fontWeight: 400, fontSize: '14px' }}
                                                     >
                                                         {lang
                                                             ? 'Vitamin A'
@@ -1023,7 +1021,7 @@ const Analysis = () => {
                                                 }
                                             >
                                                     <Name
-                                                        style={{ fontWeight: 400 }}
+                                                        style={{ fontWeight: 400 , fontSize: '14px'}}
                                                     >
                                                         {lang
                                                             ? 'Tryptophan'
@@ -1059,7 +1057,7 @@ const Analysis = () => {
                                                 }
                                             >
                                                     <Name
-                                                        style={{ fontWeight: 400 }}
+                                                        style={{ fontWeight: 400, fontSize: '14px' }}
                                                     >
                                                         {lang
                                                             ? 'Folic acid'
@@ -1083,7 +1081,7 @@ const Analysis = () => {
                                                 }
                                             >
                                                     <Name
-                                                        style={{ fontWeight: 400 }}
+                                                        style={{ fontWeight: 400, fontSize: '14px'}}
                                                     >
                                                         {lang
                                                             ? 'Vitamin B12'
@@ -1113,7 +1111,7 @@ const Analysis = () => {
                                                 }
                                             >
                                                     <Name
-                                                        style={{ fontWeight: 400 }}
+                                                        style={{ fontWeight: 400, fontSize: '14px' }}
                                                     >
                                                         {lang
                                                             ? 'Vitamin B6'
