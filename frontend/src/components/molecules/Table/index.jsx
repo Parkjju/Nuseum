@@ -338,7 +338,7 @@ const Table = ({
     };
 
     return (
-        <Container style={{ padding: '0 4px' }}>
+        <Container style={{ padding: '0 4px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <DiaryTitle
                 style={{
                     width: '100%',
