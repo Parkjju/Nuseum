@@ -86,6 +86,7 @@ body{
   table {
     border-collapse: collapse;
     border: 0;
+    border-bottom: 1px solid rgb(0 100 0 / 40%);
   }
   th,
   td {
@@ -94,7 +95,8 @@ body{
     background-clip: padding-box;
     // scroll-snap-align: start;
     padding: 0.3rem 0.1rem;
-    min-width: 1.82rem;
+    // min-width: 1.82rem;
+    width: calc(100% / 10);
     text-align: left;
     margin: 0;
   }
