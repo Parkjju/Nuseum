@@ -343,14 +343,14 @@ const Table = ({
                 style={{
                     width: '100%',
                     textAlign: 'center',
-                    marginBottom: '30px',
+                    marginBottom: '50px',
                 }}
             >
                 <Name style={{ fontSize: '20px' }}>맞춤식품</Name>
             </DiaryTitle>
-
+            <Name style={{ fontSize: '16px', marginBottom: '25px'}}>농수산식품</Name>
             <div
-                style={{ ...style }}
+                style={{ ...style , marginBottom:'70px'}}
                 role='region'
                 aria-label='data table'
                 tabindex='0'
@@ -576,7 +576,57 @@ const Table = ({
                         clickedTag={clickedTag}
                     />
                 ) : null}
+            </div>      
+            {/* 임시로 추가한 추천 요리, 보충제 레이아웃 */}
+            <div
+                style={{display: 'flex', flexDirection:'column', alignItems:'center',
+                width: '90%', maxWidth:'500px',textAlign: 'center', marginBottom:'70px'}}>
+                <Name style={{ fontSize: '16px', margin: '25px'}}>추천 요리</Name>
+                <Name style={{ fontSize: '13px',fontWeight:300,marginBottom:'10px'}}>추후 추가될 예정입니다 :)</Name>
+                    <ul style={{display: 'flex',width:'100%', fontSize:'14px',justifyContent:'space-between',}}>
+                        <li style={{width:'24.5%', height: '60px', 
+                        display:'flex', alignItems:'center', justifyContent:'center',
+                        background:'#fafafa', borderRadius:'10px'}}>
+                        </li>
+                        <li style={{width:'24.5%', height: '60px', 
+                        display:'flex', alignItems:'center', justifyContent:'center',
+                        background:'#fafafa', borderRadius:'10px'}}>
+                        </li>
+                        <li style={{width:'24.5%', height: '60px', 
+                        display:'flex', alignItems:'center', justifyContent:'center',
+                        background:'#fafafa', borderRadius:'10px'}}>
+                        </li>
+                        <li style={{width:'24.5%', height: '60px', 
+                        display:'flex', alignItems:'center', justifyContent:'center',
+                        background:'#fafafa', borderRadius:'10px'}}>
+                            </li>
+                    </ul>
             </div>
+            <div
+                style={{display: 'flex', flexDirection:'column', alignItems:'center',
+                width: '90%', maxWidth:'500px',textAlign: 'center', marginBottom:'70px'}}>
+                <Name style={{ fontSize: '16px', margin: '25px'}}>보충제</Name>
+                <Name style={{ fontSize: '13px',fontWeight:300,marginBottom:'10px'}}>추후 추가될 예정입니다 :)</Name>
+                    <ul style={{display: 'flex',width:'100%', fontSize:'14px',justifyContent:'space-between',}}>
+                        <li style={{width:'24.5%', height: '60px', 
+                        display:'flex', alignItems:'center', justifyContent:'center',
+                        background:'#fafafa', borderRadius:'10px'}}>
+                        </li>
+                        <li style={{width:'24.5%', height: '60px', 
+                        display:'flex', alignItems:'center', justifyContent:'center',
+                        background:'#fafafa', borderRadius:'10px'}}>
+                        </li>
+                        <li style={{width:'24.5%', height: '60px', 
+                        display:'flex', alignItems:'center', justifyContent:'center',
+                        background:'#fafafa', borderRadius:'10px'}}>
+                        </li>
+                        <li style={{width:'24.5%', height: '60px', 
+                        display:'flex', alignItems:'center', justifyContent:'center',
+                        background:'#fafafa', borderRadius:'10px'}}>
+                            </li>
+                    </ul>
+            </div>
+            
         </Container>
     );
 };

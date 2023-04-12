@@ -66,7 +66,7 @@ body{
 
 
 .primary {
-    overflow: auto;
+    // overflow: auto;
     // scroll-snap-type: both mandatory;
     // height: 80vh;
   }
@@ -80,7 +80,7 @@ body{
       border-right: 1px solid #ddd;
     }
     .primary {
-      order: 2;
+    //   order: 2;
     }
   }
   table {
