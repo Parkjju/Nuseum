@@ -43,7 +43,7 @@ input, textarea{
 html,body {
     font-family: 'Noto Serif KR', serif;
 	line-height: 1;
-    min-height:800px;
+    min-height: 100vh;
 }
 
 
