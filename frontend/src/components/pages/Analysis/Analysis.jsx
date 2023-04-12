@@ -647,7 +647,21 @@ const Analysis = () => {
                                         //     </p>
                                         // </S.SectionTitle>
                                     }
+                                    <Name
+                                        style={{
+                                            fontSize: '16px',
+                                            marginTop: 70,
+                                            fontWeight: '600',
+                                            textAlign: 'center',
+                                            padding: '10px',
+                                        }}
+                                    >
+                                        {lang
+                                            ? 'Diversity figures'
+                                            : '골고루 지수'}
+                                    </Name>
                                     <S.Box>
+                                        
                                         <S.IconBox
                                             isPoint={true}
                                             style={{
@@ -655,11 +669,10 @@ const Analysis = () => {
                                                     'inset 0px 3px 7px rgba(0, 0, 0, 0.1)',
                                             }}
                                         >
-                                            <Name
+                                            {/* <Name
                                                 style={{
-                                                    fontSize: '14px',
+                                                    fontSize: '13px',
                                                     marginTop: 5,
-                                                    marginBottom: 5,
                                                     color: 'white',
                                                     fontWeight: '500',
                                                     textAlign: 'center',
@@ -668,7 +681,7 @@ const Analysis = () => {
                                                 {lang
                                                     ? 'Diversity figures'
                                                     : '골고루 지수'}
-                                            </Name>
+                                            </Name> */}
                                             <S.IconWrapper>
                                                 <S.Point>
                                                     {(
@@ -705,7 +718,7 @@ const Analysis = () => {
                                             </S.IconWrapper>
                                             <Name
                                                 style={{
-                                                    fontSize: '14px',
+                                                    fontSize: '13px',
                                                     marginBottom: 5,
                                                 }}
                                             >
@@ -722,7 +735,7 @@ const Analysis = () => {
                                             </S.IconWrapper>
                                             <Name
                                                 style={{
-                                                    fontSize: '14px',
+                                                    fontSize: '13px',
                                                     marginBottom: 5,
                                                 }}
                                             >
@@ -739,7 +752,7 @@ const Analysis = () => {
                                             </S.IconWrapper>
                                             <Name
                                                 style={{
-                                                    fontSize: '14px',
+                                                    fontSize: '13px',
                                                     marginBottom: 5,
                                                 }}
                                             >
@@ -756,7 +769,7 @@ const Analysis = () => {
                                             </S.IconWrapper>
                                             <Name
                                                 style={{
-                                                    fontSize: '14px',
+                                                    fontSize: '13px',
                                                     marginBottom: 5,
                                                     textAlign: 'center',
                                                 }}
@@ -776,7 +789,7 @@ const Analysis = () => {
                                             </S.IconWrapper>
                                             <Name
                                                 style={{
-                                                    fontSize: '14px',
+                                                    fontSize: '13px',
                                                     marginBottom: 5,
                                                 }}
                                             >
@@ -794,7 +807,7 @@ const Analysis = () => {
 
                                             <Name
                                                 style={{
-                                                    fontSize: '14px',
+                                                    fontSize: '13px',
                                                     marginBottom: 5,
                                                 }}
                                             >
@@ -812,7 +825,7 @@ const Analysis = () => {
 
                                             <Name
                                                 style={{
-                                                    fontSize: '14px',
+                                                    fontSize: '13px',
                                                     marginBottom: 5,
                                                 }}
                                             >
@@ -829,7 +842,7 @@ const Analysis = () => {
                                             </S.IconWrapper>
                                             <Name
                                                 style={{
-                                                    fontSize: '14px',
+                                                    fontSize: '13px',
                                                     marginBottom: 5,
                                                 }}
                                             >
@@ -848,7 +861,7 @@ const Analysis = () => {
                                             </S.IconWrapper>
                                             <Name
                                                 style={{
-                                                    fontSize: '14px',
+                                                    fontSize: '13px',
                                                     marginBottom: 5,
                                                     textAlign: 'center',
                                                 }}
@@ -860,8 +873,119 @@ const Analysis = () => {
                                             </Name>
                                         </S.IconBox>
                                     </S.Box>
-
                                     <S.NutrientBox>
+                                        <S.NutrientDetail>
+                                                <Name>
+                                                    {/* {(
+                                                        (nutrition.dietary_fiber /
+                                                            (20 * dateCount)) * 100
+                                                    ).toFixed(1)}
+                                                    %{'\n'} */}
+                                                    식이섬유
+                                                    <S.NameDetail>
+                                                        장내미생물의 먹이로 이용{'\n'}
+                                                        배변활동 원활을 도움
+                                                    </S.NameDetail>
+                                                </Name>
+                                                <Name>
+                                                    {/* {(
+                                                        (nutrition.vitamin_d /
+                                                            (5 * dateCount)) * 100
+                                                    ).toFixed(1)}
+                                                    %{'\n'} */}
+                                                    비타민 D
+                                                    <S.NameDetail>
+                                                        뼈의 형성과 유지{'\n'}
+                                                        칼슘&인의 흡수와 이용{'\n'}
+                                                        골다공증 발생 위험 감소에 도움
+                                                    </S.NameDetail>
+                                                </Name>
+                                                <Name>
+                                                    {/* {(
+                                                        (nutrition.dha_epa /
+                                                            (300 * dateCount)) * 100
+                                                    ).toFixed(1)}
+                                                    %{'\n'} */}
+                                                    DHA+EPA
+                                                    <S.NameDetail>
+                                                        기억력 개선 도움{'\n'}
+                                                        혈중 중성지질&혈행개선 도움{'\n'}
+                                                        건조한 눈 개선-눈건강에 도움
+                                                    </S.NameDetail>
+                                                </Name>
+                                                <Name>
+                                                    {/* {(
+                                                        (nutrition.magnesium /
+                                                            (110 * dateCount)) * 100
+                                                    ).toFixed(1)}
+                                                    %{'\n'} */}
+                                                    마그네슘
+                                                    <S.NameDetail>
+                                                        신경과 근육 기능 유지{'\n'}
+                                                        에너지 이용
+                                                    </S.NameDetail>
+                                                </Name>
+                                                <Name>
+                                                    {/* {(
+                                                        (nutrition.vitamin_a /
+                                                            (300 * dateCount)) * 100
+                                                    ).toFixed(1)}
+                                                    %{'\n'} */}
+                                                    비타민 A
+                                                    <S.NameDetail>
+                                                        상피세포의 성장과 발달{'\n'}
+                                                        피부와 점막 형성&기능유지{'\n'}
+                                                        어두운 곳에서 시각 적응
+                                                    </S.NameDetail>
+                                                </Name>
+                                                <Name>
+                                                    {/* {(
+                                                        (nutrition.tryptophan /
+                                                            (100 * dateCount)) * 100
+                                                    ).toFixed(1)}
+                                                    %{'\n'} */}
+                                                    트립토판
+                                                    <S.NameDetail>
+                                                        신경전달물질인 {'\n'}세로토닌&멜라토닌의{'\n'} 전구체로 이용
+                                                    </S.NameDetail>
+                                                </Name>
+                                                <Name>
+                                                    {/* {(
+                                                        (nutrition.folic_acid /
+                                                            (180 * dateCount)) * 100
+                                                    ).toFixed(1)}
+                                                    %{'\n'} */}
+                                                    엽산
+                                                    <S.NameDetail>
+                                                        태아 신경관의 정상 발달{'\n'}
+                                                        세포와 혈액 생성{'\n'}
+                                                        혈액의 호모시스테인 수준을{'\n'}정상으로 유지하는데 필요
+                                                    </S.NameDetail>
+                                                </Name>
+                                                <Name>
+                                                    {/* {(
+                                                        (nutrition.vitamin_b12 /
+                                                            (1.1 * dateCount)) * 100
+                                                    ).toFixed(1)}
+                                                    %{'\n'} */}
+                                                    비타민 B12
+                                                    <S.NameDetail>
+                                                        정상적인 엽산 대사
+                                                    </S.NameDetail>
+                                                </Name>
+                                                <Name>
+                                                    {/* {(
+                                                        (nutrition.vitamin_b6 /
+                                                            (0.7 * dateCount)) * 100
+                                                    ).toFixed(1)}
+                                                    %{'\n'} */}
+                                                    비타민 B6
+                                                    <S.NameDetail>
+                                                        단백질 및 아미노산 이용{'\n'}
+                                                        혈액의 호모시스테인 수준을{'\n'}정상으로 유지하는데 필요
+                                                    </S.NameDetail>
+                                                </Name>
+                                        </S.NutrientDetail>
                                         <S.NutrientList>
                                             <Tooltip
                                                 title={
@@ -1147,6 +1271,22 @@ const Analysis = () => {
                                             marginBottom: '50px',
                                         }}
                                     >
+                                    <Name
+                                        style={{
+                                            fontSize: '16px',
+                                            marginTop: 70,
+                                            fontWeight: '600',
+                                            textAlign: 'center',
+                                            padding: '10px',
+                                            marginBottom: '5px',
+                                            display: 'inline-block'
+                                        }}
+                                    >
+                                        {lang
+                                            ? 'carbohydrate protein fat ratio'
+                                            : '탄수화물-단백질-지방 섭취율'}
+                                    </Name>
+
                                         <BarGraph
                                             count={dateCount}
                                             data={nutrition}
