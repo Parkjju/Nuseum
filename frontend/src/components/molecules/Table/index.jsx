@@ -348,7 +348,7 @@ const Table = ({
             >
                 <Name style={{ fontSize: '20px' }}>맞춤식품</Name>
             </DiaryTitle>
-            <Name style={{ fontSize: '16px', marginBottom: '25px'}}>농수산식품</Name>
+            <Name style={{ fontSize: '16px', marginBottom: '25px'}}>식재료</Name>
             <div
                 style={{ ...style , marginBottom:'70px'}}
                 role='region'
@@ -581,9 +581,33 @@ const Table = ({
             <div
                 style={{display: 'flex', flexDirection:'column', alignItems:'center',
                 width: '90%', maxWidth:'500px',textAlign: 'center', marginBottom:'70px'}}>
-                <Name style={{ fontSize: '16px', margin: '25px'}}>추천 요리</Name>
+                <Name style={{ fontSize: '16px', margin: '25px'}}>음식</Name>
                 <Name style={{ fontSize: '13px',fontWeight:300,marginBottom:'10px'}}>추후 추가될 예정입니다 :)</Name>
-                    <ul style={{display: 'flex',width:'100%', fontSize:'14px',justifyContent:'space-between',}}>
+                    <ul style={{display: 'flex',width:'100%', fontSize:'14px',justifyContent:'space-evenly',}}>
+                        <li style={{width:'24.5%', height: '60px', 
+                        display:'flex', alignItems:'center', justifyContent:'center',
+                        background:'#fafafa', borderRadius:'10px'}}>
+                        </li>
+                        <li style={{width:'24.5%', height: '60px', 
+                        display:'flex', alignItems:'center', justifyContent:'center',
+                        background:'#fafafa', borderRadius:'10px'}}>
+                        </li>
+                        <li style={{width:'24.5%', height: '60px', 
+                        display:'flex', alignItems:'center', justifyContent:'center',
+                        background:'#fafafa', borderRadius:'10px'}}>
+                        </li>
+                        <li style={{width:'24.5%', height: '60px', 
+                        display:'flex', alignItems:'center', justifyContent:'center',
+                        background:'#fafafa', borderRadius:'10px'}}>
+                            </li>
+                    </ul>
+            </div>
+            <div
+                style={{display: 'flex', flexDirection:'column', alignItems:'center',
+                width: '90%', maxWidth:'500px',textAlign: 'center', marginBottom:'70px'}}>
+                <Name style={{ fontSize: '16px', margin: '25px'}}>가공 식품</Name>
+                <Name style={{ fontSize: '13px',fontWeight:300,marginBottom:'10px'}}>추후 추가될 예정입니다 :)</Name>
+                    <ul style={{display: 'flex',width:'100%', fontSize:'14px',justifyContent:'space-evenly',}}>
                         <li style={{width:'24.5%', height: '60px', 
                         display:'flex', alignItems:'center', justifyContent:'center',
                         background:'#fafafa', borderRadius:'10px'}}>
@@ -607,20 +631,20 @@ const Table = ({
                 width: '90%', maxWidth:'500px',textAlign: 'center', marginBottom:'70px'}}>
                 <Name style={{ fontSize: '16px', margin: '25px'}}>보충제</Name>
                 <Name style={{ fontSize: '13px',fontWeight:300,marginBottom:'10px'}}>추후 추가될 예정입니다 :)</Name>
-                    <ul style={{display: 'flex',width:'100%', fontSize:'14px',justifyContent:'space-between',}}>
-                        <li style={{width:'24.5%', height: '60px', 
+                    <ul style={{display: 'flex',width:'100%', fontSize:'14px',justifyContent:'space-evenly',}}>
+                        <li style={{width:'24.5%', height: '80px', 
                         display:'flex', alignItems:'center', justifyContent:'center',
                         background:'#fafafa', borderRadius:'10px'}}>
                         </li>
-                        <li style={{width:'24.5%', height: '60px', 
+                        <li style={{width:'24.5%', height: '80px', 
                         display:'flex', alignItems:'center', justifyContent:'center',
                         background:'#fafafa', borderRadius:'10px'}}>
                         </li>
-                        <li style={{width:'24.5%', height: '60px', 
+                        <li style={{width:'24.5%', height: '80px', 
                         display:'flex', alignItems:'center', justifyContent:'center',
                         background:'#fafafa', borderRadius:'10px'}}>
                         </li>
-                        <li style={{width:'24.5%', height: '60px', 
+                        <li style={{width:'24.5%', height: '80px', 
                         display:'flex', alignItems:'center', justifyContent:'center',
                         background:'#fafafa', borderRadius:'10px'}}>
                             </li>
