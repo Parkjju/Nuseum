@@ -18,15 +18,15 @@ export const Tab = styled.div`
     padding: 10px;
     width: 100%;
     height: auto;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
 `;
 
 export const Icon = styled.img`
-    width: 38px;
-    margin-bottom: 10px;
+    width: 35px;
+    margin-bottom: 5px;
 `;
 export const IconBox = styled.div`
     display: flex;
@@ -37,17 +37,17 @@ export const IconBox = styled.div`
 `;
 
 export const Name = styled.span`
-    font-size: 16px;
+    font-size: 14px;
     color: #222222;
-    font-weight: bold;
+    font-weight: 600;
     text-align: center;
     white-space: pre-wrap;
 `;
 
 export const IconName = styled(Name)`
-    font-size: 16px;
+    font-size: 14px;
     color: #222222;
-    font-weight: bold;
+    font-weight: 600;
     width: 100%;
     text-align: center;
     white-space: pre-wrap;

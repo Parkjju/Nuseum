@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
 export const Box = styled.div`
-    width: 80%;
-    padding-top: 50px;
+    width: 70%;
+    padding-top: 20px;
     display: grid;
     @media all and (max-width: 550px) {
-        width: 91%;
+        width: 85%;
     }
     @media all and (max-width: 490px) {
         grid-template-columns: repeat(3, 1fr);
@@ -17,13 +17,13 @@ export const Box = styled.div`
     grid-template-rows: repeat(3, 1fr);
     justify-items: center;
     align-items: center;
-    padding-bottom: 30px;
+    padding-bottom: 50px;
 `;
 
 export const IconBox = styled.div`
-    height: 86px;
-    width: 88px;
-    margin: 0 2.5px 10px;
+    height: 75px;
+    width: 80px;
+    margin: 0 2.5px 5px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -36,26 +36,25 @@ export const IconBox = styled.div`
             : null};
     box-shadow: ${(props) =>
         props.isEat
-            ? '4px 4px 5px rgba(70, 70, 70, 0.15)'
+            ? '3px 3px 4px rgba(70, 70, 70, 0.2)'
             : props.isPoint
             ? 'none'
             : null};
     border-radius: 20px;
-    padding: 6px;
+    padding: 5px;
 `;
 
 export const Icon = styled.img`
-    width: 2.5rem;
+    width: 2.2rem;
 `;
 export const IconWrapper = styled.div`
     background-color: ${(props) => (props.isEat ? '#dfdfdf' : null)};
     width: 4rem;
-    height: 3.6rem;
+    height: 3.3rem;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 2rem;
-    margin-bottom: 4px;
 `;
 export const ButtonBox = styled.div`
     display: flex;
@@ -122,7 +121,29 @@ export const NutrientList = styled.div`
     }
     margin-bottom: 50px;
 `;
-
+export const NutrientDetail = styled.div`
+    width: 102%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 70px;
+    span{
+        font-weight: 600;
+        line-height: 1.3;
+        width: 48.5%;
+        background: #fafafa;
+        padding: 5px 1px;
+        border-radius: 5px;
+        margin: 5px 0;
+    }
+`
+export const NameDetail= styled.span`
+    display: inline-block;
+    width: 100% !important;
+    padding-top: 4px;
+    font-weight: 400 !important;
+    font-size: 12px !important;
+`
 export const Divider = styled.div`
     border-bottom: 1px solid #dcdfdf;
     width: 100%;

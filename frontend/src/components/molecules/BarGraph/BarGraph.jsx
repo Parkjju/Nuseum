@@ -21,8 +21,8 @@ ChartJS.register(
 const BarGraph = ({ count, data }) => {
     const lang = useSelector((state) => state.language.isKorean);
     const labelsForBar = [
-        lang ? 'Actual intake rate' : '실제 섭취율',
-        lang ? 'Recommended intake rate' : '권장 섭취율',
+        lang ? 'Actual intake rate' : '실제섭취율',
+        lang ? 'Recommended intake rate' : '권장섭취율',
     ];
     const optionsForBar = {
         indexAxis: 'y',
@@ -44,18 +44,18 @@ const BarGraph = ({ count, data }) => {
                     boxWidth: 25,
                 },
             },
-            title: {
-                display: true,
-                text: lang
-                    ? 'carbohydrate protein fat ratio'
-                    : '탄수화물 단백질 지방 섭취율    ',
-                align: 'end',
-                font: {
-                    family: 'Noto Serif KR,serif',
-                    size: 12,
-                    weight: 500,
-                },
-            },
+            // title: {
+            //     display: true,
+            //     text: lang
+            //         ? 'carbohydrate protein fat ratio'
+            //         : '탄수화물 단백질 지방 섭취율    ',
+            //     align: 'end',
+            //     font: {
+            //         family: 'Noto Serif KR,serif',
+            //         size: 12,
+            //         weight: 500,
+            //     },
+            // },
         },
         scales: {
             y: {
