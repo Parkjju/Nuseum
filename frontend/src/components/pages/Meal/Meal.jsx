@@ -725,7 +725,7 @@ const Meal = () => {
                         background: '#586162',
                         border: 'none',
                         borderRadius: '20px',
-                        padding: '10px 50px',
+                        padding: '7px 45px',
                         color: 'white',
                     }}
                 >

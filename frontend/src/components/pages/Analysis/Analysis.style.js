@@ -5,7 +5,7 @@ export const Box = styled.div`
     padding-top: 20px;
     display: grid;
     @media all and (max-width: 550px) {
-        width: 85%;
+        width: 80%;
     }
     @media all and (max-width: 490px) {
         grid-template-columns: repeat(3, 1fr);
@@ -31,8 +31,8 @@ export const IconBox = styled.div`
     background-color: ${(props) =>
         props.isEat
             ? 'rgba(238, 238, 238, 0.5)'
-            : props.isPoint
-            ? '#BFC5C6'
+            // : props.isPoint
+            // ? '#BFC5C6'
             : null};
     box-shadow: ${(props) =>
         props.isEat
@@ -59,7 +59,7 @@ export const IconWrapper = styled.div`
 export const ButtonBox = styled.div`
     display: flex;
     margin-top: 50px;
-    justify-content: space-between;
+    justify-content: center;
     width: 85%;
     @media all and (max-width: 480px) {
         width: 90%;
@@ -77,8 +77,8 @@ export const FetchButton = styled.button`
     background-color: ${(props) => (props.isClicked ? '#fafafa' : 'transparent')};
     border-radius: 8px;
     color: black;
-    width: 33.3%;
-    padding: 16px 10px;
+    width: 30%;
+    padding: 10px;
     font-size: 16px;
     border: none;
     cursor: pointer;
@@ -122,24 +122,27 @@ export const NutrientList = styled.div`
     margin-bottom: 50px;
 `;
 export const NutrientDetail = styled.div`
-    width: 102%;
+    width: 100%;
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
-    justify-content: space-between;
+    align-items: center;
     margin-bottom: 70px;
+    >span{
+        width: 90%;
+    }
     span{
+        text-align: left;
         font-weight: 600;
         line-height: 1.3;
-        width: 48.5%;
         background: #fafafa;
-        padding: 5px 1px;
+        padding: 5px 10px;
         border-radius: 5px;
-        margin: 5px 0;
     }
 `
 export const NameDetail= styled.span`
     display: inline-block;
-    width: 100% !important;
+    width: 95% !important;
     padding-top: 4px;
     font-weight: 400 !important;
     font-size: 12px !important;
@@ -150,7 +153,7 @@ export const Divider = styled.div`
 `;
 
 export const Point = styled.p`
-    color: white;
+    // color: white;
     font-size: 36px;
     font-weight: bold;
     display: flex;
