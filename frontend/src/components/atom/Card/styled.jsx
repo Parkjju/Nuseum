@@ -25,7 +25,7 @@ export const Tab = styled.div`
 `;
 
 export const Icon = styled.img`
-    width: 35px;
+    width: 30px;
     margin-bottom: 5px;
 `;
 export const IconBox = styled.div`
