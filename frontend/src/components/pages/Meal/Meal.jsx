@@ -702,7 +702,7 @@ const Meal = () => {
             </TagBox>
             {/* 원재료 입력 시 정확도 상승 멘트 추가*/}
                 <Name style={{fontWeight: 300, fontSize: '13px'}}>
-                    원재료를 입력하면 분석 정확도가 올라갑니다
+                    식재료를 입력하면 분석 정확도가 올라갑니다
                 </Name>
             <input
                 onChange={onChange}
@@ -719,7 +719,7 @@ const Meal = () => {
             </ModalSearch>
             {/* 입력 방법 설명 멘트 추가 */}
                 <Name style={{lineHeight: 1.4,fontWeight: 300, fontSize: '13px'}}>
-                    음식 선택 시 g/ml입력 후 enter↵{'\n'} 저장버튼을 꼭 눌러주세요:)
+                    음식 선택 시 g/ml 입력 후 enter↵{'\n'} 저장버튼을 꼭 눌러주세요:)
                 </Name>
             {loading ? (
                 <CircularProgress sx={{ marginBottom: 5 }} />
