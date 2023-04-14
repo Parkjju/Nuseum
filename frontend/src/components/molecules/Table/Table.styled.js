@@ -18,3 +18,29 @@ export const CurationTd = styled.td`
             ? '#F0F0F0'
             : null};
 `;
+
+// 음식, 가공식품, 보충제
+export const CurationWith = styled.div`
+    dispaly: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    margin-bottom: 70px;
+    ul{
+        display: flex;
+        width: 100%;
+        font-size: 14px;
+        justify-content: space-evenly;
+    }
+    li{
+        width: 24.5%;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fafafa;
+        border-radius: 10px;
+    }
+`

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import useCalculate from '../../../hooks/useCalculate';
 import BottomSheet from '../BottomSheet/BottomSheet';
-import { CurationMeal, CurationMealWrapper, CurationTd } from './Table.styled';
+import { CurationMeal, CurationMealWrapper, CurationTd, CurationWith } from './Table.styled';
 
 import { TooltipDescription } from '../../pages/Analysis/Analysis.style';
 import { Tooltip } from '@mui/material';
@@ -535,78 +535,36 @@ const Table = ({
                 ) : null}
             </div>      
             {/* 임시로 추가한 추천 요리, 보충제 레이아웃 */}
-            <div
-                style={{display: 'flex', flexDirection:'column', alignItems:'center',
-                width: '90%', maxWidth:'500px',textAlign: 'center', marginBottom:'70px'}}>
+            <CurationWith>
                 <Name style={{ fontSize: '16px', margin: '25px'}}>음식</Name>
                 <Name style={{ fontSize: '13px',fontWeight:300,marginBottom:'10px'}}>추후 추가될 예정입니다 :)</Name>
-                    <ul style={{display: 'flex',width:'100%', fontSize:'14px',justifyContent:'space-evenly',}}>
-                        <li style={{width:'24.5%', height: '60px', 
-                        display:'flex', alignItems:'center', justifyContent:'center',
-                        background:'#fafafa', borderRadius:'10px'}}>
-                        </li>
-                        <li style={{width:'24.5%', height: '60px', 
-                        display:'flex', alignItems:'center', justifyContent:'center',
-                        background:'#fafafa', borderRadius:'10px'}}>
-                        </li>
-                        <li style={{width:'24.5%', height: '60px', 
-                        display:'flex', alignItems:'center', justifyContent:'center',
-                        background:'#fafafa', borderRadius:'10px'}}>
-                        </li>
-                        <li style={{width:'24.5%', height: '60px', 
-                        display:'flex', alignItems:'center', justifyContent:'center',
-                        background:'#fafafa', borderRadius:'10px'}}>
-                            </li>
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
                     </ul>
-            </div>
-            <div
-                style={{display: 'flex', flexDirection:'column', alignItems:'center',
-                width: '90%', maxWidth:'500px',textAlign: 'center', marginBottom:'70px'}}>
-                <Name style={{ fontSize: '16px', margin: '25px'}}>가공 식품</Name>
+            </CurationWith>
+            <CurationWith>
+                <Name style={{ fontSize: '16px', margin: '25px'}}>가공식품</Name>
                 <Name style={{ fontSize: '13px',fontWeight:300,marginBottom:'10px'}}>추후 추가될 예정입니다 :)</Name>
-                    <ul style={{display: 'flex',width:'100%', fontSize:'14px',justifyContent:'space-evenly',}}>
-                        <li style={{width:'24.5%', height: '60px', 
-                        display:'flex', alignItems:'center', justifyContent:'center',
-                        background:'#fafafa', borderRadius:'10px'}}>
-                        </li>
-                        <li style={{width:'24.5%', height: '60px', 
-                        display:'flex', alignItems:'center', justifyContent:'center',
-                        background:'#fafafa', borderRadius:'10px'}}>
-                        </li>
-                        <li style={{width:'24.5%', height: '60px', 
-                        display:'flex', alignItems:'center', justifyContent:'center',
-                        background:'#fafafa', borderRadius:'10px'}}>
-                        </li>
-                        <li style={{width:'24.5%', height: '60px', 
-                        display:'flex', alignItems:'center', justifyContent:'center',
-                        background:'#fafafa', borderRadius:'10px'}}>
-                            </li>
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
                     </ul>
-            </div>
-            <div
-                style={{display: 'flex', flexDirection:'column', alignItems:'center',
-                width: '90%', maxWidth:'500px',textAlign: 'center', marginBottom:'70px'}}>
+            </CurationWith>
+            <CurationWith>
                 <Name style={{ fontSize: '16px', margin: '25px'}}>보충제</Name>
                 <Name style={{ fontSize: '13px',fontWeight:300,marginBottom:'10px'}}>추후 추가될 예정입니다 :)</Name>
-                    <ul style={{display: 'flex',width:'100%', fontSize:'14px',justifyContent:'space-evenly',}}>
-                        <li style={{width:'24.5%', height: '80px', 
-                        display:'flex', alignItems:'center', justifyContent:'center',
-                        background:'#fafafa', borderRadius:'10px'}}>
-                        </li>
-                        <li style={{width:'24.5%', height: '80px', 
-                        display:'flex', alignItems:'center', justifyContent:'center',
-                        background:'#fafafa', borderRadius:'10px'}}>
-                        </li>
-                        <li style={{width:'24.5%', height: '80px', 
-                        display:'flex', alignItems:'center', justifyContent:'center',
-                        background:'#fafafa', borderRadius:'10px'}}>
-                        </li>
-                        <li style={{width:'24.5%', height: '80px', 
-                        display:'flex', alignItems:'center', justifyContent:'center',
-                        background:'#fafafa', borderRadius:'10px'}}>
-                            </li>
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
                     </ul>
-            </div>
+            </CurationWith>
             
         </Container>
     );
