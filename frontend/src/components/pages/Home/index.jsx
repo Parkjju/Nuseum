@@ -36,7 +36,7 @@ function Home() {
 
     return (
         <Container>
-            <Contents>
+            <Contents style={{minHeight:'75vh'}}>
                 <DiaryTitle layoutId={menu[0][2]}>
                     <Name
                         style={{
