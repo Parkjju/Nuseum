@@ -53,7 +53,10 @@ function Record() {
 
     return (
         <Container>
-            <Contents>
+            <Contents                
+            // 무한스크롤을 위한 height 고정
+                style={{minHeight: '90vh', marginTop:'10px', justifyContent: 'flex-start'}}
+            >
                 <DiaryTitle layoutId={menu[0][2]}>
                     <Icon style={{ width: '40px', display:'none' }} src={menu[0][0]} />
                     <Name
