@@ -364,11 +364,7 @@ const Table = ({
                                 title={
                                     <div>
                                         <TooltipDescription>
-                                            1. 장내미생물의 먹이로 이용.
-                                        </TooltipDescription>
-                                        <TooltipDescription>
-                                            2. 배변활동 원활에 도움을 줄 수
-                                            있음.
+                                            장내미생물의 먹이로 이용 | 배변활동 원활에 도움을 줄 수 있음
                                         </TooltipDescription>
                                     </div>
                                 }
@@ -379,15 +375,7 @@ const Table = ({
                                 title={
                                     <div>
                                         <TooltipDescription>
-                                            1. 뼈의 형성과 유지에 필요.
-                                        </TooltipDescription>
-                                        <TooltipDescription>
-                                            2. 칼슘과 인이 흡수되고 이용되는데
-                                            필요.
-                                        </TooltipDescription>
-                                        <TooltipDescription>
-                                            3. 골다공증 발생 위험 감소에 도움을
-                                            줌.
+                                            뼈의 형성과 유지에 필요 | 칼슘&인의 흡수와 이용에 필요 | 골다공증 발생 위험 감소에 도움을 줌
                                         </TooltipDescription>
                                     </div>
                                 }
@@ -398,15 +386,7 @@ const Table = ({
                                 title={
                                     <div>
                                         <TooltipDescription>
-                                            1. 기억력 개선에 도움을 줄 수 있음.
-                                        </TooltipDescription>
-                                        <TooltipDescription>
-                                            2. 혈중 중성지질, 혈행개선에 도움을
-                                            줄 수 있음.
-                                        </TooltipDescription>
-                                        <TooltipDescription>
-                                            3. 건조한 눈을 개선하여 눈 건강에
-                                            도움을 줄 수 있음.
+                                            기억력 개선 도움에 도움을 줄 수 있음 | 혈중 중성지질&혈행개선에 도움을 줄 수 있음 | 건조한 눈을 개선하여 눈건강에 도움을 줄 수 있음
                                         </TooltipDescription>
                                     </div>
                                 }
@@ -417,10 +397,7 @@ const Table = ({
                                 title={
                                     <div>
                                         <TooltipDescription>
-                                            1. 신경과 근육 기능 유지에 필요.
-                                        </TooltipDescription>
-                                        <TooltipDescription>
-                                            2. 에너지 이용에 필요.
+                                            신경과 근육 기능 유지에 필요 | 에너지 이용에 필요
                                         </TooltipDescription>
                                     </div>
                                 }
@@ -431,15 +408,7 @@ const Table = ({
                                 title={
                                     <div>
                                         <TooltipDescription>
-                                            1.상피세포의 성장과 발달에 필요.
-                                        </TooltipDescription>
-                                        <TooltipDescription>
-                                            2. 피부와 점막을 형성하고 기능을
-                                            유지하는데 필요.
-                                        </TooltipDescription>
-                                        <TooltipDescription>
-                                            3. 어두운 곳에서 시각 적응을 위해
-                                            필요.
+                                            상피세포의 성장과 발달에 필요 | 피부와 점막 형성&기능유지에 필요 | 어두운 곳에서 시각 적응을 위해 필요
                                         </TooltipDescription>
                                     </div>
                                 }
@@ -451,8 +420,7 @@ const Table = ({
                                 title={
                                     <div>
                                         <TooltipDescription>
-                                            1.신경전달물질인 세로토닌,
-                                            멜라토닌의 전구체로 이용.
+                                            신경전달물질인 세로토닌&멜라토닌의 전구체로 이용
                                         </TooltipDescription>
                                     </div>
                                 }
@@ -463,14 +431,7 @@ const Table = ({
                                 title={
                                     <div>
                                         <TooltipDescription>
-                                            1. 태아 신경관의 정상 발달에 필요.
-                                        </TooltipDescription>
-                                        <TooltipDescription>
-                                            2. 세포와 혈액 생성에 필요.
-                                        </TooltipDescription>
-                                        <TooltipDescription>
-                                            3. 혈액의 호모시스테인 수준을
-                                            정상으로 유지하는데 필요.
+                                            태아 신경관의 정상 발달에 필요 | 세포와 혈액 생성에 필요 | 혈액의 호모시스테인 수준을 정상으로 유지하는데 필요
                                         </TooltipDescription>
                                     </div>
                                 }
@@ -481,7 +442,7 @@ const Table = ({
                                 title={
                                     <div>
                                         <TooltipDescription>
-                                            정상적인 엽산 대사에 필요.
+                                            정상적인 엽산 대사에 필요
                                         </TooltipDescription>
                                     </div>
                                 }
@@ -492,11 +453,7 @@ const Table = ({
                                 title={
                                     <div>
                                         <TooltipDescription>
-                                            1.단백질 및 아미노산 이용에 필요.
-                                        </TooltipDescription>
-                                        <TooltipDescription>
-                                            2. 혈액의 호모시스테인 수준을
-                                            정상으로 유지하는데 필요
+                                            단백질 및 아미노산 이용에 필요 | 혈액의 호모시스테인 수준을 정상으로 유지하는데 필요
                                         </TooltipDescription>
                                     </div>
                                 }
