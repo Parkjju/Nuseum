@@ -49,7 +49,7 @@ const Header = () => {
                     <div
                         style={{
                             height: '50px',
-                            paddingLeft: 20,
+                            // paddingLeft: 20,
                             display: 'flex',
                             justifyContent: 'space-between',
                         }}
@@ -99,6 +99,7 @@ const Header = () => {
                             </>
                         )}
                         <FormControlLabel
+                            style={{paddingLeft:'10px'}}
                             control={
                                 <Switch
                                     onChange={() =>
@@ -116,7 +117,7 @@ const Header = () => {
 
                     <div
                         style={{
-                            paddingRight: 20,
+                            // paddingRight: 20,
                             display: 'flex',
                             justifyContent: 'space-between',
                         }}

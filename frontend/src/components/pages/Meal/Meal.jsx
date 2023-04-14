@@ -33,6 +33,7 @@ import h from '../../../assets/category/8.png';
 import i from '../../../assets/category/9.png';
 import { useQuery } from 'react-query';
 import { fetchDailyFood } from '../../../api';
+import { lineHeight } from '@mui/system';
 
 const Meal = () => {
     const param = useParams();
@@ -353,7 +354,7 @@ const Meal = () => {
     useEffect(() => {
         const handleScroll = () => {
             const { scrollTop, offsetHeight } = document.documentElement;
-            if (window.innerHeight + scrollTop >= offsetHeight - 100) {
+            if (window.innerHeight + scrollTop >= offsetHeight - 500) {
                 setIsFetching(true);
             }
         };
@@ -699,7 +700,10 @@ const Meal = () => {
                       )
                     : null}
             </TagBox>
-
+            {/* 원재료 입력 시 정확도 상승 멘트 추가*/}
+                <Name style={{fontWeight: 300, fontSize: '13px'}}>
+                    원재료를 입력하면 분석 정확도가 올라갑니다
+                </Name>
             <input
                 onChange={onChange}
                 type='file'
@@ -713,7 +717,10 @@ const Meal = () => {
                 <span className='material-symbols-outlined'>search</span>
                 <ModalInput value={foodName} onChange={onChangeName} />
             </ModalSearch>
-
+            {/* 입력 방법 설명 멘트 추가 */}
+                <Name style={{lineHeight: 1.4,fontWeight: 300, fontSize: '13px'}}>
+                    음식 선택 시 g/ml입력 후 enter↵{'\n'} 저장버튼을 꼭 눌러주세요:)
+                </Name>
             {loading ? (
                 <CircularProgress sx={{ marginBottom: 5 }} />
             ) : (
@@ -721,25 +728,24 @@ const Meal = () => {
                 <button
                     onClick={() => savePost()}
                     style={{
-                        marginBottom: '30px',
+                        margin: '20px 0 30px 0',
                         background: '#586162',
                         border: 'none',
                         borderRadius: '20px',
-                        padding: '7px 45px',
+                        padding: '10px 65px',
                         color: 'white',
                     }}
                 >
                     {lang ? 'Save' : '저장'}
                 </button>
             )}
-
             {isLoading ? (
                 <CircularProgress sx={{ marginBottom: 5 }} />
             ) : (
                 <Menu data={result} />
             )}
             {isFetching ? <CircularProgress sx={{ marginBottom: 5 }} /> : null}
-        </DiaryBody>
+    </DiaryBody>
     );
 };
 

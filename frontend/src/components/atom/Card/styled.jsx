@@ -18,7 +18,7 @@ export const Tab = styled.div`
     padding: 10px;
     width: 100%;
     height: auto;
-    margin-bottom: 30px;
+    margin-bottom: 3rem;
     display: flex;
     justify-content: center;
     align-items: center;

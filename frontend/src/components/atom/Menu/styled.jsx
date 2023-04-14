@@ -8,24 +8,30 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 export const ResultBox = styled(motion.div)`
-    width: 100%;
+    width: 95%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-height: 70vh;
-    overflow-y: scroll;
+    @media all and (max-width: 550px) {
+        max-height: 70vh;
+        overflow-y: scroll;
+    }
 `;
 
 export const Result = styled(motion.p)`
     width: 90%;
-    font-size: 12px;
+    font-size: 13px;
     text-align: left;
-    padding: 5px 10px;
+    padding: 5px;
     display: flex;
     flex-direction: column;
     line-height: 16px;
     margin-bottom: 10px;
     border-radius: 10px;
+    hr{
+        margin: 10px 0;
+        opacity: 0.5 !important;
+    }
 `;
 export const Divider = styled(motion.hr)`
     width: 100%;
