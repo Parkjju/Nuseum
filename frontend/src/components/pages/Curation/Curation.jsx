@@ -255,23 +255,23 @@ const Curation = () => {
 
     const mappingNutritionNameToCoordinate = (name) => {
         switch (name) {
-            case 'dha_epa':
+            case 'dietary_fiber':
                 return 0;
-            case 'vitamin_a':
+            case 'vitamin_d':
                 return 1;
-            case 'magnesium':
+            case 'dha_epa':
                 return 2;
-            case 'tryptophan':
+            case 'magnesium':
                 return 3;
-            case 'vitamin_b6':
+            case 'vitamin_a':
                 return 4;
-            case 'vitamin_b12':
+            case 'tryptophan':
                 return 5;
             case 'folic_acid':
                 return 6;
-            case 'vitamin_d':
+            case 'vitamin_b12':
                 return 7;
-            case 'dietary_fiber':
+            case 'vitamin_b6':
                 return 8;
             default:
                 return null;
@@ -316,7 +316,7 @@ const Curation = () => {
                         key === 'energy'
                     )
                         continue;
-
+                    console.log(key);
                     if (response.data[key] < range[key] * 7) {
                         setInSufficientNutrition((prev) => [
                             ...prev,
