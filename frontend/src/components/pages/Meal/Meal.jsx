@@ -700,7 +700,7 @@ const Meal = () => {
                       )
                     : null}
             </TagBox>
-            {/* 원재료 입력 시 정확도 상승 멘트 추가*/}
+            {/* 식재료 입력 시 정확도 상승 멘트 추가*/}
                 <Name style={{fontWeight: 300, fontSize: '13px'}}>
                     식재료를 입력하면 분석 정확도가 올라갑니다
                 </Name>

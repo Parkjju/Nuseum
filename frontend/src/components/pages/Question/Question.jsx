@@ -65,6 +65,7 @@ const Question = () => {
                     <DiaryTitle layoutId={'question'}>
                         <Name style={{marginBottom: '20px', fontSize:'20px'}}>{'Q&A'}</Name>
                     </DiaryTitle>
+                        <Name style={{marginBottom: '20px', lineHeight: 1.3}}>뉴지엄의 성장을 위해 좋았던 점,{'\n'} 개선될 점 등을 남겨주세요 :)</Name>
                         <div style={{width: '82%', display:'flex', flexDirection: 'column', 
                         alignItems:'center',marginBottom: '50px', maxHeight: '80vh', overflowY:'scroll', padding:' 0 8px'}}>
                             {questions.map((item) => (
