@@ -260,7 +260,7 @@ const RadarGraph = ({ dateCount, data, dataWithoutSupplement }) => {
         <>
             <Radar
                 style={{
-                    marginTop: 30,
+                    marginTop: 70,
                     marginBottom: 15,
                     width: '100%',
                 }}
