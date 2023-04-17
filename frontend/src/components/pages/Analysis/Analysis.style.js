@@ -17,7 +17,7 @@ export const Box = styled.div`
     grid-template-rows: repeat(3, 1fr);
     justify-items: center;
     align-items: center;
-    padding-bottom: 50px;
+    padding-bottom: 20px;
 `;
 
 export const IconBox = styled.div`
@@ -134,7 +134,7 @@ export const NutrientDetail = styled.div`
     span{
         text-align: left;
         font-weight: 600;
-        line-height: 1.3;
+        line-height: 1.4;
         background: #fafafa;
         padding: 5px 10px;
         border-radius: 5px;

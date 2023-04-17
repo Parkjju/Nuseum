@@ -874,8 +874,42 @@ const Analysis = () => {
                                             </Name>
                                         </S.IconBox>
                                     </S.Box>
+                                    <Name
+                                        style={{
+                                            fontSize: '12px',
+                                            marginBottom: 100,
+                                            fontWeight: '300',
+                                            textAlign: 'center',
+                                            lineHeight: 1.6,
+                                            background: '#f1f1f1',
+                                            padding: '10px',
+                                            borderRadius: '5px',
+                                            width: '80%'
+                                        }}
+                                    >
+                                        건강한 식품군의 다양한 섭취는 체내 다양한 장내미생물의 서식을 돕고,
+                                        다양한 영양성분을 공급하여 지속 가능하게 건강을 유지하고 질병을 예방하게 합니다
+                                    </Name>
                                     <S.NutrientBox>
                                         <S.NutrientDetail>
+                                        <Name
+                                        style={{
+                                            fontSize: '12px',
+                                            marginBottom: 30,
+                                            fontWeight: '300',
+                                            textAlign: 'center',
+                                            lineHeight: 1.6,
+                                            background: '#f1f1f1',
+                                            padding: '10px',
+                                            borderRadius: '5px',
+                                            whiteSpace: 'pre=wrap'
+                                        }}
+                                        >
+                                            서울대학교 영양생리약리연구실은 JCR 자료를 기준으로{'\n'}  
+                                            Nutrition Dietetics 및 Food Science & Technology {'\n'} 분야 top 1-3위 저널에서
+                                             아동의 행동신경발달 관련 추출된 문헌들과 이들의 참고문헌 약 1,787개의 문헌에 대해 리뷰/고찰하고, 
+                                             관련 영양성분 및 섭취성분을 선별하였습니다
+                                        </Name>
                                                 <Name>
                                                     {/* {(
                                                         (nutrition.dietary_fiber /
