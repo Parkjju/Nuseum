@@ -392,12 +392,12 @@ const Table = ({
                             <th class='pin'></th>
                             <th>채소</th>
                             <th>과일</th>
-                            <th>콩/두부</th>
+                            <th>콩{'\n'}두부</th>
                             <th>통곡물</th>
                             <th>버섯</th>
                             <th>해조류</th>
                             <th>견과</th>
-                            <th>고기 생선 달걀</th>
+                            <th>고기{'\n'}생선{'\n'}달걀</th>
                             <th>유제품</th>
                         </tr>
                     </thead>
