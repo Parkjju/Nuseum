@@ -246,7 +246,7 @@ const Table = ({
             for (let diversity of inSufficientDiversity) {
                 setCoordinates((prev) => [
                     ...prev,
-                    `${diversity}.${nutrition}`,
+                    `${nutrition}.${diversity}`,
                 ]);
             }
         }
