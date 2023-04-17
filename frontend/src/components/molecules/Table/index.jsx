@@ -5,7 +5,12 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import useCalculate from '../../../hooks/useCalculate';
 import BottomSheet from '../BottomSheet/BottomSheet';
-import { CurationMeal, CurationMealWrapper, CurationTd, CurationWith } from './Table.styled';
+import {
+    CurationMeal,
+    CurationMealWrapper,
+    CurationTd,
+    CurationWith,
+} from './Table.styled';
 
 import { TooltipDescription } from '../../pages/Analysis/Analysis.style';
 import { Tooltip } from '@mui/material';
@@ -317,28 +322,35 @@ const Table = ({
     const getTitleHeader = (key) => {
         switch (key) {
             case '0':
-                return '채소';
+                return '식이섬유';
             case '1':
-                return '과일';
+                return '비타민D';
             case '2':
-                return '콩\n두부';
+                return 'DHA+EPA';
             case '3':
-                return '통곡물';
+                return '마그네슘';
             case '4':
-                return '버섯';
+                return '비타민A';
             case '5':
-                return '해조류';
+                return '트립토판';
             case '6':
-                return '견과';
+                return '엽산';
             case '7':
-                return '고기\n생선\n달걀';
+                return '비타민B12';
             case '8':
-                return '유제품';
+                return '비타민B6';
         }
     };
 
     return (
-        <Container style={{ padding: '0 4px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Container
+            style={{
+                padding: '0 4px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+            }}
+        >
             <DiaryTitle
                 style={{
                     width: '100%',
@@ -348,9 +360,11 @@ const Table = ({
             >
                 <Name style={{ fontSize: '20px' }}>맞춤식품</Name>
             </DiaryTitle>
-            <Name style={{ fontSize: '16px', marginBottom: '25px'}}>식재료</Name>
+            <Name style={{ fontSize: '16px', marginBottom: '25px' }}>
+                식재료
+            </Name>
             <div
-                style={{ ...style , marginBottom:'70px'}}
+                style={{ ...style, marginBottom: '70px' }}
                 role='region'
                 aria-label='data table'
                 tabindex='0'
@@ -364,79 +378,91 @@ const Table = ({
                                 title={
                                     <div>
                                         <TooltipDescription>
-                                            장내미생물의 먹이로 이용 | 배변활동 원활에 도움을 줄 수 있음
+                                            장내미생물의 먹이로 이용 | 배변활동
+                                            원활에 도움을 줄 수 있음
                                         </TooltipDescription>
                                     </div>
                                 }
                             >
-                                <th>식이{'\n'}섬유</th>
+                                <th>채소</th>
                             </Tooltip>
                             <Tooltip
                                 title={
                                     <div>
                                         <TooltipDescription>
-                                            뼈의 형성과 유지에 필요 | 칼슘&인의 흡수와 이용에 필요 | 골다공증 발생 위험 감소에 도움을 줌
+                                            뼈의 형성과 유지에 필요 | 칼슘&인의
+                                            흡수와 이용에 필요 | 골다공증 발생
+                                            위험 감소에 도움을 줌
                                         </TooltipDescription>
                                     </div>
                                 }
                             >
-                                <th>비타민{'\n'}D</th>
+                                <th>과일</th>
                             </Tooltip>
                             <Tooltip
                                 title={
                                     <div>
                                         <TooltipDescription>
-                                            기억력 개선 도움에 도움을 줄 수 있음 | 혈중 중성지질&혈행개선에 도움을 줄 수 있음 | 건조한 눈을 개선하여 눈건강에 도움을 줄 수 있음
+                                            기억력 개선 도움에 도움을 줄 수 있음
+                                            | 혈중 중성지질&혈행개선에 도움을 줄
+                                            수 있음 | 건조한 눈을 개선하여
+                                            눈건강에 도움을 줄 수 있음
                                         </TooltipDescription>
                                     </div>
                                 }
                             >
-                                <th>DHA+{'\n'}EPA</th>
+                                <th>콩/두부</th>
                             </Tooltip>
                             <Tooltip
                                 title={
                                     <div>
                                         <TooltipDescription>
-                                            신경과 근육 기능 유지에 필요 | 에너지 이용에 필요
+                                            신경과 근육 기능 유지에 필요 |
+                                            에너지 이용에 필요
                                         </TooltipDescription>
                                     </div>
                                 }
                             >
-                                <th>마그{'\n'}네슘</th>
+                                <th>통곡물</th>
                             </Tooltip>
                             <Tooltip
                                 title={
                                     <div>
                                         <TooltipDescription>
-                                            상피세포의 성장과 발달에 필요 | 피부와 점막 형성&기능유지에 필요 | 어두운 곳에서 시각 적응을 위해 필요
+                                            상피세포의 성장과 발달에 필요 |
+                                            피부와 점막 형성&기능유지에 필요 |
+                                            어두운 곳에서 시각 적응을 위해 필요
                                         </TooltipDescription>
                                     </div>
                                 }
                             >
-                                <th>비타민{'\n'}A</th>
-                            </Tooltip>
-
-                            <Tooltip
-                                title={
-                                    <div>
-                                        <TooltipDescription>
-                                            신경전달물질인 세로토닌&멜라토닌의 전구체로 이용
-                                        </TooltipDescription>
-                                    </div>
-                                }
-                            >
-                                <th>트립{'\n'}토판</th>
+                                <th>버섯</th>
                             </Tooltip>
                             <Tooltip
                                 title={
                                     <div>
                                         <TooltipDescription>
-                                            태아 신경관의 정상 발달에 필요 | 세포와 혈액 생성에 필요 | 혈액의 호모시스테인 수준을 정상으로 유지하는데 필요
+                                            신경전달물질인 세로토닌&멜라토닌의
+                                            전구체로 이용
                                         </TooltipDescription>
                                     </div>
                                 }
                             >
-                                <th>엽산</th>
+                                <th>해조류</th>
+                            </Tooltip>
+                            <Tooltip
+                                title={
+                                    <div>
+                                        <TooltipDescription>
+                                            태아 신경관의 정상 발달에 필요 |
+                                            세포와 혈액 생성에 필요 | 혈액의
+                                            호모시스테인 수준을 정상으로
+                                            유지하는데 필요
+                                        </TooltipDescription>
+                                    </div>
+                                }
+                            >
+                                <th>견과</th>
                             </Tooltip>
                             <Tooltip
                                 title={
@@ -447,18 +473,20 @@ const Table = ({
                                     </div>
                                 }
                             >
-                                <th>비타민{'\n'}B12</th>
+                                <th>고기 생선 달걀</th>
                             </Tooltip>
                             <Tooltip
                                 title={
                                     <div>
                                         <TooltipDescription>
-                                            단백질 및 아미노산 이용에 필요 | 혈액의 호모시스테인 수준을 정상으로 유지하는데 필요
+                                            단백질 및 아미노산 이용에 필요 |
+                                            혈액의 호모시스테인 수준을 정상으로
+                                            유지하는데 필요
                                         </TooltipDescription>
                                     </div>
                                 }
                             >
-                                <th>비타민{'\n'}B6</th>
+                                <th>유제품</th>
                             </Tooltip>
                         </tr>
                     </thead>
@@ -533,39 +561,64 @@ const Table = ({
                         clickedTag={clickedTag}
                     />
                 ) : null}
-            </div>      
+            </div>
             {/* 임시로 추가한 추천 요리, 보충제 레이아웃 */}
             <CurationWith>
-                <Name style={{ fontSize: '16px', margin: '25px'}}>음식</Name>
-                <Name style={{ fontSize: '13px',fontWeight:300,marginBottom:'10px'}}>추후 추가될 예정입니다 :)</Name>
-                    <ul>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
+                <Name style={{ fontSize: '16px', margin: '25px' }}>음식</Name>
+                <Name
+                    style={{
+                        fontSize: '13px',
+                        fontWeight: 300,
+                        marginBottom: '10px',
+                    }}
+                >
+                    추후 추가될 예정입니다 :)
+                </Name>
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
             </CurationWith>
             <CurationWith>
-                <Name style={{ fontSize: '16px', margin: '25px'}}>가공식품</Name>
-                <Name style={{ fontSize: '13px',fontWeight:300,marginBottom:'10px'}}>추후 추가될 예정입니다 :)</Name>
-                    <ul>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
+                <Name style={{ fontSize: '16px', margin: '25px' }}>
+                    가공식품
+                </Name>
+                <Name
+                    style={{
+                        fontSize: '13px',
+                        fontWeight: 300,
+                        marginBottom: '10px',
+                    }}
+                >
+                    추후 추가될 예정입니다 :)
+                </Name>
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
             </CurationWith>
             <CurationWith>
-                <Name style={{ fontSize: '16px', margin: '25px'}}>보충제</Name>
-                <Name style={{ fontSize: '13px',fontWeight:300,marginBottom:'10px'}}>추후 추가될 예정입니다 :)</Name>
-                    <ul>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
+                <Name style={{ fontSize: '16px', margin: '25px' }}>보충제</Name>
+                <Name
+                    style={{
+                        fontSize: '13px',
+                        fontWeight: 300,
+                        marginBottom: '10px',
+                    }}
+                >
+                    추후 추가될 예정입니다 :)
+                </Name>
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
             </CurationWith>
-            
         </Container>
     );
 };
