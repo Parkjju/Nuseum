@@ -342,6 +342,22 @@ const Table = ({
         }
     };
 
+    const tooltipContents = {
+        식이섬유: '장내미생물의 먹이로 이용 | 배변활동 원활에 도움을 줄수 있음',
+        비타민D:
+            '뼈의 형성과 유지에 필요 | 칼슘&인의 흡수와 이용에 필요 | 골다공증 발생 위험 감소에 도움을 줌',
+        'DHA+EPA':
+            '기억력 개선 도움에 도움을 줄 수 있음 | 혈중 중성지질&혈행개선에 도움을 줄 수 있음 | 건조한 눈을 개선하여 눈건강에 도움을 줄 수 있음',
+        마그네슘: '신경과 근육 기능 유지에 필요 | 에너지 이용에 필요',
+        비타민A:
+            '상피세포의 성장과 발달에 필요 | 피부와 점막 형성&기능유지에 필요 | 어두운 곳에서 시각 적응을 위해 필요',
+        트립토판: '신경전달물질인 세로토닌&멜라토닌의 전구체로 이용',
+        엽산: '태아 신경관의 정상 발달에 필요 | 세포와 혈액 생성에 필요 | 혈액의 호모시스테인 수준을 정상으로 유지하는데 필요',
+        비타민B12: '정상적인 엽산 대사에 필요',
+        비타민B6:
+            '단백질 및 아미노산 이용에 필요 | 혈액의 호모시스테인 수준을 정상으로 유지하는데 필요',
+    };
+
     return (
         <Container
             style={{
@@ -374,120 +390,15 @@ const Table = ({
                     <thead>
                         <tr>
                             <th class='pin'></th>
-                            <Tooltip
-                                title={
-                                    <div>
-                                        <TooltipDescription>
-                                            장내미생물의 먹이로 이용 | 배변활동
-                                            원활에 도움을 줄 수 있음
-                                        </TooltipDescription>
-                                    </div>
-                                }
-                            >
-                                <th>채소</th>
-                            </Tooltip>
-                            <Tooltip
-                                title={
-                                    <div>
-                                        <TooltipDescription>
-                                            뼈의 형성과 유지에 필요 | 칼슘&인의
-                                            흡수와 이용에 필요 | 골다공증 발생
-                                            위험 감소에 도움을 줌
-                                        </TooltipDescription>
-                                    </div>
-                                }
-                            >
-                                <th>과일</th>
-                            </Tooltip>
-                            <Tooltip
-                                title={
-                                    <div>
-                                        <TooltipDescription>
-                                            기억력 개선 도움에 도움을 줄 수 있음
-                                            | 혈중 중성지질&혈행개선에 도움을 줄
-                                            수 있음 | 건조한 눈을 개선하여
-                                            눈건강에 도움을 줄 수 있음
-                                        </TooltipDescription>
-                                    </div>
-                                }
-                            >
-                                <th>콩/두부</th>
-                            </Tooltip>
-                            <Tooltip
-                                title={
-                                    <div>
-                                        <TooltipDescription>
-                                            신경과 근육 기능 유지에 필요 |
-                                            에너지 이용에 필요
-                                        </TooltipDescription>
-                                    </div>
-                                }
-                            >
-                                <th>통곡물</th>
-                            </Tooltip>
-                            <Tooltip
-                                title={
-                                    <div>
-                                        <TooltipDescription>
-                                            상피세포의 성장과 발달에 필요 |
-                                            피부와 점막 형성&기능유지에 필요 |
-                                            어두운 곳에서 시각 적응을 위해 필요
-                                        </TooltipDescription>
-                                    </div>
-                                }
-                            >
-                                <th>버섯</th>
-                            </Tooltip>
-                            <Tooltip
-                                title={
-                                    <div>
-                                        <TooltipDescription>
-                                            신경전달물질인 세로토닌&멜라토닌의
-                                            전구체로 이용
-                                        </TooltipDescription>
-                                    </div>
-                                }
-                            >
-                                <th>해조류</th>
-                            </Tooltip>
-                            <Tooltip
-                                title={
-                                    <div>
-                                        <TooltipDescription>
-                                            태아 신경관의 정상 발달에 필요 |
-                                            세포와 혈액 생성에 필요 | 혈액의
-                                            호모시스테인 수준을 정상으로
-                                            유지하는데 필요
-                                        </TooltipDescription>
-                                    </div>
-                                }
-                            >
-                                <th>견과</th>
-                            </Tooltip>
-                            <Tooltip
-                                title={
-                                    <div>
-                                        <TooltipDescription>
-                                            정상적인 엽산 대사에 필요
-                                        </TooltipDescription>
-                                    </div>
-                                }
-                            >
-                                <th>고기 생선 달걀</th>
-                            </Tooltip>
-                            <Tooltip
-                                title={
-                                    <div>
-                                        <TooltipDescription>
-                                            단백질 및 아미노산 이용에 필요 |
-                                            혈액의 호모시스테인 수준을 정상으로
-                                            유지하는데 필요
-                                        </TooltipDescription>
-                                    </div>
-                                }
-                            >
-                                <th>유제품</th>
-                            </Tooltip>
+                            <th>채소</th>
+                            <th>과일</th>
+                            <th>콩/두부</th>
+                            <th>통곡물</th>
+                            <th>버섯</th>
+                            <th>해조류</th>
+                            <th>견과</th>
+                            <th>고기 생선 달걀</th>
+                            <th>유제품</th>
                         </tr>
                     </thead>
 
@@ -495,9 +406,27 @@ const Table = ({
                         {Object.keys(curationList).map(
                             (diversityCoordinate, index) => (
                                 <tr>
-                                    <th key={index}>
-                                        {getTitleHeader(diversityCoordinate)}
-                                    </th>
+                                    <Tooltip
+                                        title={
+                                            <div>
+                                                <TooltipDescription>
+                                                    {
+                                                        tooltipContents[
+                                                            getTitleHeader(
+                                                                diversityCoordinate
+                                                            )
+                                                        ]
+                                                    }
+                                                </TooltipDescription>
+                                            </div>
+                                        }
+                                    >
+                                        <th key={index}>
+                                            {getTitleHeader(
+                                                diversityCoordinate
+                                            )}
+                                        </th>
+                                    </Tooltip>
 
                                     {Object.entries(
                                         curationList[diversityCoordinate]
