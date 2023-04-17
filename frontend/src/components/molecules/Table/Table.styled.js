@@ -21,7 +21,7 @@ export const CurationTd = styled.td`
 
 // 음식, 가공식품, 보충제
 export const CurationWith = styled.div`
-    dispaly: flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
     width: 90%;
