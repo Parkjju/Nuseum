@@ -312,10 +312,12 @@ const Curation = () => {
                     if (
                         key === 'carbohydrate' ||
                         key === 'fat' ||
-                        key === 'protein'
+                        key === 'protein' ||
+                        key === 'energy'
                     )
                         continue;
-                    if (response.data[key] < range[key]) {
+
+                    if (response.data[key] < range[key] * 7) {
                         setInSufficientNutrition((prev) => [
                             ...prev,
                             mappingNutritionNameToCoordinate(key),
