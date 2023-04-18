@@ -541,10 +541,14 @@ const Table = ({
             >
                 <Name style={{ fontSize: '20px' }}>맞춤식품</Name>
             </DiaryTitle>
-            <Name style={{ fontSize: '13px',fontWeight:500,lineHeight: 1.2, marginBottom: '60px',
-                textAlign:'center', width: '80%' }}>
+            <Name style={{ fontSize: '13px',fontWeight: 400,
+                lineHeight: 1.2, marginBottom: '60px',
+                textAlign:'justify', width: '85%', background: '#f1f1f1',
+                padding: '10px',
+                borderRadius: '5px',
+                width: '80%'}}>
                 식이일기를 작성해 주시면, 지난 한주의 식이내용이 그림자로 채워지고 
-                부족한 식이내용을 장보기에 활용할 수 있습니다-
+                부족한 식이내용을 장보기에 활용할 수 있습니다-{'\n'}
                 ( ), 100g 당 함량
             </Name>
             <Name style={{ fontSize: '16px', marginBottom: '25px' }}>
@@ -685,6 +689,15 @@ const Table = ({
             {/* 임시로 추가한 추천 요리, 보충제 레이아웃 */}
             <CurationWith>
                 <Name style={{ fontSize: '16px', margin: '25px' }}>음식</Name>
+                <Name
+                    style={{
+                        fontSize: '13px',
+                        fontWeight: 300,
+                        marginBottom: '10px',
+                    }}
+                >
+                    추후 서비스의 예입니다 :)
+                </Name>
                 <ul>
                     {Object.keys(cookingMeal).map((index) => (
                             <li>
@@ -705,6 +718,15 @@ const Table = ({
             <CurationWith>
                 <Name style={{ fontSize: '16px', margin: '25px' }}>
                     가공식품
+                </Name>
+                <Name
+                    style={{
+                        fontSize: '13px',
+                        fontWeight: 300,
+                        marginBottom: '10px',
+                    }}
+                >
+                    추후 서비스의 예입니다 :)
                 </Name>
                 <ul>
                     {Object.keys(ProcessedFood).map((index) => (
