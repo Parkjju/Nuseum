@@ -94,7 +94,7 @@ body{
     border: 1px solid #aaaaaa63;
     background-clip: padding-box;
     // scroll-snap-align: start;
-    padding: 0.3rem 0.1rem;
+    padding: 0.1rem;
     // min-width: 1.82rem;
     width: calc(100% / 10);
     text-align: left;
