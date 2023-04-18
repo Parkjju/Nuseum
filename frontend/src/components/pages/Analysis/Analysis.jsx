@@ -666,7 +666,7 @@ const Analysis = () => {
                                             marginTop: 10,
                                             marginBottom: 20,
                                             fontWeight: '300',
-                                            textAlign: 'left',
+                                            textAlign: 'justify',
                                             lineHeight: 1.6,
                                             background: '#f1f1f1',
                                             padding: '10px',

@@ -230,8 +230,113 @@ const Table = ({
         },
     });
 
+    const [nutCurationList, setNutCurationList] = useState({
+        0: {
+            '0.0': null,
+            0.1: null,
+            0.2: null,
+            0.3: null,
+            0.4: null,
+            0.5: null,
+            0.6: null,
+            0.7: null,
+            0.8: null,
+        },
+        1: {
+            '1.0': null,
+            1.1: null,
+            1.2: null,
+            1.3: null,
+            1.4: null,
+            1.5: null,
+            1.6: null,
+            1.7: null,
+            1.8: null,
+        },
+        2: {
+            '2.0': null,
+            2.1: null,
+            2.2: null,
+            2.3: null,
+            2.4: null,
+            2.5: null,
+            2.6: null,
+            2.7: null,
+            2.8: null,
+        },
+        3: {
+            '3.0': null,
+            3.1: null,
+            3.2: null,
+            3.3: null,
+            3.4: null,
+            3.5: null,
+            3.6: null,
+            3.7: null,
+            3.8: null,
+        },
+        4: {
+            '4.0': null,
+            4.1: null,
+            4.2: null,
+            4.3: null,
+            4.4: null,
+            4.5: null,
+            4.6: null,
+            4.7: null,
+            4.8: null,
+        },
+        5: {
+            '5.0': null,
+            5.1: null,
+            5.2: null,
+            5.3: null,
+            5.4: null,
+            5.5: null,
+            5.6: null,
+            5.7: null,
+            5.8: null,
+        },
+        6: {
+            '6.0': null,
+            6.1: null,
+            6.2: null,
+            6.3: null,
+            6.4: null,
+            6.5: null,
+            6.6: null,
+            6.7: null,
+            6.8: null,
+        },
+        7: {
+            '7.0': null,
+            7.1: null,
+            7.2: null,
+            7.3: null,
+            7.4: null,
+            7.5: null,
+            7.6: null,
+            7.7: null,
+            7.8: null,
+        },
+        8: {
+            '8.0': null,
+            8.1: null,
+            8.2: null,
+            8.3: null,
+            8.4: null,
+            8.5: null,
+            8.6: null,
+            8.7: null,
+            8.8: null,
+        },
+    });
     // 좌표관리 상태값
     const [coordinates, setCoordinates] = useState([]);
+
+    /////////////////////////골고루지수 채웠지만 영양성분 충족x by hj
+    const [nutCoordinates, setNutCoordinates] = useState([]);
+    const [weiWeight, setWeiWeight] = useState({});
 
     // === 중복제거 리스트 및 가중치 초기화 ===
     const [weight, setWeight] = useState({});
@@ -249,11 +354,34 @@ const Table = ({
                     `${nutrition}.${diversity}`,
                 ]);
             }
+            /////////////////////// 골고루지수를 채웠어도 영양성분 충족이 되지 않은 좌표 by hj
+            for (let i = 0; i < 9; i++){
+                setNutCoordinates((prev)=>[
+                    ...prev,
+                    `${nutrition}.${i}`,
+                ]);
+            }
         }
     }, [inSufficientDiversity, inSufficientNutrition]);
 
     // 좌표정렬 후 큐레이션 대상 딕셔너리 정의
     useEffect(() => {
+        
+        /////////////////////// 골고루지수를 채웠어도 영양성분 충족이 되지 않은 좌표(골고루지수 제외) by hj
+        coordinates.forEach(function(item){
+            let index = nutCoordinates.indexOf(item);
+            if(index !== -1){
+                nutCoordinates.splice(index,1);
+            }
+        })
+        setNutCurationList((prev) => {
+            for (let nut of nutCoordinates){
+                prev[nut.split('.')[0]][nut] =
+                curationData[nut];
+            }
+            return {...prev};
+        });
+
         // (insufficientCategory, insufficientNutrition) 좌표 전체 리스트를 순회하면서
         // 해당 좌표에 해당하는 데이터들은 추천 대상이므로 큐레이션 리스트에 집어넣어야 함
         // 그 외의 것들은 집어넣지 않음
@@ -293,7 +421,9 @@ const Table = ({
                 ...copy,
             };
         });
+
     }, [curationData, coordinates]);
+
 
     // 추천리스트 정렬 후 추천대상에서 제외된 리스트 추가 - 섀도우 부여를 위함
     useEffect(() => {
@@ -322,23 +452,23 @@ const Table = ({
     const getTitleHeader = (key) => {
         switch (key) {
             case '0':
-                return '식이섬유';
+                return '식이섬유\ng';
             case '1':
-                return '비타민D';
+                return '비타민\nD\n(㎍)';
             case '2':
-                return 'DHA+EPA';
+                return 'DHA\n+EPA\n(mg)';
             case '3':
-                return '마그네슘';
+                return '마그네슘\n(mg)';
             case '4':
-                return '비타민A';
+                return '비타민\nA\n㎍';
             case '5':
-                return '트립토판';
+                return '트립토판\n(mg)';
             case '6':
-                return '엽산';
+                return '엽산\n(㎍)';
             case '7':
-                return '비타민B12';
+                return '비타민\nB12\n(㎍)';
             case '8':
-                return '비타민B6';
+                return '비타민\nB6\n(mg)';
         }
     };
 
@@ -358,6 +488,41 @@ const Table = ({
             '단백질 및 아미노산 이용에 필요 | 혈액의 호모시스테인 수준을 정상으로 유지하는데 필요',
     };
 
+    const cookingMeal = {
+        '멸치 견과류\n볶음' : '멸치, 견과류',
+        '버섯 애호박\n볶음' : '버섯류, 애호박',
+        '시금치\n프리타타' : '토마토, 시금치, 달걀, 돼지고기',
+        '오징어\n볶음' : '오징어, 양배추, 당근, 깻잎',
+        '북어 매생이\n미역국' : '북어, 미역, 마늘, 매생이',
+        '요거트 샐러드' : '다양한 과일, 요거트',
+        '고추잡채' : '돼지고기, 야채',
+        '연어 샐러드' : '연어, 야채',
+        '메추리알\n장조림' : '메추리알, 소고기, 마늘',
+        '유부 초밥' : '유부, 야채',
+        '소고기\n우거지국' : '우거지, 소고기',
+        '취나물\n들깨볶음' : '취나물, 들깨',
+        '과카몰리\n샐러드' : '아보카도, 야채, 토마토',
+        '견과류콩자반' : '견과류, 대두',
+        '오리주물럭' : '오리고기, 야채, 마늘'
+    };
+
+    const ProcessedFood = {
+        '본죽 쇠고기메추리알장조림' : '소고기, 메추리알',
+        '프레시지 밀푀유 나베 밀키트' : '소고기, 야채, 버섯',
+        '청정원 소고기버섯만두전골' : '소고기, 버섯, 야채',
+        '곰곰 궁중식 찜닭 밀키트' : '닭고기, 당근, 양배추',
+        '풀무원 리코타 고구마 SMIX 브런치 샐러드' : '고구마, 견과류, 치즈',
+        '100% 식물성 비비고 플랜테이블 왕교자' : '야채, 대체육',
+        '프레시밀 바지락 된장찌개' : '바지락, 애호박, 두부',
+        '스윗밸런스 연어와 리코타 치즈 발사믹 샐러드' : '연어, 치즈, 야채',
+        '닥터넛츠 오리지널뉴 신선하루한줌견과' : '아몬드, 캐슈넛, 피스타치오넛',
+        '채선당 월남쌈 밀키트' : '소고기, 당근, 양배추, 꺳잎',
+        '포켓샐러드 쉬림프 씨위드 두부면 샐러드' : '야채, 두부, 새우, 고구마',
+        '마이셰프 훈제 오리 무쌈' : '오리고기, 야채',
+        '바르닭 닭가슴살 곤약볶음밥 귀리&간장 계란밥' : '귀리, 계란, 닭고기',
+        '한상 가득 비비고 생선구이&순두부한상' : '고등어, 두부, 김, 호박, 버섯',
+        '정미경키친 비빔밥세트' : '고사리, 취나물, 애호박, 버섯, 소고기'
+    }
     return (
         <Container
             style={{
@@ -371,11 +536,17 @@ const Table = ({
                 style={{
                     width: '100%',
                     textAlign: 'center',
-                    marginBottom: '50px',
+                    marginBottom: '20px',
                 }}
             >
                 <Name style={{ fontSize: '20px' }}>맞춤식품</Name>
             </DiaryTitle>
+            <Name style={{ fontSize: '13px',fontWeight:500,lineHeight: 1.2, marginBottom: '60px',
+                textAlign:'center', width: '90%' }}>
+                한 주동안 섭취한 식이내용을 기반으로 추천됩니다 :){'\n'}
+                그림자로 채워진 지난 한주의 식이내용을 확인하고 부족한 식이내용을 장보기에 활용하세요-.{'\n'}
+                ( ), 100g 당 함량
+            </Name>
             <Name style={{ fontSize: '16px', marginBottom: '25px' }}>
                 식재료
             </Name>
@@ -454,13 +625,28 @@ const Table = ({
                                                           </CurationMeal>
                                                       )
                                                   )
-                                                : notCuratedList[
+                                                : nutCurationList[
                                                       diversityCoordinate
                                                   ][cellData[0]]
+
+                                                //// 골고루지수는 충족하여도 영양성분은 충족x by hj
+                                                ? Object.keys(
+                                                    nutCurationList[diversityCoordinate][cellData[0]]
+                                                    ).map(
+                                                    (meal) => (
+                                                        <CurationMeal
+                                                            nutCurated = {true}>
+                                                                {meal}
+                                                            </CurationMeal>
+                                                    )
+                                                ): notCuratedList[
+                                                    diversityCoordinate
+                                                ][cellData[0]]
+
                                                 ? Object.keys(
                                                       notCuratedList[
                                                           diversityCoordinate
-                                                      ][cellData[0]]
+                                                        ][cellData[0]]
                                                   ).map((meal) => (
                                                       <CurationMeal
                                                           notCurated={true}
@@ -475,7 +661,8 @@ const Table = ({
                                                           {meal}
                                                       </CurationMeal>
                                                   ))
-                                                : null}
+                                                :null
+                                            }
                                         </CurationTd>
                                     ))}
                                 </tr>
@@ -504,10 +691,20 @@ const Table = ({
                     추후 추가될 예정입니다 :)
                 </Name>
                 <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
+                    {Object.keys(cookingMeal).map((index) => (
+                            <li>
+                                <Name onClick={(e) => {
+                                setIsOpen(true);
+                                    setClickedTag(e.target.innerText);}}
+                                style={{fontSize: 'inherit',fontWeight: 500,cursor:'pointer', padding: '10px 0', lineHeight: 1.1}}>
+                                    {index}
+                                </Name>
+                                <Name style={{fontSize: '11px',fontWeight: 200}}>
+                                    {cookingMeal[index]}
+                                </Name>
+                            </li>
+                            ))
+                    }
                 </ul>
             </CurationWith>
             <CurationWith>
@@ -524,10 +721,20 @@ const Table = ({
                     추후 추가될 예정입니다 :)
                 </Name>
                 <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
+                    {Object.keys(ProcessedFood).map((index) => (
+                            <li style={{width: '46%'}}>
+                                <Name onClick={(e) => {
+                                setIsOpen(true);
+                                    setClickedTag(e.target.innerText);}}
+                                style={{fontSize: 'inherit',fontWeight: 500,cursor:'pointer', padding: '10px 0', lineHeight: 1.1}}>
+                                    {index}
+                                </Name>
+                                <Name style={{fontSize: '11px',fontWeight: 200}}>
+                                    {ProcessedFood[index]}
+                                </Name>
+                            </li>
+                            ))
+                    }
                 </ul>
             </CurationWith>
             <CurationWith>
