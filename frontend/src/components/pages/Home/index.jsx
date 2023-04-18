@@ -28,8 +28,8 @@ function Home() {
 
     const menu = [
         [food, lang ? 'SHOP' : 'SHOP', 'food'],
-        [diary, lang ? 'DIARY' : '일기', 'diary'],
-        [analysis, lang ? 'ANALYSIS' : '분석', 'analysis'],
+        [diary, lang ? 'DIARY' : 'DIARY', 'diary'],
+        [analysis, lang ? 'ANALYSIS' : 'ANALYSIS', 'analysis'],
         // [record, lang ? 'HEALTH RECORD' : '내 아이', 'record'],
         [question, lang ? 'QUESTION' : 'Q&A', 'question'],
     ];
