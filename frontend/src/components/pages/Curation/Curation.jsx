@@ -339,7 +339,7 @@ const Curation = () => {
                         key === 'energy'
                     )
                         continue;
-
+                    console.log(key);
                     if (response.data[key] < range[key] * 7) {
                         setInSufficientNutrition((prev) => [
                             ...prev,
