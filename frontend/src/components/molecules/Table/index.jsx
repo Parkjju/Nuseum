@@ -452,7 +452,7 @@ const Table = ({
     const getTitleHeader = (key) => {
         switch (key) {
             case '0':
-                return '식이섬유\ng';
+                return '식이섬유\n(g)';
             case '1':
                 return '비타민\nD\n(㎍)';
             case '2':
@@ -460,7 +460,7 @@ const Table = ({
             case '3':
                 return '마그네슘\n(mg)';
             case '4':
-                return '비타민\nA\n㎍';
+                return '비타민\nA\n(㎍)';
             case '5':
                 return '트립토판\n(mg)';
             case '6':
@@ -542,9 +542,9 @@ const Table = ({
                 <Name style={{ fontSize: '20px' }}>맞춤식품</Name>
             </DiaryTitle>
             <Name style={{ fontSize: '13px',fontWeight:500,lineHeight: 1.2, marginBottom: '60px',
-                textAlign:'center', width: '90%' }}>
-                한 주동안 섭취한 식이내용을 기반으로 추천됩니다 :){'\n'}
-                그림자로 채워진 지난 한주의 식이내용을 확인하고 부족한 식이내용을 장보기에 활용하세요-.{'\n'}
+                textAlign:'center', width: '80%' }}>
+                식이일기를 작성해 주시면, 지난 한주의 식이내용이 그림자로 채워지고 
+                부족한 식이내용을 장보기에 활용할 수 있습니다-
                 ( ), 100g 당 함량
             </Name>
             <Name style={{ fontSize: '16px', marginBottom: '25px' }}>
@@ -616,8 +616,7 @@ const Table = ({
                                                                       true
                                                                   );
                                                                   setClickedTag(
-                                                                      e.target
-                                                                          .innerText
+                                                                      e.target.innerText.split('(')[0]
                                                                   );
                                                               }}
                                                           >
@@ -635,7 +634,13 @@ const Table = ({
                                                     ).map(
                                                     (meal) => (
                                                         <CurationMeal
-                                                            nutCurated = {true}>
+                                                            nutCurated = {true}
+                                                            onClick={(e) => {
+                                                                setIsOpen(true);
+                                                                setClickedTag(
+                                                                    e.target.innerText.split('(')[0]
+                                                                );
+                                                            }}>
                                                                 {meal}
                                                             </CurationMeal>
                                                     )
@@ -653,8 +658,7 @@ const Table = ({
                                                           onClick={(e) => {
                                                               setIsOpen(true);
                                                               setClickedTag(
-                                                                  e.target
-                                                                      .innerText
+                                                                  e.target.innerText.split('(')[0]
                                                               );
                                                           }}
                                                       >
@@ -681,15 +685,6 @@ const Table = ({
             {/* 임시로 추가한 추천 요리, 보충제 레이아웃 */}
             <CurationWith>
                 <Name style={{ fontSize: '16px', margin: '25px' }}>음식</Name>
-                <Name
-                    style={{
-                        fontSize: '13px',
-                        fontWeight: 300,
-                        marginBottom: '10px',
-                    }}
-                >
-                    추후 추가될 예정입니다 :)
-                </Name>
                 <ul>
                     {Object.keys(cookingMeal).map((index) => (
                             <li>
@@ -710,15 +705,6 @@ const Table = ({
             <CurationWith>
                 <Name style={{ fontSize: '16px', margin: '25px' }}>
                     가공식품
-                </Name>
-                <Name
-                    style={{
-                        fontSize: '13px',
-                        fontWeight: 300,
-                        marginBottom: '10px',
-                    }}
-                >
-                    추후 추가될 예정입니다 :)
                 </Name>
                 <ul>
                     {Object.keys(ProcessedFood).map((index) => (
