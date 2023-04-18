@@ -27,9 +27,9 @@ function Home() {
     }, [dispatch]);
 
     const menu = [
+        [food, lang ? 'SHOP' : 'SHOP', 'food'],
         [diary, lang ? 'DIARY' : '일기', 'diary'],
         [analysis, lang ? 'ANALYSIS' : '분석', 'analysis'],
-        [food, lang ? 'FOOD' : '맞춤식품', 'food'],
         // [record, lang ? 'HEALTH RECORD' : '내 아이', 'record'],
         [question, lang ? 'QUESTION' : 'Q&A', 'question'],
     ];
