@@ -45,6 +45,11 @@ export const CurationWith = styled.div`
         width: 95%;
         font-size: 13px;
         justify-content: flex-start;
+        @media all and (min-width: 550px) {
+            ::-webkit-scrollbar {
+                display: none;
+            }
+        }
     }
     li{
         margin: 5px 0;
