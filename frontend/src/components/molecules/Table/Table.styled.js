@@ -38,20 +38,29 @@ export const CurationWith = styled.div`
     margin-bottom: 70px;
     ul{
         display: flex;
-        flex-wrap: wrap;
-        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        max-height: 70vh;
+        overflow-y:scroll;
+        width: 95%;
         font-size: 13px;
-        justify-content: space-evenly;
+        justify-content: flex-start;
     }
     li{
         margin: 5px 0;
-        padding: 0 5px 10px;
-        width: 28%;
+        padding: 5px 10px 5px 15px;
+        width: 90%;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: space-around;
+        align-items: flex-start;
+        justify-content: space-between;
         background: #fafafa;
         border-radius: 10px;
+        span{
+            text-align: left;
+        }
+        span:nth-child(2){
+            padding-bottom: 5px;
+        }
     }
 `
