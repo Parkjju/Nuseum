@@ -27,11 +27,11 @@ function Home() {
     }, [dispatch]);
 
     const menu = [
-        [food, lang ? 'SHOP' : 'SHOP', 'food'],
-        [diary, lang ? 'DIARY' : 'DIARY', 'diary'],
-        [analysis, lang ? 'ANALYSIS' : 'ANALYSIS', 'analysis'],
+        [food, lang ? 'SHOP' : 'shop', 'food'],
+        [diary, lang ? 'DIARY' : 'diary', 'diary'],
+        [analysis, lang ? 'ANALYSIS' : 'analysis', 'analysis'],
         // [record, lang ? 'HEALTH RECORD' : '내 아이', 'record'],
-        [question, lang ? 'QUESTION' : 'Q&A', 'question'],
+        [question, lang ? 'QUESTION' : 'q&a', 'question'],
     ];
 
     return (

@@ -547,9 +547,8 @@ const Table = ({
                 padding: '10px',
                 borderRadius: '5px',
                 width: '80%'}}>
-                ( ), 100g 당 함량{'\n'}
                 식이일기를 작성해 주시면, 지난 한주의 식이내용이 그림자로 채워지고 
-                부족한 식이내용을 장보기에 활용할 수 있습니다-
+                부족한 식이내용을 장보기 및 음식주문에 활용할 수 있습니다. ( ), 100g 당 함량
             </Name>
             <Name style={{ fontSize: '16px', marginBottom: '25px' }}>
                 식재료
@@ -696,7 +695,8 @@ const Table = ({
                         marginBottom: '10px',
                     }}
                 >
-                    추후 서비스의 예입니다 :)
+                    추후 서비스의 예입니다 :) {'\n'}
+                    배달앱에서도 활용해보세요
                 </Name>
                 <ul>
                     {Object.keys(cookingMeal).map((index) => (
