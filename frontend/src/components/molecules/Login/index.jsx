@@ -144,7 +144,7 @@ function Login() {
                             ? '😭 Please enter the code!'
                             : '😭 코드를 입력해주세요!',
                     })}
-                    placeholder={lang ? 'Code' : '발급 코드'}
+                    placeholder={lang ? 'Id' : '아이디'}
                     type='text'
                     error={errors.loginId}
                 />
