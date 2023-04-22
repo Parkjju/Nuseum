@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Text = styled.h1`
-    font-size: 34px;
+    font-size: 26px;
     width: 80%;
     font-weight: bold;
     display: flex;
@@ -12,6 +12,7 @@ const Text = styled.h1`
     text-align: center;
     line-height: 1.5;
     white-space: pre-wrap;
+    padding-bottom: 10px;
 `;
 
 export const TextBox = styled.div`
