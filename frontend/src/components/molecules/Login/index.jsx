@@ -163,7 +163,7 @@ function Login() {
                                 : '😭 비밀번호를 8자 이상 입력해주세요!',
                         },
                     })}
-                    placeholder={lang ? 'Password' : '비밀번호 입력'}
+                    placeholder={lang ? 'Password' : '비밀번호'}
                     type='password'
                     error={errors.loginPassword}
                 />
