@@ -110,9 +110,9 @@ function Register() {
                 }
             />
             <span
-                style={{width: '85%', display: 'inline-block',textAlign: 'justify', lineHeight: 1.4, whiteSpace:'pre-wrap', fontSize: '13px', margin: '0 15px 25px', padding: '10px', background:'#f1f1f1',borderRadius:'5px'}}
+                style={{width: '85%', display: 'block',textAlign: 'justify', lineHeight: 1.4, whiteSpace:'pre-wrap', fontSize: '13px', margin: '0 auto 25px', padding: '10px', background:'#f1f1f1',borderRadius:'5px'}}
             >
-                뉴지엄 product의 PoC를 진행하고 있습니다. 회원가입해서 사용해보실 수 있습니다. {'\n'}
+                뉴지엄 product의 PoC를 진행하고 있습니다. 회원가입해서 사용해보실 수 있습니다. 
                 현재는 만 3-5세를 위해 만들어져 있지만 개인이 먹고있는 식이의 다양성이나 영양성분에 대한 정보를 제공받고 필요한 식재료나 음식의 주문에 뉴지엄의 지식을 사용하실 수 있습니다. {'\n'}
                 뉴지엄의 성장을 위해 좋았던 점, 개선해야할 점 등을 알려주세요. 주변 많은 분들께도 전달부탁드립니다-!
             </span>
@@ -176,7 +176,7 @@ function Register() {
                 {errors.code ? <Error>{errors.code.message}</Error> : null}
 
                 <Form
-                    placeholder={lang ? 'Password' : '패스워드 입력'}
+                    placeholder={lang ? 'Password' : '비밀번호 입력'}
                     name='password1'
                     type='password'
                     {...register('password1', {
@@ -197,7 +197,7 @@ function Register() {
                 ) : null}
 
                 <Form
-                    placeholder={lang ? 'Password check' : '패스워드 확인'}
+                    placeholder={lang ? 'Password check' : '비밀번호 확인'}
                     name='password2'
                     type='password'
                     {...register('password2', {
