@@ -68,10 +68,13 @@ function Home() {
                             <span style={{textAlign: 'center'}}>NUSEUM pursues a world{'\n'}free of diseases in a sustainable personalized nutrition way</span>
                         {'\n'}{'\n'}
                         식품은 영양소를 제공하는 본질적인 역할 외에도 질병을 예방하고 치료하는 강력한 도구가 될 수 있습니다. 
-                        개인화된 영양접근은 중요한데, 특정 식품의 소비와 건강 및 질병 결과 사이의 복잡한 상호작용을 이해하면, 여러 질환의 예방 및 치료를 위한 중재에 정보를 제공할 수 있는 엄청난 잠재력이 있습니다. 
+                        개인화된 영양접근은 중요한데, 특정 식품의 소비와 건강 및 질병 결과 사이의 복잡한 상호작용을 이해하면, 여러 질환의 예방 및 치료를 위한 중재에 정보를 제공할 수 있습니다.¹
                         서울대학교 영양생리약리연구실 예비창업팀 뉴지엄은 영양과 건강의 더 나은 통합을 지원하고, 고객이 건강한 식품을 선택할 수 있도록 구매 단계에서 지원합니다. 
                         {'\n'}{'\n'}현재 진행 중인 PoC에 참여하여 장보기나 음식 선택에 뉴지엄의 지식을 활용해 보세요. 현재는 만 3-5세의 성장기의 아이들의 신경행동발달을 위해 식이내용의 다양성과 영양성분의 섭취 정도를 분석하지만, 당신의 식이내용의 다양성과 특정 영양성분들의 섭취정도를 파악할 수 있습니다. 
-                        {'\n'}{'\n'}뉴지엄의 성장을 위해 q&a에 의견을 남겨주세요. {'\n'}
+                        {'\n'}{'\n'}뉴지엄의 성장을 위해 q&a에 의견을 남겨주세요. {'\n'}{'\n'}
+                        <span
+                            style={{fontSize: '12px', textAlign: 'left',}}
+                        >¹ Food as medicine: translating the evidence. Nat Med 29, 753–754 (2023). https://doi.org/10.1038/s41591-023-02330-7</span>
                         </p>
                         <div style={{width:'100%', bottom: 0, position: 'absolute', display: 'flex', justifyContent:'space-between', borderTop: '1px dotted darkgray'}}>
                             <a onClick={hideForeverModal}> 다시 보지 않기</a>
