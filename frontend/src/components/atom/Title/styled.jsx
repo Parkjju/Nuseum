@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Text = styled.h1`
-    font-size: 26px;
+    font-size: 18px;
     width: 80%;
     font-weight: bold;
     display: flex;
