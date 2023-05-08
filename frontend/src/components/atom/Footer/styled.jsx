@@ -2,7 +2,7 @@ import styled from 'styled-components';
 export const Box = styled.div`
     display: flex;
     width: 100%;
-    margin-top: 30px;
+    margin-top: 20px;
     justify-content: center;
     position: relative;
     bottom: 0;
@@ -11,7 +11,7 @@ export const Box = styled.div`
 export const Content = styled.footer`
     width: 85%;
     border-top: 1px solid #7f8c8d;
-    padding-top: 20px;
+    // padding-top: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;

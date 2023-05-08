@@ -5,7 +5,8 @@ import Container from '../../atom/Container';
 import diary from '../../../assets/notepad.png';
 import record from '../../../assets/record.png';
 import analysis from '../../../assets/analysis.png';
-import food from '../../../assets/food.png';
+import shop from '../../../assets/food.png';
+import food from '../../../assets/carbohydrates.png';
 import question from '../../../assets/q&a.png';
 import { DiaryTitle } from '../Record/styled';
 import { Name } from '../../atom/Card/styled';
@@ -29,10 +30,11 @@ function Home() {
     }, [dispatch]);
 
     const menu = [
-        [food, lang ? 'SHOP' : 'shop', 'food'],
+        [food, lang ? 'FOOD' : 'food', 'food'],
         [diary, lang ? 'DIARY' : 'diary', 'diary'],
         [analysis, lang ? 'ANALYSIS' : 'analysis', 'analysis'],
         // [record, lang ? 'HEALTH RECORD' : '내 아이', 'record'],
+        [shop, lang ? 'SHOP' : 'shop', 'shop'],
         [question, lang ? 'QUESTION' : 'q&a', 'question'],
     ];
 
@@ -74,7 +76,7 @@ function Home() {
                         {'\n'}{'\n'}뉴지엄의 성장을 위해 q&a에 의견을 남겨주세요. {'\n'}{'\n'}
                         <span
                             style={{fontSize: '12px', textAlign: 'left',}}
-                        >¹ Food as medicine: translating the evidence. Nat Med 29, 753–754 (2023). https://doi.org/10.1038/s41591-023-02330-7</span>
+                        >¹ Food as medicine: translating the evidence. Nat Med 29, 753–754 (2023).</span>
                         </p>
                         <div style={{width:'100%', bottom: 0, position: 'absolute', display: 'flex', justifyContent:'space-between', borderTop: '1px dotted darkgray'}}>
                             <a onClick={hideForeverModal}> 다시 보지 않기</a>
