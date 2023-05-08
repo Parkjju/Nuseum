@@ -140,7 +140,7 @@ function Register() {
                         />
                     </RadioGroup>
                 </FormControl>
-                <FormControl sx={{ width: 300, marginY: 1.5 }}>
+                {/* <FormControl sx={{ width: 300, marginY: 1.5 }}>
                     <InputLabel
                         variant='standard'
                         htmlFor='uncontrolled-native'
@@ -159,7 +159,7 @@ function Register() {
                         <option value={4}>4세</option>
                         <option value={5}>5세</option>
                     </NativeSelect>
-                </FormControl>
+                </FormControl> */}
                 <Form
                     name='code'
                     placeholder={

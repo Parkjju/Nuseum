@@ -17,7 +17,7 @@ export const Modal = styled.div`
     max-width: 500px;
     position: absolute;
     background: #f1f1f1;
-    min-height: 630px;
+    min-height: 600px;
     display: flex;
     z-index: 1;
     align-items: center;
@@ -45,9 +45,16 @@ export const Modal = styled.div`
         }
     }
     a{
-        width:40%;
+        width: 45%;
         display: inline-block;
         text-align: center;
         padding: 20px 15px;
+        cursor: pointer;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        :hover{
+            background: #7e7e7e;
+            color: white;
+        }
     }
 `;

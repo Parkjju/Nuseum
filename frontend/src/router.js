@@ -13,6 +13,7 @@ import QuestionDetail from './components/pages/QuestionDetail';
 import QuestionForm from './components/pages/QuestionForm';
 import Record from './components/pages/Record';
 import My from './components/pages/My';
+import Shop from './components/pages/Shop';
 // import MailDetail from './components/atom/New/MailDetail';
 
 function Router() {
@@ -29,6 +30,7 @@ function Router() {
                 <Route path='/diary' element={<DiaryCalendar />}>
                     <Route path=':date' element={<Diary />}></Route>
                 </Route>
+                <Route path='/shop' element={<Shop />} />
                 <Route path='/food' element={<Curation />} />
                 <Route path='/analysis' element={<Analysis />} />
                 <Route path='/:category/:date/:when' element={<Record />} />
