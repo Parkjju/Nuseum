@@ -30,13 +30,13 @@ export const Answer = styled.div`
     width: 100%;
     background-color: rgba(238, 238, 238 ,0.4);
     border-radius: 8px;
-    padding: 20px;
+    padding: 15px;
 `;
 
 export const Username = styled.p`
     font-size: 13px;
     font-weight: 500;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -45,14 +45,17 @@ export const AnswerContent = styled.p`
     font-weight: 100;
     font-size: 15px;
     line-height: 1.5;
-    white-space: pre-line;
+    white-space: pre-wrap;
 `;
 
-export const InputComment = styled.input`
+export const InputComment = styled.textarea`
     margin-top: 20px;
+    padding: 5px;
     box-sizing: border-box;
     width: 90%;
-    height: 45px;
+    min-height: 45px;
+    height: auto;
+    white-space: pre-line;
     background-color: rgba(127, 140, 141, 0.15);
     border-radius: 8px;
     font-size: 13px;
